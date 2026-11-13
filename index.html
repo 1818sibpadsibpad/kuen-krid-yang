@@ -51,6 +51,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
     เหวี่ยงสั้น = เจ็บนิดหน่อย · เหวี่ยงกลาง: ฟาดลง <b>แขนขาด</b> / ตวัดขึ้น <b>ขาขาด</b><br>
     เหวี่ยงสุดแขน = <b>หัวขาด</b> · โดนแค่ <b>ปลายมีด</b> = บาดเจ็บ</p>
     <hr>
+    <p>🍌 <b>หาเสบียง:</b> กอกล้วยอยู่ตามขอบแผนที่ (มีผล ~20%) ฟันต้นให้ล้ม แบกพวงกล้วยกลับมาแขวนที่เสาหน้าบ้าน — แบกแล้วเดินช้าลงครึ่งหนึ่ง กดโจมตีเพื่อวางลง แจคพอทจะมากินเมื่อหิว</p>
     <p>สำรวจสวนยางห่างบ้านราว 50 ม. อาจเจอ <b style="color:#5fd35f">บักจก</b> (จอบ) — ระยะ ×3 แรง ×3 · มีลูกศรชี้ทางกลับบ้านเสมอ</p>
     <p>📱 จอยซ้าย = เดิน · ปุ่ม <b>ฟัน</b> กดค้างแล้วลากเพื่อเล็ง · ปุ่ม <b>ถีบ</b></p>
     <p>⌨️ <span class="k">WASD</span> เดิน · เมาส์เล็ง · <b>กดค้างคลิก</b> ง้าง ปล่อยฟาด<br><span class="k">Q</span>/คลิกขวา ถีบ · <span class="k">G</span> เปลี่ยนอาวุธ · <span class="k">F</span> ไฟคาดหัว · <span class="k">E</span> ซ่อนในตู้กระท่อม</p>
@@ -87,7 +88,7 @@ function ell(c,x,y,rx,ry){c.beginPath();c.ellipse(x,y,Math.max(.1,rx),Math.max(.
 const isRoad=i=>false;   // nothing but rubber rows outside the fence
 
 /* ================= MAP: Thai rubber plantation ================= */
-let tiles,huts,tables,outdoor,startPos,debris,plights=[],sparks=[],props=[],home=null,hoe=null;
+let tiles,huts,tables,outdoor,startPos,debris,plights=[],sparks=[],props=[],home=null,hoe=null,clumps=[],grounds=[],stock=0,postPos=null;
 function tAt(i,j){return (i<0||j<0||i>=MW||j>=MH)?TW:tiles[j*MW+i];}
 function setT(i,j,v){tiles[j*MW+i]=v;}
 function hutConnected(hs){
@@ -152,6 +153,25 @@ function genMap(){
   const reach=new Uint8Array(MW*MH),q=[sp[1]*MW+sp[0]];reach[q[0]]=1;
   while(q.length){const c=q.pop();const ci=c%MW,cj=(c/MW)|0;for(const[di,dj]of D4){const ni=ci+di,nj=cj+dj;if(ni<0||nj<0||ni>=MW||nj>=MH)continue;const n=nj*MW+ni;if(reach[n]||BM[tiles[n]])continue;reach[n]=1;q.push(n);}}
   outdoor=[];for(let k=0;k<MW*MH;k++)if(reach[k]&&(tiles[k]===TG||tiles[k]===TR))outdoor.push(k);
+  // banana clumps (กอกล้วย) near the edges and corners of the map; ~20% carry a bunch, at least 6 overall
+  clumps=[];grounds=[];const reachSet=new Set(outdoor);
+  for(let n=0;n<3000&&clumps.length<44;n++){
+    const side=ri(0,3),dEdge=ri(3,12),al=ri(4,MW-5),i=side===0?dEdge:side===1?MW-1-dEdge:al,j=side===2?dEdge:side===3?MH-1-dEdge:al,k=j*MW+i;
+    if(!reachSet.has(k)||tiles[k]!==TG)continue;const cx=i*TS+8+(rnd()-.5)*6,cy=j*TS+8+(rnd()-.5)*6;
+    if(clumps.some(c=>Math.hypot(c.x-cx,c.y-cy)<44))continue;
+    const plants=[],np=ri(3,5);for(let q=0;q<np;q++){const a=rnd()*TAU,r=q?4+rnd()*6:0;plants.push({x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r*.8,h:q?28+rnd()*12:40+rnd()*8,hp:2,cut:false,fallA:0,bunch:0,shake:0,seed:rnd()*100});}
+    clumps.push({x:cx,y:cy,plants,side});
+  }
+  const luck=()=>{const r=rnd();return r<.15?45:r<.5?30:20;};
+  const giveFruit=c=>{const p=c.plants.filter(p=>!p.cut).sort((a,b)=>b.h-a.h)[0];if(p&&!c.plants.some(q=>q.bunch))p.bunch=luck();};
+  for(const c of clumps)if(rnd()<.2)giveFruit(c);
+  for(let guard=0;guard<40&&clumps.filter(c=>c.plants.some(p=>p.bunch)).length<6;guard++){   // keep it fair: spread fruit over all four edges
+    const per=[0,1,2,3].map(sd=>clumps.filter(c=>c.side===sd&&c.plants.some(p=>p.bunch)).length),sd=per.indexOf(Math.min(...per));
+    const opts=clumps.filter(c=>c.side===sd&&!c.plants.some(p=>p.bunch));if(opts.length)giveFruit(opts[(rnd()*opts.length)|0]);else break;}
+  // wooden post for hanging bananas, 3 m (24 px) beside the campfire
+  {const F=plights.find(p=>p.kind==='fire'),sd=home.hs.side,perp=sd==='b'||sd==='t'?[1,0]:[0,1];postPos=null;
+   for(const sg of[-1,1]){const x=F.x+perp[0]*24*sg,y=F.y+perp[1]*24*sg;if(inYard(x,y)&&!BM[tAt(Math.floor(x/TS),Math.floor(y/TS))]&&!props.some(p=>Math.hypot(p.x-x,p.y-y)<12)){postPos={x,y};break;}}
+   if(!postPos)postPos={x:F.x+perp[0]*24,y:F.y+perp[1]*24};props.push({kind:'post',x:postPos.x,y:postPos.y,r:2.5});}
   // a hoe (จอบ / บักจก) lies somewhere 50-66 m out in the plantation
   hoe=null;for(let n=0;n<400&&!hoe;n++){const k=outdoor[(rnd()*outdoor.length)|0],i=k%MW,j=(k/MW)|0,d=Math.hypot(i*TS+8-home.cx,j*TS+8-home.cy)/8;
     if(d>=50&&d<=66&&tiles[k]===TG)hoe={x:i*TS+4+rnd()*8,y:j*TS+4+rnd()*8,a:rnd()*TAU,taken:false};}
@@ -276,7 +296,7 @@ function newGame(){
   genMap();bake();
   player={x:startPos.x,y:startPos.y,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,fallA:0,fall:0,
     charging:false,charge:0,ready:false,swingPow:0,swingReach:KMIN,swingDur:.1,weapon:'knife',hasHoe:false,swingDir:1,nextDir:1,idleT:0,combat:0,fought:false,pantT:0,breathPh:0,breathNext:0,kickT:0,kickHit:0,kcd:0,kickAng:0,armOff:1.2,armHv:6,bloody:0,swingT:0,swingLevel:0,swingAng:0,pendingHit:0,cd:0};
-  kills=0;gameTime=0;flashOn=true;muzzle=0;shake=0;invertF=0;
+  stock=0;kills=0;gameTime=0;flashOn=true;muzzle=0;shake=0;invertF=0;
   zombies=[];particles=[];gibs=[];toasts=[];spawnT=0;flowT=0;hbT=0;flickT=0;flickNext=14+rnd()*15;death=null;dropL=null;dawn=0;
   cam.x=player.x;cam.y=player.y;
   night=1;cut=null;wakeFade=0;bot=useBot?makeBot():null;spawnNight();
@@ -303,6 +323,7 @@ function flowTarget(z,FL=flow){
 
 /* ================= COLLISION ================= */
 function collide(e,r){
+  if(clumps)for(const C of clumps){const dx=e.x-C.x,dy=e.y-C.y;if(Math.abs(dx)>20||Math.abs(dy)>20)continue;if(!C.plants.some(p=>!p.cut))continue;const rr=r+6;if(dx*dx+dy*dy<rr*rr){const d=Math.hypot(dx,dy)||.01;e.x=C.x+dx/d*rr;e.y=C.y+dy/d*rr;}}
   for(const P of props){const dx=e.x-P.x,dy=e.y-P.y,rr=r+P.r;if(dx*dx+dy*dy<rr*rr){const d=Math.hypot(dx,dy)||.01;e.x=P.x+dx/d*rr;e.y=P.y+dy/d*rr;}}
   for(const P of plights){if(P.kind!=='fire')continue;const dx=e.x-P.x,dy=e.y-P.y,rr=r+8;if(dx*dx+dy*dy<rr*rr){const d=Math.hypot(dx,dy)||.01;e.x=P.x+dx/d*rr;e.y=P.y+dy/d*rr;}}
   const x0=Math.floor((e.x-r-RT)/TS),x1=Math.floor((e.x+r+RT)/TS),y0=Math.floor((e.y-r-RT)/TS),y1=Math.floor((e.y+r+RT)/TS);
@@ -349,7 +370,7 @@ const sfx={
 /* ================= KNIFE ================= */
 function toast(t){if(hitter&&hitter!==player&&/ปลาย|ฟัน|ขาด|ถีบ|กระเด็น|ตาย/.test(t)&&!/แจคพอท/.test(t))return;toasts.push({t,life:1.6});if(toasts.length>3)toasts.shift();}
 function alertNear(r,h=player){for(const z of zombies){if(Math.hypot(z.x-h.x,z.y-h.y)<r){z.aware=Math.max(z.aware,3);z.lx=h.x;z.ly=h.y;if(z.state==='wander'||z.state==='search')z.state='chase';}}}
-function startCharge(h=player){if(state!=='play'||h.hidden||h.swingT>0||h.cd>0||h.charging)return;h.charging=true;h.charge=0;h.ready=false;}
+function startCharge(h=player){if(h===player&&player.carry&&state==='play'){dropBunch();return;}if(state!=='play'||h.hidden||h.swingT>0||h.cd>0||h.charging)return;h.charging=true;h.charge=0;h.ready=false;}
 function release(angle,h=player){
   if(!h.charging)return;h.charging=false;if(state!=='play')return;
   const p=h.charge;   // longer hold = arm extends further = more reach, more power
@@ -364,7 +385,7 @@ function doHit(h=player){
   for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-(z.crawl||z.state==='down'?5:3)>R0)continue;
     if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>ARC)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
   alertNear(90+60*p,h);hitter=h;
-  if(!best)return;
+  if(!best){if(h===player)hitPlant(h);return;}
   const z=best,d=bd||1,low=z.crawl||z.state==='down',r0=(z.x-h.x)/d,r1=(z.y-h.y)/d,tip=d-(low?5:3)>R0-Math.max(4,R0*.26);
   const th=Math.atan2(r1,r0),tx=h.swingDir===1?Math.sin(th):-Math.sin(th),ty=h.swingDir===1?-Math.cos(th):Math.cos(th);
   let ux=r0+tx*.8,uy=r1+ty*.8;{const l=Math.hypot(ux,uy)||1;ux/=l;uy/=l;}
@@ -407,6 +428,7 @@ function cutLeg(z,ux,uy,p,m){
   addGib('leg',z.x,z.y,4,ux,uy);blood(z.x,z.y,5,16,ux,uy,80);z.bleed=3;z.bleedP=2;shake=5;sfx.sever();toast('ขาขาด! มันคลานแล้ว');
 }
 function kick(h=player){
+  if(h===player&&player.carry)return;
   if(state!=='play'||h.hidden||h.kickT>0||h.kcd>0||h.charging||h.swingT>0)return;
   const a=autoAim(h);h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
 }
@@ -429,6 +451,19 @@ function autoAim(h=player){
     if(ad>1.5)continue;if(!los(h.x,h.y,z.x,z.y))continue;const sc=d+ad*40;if(sc<bs){bs=sc;best=z;}}
   return best?Math.atan2(best.y-h.y,best.x-h.x):h.facing;
 }
+function hitPlant(h){
+  const a=h.swingAng,R0=h.swingReach+4;let best=null,bd=1e9;
+  for(const C of clumps){if(Math.hypot(C.x-h.x,C.y-h.y)>R0+16)continue;for(const p of C.plants){if(p.cut)continue;const dx=p.x-h.x,dy=p.y-h.y,d=Math.hypot(dx,dy);if(d-2>R0||Math.abs(angDiff(a,Math.atan2(dy,dx)))>ARC)continue;if(d<bd){bd=d;best=p;}}}
+  if(!best)return;const p=best,ux=(p.x-h.x)/(bd||1),uy=(p.y-h.y)/(bd||1);
+  p.hp-=W(h).m;p.shake=.35;leafBurst(p.x,p.y,ux,uy,60);tn('sine',190,80,.09,.45);nz(.1,'bandpass',900,300,.3,1.4);shake=Math.max(shake,1.5);
+  if(p.hp<=0){p.cut=true;const tg=h.swingDir===1?1:-1;p.fallA=Math.atan2(uy,ux)+tg*.5;nz(.5,'lowpass',700,120,.4,1,null,.15);for(let k=0;k<6;k++)leafBurst(p.x+Math.cos(p.fallA)*k*5,p.y+Math.sin(p.fallA)*k*5,ux,uy,40);
+    if(p.bunch){grounds.push({x:p.x+Math.cos(p.fallA)*14,y:p.y+Math.sin(p.fallA)*14,count:p.bunch,a:p.fallA});toast(`ได้กล้วยหนึ่งพวง! (${p.bunch} ลูก) — กด "แบก"`);p.bunch=0;sfx.ready();}
+    else if(!clumpHasFruit(p))toast('ต้นนี้ไม่มีผล — ลองหากออื่น');}
+}
+function clumpHasFruit(p){const C=clumps.find(c=>c.plants.includes(p));return C&&C.plants.some(q=>q.bunch&&!q.cut);}
+function groundNear(){if(player.carry)return null;let b=null,bd=20;for(const g of grounds){const d=Math.hypot(g.x-player.x,g.y-player.y);if(d<bd){bd=d;b=g;}}return b;}
+function pickBunch(){const g=groundNear();if(!g||state!=='play')return false;grounds.splice(grounds.indexOf(g),1);player.carry={count:g.count};player.charging=false;tn('sine',120,70,.18,.4);toast(`แบกกล้วย ${g.count} ลูก — เดินช้าลง (กดโจมตีเพื่อวางลง)`);return true;}
+function dropBunch(){if(!player.carry)return;grounds.push({x:player.x+Math.cos(player.facing)*7,y:player.y+Math.sin(player.facing)*7,count:player.carry.count,a:player.facing});player.carry=null;nz(.2,'lowpass',500,120,.35,1);toast('วางกล้วยลงพื้น');}
 function nearWardrobe(){
   const i0=Math.floor((player.x-16)/TS),i1=Math.floor((player.x+16)/TS),j0=Math.floor((player.y-16)/TS),j1=Math.floor((player.y+16)/TS);
   for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++)if(tAt(i,j)===TK){const nx=clamp(player.x,i*TS,i*TS+TS),ny=clamp(player.y,j*TS,j*TS+TS);if(Math.hypot(player.x-nx,player.y-ny)<9)return{i,j};}
@@ -484,11 +519,12 @@ function updatePlay(dt){
   let ml=Math.hypot(mx,my);if(ml>1){mx/=ml;my/=ml;ml=1;}
   if(ml>0){const wx=mx,wy=my/K,wl=Math.hypot(wx,wy);mx=wx/wl*ml;my=wy/wl*ml;}
   if(player.hidden){if(ml>.6&&!joy.active)player.hidden=false;mx=my=0;ml=0;}
-  const spd=64*(player.charging?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
+  const spd=64*(player.carry?.5:1)*(player.charging?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
   if(!player.hidden)moveCircle(player,player.vx*dt,player.vy*dt,5);
   const sp=Math.hypot(player.vx,player.vy);player.moveAmt=Math.min(1,sp/40);player.phase+=sp*dt*.24;
   actorTick(player,dt);
+  if(player.carry&&postPos&&Math.hypot(postPos.x-player.x,postPos.y-player.y)<24){stock+=player.carry.count;toast(`แขวนกล้วยที่เสาแล้ว +${player.carry.count} ลูก (รวม ${stock})`);player.carry=null;sfx.ready();tn('square',600,900,.12,.1,null,.1);}
   let tgt=null,rate=9;
   if(player.swingT<=0){
     if(aimT.active&&aimT.aiming){tgt=aimT.ang;rate=24;}
@@ -640,7 +676,7 @@ function updateCommon(dt){
   if(state==='win'){dawn=Math.min(150,dawn+dt*40);for(const z of zombies){z.t-=dt;if(z.t<=0){z.wa=rnd()*TAU;z.t=3;}moveCircle(z,Math.cos(z.wa)*8*dt,Math.sin(z.wa)*8*dt,5);z.phase+=dt*2;z.a=angLerp(z.a,z.wa,dt*3);}}
 }
 function makeBot(){const b={jp:true,x:player.x+12,y:player.y+6,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,dead:false,fall:0,fallA:0,deadT:0,lampOn:true,
-  weapon:'stick',pokeT:0,pokeCd:0,charging:false,charge:0,ready:false,swingPow:0,swingReach:14,swingDur:.1,swingDir:1,nextDir:1,idleT:0,combat:0,fought:false,pantT:0,breathPh:0,breathNext:0,
+  weapon:'stick',pokeT:0,pokeCd:0,hunger:.4,eatT:0,charging:false,charge:0,ready:false,swingPow:0,swingReach:14,swingDur:.1,swingDir:1,nextDir:1,idleT:0,combat:0,fought:false,pantT:0,breathPh:0,breathNext:0,
   kickT:0,kickHit:0,kcd:0,kickAng:0,armOff:1.2,armHv:6,bloody:0,swingT:0,swingAng:0,pendingHit:0,cd:0,lean:0,
   say:null,sayT:5+rnd()*4,last:-1,mind:'tag',mindT:3,goal:null,scanA:0,stuck:0};collide(b,4.5);return b;}
 function botSay(i){if(!bot||(bot.dead&&i!==4))return;if(typeof i==='string'){bot.say={text:i,t:2.4};bot.sayT=Math.max(bot.sayT,4);return;}if(i==null){do{i=(rnd()*JP_LINES.length)|0;}while(i===bot.last&&JP_LINES.length>1);}bot.last=i;bot.say={text:JP_LINES[i],t:3.2};bot.sayT=7+rnd()*7;if(near(bot,300)){tn('square',700+rnd()*300,500,.05,.05);tn('square',900,600,.05,.04,null,.07);}}
@@ -676,6 +712,7 @@ function updateBot(dt,mode){
     if(b.deadT<14&&rnd()<dt*9){const r=3+Math.min(18,b.deadT*3),an=rnd()*TAU,rr=rnd()*r;bakeSplat(b.x+Math.cos(an)*rr,b.y+Math.sin(an)*rr,1.5+rnd()*3);}return;}
   b.sayT-=dt;if(b.sayT<=0&&mode!=='sleep')botSay();
   if(b.pokeT>0)b.pokeT-=dt;if(b.pokeCd>0)b.pokeCd-=dt;
+  b.hunger+=dt/75;if(b.hunger>=1&&stock===0&&rnd()<dt*.08&&!b.say)botSay(5);
   if(mode==='dead'){b.moveAmt=0;return;}
   if(mode!=='play'){   // cutscene: go to bed with you
     const dx=player.x+10-b.x,dy=player.y+6-b.y,d=Math.hypot(dx,dy);if(d>300){b.x=player.x+10;b.y=player.y+6;collide(b,4.5);}
@@ -698,6 +735,9 @@ function updateBot(dt,mode){
     let cx=0,cy=0,cn=0;for(const z of zombies){if(z.state==='down'||z.crawl)continue;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d<58){cx+=z.x;cy+=z.y;cn++;}}
     if(cn>=2){const ax=b.x-cx/cn,ay=b.y-cy/cn,al=Math.hypot(ax,ay)||1;gx=b.x+ax/al*40;gy=b.y+ay/al*40;sp=70;}   // outnumbered: back away while jabbing
     if(rnd()<dt*.25&&!b.say)botSay(rnd()<.5?4:7);}
+  else if(b.eatT>0){b.eatT-=dt;b.moveAmt=0;face=Math.atan2(postPos.y-b.y,postPos.x-b.x);}
+  else if(b.hunger>=1&&stock>0&&postPos){gx=postPos.x+(b.x<postPos.x?-9:9);gy=postPos.y+5;sp=44;
+    if(Math.hypot(postPos.x-b.x,postPos.y-b.y)<16){const n=Math.min(stock,ri(2,3));stock-=n;b.hunger=0;b.eatT=2.6;gx=null;botSay(`กินกล้วย ${n} ลูก แซ่บคัก!`);tn('square',500,700,.05,.05);}}
   else{b.mindT-=dt;
     if(b.mindT<=0||!b.goal){b.mindT=3+rnd()*5;const r=rnd(),gtx=home.hs.di*TS+8,gty=home.hs.dj*TS+8;
       if(r<.45){const gi=home.hs.gate?{x:home.hs.gate.x,y:home.hs.gate.y-(home.hs.side==='b'?20:home.hs.side==='t'?-20:0)+0,}:{x:gtx,y:gty};if(home.hs.side==='l')gi.x+=20;if(home.hs.side==='r')gi.x-=20;b.goal={x:gi.x+(rnd()-.5)*40,y:gi.y+(rnd()-.5)*30};}
@@ -747,6 +787,7 @@ function updateCut(dt){
   else if(C.phase==='title'){if(C.t>2)nextNight();}
 }
 function nextNight(){
+  for(const C of clumps)if(!C.plants.some(p=>p.bunch)&&C.plants.some(p=>!p.cut)&&rnd()<.2){const p=C.plants.filter(p=>!p.cut).sort((a,b)=>b.h-a.h)[0];const r=rnd();p.bunch=r<.15?45:r<.5?30:20;}
   night++;cut=null;state='play';wakeFade=1;zombies.length=0;gameTime=0;dawn=0;flashOn=true;
   player.down=false;player.fall=0;player.combat=0;player.pantT=0;player.cleared=false;player.fought=false;player.nextDir=1;player.facing=Math.PI/2;
   computeFlow(player.x,player.y);if(bot&&bot.dead){bakeCorpse({x:bot.x,y:bot.y,arms:[true,true],crawl:false},Math.cos(bot.fallA),Math.sin(bot.fallA),false);bot=null;toast('คืนนี้ไม่มีแจคพอทแล้ว…');}
@@ -761,7 +802,8 @@ let P=2,vw=200,vh=200,sc,sctx,lc,lctx,hc,hctx,outImg,out32,SWc,SHc,dpr=1,UIS=1;
 const abgr=h=>(0xFF000000|(parseInt(h.slice(5,7),16)<<16)|(parseInt(h.slice(3,5),16)<<8)|parseInt(h.slice(1,3),16))>>>0;
 // 3-bit palette: 6 warm tones (soil, leaf litter, bark) + 2 blood reds = 8 colours
 const PG=['#0a0908','#2c241e','#574839','#8b7862','#c8b79c','#f3ece0'].map(abgr),PR=[abgr('#0a0908'),abgr('#5c0a10'),abgr('#d01c22')];
-const WH=PG[5],BK=PG[0],BRIGHT=new Set([PG[3],PG[4],PG[5],PR[2]]);
+const PY=[abgr('#0a0908'),abgr('#5a4a12'),abgr('#e6c43c')];
+const WH=PG[5],BK=PG[0],BRIGHT=new Set([PG[3],PG[4],PG[5],PR[2],PY[2]]);
 const LUTG=new Float32Array(256),LUTR=new Float32Array(256);for(let k=0;k<256;k++){const v=Math.min(1,k/254);LUTG[k]=Math.min(5,Math.pow(v,1/1.25)*5);LUTR[k]=Math.min(2,Math.pow(v,1/1.4)*2.4);}
 const BAY=[0,32,8,40,2,34,10,42,48,16,56,24,50,18,58,26,12,44,4,36,14,46,6,38,60,28,52,20,62,30,54,22,3,35,11,43,1,33,9,41,51,19,59,27,49,17,57,25,15,47,7,39,13,45,5,37,63,31,55,23,61,29,53,21];
 const B01=new Float32Array(64);for(let k=0;k<64;k++)B01[k]=(BAY[k]+.5)/64;
@@ -778,7 +820,7 @@ function resize(){
   joyR=55*s;fireB={x:SWc-92*s,y:SHc-92*s,r:48*s};
   const mkb=(id,label,ang)=>({id,label,x:fireB.x+Math.cos(ang)*98*s,y:fireB.y+Math.sin(ang)*98*s,r:28*s,flash:0});
   sleepBtn.x=SWc/2;sleepBtn.y=SHc-58*s;sleepBtn.r=34*s;
-  btns=[mkb('kick','ถีบ',Math.PI),mkb('hide','ซ่อน',-Math.PI*.75),mkb('light','ไฟหัว',-Math.PI*.5),{id:'swap',label:'เปลี่ยนอาวุธ',x:fireB.x,y:fireB.y-160*s,r:22*s,flash:0,small:true}];
+  btns=[mkb('kick','ถีบ',Math.PI),mkb('hide','ซ่อน',-Math.PI*.75),mkb('light','ไฟหัว',-Math.PI*.5),{id:'swap',label:'เปลี่ยนอาวุธ',x:fireB.x,y:fireB.y-160*s,r:22*s,flash:0,small:true},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-160*s,r:24*s,flash:0}];
 }
 function gradV(t){if(t>=1)return 0;if(t<.22)return 1-t/.22*.1;if(t<.65)return .9-(t-.22)/.43*.52;return .38*(1-(t-.65)/.35);}
 function ambVal(){return 0;}   // no light around the feet: all light comes from the forehead lamp
@@ -792,7 +834,7 @@ function lightAt(x,y,self){
   const av=ambVal();
   if(av>0){const dx=x-player.x,dy=y-player.y,d=Math.hypot(dx,dy);if(d<74&&(d<2||castRay(player.x,player.y,dx/d,dy/d,d)>=d-3))v+=av*gradV(d/74);}
   for(const L of curLamps){const dx=x-L.x,dy=y-L.y,d=Math.hypot(dx,dy);if(d<270){const ad=d<1?0:Math.abs(angDiff(L.a,Math.atan2(dy,dx)));let s=0;if(ad<=.62)s+=90;if(ad<=.44)s+=110;if(ad<=.26)s+=140;
-    if(s>0&&(d<2||castRay(L.x,L.y,dx/d,dy/d,d)>=d-3)&&!occluded(L,x,y,self))v+=s*L.i*(L.drop?gradV(d/270):gradC(d/270));}}
+    if(s>0&&(d<2||castRay(L.x,L.y,dx/d,dy/d,d)>=d-3)&&!occluded(L,x,y,self))v+=s*L.i*gradV(d/270);}}
   for(const P of plights){const dx=x-P.x,dy=y-P.y,d2=dx*dx+dy*dy;if(d2>P.r*P.r)continue;const d=Math.sqrt(d2);if(d>2&&castRay(P.x,P.y,dx/d,dy/d,d)<d-3)continue;v+=P.v*P.f*gradV(d/P.r);}
   if(dropL&&dropL.on&&(state==='dying'||state==='dead')){const dx=x-dropL.x,dy=y-dropL.y,d=Math.hypot(dx,dy);if(d<56&&(d<2||castRay(dropL.x,dropL.y,dx/d,dy/d,d)>=d-3))v+=85*(curL?curL.i:1)*gradV(d/56);}
   return Math.min(255,v);
@@ -932,7 +974,7 @@ function drawP(c,T,mono,h=player){
     c.lineWidth=.9;c.beginPath();const mx2=(bx0+bx1)/2,my2=(by0+by1)/2;c.moveTo(mx2,my2);c.lineTo(mx2+px*3+fwx*2,my2+py*3-2);c.moveTo(bx1-fwx*5,by1-fwy*5);c.lineTo(bx1-fwx*3-px*2.5,by1-fwy*3-py*2.5-1.5);c.stroke();};
   const lp=swinging?-side*.6*(sP<.5?sP*2:1):0;
   const run=h.combat>0||h.charging||swinging?0:Math.sin(h.phase)*.7*h.moveAmt;const leftArm=()=>{c.strokeStyle=M(JP?'#1e1e1e':'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(shLx+Math.cos(a-(run?1.3:.5)+lp+run)*5,shLy+Math.sin(a-(run?1.3:.5)+lp+run)*5*K+5);c.stroke();};
-  if(h.weapon==='stick'){if(away)knife();}else{if(away||behind)knife();if(away)leftArm();}
+  if(h.carry){}else if(h.weapon==='stick'){if(away)knife();}else{if(away||behind)knife();if(away)leftArm();}
   c.fillStyle=M(JP?'#262626':'#e6e6e6');c.strokeStyle=M('#000');c.lineWidth=.9;c.beginPath();c.ellipse(fx,toY,JP?3.5:3.1,JP?4.9:4.6,0,0,TAU);c.fill();c.stroke();
   if(!away&&!JP){c.fillStyle=M('#9a9a9a');c.fillRect(fx+ca*1.1-.5,toY-3.5,1,7);}
   if(!away&&JP&&!mono){c.strokeStyle='#bcbcbc';c.lineWidth=.6;c.beginPath();c.moveTo(fx-.8,toY-4);c.lineTo(fx-1,toY-1);c.moveTo(fx+.8,toY-4);c.lineTo(fx+1,toY-1);c.stroke();c.strokeStyle='#4a4a4a';c.beginPath();c.moveTo(fx-2,toY+2);c.lineTo(fx+2,toY+2);c.stroke();}
@@ -946,7 +988,9 @@ function drawP(c,T,mono,h=player){
   else{c.beginPath();c.arc(hcx,heY-.9,2.6,Math.PI,TAU);c.fill();const ex=fx+ca*1.5,as=Math.abs(sa);c.fillRect(ex-1*as-.5,heY+.3,1,1);if(as>.3)c.fillRect(ex+1*as-.5,heY+.3,1,1);}
   c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(hcx,heY-1,2.8,.9,0,0,TAU);c.stroke();
   if(sa>-.6){c.fillStyle=lampOf(h)&&!h.hidden?'#fff':M('#777');c.fillRect(hcx+ca*2-1,heY-2+sa*.5,2,1.6);}
-  if(h.weapon==='stick'){if(!away)knife();}else{if(!away)leftArm();if(!away&&!behind)knife();if(away&&!behind)knife();}
+  if(h.carry){const bx=fx+px*2.4-fwx,by=shY-6;c.strokeStyle=M(JP?'#1e1e1e':'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(bx+1,by+3);c.moveTo(shLx,shLy);c.lineTo(bx-1.5,by+1);c.stroke();drawBunch(c,bx,by,.75,mono,true,Math.PI/2+.3);}
+  else if(h.weapon==='stick'){if(!away)knife();}else{if(!away)leftArm();if(!away&&!behind)knife();if(away&&!behind)knife();}
+  if(h.eatT>0&&!away){const ex=hcx+ca*2.4,ey=heY+2.2;c.strokeStyle=M('rgb(214,188,64)');c.lineWidth=1.4;c.beginPath();c.arc(ex,ey+2,2.2,Math.PI*1.2,Math.PI*1.8);c.stroke();}
   c.restore();c.restore();
 }
 function drawLying(c,T,mono,h=player){
@@ -1028,8 +1072,11 @@ function renderObjects(T){
   if(!player.hidden)objs.push({y:player.down?player.y-6:player.y,k:7});
   objs.sort((a,b)=>a.y-b.y);
   if(hoe&&!hoe.taken)objs.push({y:hoe.y,k:13});
+  for(const C of clumps){if(C.x<camX-60||C.x>camX+vw+60||C.y*K<camY-30||C.y*K>camY+vh+90)continue;for(const p of C.plants)objs.push({y:p.cut?p.y-3:p.y,k:15,p});}
+  for(const g of grounds)objs.push({y:g.y,k:16,g});
+  if(postPos)objs.push({y:postPos.y,k:17});
   if(bot)objs.push({y:bot.down?bot.y-6:bot.y,k:14});
-  for(const P of props)if(P.x>camX-30&&P.x<camX+vw+30&&P.y*K>camY-30&&P.y*K<camY+vh+40)objs.push({y:P.y,k:12,P});
+  for(const P of props)if(P.kind==='jar'&&P.x>camX-30&&P.x<camX+vw+30&&P.y*K>camY-30&&P.y*K<camY+vh+40)objs.push({y:P.y,k:12,P});
   for(const P of plights)if(P.x>camX-30&&P.x<camX+vw+30&&P.y*K>camY-30&&P.y*K<camY+vh+30)objs.push({y:P.kind==='candle'?P.y+(P.e?6:0)+.5:P.y,k:P.kind==='candle'?9:10,P});
   objs.sort((a,b)=>a.y-b.y);
   for(const o of objs)drawObj(o,T,sctx,lctx);
@@ -1068,6 +1115,9 @@ function drawObj(o,T,s,l){
   case 10:{drawFire(s,o.P,T,null);drawFire(l,o.P,T,true);break;}
   case 11:{const v=lightAt(o.i*TS+8,o.j*TS+8);drawFence(s,o.i,o.j,null);drawFence(l,o.i,o.j,gray(v));break;}
   case 14:{if(bot.down){drawLying(s,T,null,bot);drawLying(l,T,gray(lightAt(bot.x,bot.y)),bot);}else{drawP(s,T,null,bot);drawP(l,T,gray(Math.max(lampOf(bot)?150:30,lightAt(bot.x,bot.y))),bot);}break;}
+  case 15:{const v=lightAt(o.p.x,o.p.y+3);drawPlant(s,o.p,T,null);drawPlant(l,o.p,T,gray(v));break;}
+  case 16:{const g=o.g,v=lightAt(g.x,g.y);drawBunch(s,g.x-camX,g.y*K-camY-2,.9,null,true,g.a);drawBunch(l,g.x-camX,g.y*K-camY-2,.9,gray(Math.max(10,v)),true,g.a);break;}
+  case 17:{const v=lightAt(postPos.x,postPos.y+3);drawPost(s,null);drawPost(l,gray(v));break;}
   case 13:{const v=lightAt(hoe.x,hoe.y);drawHoeGround(s,null);drawHoeGround(l,gray(Math.max(v,12)));break;}
   case 12:{const P=o.P,v=lightAt(P.x,P.y+5);drawJar(s,P,null);drawJar(l,P,gray(v));break;}
   }
@@ -1088,6 +1138,40 @@ function drawHoeGround(c,mono){
   const M=v=>mono||v;c.save();c.translate(hoe.x-camX,hoe.y*K-camY-1);c.scale(1,K);c.rotate(hoe.a);
   c.lineCap='round';c.strokeStyle=M('#2a2018');c.lineWidth=2.6;c.beginPath();c.moveTo(-11,0);c.lineTo(9,0);c.stroke();c.strokeStyle=M('#c8b79c');c.lineWidth=1.6;c.stroke();
   c.fillStyle=M('#222');c.fillRect(8,-1.5,3,7.5);c.fillStyle=M('#e6e6e6');c.fillRect(8,5,3,1.2);c.restore();
+}
+function drawBunch(c,x,y,sc,mono,lying,a){
+  const M=v=>mono||v;c.save();c.translate(x,y);if(lying){c.scale(1,K);c.rotate(a||0);c.rotate(Math.PI/2);}c.scale(sc,sc);
+  c.strokeStyle=M('#3a3226');c.lineWidth=1.2;c.beginPath();c.moveTo(0,-7);c.lineTo(0,7);c.stroke();
+  for(let r=0;r<4;r++)for(let k=-2;k<=2;k++){const bx=k*1.6,by=-5+r*3.2;c.strokeStyle=M('#2c2410');c.lineWidth=2.2;c.beginPath();c.arc(bx,by+2.6,2.6,Math.PI*1.15,Math.PI*1.85);c.stroke();
+    c.strokeStyle=M('rgb(214,188,64)');c.lineWidth=1.4;c.beginPath();c.arc(bx,by+2.6,2.6,Math.PI*1.18,Math.PI*1.82);c.stroke();}
+  if(!lying){c.fillStyle=M('#3c2a2c');c.beginPath();c.ellipse(0,10,1.6,2.8,0,0,TAU);c.fill();}
+  c.restore();
+}
+function drawPlant(c,p,T,mono){
+  const M=v=>mono||v,bx=p.x-camX,by=p.y*K-camY;
+  if(p.cut){c.save();c.translate(bx,by);c.scale(1,K);c.rotate(p.fallA);
+    c.fillStyle=M('#2c241e');c.fillRect(-1,-2.6,p.h*.7,5.2);c.fillStyle=M('#7a6a52');c.fillRect(0,-2,p.h*.7,4);
+    for(let k=0;k<5;k++){const a=(k-2)*.45;c.save();c.translate(p.h*.7,0);c.rotate(a);c.fillStyle=M(k%2?'#5c5040':'#6e6050');c.beginPath();c.moveTo(0,0);c.quadraticCurveTo(9,-4,18,0);c.quadraticCurveTo(9,4,0,0);c.fill();c.restore();}
+    c.restore();c.fillStyle=M('#8b7862');ell(c,bx,by-1,2.4,1.2);return;}
+  const sh=p.shake>0?Math.sin(T*60)*p.shake*2:0;if(p.shake>0&&!mono)p.shake=Math.max(0,p.shake-.016);
+  const sw=Math.sin(T*.8+p.seed)*.06,tx=bx+sh*.5,ty=by-p.h;
+  // pseudostem with dry sheaths at the bottom
+  c.fillStyle=M('#2c241e');c.fillRect(bx-2.8,ty,5.6,p.h);c.fillStyle=M('#9c8c70');c.fillRect(bx-2.2,ty,4.4,p.h);c.fillStyle=M('#c0b090');c.fillRect(bx+.8,ty,1,p.h);
+  c.fillStyle=M('#5a4a36');for(let k=0;k<3;k++){c.beginPath();c.moveTo(bx-3.2,by);c.lineTo(bx-1+k*2,by-8-k*3);c.lineTo(bx+1+k*1.5,by);c.closePath();c.fill();}
+  // big drooping, wind-torn leaves
+  for(let k=0;k<6;k++){const a=-Math.PI/2+(k-2.5)*.62+sw+sh*.05,L=17+((k*7+p.seed)%5),ex=tx+Math.cos(a)*L,ey=ty+Math.sin(a)*L*.75+L*.35*Math.abs(Math.cos(a)),mx=(tx+ex)/2,my=(ty+ey)/2-3,nx=-(ey-ty)/L*3.4,ny=(ex-tx)/L*3.4;
+    c.fillStyle=M(k%2?'#6e6a50':'#7e7a5c');c.beginPath();c.moveTo(tx,ty);c.quadraticCurveTo(mx+nx,my+ny,ex,ey);c.quadraticCurveTo(mx-nx,my-ny,tx,ty);c.fill();
+    c.strokeStyle=M('#b0a888');c.lineWidth=.6;c.beginPath();c.moveTo(tx,ty);c.quadraticCurveTo(mx,my,ex,ey);c.stroke();
+    if(!mono){c.strokeStyle='#2c241e';c.lineWidth=.5;for(let q=1;q<4;q++){const t=q/4,px=tx+(ex-tx)*t,py=ty+(ey-ty)*t-3*Math.sin(t*Math.PI);c.beginPath();c.moveTo(px,py);c.lineTo(px+nx*.9,py+ny*.9);c.stroke();}}}
+  c.fillStyle=M('#5a4a36');c.beginPath();c.moveTo(tx-1,ty+2);c.quadraticCurveTo(tx-7,ty+8,tx-5,ty+16);c.lineTo(tx-3,ty+4);c.closePath();c.fill();   // dry hanging leaf
+  if(p.bunch)drawBunch(c,tx+3.5,ty+9,1,mono,false);
+}
+function drawPost(c,mono){
+  const M=v=>mono||v,x=postPos.x-camX,y=postPos.y*K-camY;
+  if(!mono){c.fillStyle='rgba(0,0,0,.5)';ell(c,x,y,3,1.2);}
+  c.fillStyle=M('#2a2018');c.fillRect(x-2,y-28,4,28);c.fillStyle=M('#7a6448');c.fillRect(x-1.4,y-28,2.8,28);c.fillStyle=M('#2a2018');c.fillRect(x-7,y-27,14,2.4);c.fillStyle=M('#8b7862');c.fillRect(x-6.6,y-26.6,13.2,1.4);
+  c.strokeStyle=M('#c8b79c');c.lineWidth=.7;c.beginPath();c.moveTo(x+5,y-25);c.lineTo(x+5,y-21);c.stroke();
+  if(stock>0)drawBunch(c,x+5,y-14,.65+.4*Math.min(1,stock/45),mono,false);
 }
 function drawJar(c,P,mono){
   const C=v=>mono||gray(v),x=P.x-camX,y=P.y*K-camY;
@@ -1113,7 +1197,7 @@ function invLine(x0,y0,x1,y1,dotted){x0=Math.round(x0);y0=Math.round(y0);x1=Math
   for(let g=0;g<2000;g++){if(!dotted||((n>>1)&1)===0)invPix(x0,y0);n++;if(x0===x1&&y0===y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx;}if(e2<=dx){e+=dx;y0+=sy;}}}
 function composite(){
   const s=sctx.getImageData(0,0,vw,vh).data,l=lctx.getImageData(0,0,vw,vh).data,o=out32;let i=0;
-  for(let y=0;y<vh;y++){const by=((y+camY)&7)<<3;for(let x=0;x<vw;x++,i++){const p=i<<2,r=s[p],L=l[p],bt=B01[by|((x+camX)&7)];if(r>s[p+1]+45){const t=LUTR[(r*L)>>8],b=t|0;o[i]=PR[(t-b)>bt?b+1:b];}else{const t=LUTG[(r*L)>>8],b=t|0;o[i]=PG[(t-b)>bt?b+1:b];}}}
+  for(let y=0;y<vh;y++){const by=((y+camY)&7)<<3;for(let x=0;x<vw;x++,i++){const p=i<<2,r=s[p],L=l[p],bt=B01[by|((x+camX)&7)],gg=s[p+1],bb=s[p+2];if(gg>bb+60&&r>bb+60){const t=LUTR[(gg*L)>>8],b=t|0;o[i]=PY[(t-b)>bt?b+1:b];}else if(r>gg+45){const t=LUTR[(r*L)>>8],b=t|0;o[i]=PR[(t-b)>bt?b+1:b];}else{const t=LUTG[(r*L)>>8],b=t|0;o[i]=PG[(t-b)>bt?b+1:b];}}}
 }
 function arcPts(a0,a1,R,n){const pts=[];for(let k=0;k<=n;k++){const a=a0+(a1-a0)*k/n;pts.push([player.x+Math.cos(a)*R-camX,(player.y+Math.sin(a)*R)*K-camY]);}return pts;}
 function postFX(){
@@ -1148,7 +1232,8 @@ function drawUI(dt){
   if(wakeFade>0){wakeFade=Math.max(0,wakeFade-dt*.7);}
   const s=UIS;
   uiText('ไฟคาดหัว: '+(player.hidden?'ปิด (ซ่อน)':flashOn?'เปิด':'ปิด'),14,22*s,13*s,'left');
-  uiText(`คืนที่ ${night} · ซอมบี้เหลือ ${zombies.length}`,14,42*s,12*s,'left');uiText('อาวุธ: '+W().name,14,60*s,11*s,'left');if(bot)uiText(bot.dead?'แจคพอท: ตายแล้ว':'แจคพอท: ยังรอด',14,77*s,11*s,'left',bot.dead?UIRED:'#5fd35f');
+  uiText(`คืนที่ ${night} · ซอมบี้เหลือ ${zombies.length}`,14,42*s,12*s,'left');uiText('อาวุธ: '+W().name,14,60*s,11*s,'left');if(bot)uiText(bot.dead?'แจคพอท: ตายแล้ว':'แจคพอท: ยังรอด'+(bot.hunger>=1?' (หิว)':''),14,77*s,11*s,'left',bot.dead?UIRED:'#5fd35f');
+  uiText(`🍌 กล้วยที่บ้าน: ${stock} ลูก`,14,(bot?94:77)*s,11*s,'left','#e6c43c');if(player.carry)uiText(`แบกกล้วย ${player.carry.count} ลูก (ช้าลง · กดโจมตี = วาง)`,14,(bot?111:94)*s,11*s,'left','#e6c43c');
   if(bot&&bot.say){const bx=(bot.x-camX)*P,by=(bot.y*K-camY-24)*P,fs=11*s;u.font=`bold ${fs}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;
     const tw=u.measureText(bot.say.text).width,w=tw+14*s,h=fs+12*s,x=clamp(bx-w/2,6,SWc-w-6),y=by-h-8*s,al=Math.min(1,bot.say.t*3);u.globalAlpha=al;
     u.fillStyle=BG;u.fillRect(x-2,y-2,w+4,h+4);u.fillStyle=FG;u.fillRect(x,y,w,h);u.beginPath();u.moveTo(bx-4*s,y+h);u.lineTo(bx+4*s,y+h);u.lineTo(bx,y+h+7*s);u.closePath();u.fill();
@@ -1158,6 +1243,7 @@ function drawUI(dt){
     u.fillStyle=BG;u.fillRect(b.x-pw/2-3,b.y-ph/2-3,pw+6,ph+6);u.fillStyle=FG;u.fillRect(b.x-pw/2,b.y-ph/2,pw,ph);u.strokeStyle=FG;u.lineWidth=1+2*pulse;u.strokeRect(b.x-pw/2-6,b.y-ph/2-6,pw+12,ph+12);
     uiText('ไปนอน',b.x,b.y-3*s,17*s,'center',BG);uiText(showTouch?'แตะเมื่อพร้อม':'คลิก หรือกด N',b.x,b.y+12*s,9*s,'center',BG);}
   if(state==='play'){
+    for(const g of grounds){if(Math.hypot(g.x-player.x,g.y-player.y)<70){const gx=(g.x-camX)*P,gy=(g.y*K-camY-10)*P;uiText(`กล้วย ${g.count} ลูก`,gx,gy,11*s,'center','#e6c43c');if(!showTouch&&groundNear()===g)uiText('กด E แบก',gx,gy-15*s,10*s,'center','#e6c43c');}}
     // green name tag over the hoe
     if(hoe&&!hoe.taken&&Math.hypot(hoe.x-player.x,hoe.y-player.y)<70){const hx=(hoe.x-camX)*P,hy=(hoe.y*K-camY-10)*P;uiText('บักจก',hx,hy,11*s,'center','#5fd35f');
       if(!showTouch&&hoeNear())uiText('กด G เปลี่ยนอาวุธ',hx,hy-16*s,10*s,'center','#5fd35f');}
@@ -1186,6 +1272,7 @@ function drawUI(dt){
       const on=aimT.active;uiCircle(f.x,f.y,f.r,on?FG:BG,2.5);
       uiText('ฟัน',f.x,f.y-4*s,17*s,'center',on?BG:FG);uiText('กดค้าง',f.x,f.y+14*s,10*s,'center',on?BG:FG);
       for(const b of visBtns()){if(b.id==='sleep')continue;b.flash=Math.max(0,b.flash-dt);let bo=b.flash>0;if(b.id==='light')bo=bo||flashOn;if(b.id==='hide')bo=bo||player.hidden||!!nw;
+        if(b.id==='carry'){uiCircle(b.x,b.y,b.r,'#e6c43c',2);uiText('แบก',b.x,b.y-5*s,10*s,'center',BG);uiText('กล้วย',b.x,b.y+7*s,9*s,'center',BG);continue;}
         if(b.id==='swap'){bo=bo||hoeNear();uiCircle(b.x,b.y,b.r,bo?'#5fd35f':BG,2);uiText('เปลี่ยน',b.x,b.y-5*s,9*s,'center',bo?BG:FG);uiText('อาวุธ',b.x,b.y+6*s,9*s,'center',bo?BG:FG);continue;}
         uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.label,b.x,b.y,11*s,'center',bo?BG:FG);}
     }
@@ -1196,12 +1283,12 @@ function drawUI(dt){
 function hoeNear(){return hoe&&!hoe.taken&&Math.hypot(hoe.x-player.x,hoe.y-player.y)<34;}
 function swapAvail(){return state==='play'&&(hoeNear()||player.hasHoe);}
 function sleepAvail(){return state==='play'&&zombies.length===0&&player.cleared;}
-function visBtns(){const v=btns.filter(b=>b.id!=='swap'||swapAvail());if(sleepAvail())v.unshift(sleepBtn);return v;}
+function visBtns(){const v=btns.filter(b=>(b.id!=='swap'||swapAvail())&&(b.id!=='carry'||(state==='play'&&!!groundNear())));if(sleepAvail())v.unshift(sleepBtn);return v;}
 function swapWeapon(){if(!swapAvail()||player.charging||player.swingT>0)return;
   if(hoeNear()){hoe.taken=true;player.hasHoe=true;player.weapon='hoe';sfx.ready();tn('square',500,900,.1,.12);toast('ได้ จอบ (บักจก)! ระยะ×3 แรง×3');return;}
   player.weapon=player.weapon==='hoe'?'knife':'hoe';sfx.toggle();toast('ถือ '+W().name);}
 function hitBtn(x,y){for(const b of visBtns())if(Math.hypot(x-b.x,y-b.y)<b.r*1.15)return b;return null;}
-function act(b){b.flash=.15;if(b.id==='light')toggleLight();else if(b.id==='hide')toggleHide();else if(b.id==='kick')kick();else if(b.id==='swap')swapWeapon();else if(b.id==='sleep'&&sleepAvail())startSleep('clear');}
+function act(b){b.flash=.15;if(b.id==='light')toggleLight();else if(b.id==='hide')toggleHide();else if(b.id==='kick')kick();else if(b.id==='swap')swapWeapon();else if(b.id==='carry')pickBunch();else if(b.id==='sleep'&&sleepAvail())startSleep('clear');}
 function mouseAngle(){const wx=mouse.x/P+camX,wy=(mouse.y/P+camY+8)/K;return Math.atan2(wy-player.y,wx-player.x);}
 function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l>joyR){dx*=joyR/l;dy*=joyR/l;joy.kx=joy.bx+dx;joy.ky=joy.by+dy;l=joyR;}const m=l/joyR;joyV=m<.12?{x:0,y:0}:{x:dx/joyR,y:dy/joyR};}
 ui.addEventListener('pointerdown',e=>{
@@ -1228,7 +1315,7 @@ function ptrEnd(e){
 ui.addEventListener('pointerup',ptrEnd);ui.addEventListener('pointercancel',ptrEnd);
 ui.addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('keydown',e=>{keys[e.code]=true;if(state!=='play')return;
-  if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE')toggleHide();else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');
+  if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE'){if(!pickBunch())toggleHide();}else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');
   else if(e.code==='Space'){e.preventDefault();if(!e.repeat)startCharge();}
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
 addEventListener('keyup',e=>{keys[e.code]=false;if(e.code==='Space')release(mouse.active&&!showTouch?mouseAngle():player.facing);});
