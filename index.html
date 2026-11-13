@@ -354,7 +354,7 @@ const W=h=>WP[(h||player).weapon];
 const lampOf=h=>h===player?flashOn:(h&&h.lampOn&&!h.dead);
 let hitter=null;
 const PANIC=['ห้ะ ไฟดับ !!','มองไม่เห็น!!!','อ้าาาาาาก','ชิหายแล้ว','ฟืนหมดหรอ????','อิหยังวะ','ตายกุตาย'];
-const SKJ='rgb(112,80,56)',NAVY='rgb(38,42,58)',FRED='rgb(196,22,28)',JEAN='rgb(30,34,48)';
+const SKJ='rgb(112,80,56)',NAVY='rgb(38,42,58)',FRED='rgb(40,46,64)',JEAN='rgb(30,34,48)';
 const GLARE=['โอ้ยย แสบตา','แสบตาาา!','อย่าส่องหน้าดิ๊','ตาบอดแล้ว~','เอาไฟออกไปปป'];
 const CRY=['ฮือออ...','พี่แพมมม!!','แม่จ๋าาา','ช่วยด้วยยย','ฮึก...ฮือๆ','ยายหิบบบ'];
 const PAM_LINES=['บักพอท!!','พอท เฮ็ดดีดีดุ๊','ไผกินกล้วยเอื้อย','ชั้นหิว','หิวนอนเด้','ไฟมาแล้วจ้า','ลมแรงจังคืนนี้','เผามันเลย!','ตรงไหนมืด เดี๋ยวไปจุดให้','ใครเห็นซอมบี้บอกแพมนะ'];
@@ -448,7 +448,7 @@ const sfx={
 function toast(t){if(hitter&&hitter!==player&&/ปลาย|ฟัน|ขาด|ถีบ|กระเด็น|ตาย/.test(t)&&!/แจคพอท/.test(t))return;toasts.push({t,life:1.6});if(toasts.length>3)toasts.shift();}
 function alertNear(r,h=player){for(const z of zombies){if(Math.hypot(z.x-h.x,z.y-h.y)<r){z.aware=Math.max(z.aware,3);z.lx=h.x;z.ly=h.y;if(z.state==='wander'||z.state==='search')z.state='chase';}}}
 function startCharge(h=player){if(h===player&&player.drag&&state==='play'){toggleDrag();return;}if(h===player&&player.carry&&state==='play'){dropBunch();return;}if(h===player&&player.wood&&state==='play'){dropWood();return;}if(state!=='play'||h.hidden||h.swingT>0||h.cd>0||h.charging)return;h.charging=true;h.charge=0;h.ready=false;}
-function release(angle,h=player){
+function release(angle,h=player){if(h===player)h.autoCh=false;
   if(!h.charging)return;h.charging=false;if(state!=='play')return;
   const p=h.charge;   // longer hold = arm extends further = more reach, more power
   h.swingDir=h.nextDir;h.nextDir=-h.swingDir;h.idleT=0;h.facing=angle;h.swingAng=angle;
@@ -507,19 +507,20 @@ function cutLeg(z,ux,uy,p,m){
 }
 function kick(h=player){
   if(h===player&&player.carry)return;
+  if(h===player&&h.charging&&h.autoCh){h.charging=false;h.autoCh=false;}
   if(state!=='play'||h.hidden||h.kickT>0||h.kcd>0||h.charging||h.swingT>0)return;
   const a=autoAim(h);h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
 }
 function doKick(h=player){
   const a=h.kickAng;let best=null,bd=1e9;
-  for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-3>19)continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>1)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
+  for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-3>(h===player?WP.knife.kmax:19))continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>1.05)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
   alertNear(110,h);if(!best)return;
   const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;
   shake=Math.max(shake,4);sfx.kick();toast('ถีบ!');z.aware=6;
-  if(z.crawl){z.vx=ux*130;z.vy=uy*130;z.state='stagger';z.t=.45;z.tilt=Math.sign(ux||1)*.5;return;}
+  if(z.crawl){z.vx=ux*200;z.vy=uy*200;z.state='stagger';z.t=.6;z.tilt=Math.sign(ux||1)*.5;return;}
   // flung backwards, lands flat on its back and ploughs ~3 m (24px) through the leaf litter
-  z.a=Math.atan2(-uy,-ux);z.down={t:0,T:2.2+rnd()*.4,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y,sw:0};
-  z.state='down';z.vx=ux*122;z.vy=uy*122;z.tilt=0;
+  z.a=Math.atan2(-uy,-ux);z.down={t:0,T:2.6+rnd()*.5,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y,sw:0};
+  z.state='down';z.vx=ux*175;z.vy=uy*175;z.tilt=0;shake=Math.max(shake,5);
 }
 function leafBurst(x,y,ux,uy,v){const nx=-uy,ny=ux;for(let k=0;k<2;k++){const sd=rnd()<.5?-1:1,s=25+rnd()*55;
   particles.push({x:x+nx*sd*3,y:y+ny*sd*3,vx:nx*sd*s+ux*v*(.3+rnd()*.5),vy:ny*sd*s+uy*v*(.3+rnd()*.5),h:1,vh:30+rnd()*70,leaf:1,col:gray(120+rnd()*90),rot:rnd()*TAU});}}
@@ -608,6 +609,7 @@ function grab(z){
 const keys={};let joyV={x:0,y:0};
 const joy={active:false,id:null,bx:0,by:0,kx:0,ky:0};
 const aimT={active:false,id:null,aiming:false,ang:0,dx:0,dy:0};
+const look={active:false,id:null,lx:0,ly:0};
 const mouse={x:0,y:0,active:false,down:false};
 let showTouch=matchMedia('(pointer: coarse)').matches;
 
@@ -642,8 +644,12 @@ function updatePlay(dt){
   let ml=Math.hypot(mx,my);if(ml>1){mx/=ml;my/=ml;ml=1;}
   if(ml>0){const wx=mx,wy=my/K,wl=Math.hypot(wx,wy);mx=wx/wl*ml;my=wy/wl*ml;}
   if(player.hidden){if(ml>.6&&!joy.active)player.hidden=false;mx=my=0;ml=0;}
+  {let lz=null,ld=1e9;if(!player.hidden)for(const z of zombies){if(z.dieOnLand||z.state==='eatB'||z.state==='convB')continue;const d=Math.hypot(z.x-player.x,z.y-player.y);if(d<ld&&d<75&&los(player.x,player.y,z.x,z.y)){ld=d;lz=z;}}
+   player.lock=lz;const free=!player.carry&&!player.drag&&!player.wood&&!player.hidden;
+   if(lz&&free&&!player.charging&&player.swingT<=0&&player.cd<=0&&player.kickT<=0){startCharge(player);if(player.charging)player.autoCh=true;}   // weapon comes up by itself
+   else if(!lz&&player.charging&&player.autoCh&&!aimT.active&&!mouse.down){player.charging=false;player.autoCh=false;}}
   let calm=player.combat<=0;if(calm)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
-  const spd=64*(calm&&!player.charging?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.carry?.5:1)*(player.charging?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
+  const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
   if(!player.hidden)moveCircle(player,player.vx*dt,player.vy*dt,5);
   const sp=Math.hypot(player.vx,player.vy);player.moveAmt=Math.min(1,sp/40);player.phase+=sp*dt*.24;
@@ -656,8 +662,11 @@ function updatePlay(dt){
   if(player.carry&&postPos&&Math.hypot(postPos.x-player.x,postPos.y-player.y)<24){stock+=player.carry.count;toast(`แขวนกล้วยที่เสาแล้ว +${player.carry.count} ลูก (รวม ${stock})`);player.carry=null;sfx.ready();tn('square',600,900,.12,.1,null,.1);}
   let tgt=null,rate=9;
   if(player.swingT<=0){
+    if(player.lookHold>0)player.lookHold-=dt;
     if(aimT.active&&aimT.aiming){tgt=aimT.ang;rate=24;}
+    else if(look.active||player.lookHold>0){tgt=player.lookA;rate=30;}
     else if(mouse.active&&!showTouch){tgt=mouseAngle();rate=22;}
+    else if(player.lock){tgt=Math.atan2(player.lock.y-player.y,player.lock.x-player.x);rate=14;}   // lock on
     else if(player.charging){tgt=autoAim();rate=10;}
     else if(ml>.15){tgt=Math.atan2(my,mx);rate=9;}
     if(tgt!==null)player.facing=angLerp(player.facing,tgt,dt*rate);
@@ -1087,7 +1096,7 @@ function resize(){
   joyR=55*s;fireB={x:SWc-92*s,y:SHc-92*s,r:48*s};
   const mkb=(id,label,ang)=>({id,label,x:fireB.x+Math.cos(ang)*98*s,y:fireB.y+Math.sin(ang)*98*s,r:28*s,flash:0});
   sleepBtn.x=SWc/2;sleepBtn.y=SHc-58*s;sleepBtn.r=34*s;woodBtn.x=fireB.x;woodBtn.y=fireB.y-160*s;woodBtn.r=27*s;
-  btns=[mkb('kick','ถีบ',Math.PI),mkb('hide','ซ่อน',-Math.PI*.75),mkb('light','ไฟหัว',-Math.PI*.5),{id:'swap',label:'เปลี่ยนอาวุธ',x:fireB.x+54*s,y:fireB.y-206*s,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-160*s,r:27*s,flash:0},{id:'drag',label:'ลากกิ่ง',x:fireB.x,y:fireB.y-160*s,r:27*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-160*s,r:24*s,flash:0}];
+  btns=[{id:'kick',label:'ถีบ',x:fireB.x-fireB.r*2-18*s,y:fireB.y+4*s,r:fireB.r,flash:0,big:true},mkb('hide','ซ่อน',-Math.PI*.75),mkb('light','ไฟหัว',-Math.PI*.5),{id:'swap',label:'เปลี่ยนอาวุธ',x:fireB.x+54*s,y:fireB.y-206*s,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-160*s,r:27*s,flash:0},{id:'drag',label:'ลากกิ่ง',x:fireB.x,y:fireB.y-160*s,r:27*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-160*s,r:24*s,flash:0}];
 }
 function gradV(t){if(t>=1)return 0;if(t<.22)return 1-t/.22*.1;if(t<.65)return .9-(t-.22)/.43*.52;return .38*(1-(t-.65)/.35);}
 function ambVal(){return 0;}   // no light around the feet: all light comes from the forehead lamp
@@ -1260,7 +1269,7 @@ function drawP(c,T,mono,h=player){
   if(!away&&!JP&&!FF){c.fillStyle=M('#9a9a9a');c.fillRect(fx+ca*1.1-.5,toY-3.5,1,7);}
   if(FF&&!mono){if(!away){c.fillStyle='#0e0e0e';c.beginPath();c.moveTo(fx-2.4,toY-4.6);c.lineTo(fx+ca*.3,toY-1.6);c.lineTo(fx+2.4,toY-4.6);c.lineTo(fx+1.4,toY-3.2);c.lineTo(fx+ca*.3,toY-2.4);c.lineTo(fx-1.4,toY-3.2);c.closePath();c.fill();   // black collar, V-neck
       c.fillStyle='#c9c4bc';c.beginPath();c.moveTo(fx-.8+ca*.3,toY-4.3);c.lineTo(fx+ca*.3,toY-2.6);c.lineTo(fx+.8+ca*.3,toY-4.3);c.closePath();c.fill();
-      if(Math.abs(sa)>.25){const lx=fx-px*1.5+ca*.3,ly=toY-1.4;c.strokeStyle='rgb(140,14,20)';c.lineWidth=.45;c.strokeRect(lx-.9,ly-.9,1.8,1.9);}}   // chest pocket
+      if(Math.abs(sa)>.25){const lx=fx-px*1.5+ca*.3,ly=toY-1.4;c.strokeStyle='rgb(24,28,40)';c.lineWidth=.45;c.strokeRect(lx-.9,ly-.9,1.8,1.9);}}   // chest pocket
     else{c.fillStyle='#0e0e0e';c.fillRect(fx-2.4,toY-4.8,4.8,1.1);c.fillStyle='#f0f0f0';for(let k=0;k<5;k++)c.fillRect(fx-2+k*.85,toY-2.2+(k%2)*.3,.55,.7);}}   // "ผู้บ่าวไทบ้าน" back print
   if(!away&&JP&&!mono){c.strokeStyle='#5a5e6c';c.lineWidth=.4;c.beginPath();c.moveTo(fx+ca*.3,toY-4.2);c.lineTo(fx+ca*.3,toY+4);c.stroke();   // zipper
     if(Math.abs(sa)>.25){const lx=fx-px*1.5+ca*.3,ly=toY-1.6;c.strokeStyle='#d8e6ee';c.lineWidth=.45;c.beginPath();c.arc(lx,ly,1,0,TAU);c.stroke();c.fillStyle='#8fb4c8';c.fillRect(lx-.4,ly-.25,.8,.5);}   // round chest logo
@@ -1681,7 +1690,7 @@ function drawUI(dt){
         if(b.id==='pickw'){uiCircle(b.x,b.y,b.r,'#c08a52',2);uiText('เก็บ',b.x,b.y-5*s,11*s,'center',BG);uiText('ฟืน',b.x,b.y+8*s,11*s,'center',BG);continue;}
         if(b.id==='carry'){uiCircle(b.x,b.y,b.r,'#e6c43c',2);uiText('แบก',b.x,b.y-5*s,10*s,'center',BG);uiText('กล้วย',b.x,b.y+7*s,9*s,'center',BG);continue;}
         if(b.id==='swap'){bo=bo||hoeNear();uiCircle(b.x,b.y,b.r,bo?'#5fd35f':BG,2);uiText('เปลี่ยน',b.x,b.y-5*s,9*s,'center',bo?BG:FG);uiText('อาวุธ',b.x,b.y+6*s,9*s,'center',bo?BG:FG);continue;}
-        uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.label,b.x,b.y,11*s,'center',bo?BG:FG);}
+        uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.label,b.x,b.y,(b.big?19:11)*s,'center',bo?BG:FG);}
     }
   }
 }
@@ -1709,6 +1718,7 @@ ui.addEventListener('pointerdown',e=>{
   if(state!=='play')return;
   const b=hitBtn(x,y);if(b){act(b);return;}
   if(Math.hypot(x-fireB.x,y-fireB.y)<fireB.r*1.5&&!aimT.active){aimT.active=true;aimT.id=e.pointerId;aimT.aiming=false;aimT.dx=0;aimT.dy=0;startCharge();return;}
+  if(x>=SWc*.55&&!look.active){look.active=true;look.id=e.pointerId;look.lx=x;look.ly=y;player.lookA=player.facing;return;}
   if(x<SWc*.55&&!joy.active){joy.active=true;joy.id=e.pointerId;joy.bx=clamp(x,joyR+30,SWc*.55-joyR);joy.by=clamp(y,joyR+70,SHc-joyR-8);joy.kx=x;joy.ky=y;updJoy();}
 },{passive:false});
 ui.addEventListener('pointermove',e=>{
@@ -1716,12 +1726,14 @@ ui.addEventListener('pointermove',e=>{
   if(wDrag&&e.pointerId===wDrag.id){wDrag.x=x;wDrag.y=y;return;}   // aim point = start + finger offset
   if(e.pointerType==='mouse'){mouse.x=x;mouse.y=y;mouse.active=true;return;}
   if(joy.active&&e.pointerId===joy.id){joy.kx=x;joy.ky=y;updJoy();}
+  if(look.active&&e.pointerId===look.id){player.lookA+=(x-look.lx)*.014/UIS;look.lx=x;look.ly=y;player.facing=player.lookA;}
   if(aimT.active&&e.pointerId===aimT.id){const dx=x-fireB.x,dy=y-fireB.y;aimT.dx=dx;aimT.dy=dy;if(Math.hypot(dx,dy)>fireB.r*.35){aimT.aiming=true;aimT.ang=Math.atan2(dy/K,dx);}else aimT.aiming=false;}
 });
 function ptrEnd(e){
   if(wDrag&&e.pointerId===wDrag.id){const d=wDrag;wDrag=null;if(e.type==='pointerup'){const a=wAim(d);placePile(a.x,a.y);}return;}
   if(e.pointerType==='mouse'){if(mouse.down){mouse.down=false;release(showTouch?autoAim():mouseAngle());}return;}
   if(joy.active&&e.pointerId===joy.id){joy.active=false;joyV={x:0,y:0};}
+  if(look.active&&e.pointerId===look.id){look.active=false;player.lookHold=1.4;}
   if(aimT.active&&e.pointerId===aimT.id){if(e.type==='pointerup')release(aimT.aiming?aimT.ang:player.facing);else player.charging=false;aimT.active=false;aimT.aiming=false;}
 }
 ui.addEventListener('pointerup',ptrEnd);ui.addEventListener('pointercancel',ptrEnd);
