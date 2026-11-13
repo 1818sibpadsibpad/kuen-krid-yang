@@ -982,7 +982,7 @@ function resize(){
   UIS=clamp(Math.min(SWc,SHc)/400,.8,1.35);const s=UIS;
   joyR=55*s;fireB={x:SWc-92*s,y:SHc-92*s,r:48*s};
   const mkb=(id,label,ang)=>({id,label,x:fireB.x+Math.cos(ang)*98*s,y:fireB.y+Math.sin(ang)*98*s,r:28*s,flash:0});
-  sleepBtn.x=SWc/2;sleepBtn.y=SHc-58*s;sleepBtn.r=34*s;woodBtn.x=SWc/2;woodBtn.y=SHc-110*s;woodBtn.r=30*s;
+  sleepBtn.x=SWc/2;sleepBtn.y=SHc-58*s;sleepBtn.r=34*s;woodBtn.x=fireB.x;woodBtn.y=fireB.y-160*s;woodBtn.r=27*s;
   btns=[mkb('kick','ถีบ',Math.PI),mkb('hide','ซ่อน',-Math.PI*.75),mkb('light','ไฟหัว',-Math.PI*.5),{id:'swap',label:'เปลี่ยนอาวุธ',x:fireB.x+54*s,y:fireB.y-206*s,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-160*s,r:27*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-160*s,r:24*s,flash:0}];
 }
 function gradV(t){if(t>=1)return 0;if(t<.22)return 1-t/.22*.1;if(t<.65)return .9-(t-.22)/.43*.52;return .38*(1-(t-.65)/.35);}
@@ -1466,8 +1466,8 @@ function drawUI(dt){
     u.fillStyle=BG;u.fillRect(x-2,y-2,w+4,h+4);u.fillStyle=FG;u.fillRect(x,y,w,h);u.beginPath();u.moveTo(bx-4*s,y+h);u.lineTo(bx+4*s,y+h);u.lineTo(bx,y+h+7*s);u.closePath();u.fill();
     u.fillStyle=BG;u.textAlign='center';u.textBaseline='middle';u.fillText(sp.say.text,x+w/2,y+h/2+1);u.globalAlpha=1;
     uiText(isP?'แพรวา':isM?'แพม':'แจคพอท',bx,by+4*s,9*s,'center',isP?'#ff9ec8':isM?'#ffb347':'#5fd35f');}
-  if(woodAvail()){const b=woodBtn,pw2=130*s,ph=34*s;u.fillStyle=BG;u.fillRect(b.x-pw2/2-3,b.y-ph/2-3,pw2+6,ph+6);u.fillStyle='#c8b79c';u.fillRect(b.x-pw2/2,b.y-ph/2,pw2,ph);
-    uiText('วางฟืน',b.x,b.y-4*s,15*s,'center',BG);uiText(showTouch?'กดค้างแล้วลากไปวาง':'ลากไปวาง หรือกด V',b.x,b.y+9*s,9*s,'center',BG);
+  if(woodAvail()){const b=woodBtn,dr=!!wDrag;uiCircle(b.x,b.y,b.r,dr?FG:'#c08a52',2);uiText('วาง',b.x,b.y-5*s,11*s,'center',BG);uiText('ฟืน',b.x,b.y+8*s,11*s,'center',BG);
+    if(!dr)uiText(showTouch?'กดค้าง ลากไปวาง':'ลาก หรือกด V',b.x,b.y-b.r-9*s,9*s,'center','#c08a52');
     if(wDrag){const wx=wDrag.x/P+camX,wy=(wDrag.y/P+camY)/K,ok=inYard(wx,wy);u.strokeStyle=ok?'#5fd35f':UIRED;u.lineWidth=3;u.beginPath();u.ellipse(wDrag.x,wDrag.y,22*s,10*s,0,0,TAU);u.stroke();uiText(ok?`วางฟืน ${player.wood} ท่อนตรงนี้`:'นอกเขตรั้ว',wDrag.x,wDrag.y-20*s,11*s,'center',ok?'#5fd35f':UIRED);}}
   if(sleepAvail()){const b=sleepBtn,pw=118*s,ph=40*s,pulse=.5+.5*Math.sin(performance.now()/300);
     u.fillStyle=BG;u.fillRect(b.x-pw/2-3,b.y-ph/2-3,pw+6,ph+6);u.fillStyle=FG;u.fillRect(b.x-pw/2,b.y-ph/2,pw,ph);u.strokeStyle=FG;u.lineWidth=1+2*pulse;u.strokeRect(b.x-pw/2-6,b.y-ph/2-6,pw+12,ph+12);
@@ -1515,7 +1515,7 @@ function woodAvail(){return state==='play'&&player.wood>0&&inYard(player.x,playe
 function hoeNear(){return hoe&&!hoe.taken&&Math.hypot(hoe.x-player.x,hoe.y-player.y)<34;}
 function swapAvail(){return state==='play'&&(hoeNear()||player.hasHoe);}
 function sleepAvail(){return state==='play'&&zombies.length===0&&player.cleared;}
-function visBtns(){const v=btns.filter(b=>(b.id!=='swap'||swapAvail())&&(b.id!=='carry'||(state==='play'&&!!groundNear()))&&(b.id!=='pickw'||woodNear()));if(sleepAvail())v.unshift(sleepBtn);return v;}
+function visBtns(){const v=btns.filter(b=>(b.id!=='swap'||swapAvail())&&(b.id!=='carry'||(state==='play'&&!!groundNear()))&&(b.id!=='pickw'||(woodNear()&&!woodAvail())));if(sleepAvail())v.unshift(sleepBtn);return v;}
 function swapWeapon(){if(!swapAvail()||player.charging||player.swingT>0)return;
   if(hoeNear()){hoe.taken=true;player.hasHoe=true;player.weapon='hoe';sfx.ready();tn('square',500,900,.1,.12);toast('ได้ จอบ (บักจก)! ระยะ×3 แรง×3');return;}
   player.weapon=player.weapon==='hoe'?'knife':'hoe';sfx.toggle();toast('ถือ '+W().name);}
@@ -1525,7 +1525,7 @@ function mouseAngle(){const wx=mouse.x/P+camX,wy=(mouse.y/P+camY+8)/K;return Mat
 function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l>joyR){dx*=joyR/l;dy*=joyR/l;joy.kx=joy.bx+dx;joy.ky=joy.by+dy;l=joyR;}const m=l/joyR;joyV=m<.12?{x:0,y:0}:{x:dx/joyR,y:dy/joyR};}
 ui.addEventListener('pointerdown',e=>{
   e.preventDefault();initAudio();const x=e.clientX,y=e.clientY;
-  if(woodAvail()&&Math.abs(x-woodBtn.x)<70*UIS&&Math.abs(y-woodBtn.y)<22*UIS){wDrag={id:e.pointerId,x,y};try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
+  if(woodAvail()&&Math.hypot(x-woodBtn.x,y-woodBtn.y)<woodBtn.r*1.25){wDrag={id:e.pointerId,x,y};try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
   if(e.pointerType==='mouse'){mouse.x=x;mouse.y=y;mouse.active=true;if(sleepAvail()&&Math.hypot(x-sleepBtn.x,y-sleepBtn.y)<sleepBtn.r*1.6){act(sleepBtn);return;}if(showTouch){const b=hitBtn(x,y);if(b){act(b);return;}}
     if(e.button===0&&state==='play'){mouse.down=true;startCharge();}else if(e.button===2&&state==='play'){if(!showTouch)player.facing=mouseAngle();kick();}return;}
   showTouch=true;mouse.active=false;try{ui.setPointerCapture(e.pointerId);}catch(_){}
