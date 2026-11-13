@@ -883,7 +883,7 @@ function updateBot(dt,mode){
   if(b.combat>0){b.combat-=dt;if(b.combat<=0&&b.fought){b.fought=false;b.pantT=10;}}
   // he never leaves the yard: guard the fence & gate and push zombies away with the branch
   if(!inYard(b.x,b.y)){const tx=home.hs.di*TS+8,ty=home.hs.dj*TS+8;b.goal={x:tx,y:ty+12};}
-  let tz=null,td=1e9;for(const z of zombies){if(z.dieOnLand||z.state==='eatB')continue;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d>(fireOut?20:110))continue;
+  let tz=null,td=1e9;for(const z of zombies){if(z.dieOnLand||z.state==='eatB')continue;if(fireOut)break;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d>110)continue;   // fire out: blind, can't fend anything off
     if(!(z.litBy===b||d<60||z.aware>0)||!los(b.x,b.y,z.x,z.y))continue;const dz=d-((z.state==='windup'||z.state==='lunge')&&d<70?40:0);if(dz<td){td=dz;tz=z;}}
   if(tz)td=Math.hypot(tz.x-b.x,tz.y-b.y);
   let gx=null,gy=null,sp=56,face=null;
