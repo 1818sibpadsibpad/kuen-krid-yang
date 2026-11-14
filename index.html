@@ -1756,6 +1756,7 @@ function krShadows(c){const L=KRL;if(!L||L.v<.05)return;const R=135;c.save();c.f
   const cast=(x,y,w,len0)=>{const dx=x-L.x,dy=y-L.y,d=Math.hypot(dx,dy);if(d<6||d>R)return;const ux=dx/d,uy=dy/d,Ln=len0+d*.55,px=-uy,py=ux;c.globalAlpha=.85*L.v*Math.pow(1-d/R,.5);
     const a=S(x+px*w,y+py*w),b=S(x+ux*Ln+px*w*1.8,y+uy*Ln+py*w*1.8),e=S(x+ux*Ln-px*w*1.8,y+uy*Ln-py*w*1.8),f=S(x-px*w,y-py*w);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.lineTo(e[0],e[1]);c.lineTo(f[0],f[1]);c.closePath();c.fill();};
   for(const e of[player,bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null])if(e&&!e.up&&!e.st&&!e.hidden&&!e.gone)cast(e.x,e.y,e===praewa?1.8:2.8,16);
+  for(const C of clumps){if(Math.abs(C.x-L.x)>R+20||Math.abs(C.y-L.y)>R+20)continue;for(const p of C.plants)if(!p.cut)cast(p.x,p.y,2.6,22+(p.h||30)*.5);}
   for(const p of woodPiles)cast(p.x,p.y,6,9);for(const p of props)cast(p.x,p.y,4,9);if(postPos)cast(postPos.x,postPos.y,1.4,22);for(const b of bigBranches)cast(b.x,b.y,8,5);
   c.restore();}
 // แสงของกระสือ — ดึงเฉพาะส่วนแสงออกมาจาก test.html ให้ใช้แยกได้ ไม่พึ่งตัวแปรอื่นในเกม
@@ -1866,9 +1867,8 @@ function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)retu
   // light value per pixel from KrasueLight, then blurred so the glow spreads soft instead of a hard pixel disc
   const n=w*h;if(!KLB||KLB.length<n){KLB=new Float32Array(n*2);}const A=KLB.subarray(0,n),Bf=KLB.subarray(n,n*2);A.fill(0);
   for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx,dd2=ddx*ddx+ddy*ddy;if(dd2>=Rc2)continue;
-    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const q=yy*w+xx,sh=1-md[(q<<2)+3]/255;if(sh<=0)continue;
-    A[q]=Math.min(255,(KrasueLight.tone(o.r)+o.sr)*sh*290);}}
-  {const hw=Lk.v*58,s2=2*90*90;for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const ddx=L.lx-(xx+x0+camX);A[yy*w+xx]+=hw*Math.exp(-(ddx*ddx+ddy*ddy)/s2);}}}   // wide soft halo
+    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const q=yy*w+xx,sh=1-md[(q<<2)+3]/255;if(sh<=0)continue;   // zero here = behind a trunk: no halo either, so the shadow stays
+    const e=1-dd2/Rc2,halo=Lk.v*52*Math.exp(-dd2/7200)*e*e;A[q]=Math.min(255,((KrasueLight.tone(o.r)+o.sr)*290+halo)*sh*Math.pow(e,.35));}}
   const box=(src,dst,r,horiz)=>{const L1=horiz?w:h,L2=horiz?h:w,st=horiz?1:w,st2=horiz?w:1,inv=1/(2*r+1);
     for(let b2=0;b2<L2;b2++){const base=b2*st2;let acc=0;for(let k=-r;k<=r;k++)acc+=src[base+clamp(k,0,L1-1)*st];
       for(let k=0;k<L1;k++){dst[base+k*st]=acc*inv;acc+=src[base+Math.min(L1-1,k+r+1)*st]-src[base+Math.max(0,k-r)*st];}}};
@@ -1891,8 +1891,8 @@ function treeRim(s,l,cx,cy,bx,by){const L=KRL;if(!L||L.v<.05)return;const dx=L.x
   s.fillStyle='rgb(236,40,62)';s.fillRect(bx+sd*2.2-.6,top,1.3,by-top);l.fillStyle=gray(255*clamp(it,0,1));l.fillRect(bx+sd*2.2-.6,top,1.3,by-top);
   if(dy>0){s.fillRect(bx-2.5,by-1,5,1);l.fillRect(bx-2.5,by-1,5,1);}}
 function krBloom(){const L=KL,Lk=KRL;if(!L||!Lk||Lk.v<.05)return;const gx=L.lx-camX,gy=L.ly*K-camY-L.lz*.4,R=160,v=Lk.v;   // a soft red haze over everything near it
-  let g=lctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,gray(78*v));g.addColorStop(.45,gray(30*v));g.addColorStop(1,'#000');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(gx-R,gy-R,R*2,R*2);lctx.restore();
-  g=sctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(.5,`rgb(255,${255-95*v|0},${255-92*v|0})`);g.addColorStop(1,'#fff');sctx.save();sctx.globalCompositeOperation='multiply';sctx.fillStyle=g;sctx.fillRect(gx-R,gy-R,R*2,R*2);sctx.restore();}
+  let g=lctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,gray(78*v));g.addColorStop(.3,gray(44*v));g.addColorStop(.6,gray(16*v));g.addColorStop(.85,gray(4*v));g.addColorStop(1,'#000');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(gx-R,gy-R,R*2,R*2);lctx.restore();
+  g=sctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(.4,`rgb(255,${255-110*v|0},${255-106*v|0})`);g.addColorStop(.75,`rgb(255,${255-35*v|0},${255-34*v|0})`);g.addColorStop(1,'#fff');sctx.save();sctx.globalCompositeOperation='multiply';sctx.fillStyle=g;sctx.fillRect(gx-R,gy-R,R*2,R*2);sctx.restore();}
 function rimRed(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130;if(dd>RR)return;
   const str=klv(e.x,e.y,12);if(str<=.02)return;const a=Math.atan2(dy*K-L.z*.75+12,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
   RMX.globalCompositeOperation='source-over';RMX.clearRect(0,0,136,120);RMX.drawImage(OLC,0,0);RMX.globalCompositeOperation='source-in';RMX.fillStyle='rgb(255,46,66)';RMX.fillRect(0,0,136,120);
@@ -2493,6 +2493,7 @@ function drawBubbles(s){
     u.fillStyle=BG;u.textAlign='center';u.textBaseline='middle';u.fillText(sp.say.text,x+w/2,y+h/2+1);u.globalAlpha=1;
     uiText(isH?HERONAME():isP?'แพรวา':isM?'แพม':BOTNAME(),bx,by+4*s,9*s,'center',isH?'#9ec8ff':isP?'#ff9ec8':isM?'#ffb347':'#5fd35f');}
 }
+function skipCountBox(){const s=UIS,w=168*s,h=34*s;return{x:SWc/2-w/2,y:SHc*.2+104*s,w,h};}
 function skipBox(){const s=UIS,w=150*s,h=34*s;return{x:SWc-w-12*s,y:Math.max(8*s,SHc*.11/2-h/2),w,h};}
 function drawN3UI(s){const C=N3,bar=SHc*.11;u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);drawBubbles(s);
   const sb=skipBox(),intro=C.step==='intro';u.fillStyle=BG;u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle=intro?'#d01c22':FG;u.fillRect(sb.x,sb.y,sb.w,sb.h);
@@ -2560,7 +2561,8 @@ function drawUI(dt){
   uiText(`0${hh}:${mm<10?'0':''}${mm}`,SWc/2,22*s,22*s);if(n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':'คืนที่ 3 — ฆ่ากระสือให้ได้',SWc/2,44*s,11*s,'center','#ff6b5e');else uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
   if(state==='play'&&N3&&N3.ph==='count'){const n=Math.ceil(N3.t),pu=1+.06*Math.sin(performance.now()/120);uiText('นับถอยหลังก่อนเริ่มเกม 1 นาที',SWc/2,SHc*.2,19*s,'center',UIRED);
     u.save();u.font=`900 ${54*s*pu}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineWidth=6*s;u.strokeStyle=BG;u.strokeText(n,SWc/2,SHc*.2+48*s);u.fillStyle='#ff3b30';u.fillText(n,SWc/2,SHc*.2+48*s);u.restore();
-    uiText('เก็บฟืน กล้วย งู ให้พร้อม',SWc/2,SHc*.2+86*s,11*s,'center',FG);}
+    uiText('เก็บฟืน กล้วย งู ให้พร้อม',SWc/2,SHc*.2+86*s,11*s,'center',FG);
+    const sb=skipCountBox();u.fillStyle=BG;u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle='#d01c22';u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้ามนับถอยหลัง ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',FG);}
   if(B&&N3&&(N3.ph==='fight'||B.state==='dead'&&B.t<4)&&state==='play'){const w=Math.min(280*s,SWc*.72),x0=SWc/2-w/2,y0=164*s,f=Math.max(0,B.hp/B.hpMax);u.fillStyle=BG;u.fillRect(x0-3,y0-3,w+6,14*s+6);u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,14*s);u.fillStyle=B.hitF>0?'#fff':'#d01c22';u.fillRect(x0,y0,w*f,14*s);
     uiText('กระสือ',SWc/2,y0+7*s,10*s,'center',FG);
     if(!B.hidden&&B.state!=='dead'){const hx=(B.x-camX)*P,hy=(B.y*K-camY-KRS.R.hz*.75-16)*P,tt=performance.now()/1000;
@@ -2619,6 +2621,7 @@ function mouseAngle(){const wx=mouse.x/P+camX,wy=(mouse.y/P+camY+8)/K;return Mat
 function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l>joyR){dx*=joyR/l;dy*=joyR/l;joy.kx=joy.bx+dx;joy.ky=joy.by+dy;l=joyR;}const m=l/joyR;joyV=m<.12?{x:0,y:0}:{x:dx/joyR,y:dy/joyR};}
 ui.addEventListener('pointerdown',e=>{
   e.preventDefault();initAudio();const x=e.clientX,y=e.clientY;
+  if(state==='play'&&N3&&N3.ph==='count'){const sb=skipCountBox();if(x>sb.x-10&&x<sb.x+sb.w+10&&y>sb.y-10&&y<sb.y+sb.h+10){N3.t=0;return;}}
   if(state==='n3cine'){const sb=skipBox();if(x>sb.x-14&&x<sb.x+sb.w+14&&y>sb.y-14&&y<sb.y+sb.h+14)skipCine();return;}
   if(grillAvail()&&Math.hypot(x-(fireB.x-66*UIS),y-(fireB.y-176*UIS))<27*UIS*1.25){gDrag={id:e.pointerId,x,y,sx:x,sy:y,wx:fireP.x+20,wy:fireP.y+24};return;}
   if(woodAvail()&&Math.hypot(x-woodBtn.x,y-woodBtn.y)<woodBtn.r*1.25){wDrag={id:e.pointerId,x,y,sx:x,sy:y,wx:vw/2+camX,wy:(vh/2+camY)/K,t0:performance.now()};try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
@@ -2653,7 +2656,7 @@ function ptrEnd(e){
 ui.addEventListener('pointerup',ptrEnd);ui.addEventListener('pointercancel',ptrEnd);
 ui.addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('keydown',e=>{keys[e.code]=true;if(state==='n3cine'&&(e.code==='Enter'||e.code==='Escape'||e.code==='Space')){e.preventDefault();skipCine();return;}if(state!=='play')return;
-  if(e.code==='ShiftLeft'||e.code==='ShiftRight'){doRoll();return;}if(e.code==='KeyT'){grabTail();return;}
+  if(e.code==='ShiftLeft'||e.code==='ShiftRight'){doRoll();return;}if(e.code==='Enter'&&N3&&N3.ph==='count'){N3.t=0;return;}if(e.code==='KeyT'){grabTail();return;}
   if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE'){if(!toggleDrag()&&!pickWood()&&!pickBunch()&&nearWardrobe())toggleHide();}else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');else if(e.code==='KeyR'&&grillAvail()&&Math.hypot(player.x-fireP.x,player.y-fireP.y)<60)grillSnakes();else if(e.code==='KeyV'&&woodAvail())placePile(player.x+Math.cos(player.facing)*10,player.y+Math.sin(player.facing)*10);
   else if(e.code==='Space'){e.preventDefault();tapAttack(mouse.active&&!showTouch?mouseAngle():null);}
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
