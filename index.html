@@ -1320,8 +1320,8 @@ function drawP(c,T,mono,h=player){
   const stickHands=()=>{const th=h.pokeT>0?Math.sin(clamp(1-h.pokeT/.22,0,1)*Math.PI):0,gx2=fx+fwx*(3+5*th),gy2=shY+4+fwy*(3+5*th);
     c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(gx2+px*1.2,gy2+py*1.2);c.moveTo(shLx,shLy);c.lineTo(gx2-fwx*4-px*1.2,gy2-fwy*4-py*1.2);c.stroke();
     const L=34+8*th,bx0=gx2-fwx*9,by0=gy2-fwy*9+1.5,bx1=gx2+fwx*L,by1=gy2+fwy*L-1.5;
-    c.strokeStyle=M('#2a2018');c.lineWidth=2.2;c.beginPath();c.moveTo(bx0,by0);c.lineTo(bx1,by1);c.stroke();c.strokeStyle=M('#8b7862');c.lineWidth=1.3;c.stroke();
-    c.lineWidth=.9;c.beginPath();const mx2=(bx0+bx1)/2,my2=(by0+by1)/2;c.moveTo(mx2,my2);c.lineTo(mx2+px*3+fwx*2,my2+py*3-2);c.moveTo(bx1-fwx*5,by1-fwy*5);c.lineTo(bx1-fwx*3-px*2.5,by1-fwy*3-py*2.5-1.5);c.stroke();};
+    const mx2=(bx0+bx1)/2,my2=(by0+by1)/2,ops=[[bx0,by0,bx1,by1,1.3,'#2a2018'],[bx0,by0,bx1,by1,.6,'#8b7862'],[mx2,my2,mx2+px*3+fwx*2,my2+py*3-2,.6,'#2a2018'],[bx1-fwx*5,by1-fwy*5,bx1-fwx*3-px*2.5,by1-fwy*3-py*2.5-1.5,.6,'#2a2018']];   // thin dry stick
+    if(OL_PASS){h._stk=ops;}else for(const o of ops){c.strokeStyle=M(o[5]);c.lineWidth=o[4];c.beginPath();c.moveTo(o[0],o[1]);c.lineTo(o[2],o[3]);c.stroke();}};
   const lp=swinging?-side*.6*(sP<.5?sP*2:1):0;
   const run=h.combat>0||h.charging||swinging?0:Math.sin(h.phase)*.7*h.moveAmt;const leftArm=()=>{c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(shLx+Math.cos(a-(run?1.3:.5)+lp+run)*5,shLy+Math.sin(a-(run?1.3:.5)+lp+run)*5*K+5);c.stroke();};
   if(h.carry||h.wood||PW||PM){}else if(h.weapon==='stick'){if(away)knife();}else{if(away||behind)knife();if(away)leftArm();}
@@ -1501,10 +1501,12 @@ function drawRoof(T){const hs=home&&home.hs;if(!hs||!hs.tiang)return;
     c.restore();}}
 const OLC=document.createElement('canvas');OLC.width=136;OLC.height=120;const OLX=OLC.getContext('2d');
 const OLS=document.createElement('canvas');OLS.width=136;OLS.height=120;const OLSX=OLS.getContext('2d');
-function withOutline(s,e,fn){   // crisp dark outline around a character
-  const x0=Math.round(e.x-camX)-68,y0=Math.round(e.y*K-camY)-92;OLX.setTransform(1,0,0,1,0,0);OLX.clearRect(0,0,136,120);OLX.setTransform(1,0,0,1,-x0,-y0);fn(OLX);
+let OL_PASS=false;
+function withOutline(s,e,fn){   // crisp dark outline around a character (the thin stick is drawn on top, unoutlined)
+  const x0=Math.round(e.x-camX)-68,y0=Math.round(e.y*K-camY)-92;OLX.setTransform(1,0,0,1,0,0);OLX.clearRect(0,0,136,120);OLX.setTransform(1,0,0,1,-x0,-y0);e._stk=null;OL_PASS=true;try{fn(OLX);}finally{OL_PASS=false;}
   OLSX.globalCompositeOperation='source-over';OLSX.clearRect(0,0,136,120);OLSX.drawImage(OLC,0,0);OLSX.globalCompositeOperation='source-in';OLSX.fillStyle='#0a0908';OLSX.fillRect(0,0,136,120);
-  for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])s.drawImage(OLS,x0+dx,y0+dy);s.drawImage(OLC,x0,y0);}
+  for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])s.drawImage(OLS,x0+dx,y0+dy);s.drawImage(OLC,x0,y0);
+  if(e._stk){s.lineCap='round';for(const o of e._stk){s.strokeStyle=o[5];s.lineWidth=o[4];s.beginPath();s.moveTo(o[0],o[1]);s.lineTo(o[2],o[3]);s.stroke();}e._stk=null;}}
 function drawObj(o,T,s,l){
   const F=(c,v,x,y,w,h)=>{c.fillStyle=typeof v==='number'?gray(v):v;c.fillRect(x,y,w,h);};
   switch(o.k){
