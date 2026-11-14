@@ -92,6 +92,10 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
       <li>เข้าใกล้ฟืน (~4 ม.) กดปุ่ม <b>เก็บฟืน</b> · ถือได้ 20 ท่อน (ยิ่งเยอะยิ่งช้า)</li>
       <li>ในเขตรั้ว <b>กดค้าง "วางฟืน"</b> แล้วลากวงแหวนไปตรงที่จะวาง ปล่อยนิ้ว = วาง</li>
       <li>เจอกิ่งใหญ่ กด <b>ลากกิ่ง</b> กลับบ้าน — แพมหักเป็นฟืนให้ 3–5 ท่อน</li></ul></div>
+    <div class="sec"><h3>🐍 งูสิง</h3><ul>
+      <li>เข้าใกล้ ~5 ม. งูจะ<b>ยกคอขู่ฟ่อๆ</b> — ตีตอนนั้นตาย แล้ว<b>คล้องคอ</b>ไว้ (สูงสุด 5 ตัว)</li>
+      <li>ถ้าเดินเข้าไปชิด <b style="color:#ff3b30">งูกัด!!</b> เดินช้าลงครึ่งหนึ่ง → กดปุ่มโจมตีปุ่มไหนก็ได้เพื่อ<b>เตะงูออก</b></li>
+      <li>กลับบ้าน กดค้างปุ่ม <b>ปิ้งงู</b> ลากใส่กองไฟ (รอบกองไฟได้ 8 ไม้) สุกแล้ว 1 ตัว = <b>6 คำ</b> เท่ากล้วย 6 ลูก</li></ul></div>
     <div class="sec"><h3>🍌 อาหาร</h3><ul>
       <li>กอกล้วยอยู่แถวขอบแผนที่ (มีผลราว 20%) ฟันต้นให้ล้ม <b>แบกพวง</b>กลับมาแขวนเสาหน้าบ้าน</li>
       <li>แบกกล้วยแล้วเดินช้าลงครึ่งหนึ่ง · คนหิวจะเดินมากินเองที่เสา</li></ul></div>
@@ -136,7 +140,7 @@ function ell(c,x,y,rx,ry){c.beginPath();c.ellipse(x,y,Math.max(.1,rx),Math.max(.
 const isRoad=i=>false;   // nothing but rubber rows outside the fence
 
 /* ================= MAP: Thai rubber plantation ================= */
-let waveDone=false,trickleT=4,bigBranches=[],roofA=1,tiles,huts,tables,outdoor,startPos,debris,plights=[],sparks=[],props=[],home=null,hoe=null,clumps=[],grounds=[],stock=0,postPos=null,fireP=null,woodItems=[],woodPiles=[],praewa=null,fireOut=false,pam=null,postTorches=[],postSpots=[];
+let snakes=[],gDrag=null,waveDone=false,trickleT=4,bigBranches=[],roofA=1,tiles,huts,tables,outdoor,startPos,debris,plights=[],sparks=[],props=[],home=null,hoe=null,clumps=[],grounds=[],stock=0,postPos=null,fireP=null,woodItems=[],woodPiles=[],praewa=null,fireOut=false,pam=null,postTorches=[],postSpots=[];
 function passT(tc,tn){if(tn===TST)return true;if(tn===TPL)return tc===TPL||tc===TST;if(tc===TPL)return false;return !BM[tn];}
 function blkT(t,e){if(t===TST)return false;if(e.st)return BM[t]&&t!==TPL;if(e.up)return t!==TPL;return BM[t];}
 function lvSet(e){const t=tAt(Math.floor(e.x/TS),Math.floor(e.y/TS));e.st=t===TST;e.up=t===TPL;e.ev=e.st?.55:e.up?1:0;}
@@ -250,8 +254,8 @@ function genMap(){
    for(const sg of[-1,1]){const x=F.x+perp[0]*24*sg,y=F.y+perp[1]*24*sg;if(inYard(x,y)&&!BM[tAt(Math.floor(x/TS),Math.floor(y/TS))]&&!props.some(p=>Math.hypot(p.x-x,p.y-y)<12)){postPos={x,y};break;}}
    if(!postPos)postPos={x:F.x+perp[0]*24,y:F.y+perp[1]*24};props.push({kind:'post',x:postPos.x,y:postPos.y,r:2.5});}
   // the campfire burns firewood: fuel F (s, max 120). one log = +40 s
-  fireP=plights.find(p=>p.kind==='fire');fireP.F=60;fireP.bt=-1;fireP.boost=0;fireP.hs=1;fireOut=false;
-  woodItems=[];scatterWood(150);
+  fireP=plights.find(p=>p.kind==='fire');fireP.sk=[];fireP.F=60;fireP.bt=-1;fireP.boost=0;fireP.hs=1;fireOut=false;
+  woodItems=[];scatterWood(150);snakes=[];spawnSnakes(22);
   bigBranches=[];for(let n=0;n<600&&bigBranches.length<18;n++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+8,y=((t/MW)|0)*TS+8;if(tiles[t]===TT||Math.hypot(x-home.cx,y-home.cy)<110)continue;if(bigBranches.some(b=>Math.hypot(b.x-x,b.y-y)<90))continue;bigBranches.push(makeBig(x,y));}
   woodPiles=[];{const hs=home.hs,sx=(hs.x+hs.w+1)*TS+4,sy=(hs.y+1)*TS+8,x=inYard(sx,sy)?sx:(hs.x-2)*TS+8,y=sy;woodPiles.push({x,y,logs:[0,3,5,8]});}
   // a hoe (จอบ / บักจก) lies somewhere 50-66 m out in the plantation
@@ -323,6 +327,7 @@ function bake(){
       if(d<2&&len>30){const n=ri(1,2);for(let k=0;k<n;k++){const t=.3+rnd()*.4,na=clamp(a+(rnd()<.5?-1:1)*(.08+rnd()*.16),-Math.PI/2-.42,-Math.PI/2+.42);br(x+(x2-x)*t,y+(y2-y)*t,na,Math.min(len*(.5+rnd()*.3),(y+(y2-y)*t-4)/Math.max(.5,-Math.sin(na))),Math.max(.6,w*.62),d+1);}}
       tips.push([x2,y2]);};
     const limbs=ri(2,3);for(let k=0;k<limbs;k++){const a=-Math.PI/2+(k-(limbs-1)/2)*.17+(rnd()-.5)*.1;br(W2/2+(rnd()-.5)*2,H2,a,(H2-6)/Math.max(.5,-Math.sin(a))*(.92+rnd()*.06),2.6,0);}   // long bare V-shaped limbs stretching up
+    {g.globalCompositeOperation='destination-in';const gr=g.createLinearGradient(0,0,0,H2);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(.42,'rgba(0,0,0,.35)');gr.addColorStop(.7,'rgba(0,0,0,1)');g.fillStyle=gr;g.fillRect(0,0,W2,H2);g.globalCompositeOperation='source-over';}   // tips fade away
     const mask=col=>{const m=mk(W2,H2),q=m.getContext('2d');q.drawImage(cv,0,0);q.globalCompositeOperation='source-in';q.fillStyle=col;q.fillRect(0,0,W2,H2);return m;};
     return{img:cv,w:mask('#fff'),b:mask('#000')};});
   // rubber tree trunks: tapping cut, latex line, black cup
@@ -419,7 +424,7 @@ const cam={x:0,y:0};let camX=0,camY=0;
 
 function newGame(){
   genMap();bake();
-  player={wood:0,woodV:[],woodCd:0,x:startPos.x,y:startPos.y,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,fallA:0,fall:0,
+  player={snakes:0,snakeBite:null,wood:0,woodV:[],woodCd:0,x:startPos.x,y:startPos.y,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,fallA:0,fall:0,
     up:false,st:false,ev:0,charging:false,charge:0,ready:false,swingPow:0,swingReach:KMIN,swingDur:.1,weapon:'knife',hasHoe:false,swingDir:1,nextDir:1,idleT:0,combat:0,fought:false,pantT:0,breathPh:0,breathNext:0,kickT:0,kickHit:0,kcd:0,kickAng:0,armOff:1.2,armHv:6,bloody:0,swingT:0,swingLevel:0,swingAng:0,pendingHit:0,cd:0};
   stock=0;kills=0;gameTime=0;flashOn=true;muzzle=0;shake=0;invertF=0;
   zombies=[];particles=[];gibs=[];toasts=[];spawnT=0;flowT=0;hbT=0;flickT=0;flickNext=14+rnd()*15;death=null;dropL=null;dawn=0;
@@ -500,7 +505,7 @@ function lungeTarget(h,ang,R){let best=null,bd=1e9;for(const z of zombies){if(z.
   return best?{z:best,d:Math.hypot(best.x-h.x,best.y-h.y),a:Math.atan2(best.y-h.y,best.x-h.x)}:null;}
 function lungeTo(h,t,stand){return;   // dash removed: only aim at the target
 const mv=Math.min(24,Math.max(0,t.d-stand));if(mv<1)return;h.lunge={ux:Math.cos(t.a),uy:Math.sin(t.a),sp:mv/.065,t:.065};h.lean=Math.max(h.lean||0,2.4);}
-function tapAttack(ang){const h=player;if(state!=='play'||h.hidden)return;if(h.drag){toggleDrag();return;}if(h.carry){dropBunch();return;}if(h.wood){dropWood();return;}
+function tapAttack(ang){const h=player;if(state!=='play'||h.hidden)return;if(h.snakeBite){kickSnake();return;}if(h.drag){toggleDrag();return;}if(h.carry){dropBunch();return;}if(h.wood){dropWood();return;}
   const now=performance.now()/1000;if(now-(h.lastSw||0)<.25||h.kickT>0)return;h.lastSw=now;
   h.swingT=0;h.cd=0;h.charging=true;h.charge=.62;h.tap=true;release(ang==null?autoAim(h):ang);h.tap=false;}
 function release(angle,h=player){if(h===player)h.autoCh=false;
@@ -518,7 +523,8 @@ function doHit(h=player){
   for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-(z.crawl||z.state==='down'?5:3)>R0)continue;
     if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>ARC)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
   alertNear(90+60*p,h);hitter=h;
-  if(!best){if(h===player)hitPlant(h);return;}
+  const sh=snakeHits(h,a,R0,ARC+.2);
+  if(!best){if(h===player&&!sh)hitPlant(h);return;}
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   if(best.burn>0){const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;shake=Math.max(shake,2.5);sfx.hit();sfx.sever();for(let k=0;k<20;k++)sparks.push({x:z.x+(rnd()-.5)*8,y:z.y+(rnd()-.5)*4,h:4+rnd()*12,vx:ux*40+(rnd()-.5)*40,vy:uy*20+(rnd()-.5)*20,vh:10+rnd()*40,life:.4+rnd()*.6});killZ(z,ux,uy,false);toast('ฟันทีเดียว ร่วงเป็นถ่าน!');return;}
   const z=best,d=bd||1,low=z.crawl||z.state==='down',r0=(z.x-h.x)/d,r1=(z.y-h.y)/d,tip=d-(low?5:3)>R0-Math.max(4,R0*.26);
@@ -563,6 +569,7 @@ function cutLeg(z,ux,uy,p,m){
   addGib('leg',z.x,z.y,4,ux,uy);blood(z.x,z.y,5,16,ux,uy,80);z.bleed=3;z.bleedP=2;shake=5;sfx.sever();toast('ขาขาด! มันคลานแล้ว');
 }
 function kick(h=player){
+  if(h===player&&player.snakeBite&&state==='play'){kickSnake();return;}
   if(h===player&&player.carry)return;
   if(h===player&&h.charging&&h.autoCh){h.charging=false;h.autoCh=false;}
   if(state!=='play'||h.hidden||h.kickT>0||h.kcd>0||h.charging||h.swingT>0)return;
@@ -571,7 +578,7 @@ function kick(h=player){
 function doKick(h=player){
   const a=h.kickAng;let best=null,bd=1e9;
   for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-3>(h===player?WP.knife.kmax:19))continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>1.05)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
-  alertNear(110,h);if(!best)return;
+  snakeHits(h,a,WP.knife.kmax,1.1);alertNear(110,h);if(!best)return;
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;
   shake=Math.max(shake,4);sfx.kick();toast('ถีบ!');z.aware=6;
@@ -601,6 +608,60 @@ function drawBig(c,b,mono){const M=col=>mono||col,t=b.tone,BR=v=>`rgb(${v+26|0},
 function bigNear(){if(state!=='play'||player.carry||player.drag)return null;for(const b of bigBranches){const ex=b.x-Math.cos(b.a)*b.L/2,ey=b.y-Math.sin(b.a)*b.L/2;if(Math.hypot(ex-player.x,ey-player.y)<16||Math.hypot(b.x-player.x,b.y-player.y)<16)return b;}return null;}
 function toggleDrag(){if(state!=='play')return false;if(player.drag){const b=player.drag;player.drag=null;b.yard=inYard(b.x,b.y);nz(.3,'lowpass',500,150,.3,1);toast(b.yard?'วางกิ่งในบ้านแล้ว — เดี๋ยวแพมมาหักเป็นท่อน':'ปล่อยกิ่งไม้');return true;}
   const b=bigNear();if(!b)return false;player.drag=b;b.yard=false;b.pull=0;nz(.25,'lowpass',700,200,.3,1);toast('ลากกิ่งใหญ่กลับบ้าน (เดินช้าลง)');return true;}
+function spawnSnakes(n){for(let k=0;k<n*10&&n>0;k++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+3+rnd()*10,y=((t/MW)|0)*TS+3+rnd()*10;if(tiles[t]===TT||inYard(x,y)||Math.hypot(x-home.cx,y-home.cy)<130)continue;
+  snakes.push({x,y,a:rnd()*TAU,tw:rnd()*TAU,ph:rnd()*10,st:'idle',t:0,len:22+rnd()*7,seed:rnd()*100,wT:0,hissT:0});n--;}}
+function updateSnakes(dt){for(let i=snakes.length-1;i>=0;i--){const n=snakes[i];n.t+=dt;
+  if(n.st==='fly'){n.x+=n.vx*dt;n.y+=n.vy*dt;n.h+=n.vh*dt;n.vh-=210*dt;n.spin+=dt*16;if(n.t>1.7)snakes.splice(i,1);continue;}
+  if(n.st==='att'){n.x=player.x;n.y=player.y;continue;}
+  const dx=player.x-n.x,dy=player.y-n.y,d=Math.hypot(dx,dy),can=!player.hidden&&!player.up&&!player.st&&state==='play';
+  if(n.st==='idle'){if(can&&d<40){n.st='hiss';n.t=0;n.hissT=0;}else{n.wT-=dt;if(n.wT<=0){n.wT=2+rnd()*4;n.tw=rnd()*TAU;}n.a=angLerp(n.a,n.tw,dt*.8);const ox=n.x,oy=n.y;n.x+=Math.cos(n.a)*5*dt;n.y+=Math.sin(n.a)*5*dt;
+      if(inYard(n.x,n.y)||BM[tAt(Math.floor(n.x/TS),Math.floor(n.y/TS))]){n.x=ox;n.y=oy;n.tw=n.a+Math.PI;}n.ph+=dt*3;}}
+  else if(n.st==='hiss'){n.a=angLerp(n.a,Math.atan2(dy,dx),dt*7);n.hissT-=dt;if(n.hissT<=0&&d<120){n.hissT=.7+rnd()*.3;nz(.55,'highpass',5200,3600,.05+.16*Math.max(0,1-d/60),1,clamp(-dx/120,-1,1));}   // ฟ่อๆ
+    if(!can||d>58){n.st='idle';}else if(d<13&&n.t>.4){n.st='att';n.t=0;player.snakeBite=n;player.biteFlash=1.2;toast('งูกัด!!');sfx.bite();shake=Math.max(shake,2);}}}}
+function snakeKill(n){const i=snakes.indexOf(n);if(i<0)return;snakes.splice(i,1);blood(n.x,n.y,12,3,Math.cos(n.a),Math.sin(n.a),30);sfx.hit();
+  if(player.snakes<5){player.snakes++;toast(`ได้งูสิง! คล้องคอไว้ (${player.snakes}/5)`);}else toast('งูเต็มคอแล้ว (5 ตัว)');}
+function snakeHits(h,a,R,arc){if(h!==player)return false;let hit=false;for(const n of [...snakes]){if(n.st!=='hiss')continue;const dx=n.x-h.x,dy=n.y-h.y,d=Math.hypot(dx,dy);if(d>R+5)continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>arc)continue;snakeKill(n);hit=true;}return hit;}
+function kickSnake(){const n=player.snakeBite;if(!n)return;player.snakeBite=null;player.kcd=0;player.cd=0;player.swingT=0;
+  const a=player.facing+(rnd()-.5)*.8;n.st='fly';n.t=0;n.x=player.x;n.y=player.y;n.h=3;n.vx=Math.cos(a)*150;n.vy=Math.sin(a)*150;n.vh=190;n.spin=0;
+  player.kickAng=a;player.kickT=.32;player.kickHit=0;sfx.kick();toast('เตะงูกระเด็นไปแล้ว!');}
+function drawSnake(c,n,mono,T){const M=col=>mono||col,BODY='rgb(108,82,58)',BELLY='rgb(176,146,100)';
+  if(n.st==='fly'){const x=n.x-camX,y=n.y*K-camY-n.h;c.save();c.translate(x,y);c.rotate(n.spin);c.lineCap='round';c.strokeStyle=M('#0d0a07');c.lineWidth=2;c.beginPath();for(let i=0;i<=12;i++){const t=i/12,px=(t-.5)*n.len*.8,py=Math.sin(t*9+n.t*20)*2;i?c.lineTo(px,py):c.moveTo(px,py);}c.stroke();c.strokeStyle=M(BODY);c.lineWidth=1.1;c.stroke();c.restore();return;}
+  const pts=[],N=16,rear=n.st==='hiss'?Math.min(1,n.t/.25):0,att=n.st==='att';
+  for(let i=0;i<=N;i++){const t=i/N;let along,lat,z=0;
+    if(att){const ang=t*TAU*1.4+n.t*3;along=Math.cos(ang)*(3+t*2);lat=Math.sin(ang)*(3+t*2);z=t<.3?(1-t/.3)*3:0;}
+    else{along=-t*n.len;lat=Math.sin(t*10-n.ph*2.4)*2.2*Math.min(1,t*3+.2);if(rear&&t<.32){z=(1-t/.32)*7*rear;lat*=.3;}}
+    const wx=n.x+Math.cos(n.a)*along-Math.sin(n.a)*lat,wy=n.y+Math.sin(n.a)*along+Math.cos(n.a)*lat;pts.push([wx-camX,wy*K-camY-z]);}
+  c.lineCap='round';c.lineJoin='round';
+  for(let i=0;i<N;i++){c.strokeStyle=M('#0d0a07');c.lineWidth=2.1-i*.07;c.beginPath();c.moveTo(pts[i][0],pts[i][1]);c.lineTo(pts[i+1][0],pts[i+1][1]);c.stroke();}
+  for(let i=0;i<N;i++){c.strokeStyle=M(BODY);c.lineWidth=1.25-i*.05;c.beginPath();c.moveTo(pts[i][0],pts[i][1]);c.lineTo(pts[i+1][0],pts[i+1][1]);c.stroke();}
+  if(!mono){c.strokeStyle=BELLY;c.lineWidth=.35;c.beginPath();c.moveTo(pts[1][0],pts[1][1]+.4);for(let i=2;i<8;i++)c.lineTo(pts[i][0],pts[i][1]+.4);c.stroke();}
+  const h0=pts[0];c.fillStyle=M('#0d0a07');c.beginPath();c.ellipse(h0[0],h0[1],1.5,1.1,0,0,TAU);c.fill();c.fillStyle=M(BODY);c.beginPath();c.ellipse(h0[0],h0[1]-.1,1.05,.75,0,0,TAU);c.fill();
+  if(!mono){c.fillStyle='#000';c.fillRect(h0[0]+Math.cos(n.a)*.4-.3,h0[1]-.5,.6,.6);
+    if(rear&&Math.sin(T*22+n.seed)>.2){c.strokeStyle='rgb(214,30,22)';c.lineWidth=.4;c.beginPath();c.moveTo(h0[0]+Math.cos(n.a)*1.2,h0[1]+Math.sin(n.a)*.6);c.lineTo(h0[0]+Math.cos(n.a)*3,h0[1]+Math.sin(n.a)*1.2);c.stroke();}}}
+// ---------- grilling ----------
+function meat(){let m=0;if(fireP&&fireP.sk)for(const k of fireP.sk)if(k.t>=12)m+=k.por;return m;}
+function food(){return stock+meat();}
+function foodSpot(p){if(stock>0&&postPos)return{x:postPos.x+(p.x<postPos.x?-8:8),y:postPos.y+5,cx:postPos.x,cy:postPos.y};let b=null,bd=1e9;if(fireP&&fireP.sk)for(const k of fireP.sk)if(k.t>=12&&k.por>0){const d=Math.hypot(k.x-p.x,k.y-p.y);if(d<bd){bd=d;b=k;}}
+  if(!b)return null;return{x:b.x+(b.x-fireP.x)*.6,y:b.y+(b.y-fireP.y)*.6,cx:b.x,cy:b.y};}
+function eatFood(n){let got=0,kind='กล้วย';if(stock>0){got=Math.min(stock,n);stock-=got;}else{kind='งูปิ้ง';for(const k of fireP.sk){if(got>=n)break;if(k.t<12)continue;const t=Math.min(k.por,n-got);k.por-=t;got+=t;}fireP.sk=fireP.sk.filter(k=>k.por>0);}return{got,kind};}
+function grillAvail(){return state==='play'&&player.snakes>0&&inYard(player.x,player.y)&&fireP&&fireP.sk.length<8;}
+function grillSnakes(){const F=fireP,free=[];for(let k=0;k<8;k++)if(!F.sk.some(q=>q.slot===k))free.push(k);const n=Math.min(player.snakes,free.length);if(!n){toast('รอบกองไฟเต็มแล้ว (8 ไม้)');return;}
+  for(let i=0;i<n;i++){const k=free[i],a=k*TAU/8+.2;F.sk.push({slot:k,x:F.x+Math.cos(a)*15,y:F.y+Math.sin(a)*12,t:0,por:6,seed:rnd()*10});}
+  player.snakes-=n;toast(`ปิ้งงู ${n} ไม้ — สุกแล้วกินได้ไม้ละ 6 คำ`);nz(.8,'highpass',2600,1800,.2,1);}
+function drawSkewer(c,k,mono,T){const M=col=>mono||col,F=fireP,x=k.x-camX,y=k.y*K-camY,tx=x+(F.x-k.x)*.3,ty=y-15;
+  c.lineCap='round';c.strokeStyle=M('#5a4836');c.lineWidth=.8;c.beginPath();c.moveTo(x,y);c.lineTo(tx,ty);c.stroke();
+  c.strokeStyle=M('#060504');c.lineWidth=1.5;c.beginPath();for(let i=0;i<=10;i++){const t=.18+i/10*.75,px=x+(tx-x)*t,py=y+(ty-y)*t,w=(i%2?1:-1)*2.2;i?c.lineTo(px+w,py):c.moveTo(px+w,py);}c.stroke();
+  if(!mono&&k.t<12&&Math.sin(T*9+k.seed)>.6){c.fillStyle=gray(120);c.fillRect(tx-1+Math.sin(T*3+k.seed)*1.5,ty-3-((T*6+k.seed)%5),.8,.8);}}
+// ---------- the campfire throws shadows like a flashlight ----------
+function fireShadows(){const F=fireP;if(!F||F.F<=0)return;const R=F.r*1.15,str=Math.min(1,F.v/230),c=lctx;c.save();c.fillStyle='#000';
+  const S=(wx,wy)=>[wx-camX,wy*K-camY];
+  const cast=(x,y,w,len0)=>{const dx=x-F.x,dy=y-F.y,d=Math.hypot(dx,dy);if(d<9||d>R)return;const ux=dx/d,uy=dy/d,L=len0+d*.4,px=-uy,py=ux;c.globalAlpha=.7*str*Math.pow(1-d/R,.6);
+    const a=S(x+px*w,y+py*w),b=S(x+ux*L+px*w*1.7,y+uy*L+py*w*1.7),e=S(x+ux*L-px*w*1.7,y+uy*L-py*w*1.7),f=S(x-px*w,y-py*w);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.lineTo(e[0],e[1]);c.lineTo(f[0],f[1]);c.closePath();c.fill();};
+  for(const e of[player,bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null])if(e&&!e.up&&!e.st&&!e.hidden)cast(e.x,e.y,e===praewa?1.8:2.8,12);
+  for(const z of zombies)if(!z.up&&!z.st)cast(z.x,z.y,z.crawl||z.state==='down'?4:2.8,z.crawl||z.state==='down'?4:12);
+  for(const p of woodPiles)cast(p.x,p.y,6,7);for(const p of props)cast(p.x,p.y,4,7);if(postPos)cast(postPos.x,postPos.y,1.4,18);
+  for(const w of woodItems)cast(w.x,w.y,2.4,3);for(const b of bigBranches)cast(b.x,b.y,8,4);for(const n of snakes)if(n.st!=='fly')cast(n.x,n.y,1.5,3);
+  c.restore();}
 function scatterWood(n){for(let k=0;k<n*6&&n>0;k++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+2+rnd()*12,y=((t/MW)|0)*TS+2+rnd()*12;if(inYard(x,y)||tiles[t]===TT)continue;if(home&&Math.hypot(x-home.cx,y-home.cy)<90)continue;woodItems.push({x,y,a:rnd()*TAU,v:(rnd()*10)|0});n--;}}
 function woodNear(){if(state!=='play'||player.carry||player.hidden)return false;for(const w of woodItems)if(Math.abs(w.x-player.x)<33&&Math.abs(w.y-player.y)<33&&Math.hypot(w.x-player.x,w.y-player.y)<32)return true;return false;}
 function pickWood(){if(!woodNear())return false;if(player.wood>=20){toast('ถือฟืนเต็มแล้ว (20 ท่อน)');return true;}
@@ -706,7 +767,7 @@ function updatePlay(dt){
    player.lock=lz;const free=!player.carry&&!player.drag&&!player.wood&&!player.hidden;
    if(player.charging&&!player.swingT){player.charging=false;player.autoCh=false;}}
   let calm=player.combat<=0;if(calm)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
-  const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
+  const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.snakeBite?.5:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
   if(!player.hidden)moveCircle(player,player.vx*dt,player.vy*dt,5);
   const sp=Math.hypot(player.vx,player.vy);player.moveAmt=Math.min(1,sp/40);player.phase+=sp*dt*.24;
@@ -734,7 +795,7 @@ function updatePlay(dt){
   flowT-=dt;if(flowT<=0){computeFlow(player.x,player.y);if(bot&&!bot.dead)computeFlow(bot.x,bot.y,flowB);flowT=.25;}
   updateZombies(dt);
   updateBot(dt,'play');
-  updateFire(dt);updatePraewa(dt,'play');updatePam(dt,'play');glareTick(dt);
+  updateFire(dt);updateSnakes(dt);if(fireP&&fireP.sk)for(const k of fireP.sk)if(fireP.F>0)k.t+=dt;if(player.biteFlash>0)player.biteFlash-=dt;updatePraewa(dt,'play');updatePam(dt,'play');glareTick(dt);
   if(state!=='play')return;
   smellT-=dt;if(smellT<=0){smellT=14;for(const z of zombies)if(z.state==='wander'){z.state='search';z.t=12;z.lx=player.x+(rnd()-.5)*140;z.ly=player.y+(rnd()-.5)*140;}}   // they slowly sniff you out
   let nd=1e9;for(const z of zombies)if(z.aware>0)nd=Math.min(nd,Math.hypot(z.x-player.x,z.y-player.y));
@@ -985,8 +1046,8 @@ function updatePam(dt,mode){
   const brT=bigBranches.find(b=>b.yard&&b!==player.drag);
   if(tz){gx=tz.x;gy=tz.y;sp=54;
     if(td<40&&p.igCd<=0){p.facing=Math.atan2(tz.y-p.y,tz.x-p.x);p.thrust=.4;p.act=.35;p.igCd=1.2;igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}}
-  else if(p.hunger>=1&&stock>0&&postPos){gx=postPos.x+(p.x<postPos.x?-8:8);gy=postPos.y+5;
-    if(Math.hypot(postPos.x-p.x,postPos.y-p.y)<14){const n=Math.min(stock,2);stock-=n;p.hunger=0;p.eatT=2.4;gx=null;sayAs(p,`กินกล้วย ${n} ลูก อิ่มแล้ว`);}}
+  else if(p.hunger>=1&&food()>0&&foodSpot(p)){const fs=foodSpot(p);gx=fs.x;gy=fs.y;
+    if(Math.hypot(fs.cx-p.x,fs.cy-p.y)<17){const r=eatFood(2);p.hunger=0;p.eatT=2.4;gx=null;sayAs(p,`กิน${r.kind} ${r.got} คำ อิ่มแล้ว`);}}
   else if(brT){gx=brT.x;gy=brT.y;sp=46;if(Math.hypot(brT.x-p.x,brT.y-p.y)<16){p.facing=Math.atan2(brT.y-p.y,brT.x-p.x);p.act=2.6;p.breaking=true;p.doAct=()=>breakBranch(brT);if(rnd()<.6)sayAs(p,'เดี๋ยวแพมหักให้');}}
   else if(p.torch<=0){   // fetch fire from the campfire
     if(F.F>0){gx=F.x+(p.x<F.x?-16:16);gy=F.y+3;if(Math.hypot(F.x-p.x,F.y-p.y)<22){p.facing=Math.atan2(F.y-p.y,F.x-p.x);p.act=.9;p.doAct=()=>{p.torch=55;nz(.35,'bandpass',600,200,.25,1);};}}
@@ -1011,7 +1072,7 @@ function drawLantern(c,x,y,mono,T){c.strokeStyle=mono||'#1c1c1c';c.lineWidth=.7;
   c.fillStyle=mono?'#fff':'#f3ece0';c.fillRect(x-1.2,y-1.8,2.4,3.2);if(!mono){c.fillStyle='rgb(230,196,60)';c.fillRect(x-.4,y-.9,.8,1.4);}}
 function updatePraewa(dt,mode){
   const p=praewa;if(!p)return;if(p.say){p.say.t-=dt;if(p.say.t<=0)p.say=null;}
-  p.sayT-=dt;if(p.sayT<=0&&mode!=='cut'){p.sayT=9+rnd()*9;if(p.hunger>=1&&stock===0)sayAs(p,PW_HUNGRY[(rnd()*PW_HUNGRY.length)|0]);else sayAs(p,PW_LINES[(rnd()*PW_LINES.length)|0]);}
+  p.sayT-=dt;if(p.sayT<=0&&mode!=='cut'){p.sayT=9+rnd()*9;if(p.hunger>=1&&food()===0)sayAs(p,PW_HUNGRY[(rnd()*PW_HUNGRY.length)|0]);else sayAs(p,PW_LINES[(rnd()*PW_LINES.length)|0]);}
   if(mode!=='play'){p.moveAmt=0;return;}
   p.hunger+=dt/90;p.refuelT-=dt;if(p.eatT>0)p.eatT-=dt;
   if(fleeUp(p,dt,false))return;   // zombies in the yard: up the ladder! (a dead fire doesn't scare her off — she relights it)
@@ -1022,8 +1083,8 @@ function updatePraewa(dt,mode){
   else if((p.refuelT<=0||F.F<=0)&&woodPiles.some(q=>q.logs.length)){   // hungry or not, the fire comes first
     let best=null,bd=1e9;for(const q of woodPiles){if(!q.logs.length)continue;const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){bd=d;best=q;}}
     gx=best.x;gy=best.y+5;sp=36;if(bd<14){p.carryLog=best.logs.pop();if(!best.logs.length)woodPiles.splice(woodPiles.indexOf(best),1);}}
-  else if(p.hunger>=1&&stock>0&&postPos){gx=postPos.x+(p.x<postPos.x?-8:8);gy=postPos.y+5;
-    if(Math.hypot(postPos.x-p.x,postPos.y-p.y)<14){const n=Math.min(stock,2);stock-=n;p.hunger=0;p.eatT=2.4;gx=null;sayAs(p,`อร่อยจัง (${n} ลูก)`);}}
+  else if(p.hunger>=1&&food()>0&&foodSpot(p)){const fs=foodSpot(p);gx=fs.x;gy=fs.y;
+    if(Math.hypot(fs.cx-p.x,fs.cy-p.y)<17){const r=eatFood(2);p.hunger=0;p.eatT=2.4;gx=null;sayAs(p,r.kind==='กล้วย'?`อร่อยจัง (${r.got} ลูก)`:'งูปิ้งอร่อยจัง~');}}
   else if((p.refuelT<=0||F.F<=0)&&woodPiles.some(q=>q.logs.length)){
     let best=null,bd=1e9;for(const q of woodPiles){if(!q.logs.length)continue;const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){bd=d;best=q;}}
     gx=best.x;gy=best.y+5;sp=36;if(bd<14){p.carryLog=best.logs.pop();if(!best.logs.length)woodPiles.splice(woodPiles.indexOf(best),1);}}
@@ -1038,7 +1099,7 @@ function updateBot(dt,mode){
     if(b.deadT<14&&rnd()<dt*9){const r=3+Math.min(18,b.deadT*3),an=rnd()*TAU,rr=rnd()*r;bakeSplat(b.x+Math.cos(an)*rr,b.y+Math.sin(an)*rr,1.5+rnd()*3);}return;}
   b.sayT-=dt;if(b.sayT<=0&&mode!=='sleep')botSay();
   if(b.pokeT>0)b.pokeT-=dt;if(b.pokeCd>0)b.pokeCd-=dt;
-  b.hunger+=dt/75;if(b.hunger>=1&&stock===0&&rnd()<dt*.08&&!b.say)botSay(5);
+  b.hunger+=dt/75;if(b.hunger>=1&&food()===0&&rnd()<dt*.08&&!b.say)botSay(5);
   if(mode==='dead'){b.moveAmt=0;return;}
   if(mode!=='play'){   // cutscene: go to bed with you
     const dx=player.x+10-b.x,dy=player.y+6-b.y,d=Math.hypot(dx,dy);if(d>300){b.x=player.x+10;b.y=player.y+6;collide(b,4.5);}
@@ -1066,8 +1127,8 @@ function updateBot(dt,mode){
      else if(!b.up)b.climbSaid=false;}
     if(rnd()<dt*.25&&!b.say)botSay(rnd()<.5?4:7);}
   else if(b.eatT>0){b.eatT-=dt;b.moveAmt=0;face=Math.atan2(postPos.y-b.y,postPos.x-b.x);}
-  else if(b.hunger>=1&&stock>0&&postPos){gx=postPos.x+(b.x<postPos.x?-9:9);gy=postPos.y+5;sp=44;
-    if(Math.hypot(postPos.x-b.x,postPos.y-b.y)<16){const n=Math.min(stock,ri(2,3));stock-=n;b.hunger=0;b.eatT=2.6;gx=null;botSay(`กินกล้วย ${n} ลูก แซ่บคัก!`);tn('square',500,700,.05,.05);}}
+  else if(b.hunger>=1&&food()>0&&foodSpot(b)){const fs=foodSpot(b);gx=fs.x;gy=fs.y;sp=44;
+    if(Math.hypot(fs.cx-b.x,fs.cy-b.y)<18){const r=eatFood(ri(2,3));b.hunger=0;b.eatT=2.6;gx=null;botSay(`กิน${r.kind} ${r.got} คำ แซ่บคัก!`);tn('square',500,700,.05,.05);}}
   else{b.mindT-=dt;
     if(b.mindT<=0||!b.goal){b.mindT=3+rnd()*5;const r=rnd(),gtx=home.hs.di*TS+8,gty=home.hs.dj*TS+8;
       if(r<.45){const gi=home.hs.gate?{x:home.hs.gate.x,y:home.hs.gate.y-(home.hs.side==='b'?20:home.hs.side==='t'?-20:0)+0,}:{x:gtx,y:gty};if(home.hs.side==='l')gi.x+=20;if(home.hs.side==='r')gi.x-=20;b.goal={x:gi.x+(rnd()-.5)*40,y:gi.y+(rnd()-.5)*30};}
@@ -1129,7 +1190,7 @@ function nextNight(){
   player.down=false;player.fall=0;player.combat=0;player.pantT=0;player.cleared=false;player.fought=false;player.nextDir=1;player.facing=Math.PI/2;
   computeFlow(player.x,player.y);if(bot&&bot.dead){bakeCorpse({x:bot.x,y:bot.y,arms:[true,true],crawl:false},Math.cos(bot.fallA),Math.sin(bot.fallA),false);bot=null;toast('คืนนี้ไม่มี'+BOTNAME()+'แล้ว…');}
   if(bot){bot.x=player.x+10;bot.y=player.y+4;lvSet(bot);collide(bot,4.5);bot.goal=null;bot.pantT=0;botSay(rnd()<.5?5:3);}
-  if(praewa){praewa.carryLog=-1;praewa.goal=null;}if(pam){pam.goal=null;pam.post=null;pam.act=0;}postTorches=[];fireP.F=Math.max(fireP.F,60);fireOut=false;scatterWood(40);
+  if(praewa){praewa.carryLog=-1;praewa.goal=null;}if(pam){pam.goal=null;pam.post=null;pam.act=0;}postTorches=[];spawnSnakes(6);player.snakeBite=null;fireP.F=Math.max(fireP.F,60);fireOut=false;scatterWood(40);
   spawnNight();
 }
 function win(){state='win';player.charging=false;for(const z of zombies){z.state='wander';z.aware=0;}setTimeout(()=>showEnd(true),1800);}
@@ -1368,6 +1429,10 @@ function drawP(c,T,mono,h=player){
     c.fillStyle=M('#1c1c1c');c.fillRect(tipx-1,tipy-1,2,2);
     if(h.torch>0)flames(c,tipx,tipy+.5,3,1,7,performance.now()/1000,3,!!mono,1.3);
     const lx=fx-px*3.8,ly=hipY+2;c.strokeStyle=M('#8c8c8c');c.lineWidth=1.4;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(lx,ly-3.6);c.stroke();drawLantern(c,lx,ly,mono);}
+  if(h===player&&h.snakeBite){const n=h.snakeBite;n.x=h.x;n.y=h.y;const sv={...n,x:h.x+2,y:h.y+1};drawSnake(c,sv,mono,performance.now()/1000);}
+  if(h===player&&h.snakes>0&&!away){for(let k=0;k<h.snakes;k++){const o=k*.5,dl=6.5+k*.9;   // dead snakes draped around the neck
+      c.lineCap='round';c.strokeStyle=M('#0d0a07');c.lineWidth=1.5;c.beginPath();c.moveTo(fx-2.6-o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx-3.6-o*.4,toY,fx-3+o*.2,toY-4.6+dl);c.moveTo(fx+2.6+o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx+3.6+o*.4,toY,fx+3-o*.2,toY-4.6+dl*.9);c.moveTo(fx-2.6-o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx,toY-6.4-o*.3,fx+2.6+o*.3,toY-4.6+o*.2);c.stroke();
+      c.strokeStyle=M('rgb(108,82,58)');c.lineWidth=.7;c.stroke();}}
   if(h!==player&&!PM){drawLantern(c,fx-px*(PW?4.4:3.8),hipY+(PW?2.5:1.5),mono);}   // small lantern hung at the hip
   if(PM){}else if(PW){const sk=M('#c9c4bc');c.strokeStyle=sk;c.lineWidth=1.6;
     if(h.carryLog>=0){const lx=fx+fwx*3,ly=shY+4+fwy*3;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(lx+px*2,ly);c.moveTo(shLx,shLy);c.lineTo(lx-px*2,ly);c.stroke();drawLog(c,lx,ly+.5,Math.atan2(py,px),h.carryLog,mono,.8,false);}
@@ -1468,12 +1533,15 @@ function renderObjects(T){
   if(bot)objs.push({y:bot.down?bot.y-6:bot.y,k:14});
   if(praewa&&!(praewa.roof>0))objs.push({y:praewa.y,k:20});
   if(pam)objs.push({y:pam.y,k:23});
+  for(const n of snakes)if(n.st!=='att'&&n.x>camX-40&&n.x<camX+vw+40&&n.y*K>camY-40&&n.y*K<camY+vh+40)objs.push({y:n.st==='fly'?n.y+30:n.y,k:29,n});
+  if(fireP&&fireP.sk)for(const k of fireP.sk)objs.push({y:k.y,k:28,sk:k});
   for(const t of postTorches)objs.push({y:t.y+.5,k:22,t});
   for(const w of woodItems)if(w.x>camX-20&&w.x<camX+vw+20&&w.y*K>camY-20&&w.y*K<camY+vh+20)objs.push({y:w.y,k:18,w});
   for(const p of woodPiles)objs.push({y:p.y,k:19,p});
   for(const P of props)if(P.kind==='jar'&&P.x>camX-30&&P.x<camX+vw+30&&P.y*K>camY-30&&P.y*K<camY+vh+40)objs.push({y:P.y,k:12,P});
   for(const P of plights)if(!P.dyn&&P.x>camX-30&&P.x<camX+vw+30&&P.y*K>camY-30&&P.y*K<camY+vh+30)objs.push({y:P.kind==='candle'?P.y+(P.e?6:0)+.5:P.y,k:P.kind==='candle'?9:10,P});
   objs.sort((a,b)=>a.y-b.y);
+  fireShadows();
   for(const o of objs){const e=o.k===6?o.z:o.k===7?player:o.k===14?bot:o.k===20?praewa:o.k===23?pam:null,ev=e?(e.ev||0)*PLH:0;
     if(ev>.2){sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);drawObj(o,T,sctx,lctx);sctx.restore();lctx.restore();}else drawObj(o,T,sctx,lctx);}
   drawRoof(T);
@@ -1567,6 +1635,8 @@ function drawObj(o,T,s,l){
   case 19:{const v=lightAt(o.p.x,o.p.y+3);drawPile(s,o.p,null);drawPile(l,o.p,gray(Math.max(95,Math.min(255,v*1.25))));break;}
   case 22:{drawPostTorch(s,o.t,T,0);drawPostTorch(l,o.t,T,Math.max(60,lightAt(o.t.x,o.t.y)));break;}
   case 23:{if(pam.down){withOutline(s,pam,c=>drawLying(c,T,null,pam));drawLying(l,T,gray(lightAt(pam.x,pam.y)),pam);}else{withOutline(s,pam,c=>drawP(c,T,null,pam));drawP(l,T,gray(Math.max(28,lightAt(pam.x,pam.y))),pam);}break;}
+  case 28:{drawSkewer(s,o.sk,null,T);drawSkewer(l,o.sk,gray(Math.max(40,lightAt(o.sk.x,o.sk.y))),T);break;}
+  case 29:{drawSnake(s,o.n,null,T);drawSnake(l,o.n,gray(Math.max(22,lightAt(o.n.x,o.n.y))),T);break;}
   case 20:{withOutline(s,praewa,c=>drawP(c,T,null,praewa));drawP(l,T,gray(Math.max(28,lightAt(praewa.x,praewa.y))),praewa);break;}
   case 17:{const v=lightAt(postPos.x,postPos.y+3);drawPost(s,null);drawPost(l,gray(v));break;}
   case 13:{const v=lightAt(hoe.x,hoe.y);drawHoeGround(s,null);drawHoeGround(l,gray(Math.max(v,12)));break;}
@@ -1707,7 +1777,7 @@ function drawUI(dt){
   const s=UIS;
   uiText('ไฟคาดหัว: '+(player.hidden?'ปิด (ซ่อน)':flashOn?'เปิด':'ปิด'),14,22*s,13*s,'left');
   uiText(`คืนที่ ${night} · ซอมบี้เหลือ ${zombies.length}`,14,42*s,12*s,'left');uiText('อาวุธ: '+W().name,14,60*s,11*s,'left');if(bot)uiText(bot.dead?BOTNAME()+': ตายแล้ว':BOTNAME()+': ยังรอด'+(bot.hunger>=1?' (หิว)':''),14,77*s,11*s,'left',bot.dead?UIRED:'#5fd35f');
-  uiText(`🍌 กล้วยที่บ้าน: ${stock} ลูก`,14,(bot?94:77)*s,11*s,'left','#e6c43c');
+  uiText(`🍌 กล้วยที่บ้าน: ${stock} ลูก`+(meat()?` · 🐍 งูปิ้ง ${meat()} คำ`:'')+(player.snakes?` · งูที่คอ ${player.snakes}/5`:''),14,(bot?94:77)*s,11*s,'left','#e6c43c');
   {const yy=(bot?128:111)*s,w=90*s,F=fireP;if(F){u.fillStyle=BG;u.fillRect(14,yy-5*s,w+4,10*s);u.fillStyle=F.F>0?(F.boost>0?'#ffd27a':UIRED):'#5c0a10';u.fillRect(16,yy-3*s,w*F.F/120,6*s);u.strokeStyle=FG;u.lineWidth=1;u.strokeRect(14.5,yy-4.5*s,w+3,9*s);
     uiText(F.F>0?`กองไฟ ${Math.ceil(F.F)} วิ`:'กองไฟดับ!',22+w,yy,10*s,'left',F.F>0?FG:UIRED);}
     const woodLeft=woodPiles.reduce((a,p)=>a+p.logs.length,0);uiText(`ฟืนที่บ้าน: ${woodLeft} ท่อน`+(player.wood?` · ในมือ ${player.wood}/20`:''),14,yy+16*s,11*s,'left','#c8b79c');}if(player.carry)uiText(`แบกกล้วย ${player.carry.count} ลูก (ช้าลง · กดโจมตี = วาง)`,14,(bot?111:94)*s,11*s,'left','#e6c43c');
@@ -1722,6 +1792,10 @@ function drawUI(dt){
     u.fillStyle=BG;u.fillRect(x-2,y-2,w+4,h+4);u.fillStyle=FG;u.fillRect(x,y,w,h);u.beginPath();u.moveTo(bx-4*s,y+h);u.lineTo(bx+4*s,y+h);u.lineTo(bx,y+h+7*s);u.closePath();u.fill();
     u.fillStyle=BG;u.textAlign='center';u.textBaseline='middle';u.fillText(sp.say.text,x+w/2,y+h/2+1);u.globalAlpha=1;
     uiText(isP?'แพรวา':isM?'แพม':BOTNAME(),bx,by+4*s,9*s,'center',isP?'#ff9ec8':isM?'#ffb347':'#5fd35f');}
+  if(player.snakeBite&&state==='play'){const hx=(player.x-camX)*P,hy=(player.y*K-camY-elevOf(player)-40)*P,pu=1+.12*Math.sin(performance.now()/90);u.save();u.font=`900 ${20*s*pu}px system-ui,sans-serif`;u.textAlign='center';u.lineWidth=5*s;u.strokeStyle='#0a0908';u.strokeText('งูกัด!!',hx,hy);u.fillStyle='#ff3b30';u.fillText('งูกัด!!',hx,hy);u.restore();}
+  if(grillAvail()){const gx0=fireB.x-66*s,gy0=fireB.y-176*s,r=27*s;uiCircle(gx0,gy0,r,gDrag?FG:'#8a2a1a',2);uiText('ปิ้ง',gx0,gy0-5*s,11*s,'center',gDrag?BG:FG);uiText('งู',gx0,gy0+8*s,11*s,'center',gDrag?BG:FG);
+    if(gDrag){const A=wAim(gDrag),ok=Math.hypot(A.x-fireP.x,A.y-fireP.y)<34,sx=(A.x-camX)*P,sy=(A.y*K-camY)*P,col=ok?'#ffb347':UIRED,pu=.5+.5*Math.sin(performance.now()/120);u.save();u.shadowColor=col;u.shadowBlur=14*s;u.strokeStyle=col;u.lineWidth=3.5*s;u.beginPath();u.ellipse(sx,sy,(24+5*pu)*s,(11+2.5*pu)*s,0,0,TAU);u.stroke();u.restore();
+      uiText('🐍',sx,sy-2*s,18*s,'center',FG);uiText(ok?`ปล่อยเพื่อปิ้งงู ${Math.min(player.snakes,8-fireP.sk.length)} ไม้`:'ลากไปที่กองไฟ',sx,sy-24*s,11*s,'center',col);}}
   if(woodAvail()){const b=woodBtn,dr=!!wDrag;uiCircle(b.x,b.y,b.r,dr?FG:'#c08a52',2);uiText('วาง',b.x,b.y-5*s,11*s,'center',BG);uiText('ฟืน',b.x,b.y+8*s,11*s,'center',BG);
     if(!dr)uiText(showTouch?'กดค้าง ลากไปวาง':'ลาก หรือกด V',b.x,b.y-b.r-9*s,9*s,'center','#c08a52');
     if(wDrag){const A=wAim(wDrag),ok=inYard(A.x,A.y)&&!(fireP&&Math.hypot(A.x-fireP.x,A.y-fireP.y)<16)&&!BM[tAt(Math.floor(A.x/TS),Math.floor(A.y/TS))],sx=(A.x-camX)*P,sy=(A.y*K-camY)*P,pu=.5+.5*Math.sin(performance.now()/120),col=ok?'#7dff7d':UIRED;
@@ -1761,7 +1835,7 @@ function drawUI(dt){
       const f=fireB;
       if(aimT.active){uiCircle(f.x,f.y,f.r*1.8,null,1.5);if(aimT.aiming){const dd=Math.min(f.r*1.8,Math.hypot(aimT.dx,aimT.dy)),an=Math.atan2(aimT.dy,aimT.dx);uiCircle(f.x+Math.cos(an)*dd,f.y+Math.sin(an)*dd,f.r*.45,FG,2);}}
       const on=aimT.active;uiCircle(f.x,f.y,f.r,on?FG:BG,2.5);
-      uiText('ฟัน',f.x,f.y-4*s,17*s,'center',on?BG:FG);uiText('แตะรัวๆ',f.x,f.y+14*s,10*s,'center',on?BG:FG);
+      if(player.snakeBite){uiText('เตะงู',f.x,f.y-4*s,16*s,'center','#ff3b30');uiText('ออกไป!',f.x,f.y+14*s,11*s,'center','#ff3b30');}else{uiText('ฟัน',f.x,f.y-4*s,17*s,'center',on?BG:FG);uiText('แตะรัวๆ',f.x,f.y+14*s,10*s,'center',on?BG:FG);}
       for(const b of visBtns()){if(b.id==='sleep')continue;b.flash=Math.max(0,b.flash-dt);let bo=b.flash>0;if(b.id==='light')bo=bo||flashOn;if(b.id==='hide')bo=bo||player.hidden||!!nw;
         if(b.id==='look'){const on=look.active&&look.btn;uiCircle(b.x,b.y,b.r,on?FG:BG,2);u.save();u.strokeStyle=on?BG:FG;u.lineWidth=2*s;u.beginPath();u.arc(b.x,b.y,b.r*.62,Math.PI*1.12,Math.PI*1.45);u.stroke();u.beginPath();u.arc(b.x,b.y,b.r*.62,Math.PI*1.55,Math.PI*1.88);u.stroke();
           for(const[ax,dir]of[[Math.PI*1.12,-1],[Math.PI*1.88,1]]){const tx=b.x+Math.cos(ax)*b.r*.62,ty=b.y+Math.sin(ax)*b.r*.62;u.fillStyle=on?BG:FG;u.beginPath();u.moveTo(tx+dir*4*s,ty+2*s);u.lineTo(tx-dir*1*s,ty-4*s);u.lineTo(tx-dir*2*s,ty+4*s);u.closePath();u.fill();}u.restore();
@@ -1771,7 +1845,7 @@ function drawUI(dt){
         if(b.id==='pickw'){uiCircle(b.x,b.y,b.r,'#c08a52',2);uiText('เก็บ',b.x,b.y-5*s,11*s,'center',BG);uiText('ฟืน',b.x,b.y+8*s,11*s,'center',BG);continue;}
         if(b.id==='carry'){uiCircle(b.x,b.y,b.r,'#e6c43c',2);uiText('แบก',b.x,b.y-5*s,10*s,'center',BG);uiText('กล้วย',b.x,b.y+7*s,9*s,'center',BG);continue;}
         if(b.id==='swap'){bo=bo||hoeNear();uiCircle(b.x,b.y,b.r,bo?'#5fd35f':BG,2);uiText('เปลี่ยน',b.x,b.y-5*s,9*s,'center',bo?BG:FG);uiText('อาวุธ',b.x,b.y+6*s,9*s,'center',bo?BG:FG);continue;}
-        uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.label,b.x,b.y,(b.big?19:11)*s,'center',bo?BG:FG);}
+        uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.id==='kick'&&player.snakeBite?'เตะงูออก':b.label,b.x,b.y,(b.big?(player.snakeBite&&b.id==='kick'?14:19):11)*s,'center',player.snakeBite&&b.id==='kick'?'#ff3b30':bo?BG:FG);}
     }
   }
 }
@@ -1792,6 +1866,7 @@ function mouseAngle(){const wx=mouse.x/P+camX,wy=(mouse.y/P+camY+8)/K;return Mat
 function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l>joyR){dx*=joyR/l;dy*=joyR/l;joy.kx=joy.bx+dx;joy.ky=joy.by+dy;l=joyR;}const m=l/joyR;joyV=m<.12?{x:0,y:0}:{x:dx/joyR,y:dy/joyR};}
 ui.addEventListener('pointerdown',e=>{
   e.preventDefault();initAudio();const x=e.clientX,y=e.clientY;
+  if(grillAvail()&&Math.hypot(x-(fireB.x-66*UIS),y-(fireB.y-176*UIS))<27*UIS*1.25){gDrag={id:e.pointerId,x,y,sx:x,sy:y,wx:fireP.x+20,wy:fireP.y+24};return;}
   if(woodAvail()&&Math.hypot(x-woodBtn.x,y-woodBtn.y)<woodBtn.r*1.25){wDrag={id:e.pointerId,x,y,sx:x,sy:y,wx:vw/2+camX,wy:(vh/2+camY)/K,t0:performance.now()};try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
   if(e.pointerType==='mouse'){mouse.x=x;mouse.y=y;mouse.active=true;if(sleepAvail()&&Math.hypot(x-sleepBtn.x,y-sleepBtn.y)<sleepBtn.r*1.6){act(sleepBtn);return;}if(showTouch){const b=hitBtn(x,y);if(b){act(b);return;}}
     if(e.button===0&&state==='play'){tapAttack(showTouch?null:mouseAngle());}else if(e.button===2&&state==='play'){if(!showTouch)player.facing=mouseAngle();kick();}return;}
@@ -1805,6 +1880,7 @@ ui.addEventListener('pointerdown',e=>{
 },{passive:false});
 ui.addEventListener('pointermove',e=>{
   const x=e.clientX,y=e.clientY;
+  if(gDrag&&e.pointerId===gDrag.id){gDrag.x=x;gDrag.y=y;return;}
   if(wDrag&&e.pointerId===wDrag.id){wDrag.x=x;wDrag.y=y;return;}   // aim point = start + finger offset
   if(e.pointerType==='mouse'){mouse.x=x;mouse.y=y;mouse.active=true;return;}
   if(joy.active&&e.pointerId===joy.id){joy.kx=x;joy.ky=y;updJoy();}
@@ -1813,6 +1889,7 @@ ui.addEventListener('pointermove',e=>{
   if(aimT.active&&e.pointerId===aimT.id){const dx=x-fireB.x,dy=y-fireB.y;aimT.dx=dx;aimT.dy=dy;if(Math.hypot(dx,dy)>fireB.r*.35){aimT.aiming=true;aimT.ang=Math.atan2(dy/K,dx);}else aimT.aiming=false;}
 });
 function ptrEnd(e){
+  if(gDrag&&e.pointerId===gDrag.id){const d=gDrag;gDrag=null;if(e.type==='pointerup'){const a=wAim(d);if(Math.hypot(a.x-fireP.x,a.y-fireP.y)<34)grillSnakes();else toast('ลากงูไปปล่อยที่กองไฟ');}return;}
   if(wDrag&&e.pointerId===wDrag.id){const d=wDrag;wDrag=null;if(e.type==='pointerup'){const a=wAim(d);placePile(a.x,a.y);}return;}
   if(e.pointerType==='mouse'){mouse.down=false;return;}
   if(joy.active&&e.pointerId===joy.id){joy.active=false;joyV={x:0,y:0};}
@@ -1822,7 +1899,7 @@ function ptrEnd(e){
 ui.addEventListener('pointerup',ptrEnd);ui.addEventListener('pointercancel',ptrEnd);
 ui.addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('keydown',e=>{keys[e.code]=true;if(state!=='play')return;
-  if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE'){if(!toggleDrag()&&!pickWood()&&!pickBunch()&&nearWardrobe())toggleHide();}else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');else if(e.code==='KeyV'&&woodAvail())placePile(player.x+Math.cos(player.facing)*10,player.y+Math.sin(player.facing)*10);
+  if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE'){if(!toggleDrag()&&!pickWood()&&!pickBunch()&&nearWardrobe())toggleHide();}else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');else if(e.code==='KeyR'&&grillAvail()&&Math.hypot(player.x-fireP.x,player.y-fireP.y)<60)grillSnakes();else if(e.code==='KeyV'&&woodAvail())placePile(player.x+Math.cos(player.facing)*10,player.y+Math.sin(player.facing)*10);
   else if(e.code==='Space'){e.preventDefault();tapAttack(mouse.active&&!showTouch?mouseAngle():null);}
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
 addEventListener('keyup',e=>{keys[e.code]=false;});
