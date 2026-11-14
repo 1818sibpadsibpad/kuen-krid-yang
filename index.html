@@ -54,6 +54,8 @@ p{margin:6px 0;font-size:14px;line-height:1.55}
 .red{color:#d01c22;font-weight:bold}
 button{margin-top:14px;background:#f3ece0;color:#0a0908;border:none;font:bold 18px system-ui,sans-serif;padding:14px 34px;cursor:pointer;box-shadow:4px 4px 0 #574839}
 button.tog{background:#0a0908;color:#f3ece0;border:2px solid #f3ece0;font-size:15px;padding:9px 18px;box-shadow:3px 3px 0 #574839}
+#codeIn{width:92px;background:#0a0908;color:#f3ece0;border:2px solid #574839;font:bold 15px system-ui,sans-serif;padding:7px 8px;text-align:center;letter-spacing:4px;margin-top:10px}#codeIn.ok{border-color:#5fd35f;color:#5fd35f}
+#lvlBox{margin-top:8px}#lvlBox button.nb{margin:4px 3px 0;padding:7px 12px;font-size:14px;background:#0a0908;color:#f3ece0;border:2px solid #574839;box-shadow:2px 2px 0 #2c241e}#lvlBox button.nb.sel{background:#d01c22;border-color:#d01c22}
 button.tog.on{background:#5fd35f;color:#0a0908;border-color:#5fd35f}
 button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #574839}
 hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
@@ -112,6 +114,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
     <div class="sec"><h3>🎮 ปุ่มควบคุม</h3><ul>
       <li>📱 จอยซ้าย = เดิน · <b>ฟัน</b> · <b>ถีบ</b> · <b>หันมอง</b> (ลากหมุน 360° หรือลากจอว่างฝั่งขวา) · <b>ไฟ</b> มุมขวาบน</li>
       <li>⌨️ <span class="k">WASD</span> เดิน · เมาส์เล็ง/คลิกฟัน · <span class="k">Q</span> ถีบ · <span class="k">Shift</span> กลิ้ง · <span class="k">T</span> จับหาง · <span class="k">F</span> ไฟ · <span class="k">E</span> เก็บ/ลาก/แบก · <span class="k">V</span> วางฟืน · <span class="k">G</span> เปลี่ยนอาวุธ · <span class="k">N</span> นอน</li></ul></div>
+    <div><input id="codeIn" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="โค้ดลับ"><div id="lvlBox" style="display:none"><div style="color:#5fd35f;font-weight:bold">✓ ปลดล็อกเลือกคืน · เสบียงจุใจ (ฟืน 50 กล้วย 40)</div><div id="lvlBtns"></div></div></div>
     <div><button id="botBtn" class="tog" type="button">☐ เพิ่มบอท: <b>แจคพอท</b></button></div>
     <button id="startBtn">แตะเพื่อเริ่ม</button>
   </div>
@@ -580,7 +583,6 @@ function cutLeg(z,ux,uy,p,m){
 }
 function kick(h=player){
   if(h===player&&player.snakeBite&&state==='play'){kickSnake();return;}
-  if(h===player&&player.carry)return;
   if(h===player&&h.charging&&h.autoCh){h.charging=false;h.autoCh=false;}
   if(state!=='play'||h.hidden||h.kickT>0||h.kcd>0||h.charging||h.swingT>0)return;
   let a=autoAim(h);if(h===player){const t=lungeTarget(h,a,WP.knife.kmax+20);if(t){a=t.a;lungeTo(h,t,12);}}h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
@@ -2465,8 +2467,16 @@ function showEnd(won){
   endEl.classList.remove('hidden');
 }
 function begin(){initAudio();try{const d=document.documentElement;if(d.requestFullscreen&&matchMedia('(pointer: coarse)').matches)d.requestFullscreen().catch(()=>{});}catch(_){}
-  menu.classList.add('hidden');endEl.classList.add('hidden');newGame();state='play';}
+  menu.classList.add('hidden');endEl.classList.add('hidden');newGame();if(cheat)applyCheat();state='play';}
 document.getElementById('startBtn').onclick=begin;
+let cheat=false,startNight=1;
+{const ci=document.getElementById('codeIn'),lb=document.getElementById('lvlBox'),bs=document.getElementById('lvlBtns');
+  for(let n=1;n<=7;n++){const b=document.createElement('button');b.type='button';b.className='nb'+(n===1?' sel':'');b.textContent='คืน '+n+(n===3?' 👹':'');b.onclick=()=>{startNight=n;for(const x of bs.children)x.classList.toggle('sel',x===b);};bs.appendChild(b);}
+  ci.addEventListener('input',()=>{ci.value=ci.value.replace(/\D/g,'').slice(0,4);cheat=ci.value==='0018';ci.classList.toggle('ok',cheat);lb.style.display=cheat?'':'none';if(cheat)ci.blur();});}
+function freeYardSpot(){const F=fireP;for(let k=0;k<24;k++){const a=k*TAU/12+.4,r=k<12?36:52,x=F.x+Math.cos(a)*r,y=F.y+Math.sin(a)*r*.9,t=tAt(Math.floor(x/TS),Math.floor(y/TS));if(inYard(x,y)&&!BM[t]&&t!==TT&&!(postPos&&Math.hypot(x-postPos.x,y-postPos.y)<16))return{x,y};}return{x:F.x+30,y:F.y+20};}
+function applyCheat(){stock+=40;const q=freeYardSpot();woodPiles.push({x:q.x,y:q.y,logs:Array.from({length:50},()=>(rnd()*10)|0)});
+  if(startNight>1){night=startNight;zombies.length=0;toasts=[];if(night===3){saveCkpt();startN3();}else spawnNight();}
+  toast('เสบียงจุใจ: ฟืน 50 กล้วย 40');}
 // stop the browser from scrolling / pull-to-refresh / swipe gestures while playing
 const inPanel=e=>e.target&&e.target.closest&&e.target.closest('.panel');
 document.addEventListener('touchmove',e=>{if(inPanel(e)&&!menu.classList.contains('hidden'))return;if(e.cancelable)e.preventDefault();},{passive:false});
