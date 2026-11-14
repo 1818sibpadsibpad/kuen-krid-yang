@@ -1462,7 +1462,7 @@ function drawKrasue(t,lx,ly,lz){
  ops.sort((a,b)=>b[0]-a[0]);
  const cam=[-VD[0],-VD[1],-VD[2]];
  const LS=proj([lx,ly,lz]);
- const tube=(A,B,a,b,wy,wide,q0)=>{const dx=B[0]-A[0],dy=B[1]-A[1],dm=Math.hypot(dx,dy)||1,pw=[-dy/dm,dx/dm,0],gd=Math.hypot(lx-B[0],ly-B[1],lz-B[2]),rimA=R.glow*Math.max(0,1-gd/110)**1.1;
+ const tube=(A,B,a,b,wy,wide,q0)=>{const dx=B[0]-A[0],dy=B[1]-A[1],dm=Math.hypot(dx,dy)||1,pw=[-dy/dm,dx/dm,0],gh=Math.hypot(lx-B[0],ly-B[1])||1,ob=KrasueLight.onBody({lx,ly,lz},{px:B[0],py:B[1],pz:B[2],nx:(lx-B[0])/gh,ny:(ly-B[1])/gh,nz:0},R.glow>.5),rimA=Math.min(1,ob[0]+ob[1]);
   const sx=b[0]-a[0],sy=b[1]-a[1],sm=Math.hypot(sx,sy)||1,ps=[-sy/sm,sx/sm],steps=Math.max(1,Math.ceil(sm*1.4));
   for(let k=0;k<=steps;k++){const x=a[0]+sx*k/steps,y=a[1]+sy*k/steps;
    for(const j of wide?[-0.5,0.5]:[0]){const q=wide?j*1.3:q0,cz=Math.sqrt(Math.max(0,1-q*q));
@@ -1835,41 +1835,44 @@ const KrasueLight = (() => {
 
 // the krasue's light, per ground pixel, exactly as KrasueLight describes: pure red diffuse + red glints, trunk wedge shadows, heartbeat, tone-mapped
 const KMC=document.createElement('canvas'),KMX=KMC.getContext('2d',{willReadFrequently:true});
-function krLightPass(T){const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)return;const glowOn=Lk.v>.5,RR=glowOn?128:56,trees=[];
+let KL=null;
+// how strongly the krasue's light falls on an upright surface facing it, straight from KrasueLight.shade
+function klv(x,y,z){if(!KL)return 0;const dx=KL.lx-x,dy=KL.ly-y,dh=Math.hypot(dx,dy)||1,o=KrasueLight.shade(KL,x,y,z,dx/dh,dy/dh,0,.5);return Math.min(1,KrasueLight.tone(o.r)+o.sr);}
+function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)return;const glowOn=Lk.v>.5,RR=glowOn?128:56,trees=[];
   for(let j=Math.floor((Lk.y-RR)/TS);j<=Math.floor((Lk.y+RR)/TS);j++)for(let i=Math.floor((Lk.x-RR)/TS);i<=Math.floor((Lk.x+RR)/TS);i++)if(tAt(i,j)===TT)trees.push({x:i*TS+8,y:j*TS+8,r:RT});
-  const L=KrasueLight.begin([Lk.x,Lk.y,Lk.z],T,glowOn,trees),Rr=Math.sqrt(L.R2)*.62,Rc2=Rr*Rr;
+  const L=KrasueLight.begin([Lk.x,Lk.y,Lk.z],T,glowOn,trees),Rr=Math.sqrt(L.R2),Rc2=L.R2;KL=L;
   const x0=Math.max(0,Math.floor(L.lx-Rr-camX)),x1=Math.min(vw-1,Math.ceil(L.lx+Rr-camX)),y0=Math.max(0,Math.floor((L.ly-Rr)*K-camY)),y1=Math.min(vh-1,Math.ceil((L.ly+Rr)*K-camY));if(x1<x0||y1<y0)return;
   const w=x1-x0+1,h=y1-y0+1;if(KMC.width!==vw||KMC.height!==vh){KMC.width=vw;KMC.height=vh;}KMX.setTransform(1,0,0,1,0,0);KMX.clearRect(0,0,vw,vh);krShadows(KMX);
   const SD=sctx.getImageData(x0,y0,w,h),LD=lctx.getImageData(x0,y0,w,h),MD=KMX.getImageData(x0,y0,w,h),sd=SD.data,ld=LD.data,md=MD.data;
-  for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx,dd2=ddx*ddx+ddy*ddy;if(dd2>=Rc2)continue;const ef=Math.pow(1-Math.sqrt(dd2)/Rr,1.8);
+  for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx,dd2=ddx*ddx+ddy*ddy;if(dd2>=Rc2)continue;
     const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const p=(yy*w+xx)<<2,sh=1-md[p+3]/255;if(sh<=0)continue;
-    const v=KrasueLight.tone(o.r)*sh*ef,sp=o.sr*sh*ef,rl=Math.min(255,(v*.5+sp*.6)*200),Lo=ld[p];
-    if(rl>Lo*.45&&ef>.06+B01[((yy+y0+camY)&7)<<3|((xx+x0+camX)&7)]*.22){const a=sd[p];sd[p]=Math.max(a*.85,62);sd[p+1]=a*.12;sd[p+2]=a*.14;}
+    const v=KrasueLight.tone(o.r)*sh,sp=o.sr*sh,rl=Math.min(255,(v+sp)*255),Lo=ld[p];
+    if(rl>Lo*.45){const a=sd[p];sd[p]=Math.max(a*.85,62);sd[p+1]=a*.12;sd[p+2]=a*.14;}
     const nl=Math.min(255,Lo+rl);ld[p]=ld[p+1]=ld[p+2]=nl;}}
   sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);
   // leaf litter and broken twigs on the ground catch the red light as bright flecks
   const s=sctx,l=lctx;s.lineCap=l.lineCap='round';
   for(let j=Math.floor((L.ly-Rr)/TS);j<=Math.floor((L.ly+Rr)/TS);j++)for(let i=Math.floor((L.lx-Rr)/TS);i<=Math.floor((L.lx+Rr)/TS);i++){if(i<0||j<0||i>=MW||j>=MH)continue;const DL=debris[j*MW+i];if(!DL)continue;
-    for(const d of DL){const e2=(d.x-L.lx)**2+(d.y-L.ly)**2;if(e2>=Rc2)continue;const ef=Math.pow(1-Math.sqrt(e2)/Rr,1.4);if(ef<B01[((Math.round(d.y*K)&7)<<3)|(Math.round(d.x)&7)]*.5)continue;const ta=d.a*3.1+d.x,nx=Math.cos(ta)*.45,ny=Math.sin(ta)*.45,nz=Math.sqrt(1-nx*nx-ny*ny),o=KrasueLight.shade(L,d.x,d.y,d.h*.5,nx,ny,nz,d.t?.5:.9);if(o.r<.05&&o.sr<.05)continue;
+    for(const d of DL){const ta=d.a*3.1+d.x,nx=Math.cos(ta)*.45,ny=Math.sin(ta)*.45,nz=Math.sqrt(1-nx*nx-ny*ny),o=KrasueLight.shade(L,d.x,d.y,d.h*.5,nx,ny,nz,d.t?.5:.9);if(o.r<.05&&o.sr<.05)continue;
       if(md[(((Math.round(d.y*K-camY)-y0)*w+(Math.round(d.x-camX)-x0))<<2)+3]>160)continue;   // in someone's shadow
-      const val=(KrasueLight.tone(o.r)*.9+o.sr*1.4)*ef,X1=d.x1-camX,Y1=d.y1*K-camY,X2=d.x2-camX,Y2=d.y2*K-camY;
+      const val=KrasueLight.tone(o.r)+o.sr,X1=d.x1-camX,Y1=d.y1*K-camY,X2=d.x2-camX,Y2=d.y2*K-camY;
       s.strokeStyle=o.sr>.35?'rgb(255,120,132)':'rgb(232,36,56)';l.strokeStyle=gray(Math.min(255,90+val*260));s.lineWidth=l.lineWidth=d.t===2?1.4:d.t?1:1.1;
       for(const c of[s,l]){c.beginPath();c.moveTo(X1,Y1);c.lineTo(X2,Y2);c.stroke();}}}}
 function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-camX,gy=L.y*K-camY-6,R=135,c=sctx,g=c.createRadialGradient(gx,gy,0,gx,gy,R),v=L.v;
   g.addColorStop(0,`rgb(255,${255-205*v|0},${255-200*v|0})`);g.addColorStop(.55,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(1,'#fff');
   c.save();c.globalCompositeOperation='multiply';c.fillStyle=g;c.fillRect(gx-R,gy-R,R*2,R*2);c.restore();}
 const CRC=document.createElement('canvas');CRC.width=140;CRC.height=300;const CRX=CRC.getContext('2d');
-function canopyRim(s,l,cv,x0,y0,cx,cy,al){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=150;if(d>RR)return;const it=clamp(L.v*(1.15-d/RR),0,1)*al;if(it<.04)return;
+function canopyRim(s,l,cv,x0,y0,cx,cy,al){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130;if(d>RR)return;const it=klv(cx,cy,30)*al;if(it<.04)return;
   if(!cv.red){const m=mk(140,300),q=m.getContext('2d');q.drawImage(cv.img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgb(236,40,62)';q.fillRect(0,0,140,300);cv.red=m;}
   const a=Math.atan2(Math.max(18,dy*K+40),dx),ux=Math.round(Math.cos(a)*1.4),uy=Math.round(Math.sin(a)*1.4);
   CRX.globalCompositeOperation='source-over';CRX.clearRect(0,0,140,300);CRX.drawImage(cv.red,0,0);CRX.globalCompositeOperation='destination-out';CRX.drawImage(cv.red,-ux,-uy);
   CRX.globalCompositeOperation='destination-in';const g=CRX.createLinearGradient(0,0,0,300);g.addColorStop(0,'rgba(0,0,0,.15)');g.addColorStop(.6,'rgba(0,0,0,.6)');g.addColorStop(1,'#000');CRX.fillStyle=g;CRX.fillRect(0,0,140,300);CRX.globalCompositeOperation='source-over';   // lower limbs catch more of it
   s.globalAlpha=it;s.drawImage(CRC,x0,y0);l.globalAlpha=it;l.drawImage(CRC,x0,y0);s.globalAlpha=1;l.globalAlpha=1;}
-function treeRim(s,l,cx,cy,bx,by){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=blackout?140:80;if(d>RR||d<4)return;const it=L.v*Math.min(1,1.3-d/RR),sd=dx>0?1:-1,top=Math.max(by-68,by-14-L.z*.75-40);
+function treeRim(s,l,cx,cy,bx,by){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130;if(d>RR||d<4)return;const it=klv(cx,cy,12);if(it<.04)return;const sd=dx>0?1:-1,top=Math.max(by-68,by-14-L.z*.75-40);
   s.fillStyle='rgb(236,40,62)';s.fillRect(bx+sd*2.2-.6,top,1.3,by-top);l.fillStyle=gray(255*clamp(it,0,1));l.fillRect(bx+sd*2.2-.6,top,1.3,by-top);
   if(dy>0){s.fillRect(bx-2.5,by-1,5,1);l.fillRect(bx-2.5,by-1,5,1);}}
-function rimRed(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=blackout?160:130;if(dd>RR)return;
-  const str=L.v*Math.min(1,1.25-dd/RR);if(str<=.05)return;const a=Math.atan2(dy*K-L.z*.75+12,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
+function rimRed(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130;if(dd>RR)return;
+  const str=klv(e.x,e.y,12);if(str<=.05)return;const a=Math.atan2(dy*K-L.z*.75+12,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
   RMX.globalCompositeOperation='source-over';RMX.clearRect(0,0,136,120);RMX.drawImage(OLC,0,0);RMX.globalCompositeOperation='source-in';RMX.fillStyle='rgb(236,40,62)';RMX.fillRect(0,0,136,120);
   RMX.globalCompositeOperation='destination-out';RMX.drawImage(OLC,-ux,-uy);RMX.drawImage(OLC,-ux*2,-uy*2);RMX.globalCompositeOperation='source-over';
   const ga=s.globalAlpha;s.globalAlpha=clamp(str*1.2,0,1);s.drawImage(RMC,x0,y0);lctx.globalAlpha=clamp(str,0,1);lctx.drawImage(RMC,x0,y0);s.globalAlpha=ga;lctx.globalAlpha=1;}
