@@ -1865,16 +1865,16 @@ function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)retu
   const w=x1-x0+1,h=y1-y0+1;if(KMC.width!==vw||KMC.height!==vh){KMC.width=vw;KMC.height=vh;}KMX.setTransform(1,0,0,1,0,0);KMX.clearRect(0,0,vw,vh);krShadows(KMX);
   const SD=sctx.getImageData(x0,y0,w,h),LD=lctx.getImageData(x0,y0,w,h),MD=KMX.getImageData(x0,y0,w,h),sd=SD.data,ld=LD.data,md=MD.data;
   // light value per pixel from KrasueLight, then blurred so the glow spreads soft instead of a hard pixel disc
-  const n=w*h;if(!KLB||KLB.length<n){KLB=new Float32Array(n*2);}const A=KLB.subarray(0,n),Bf=KLB.subarray(n,n*2);A.fill(0);
+  const n=w*h;if(!KLB||KLB.length<n*2){KLB=new Float32Array(n*2);}const A=KLB.subarray(0,n),Bf=KLB.subarray(n,n*2);A.fill(0);
   for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx,dd2=ddx*ddx+ddy*ddy;if(dd2>=Rc2)continue;
     const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const q=yy*w+xx,sh=1-md[(q<<2)+3]/255;if(sh<=0)continue;   // zero here = behind a trunk: no halo either, so the shadow stays
-    const e=1-dd2/Rc2,halo=Lk.v*52*Math.exp(-dd2/7200)*e*e;A[q]=Math.min(255,((KrasueLight.tone(o.r)+o.sr)*290+halo)*sh*Math.pow(e,.35));}}
+    const e=1-dd2/Rc2,halo=Lk.v*52*Math.exp(-dd2/7200)*e*e;A[q]=Math.min(255,((KrasueLight.tone(o.r)+o.sr)*290+halo)*sh*Math.pow(e,1.6));}}
   const box=(src,dst,r,horiz)=>{const L1=horiz?w:h,L2=horiz?h:w,st=horiz?1:w,st2=horiz?w:1,inv=1/(2*r+1);
     for(let b2=0;b2<L2;b2++){const base=b2*st2;let acc=0;for(let k=-r;k<=r;k++)acc+=src[base+clamp(k,0,L1-1)*st];
       for(let k=0;k<L1;k++){dst[base+k*st]=acc*inv;acc+=src[base+Math.min(L1-1,k+r+1)*st]-src[base+Math.max(0,k-r)*st];}}};
   for(let it=0;it<2;it++){box(A,Bf,6,true);box(Bf,A,6,false);}
-  for(let q=0;q<n;q++){const rl=A[q];if(rl<1)continue;const p=q<<2,Lo=ld[p],t=Math.min(1,rl/(Lo*.5+70)),a=sd[p];
-    sd[p]=a+(Math.max(a*.85,62)-a)*t;sd[p+1]=a*(1-.88*t);sd[p+2]=a*(1-.86*t);ld[p]=ld[p+1]=ld[p+2]=Math.min(255,Lo+rl);}
+  for(let q=0;q<n;q++){const rl=A[q];if(rl<1)continue;const p=q<<2,Lo=ld[p],t=Math.min(1,rl/(Lo*.5+60)),a=sd[p],xx=q%w,yy=(q/w)|0;
+    if(t*1.5>B01[(((yy+y0+camY)&7)<<3)|((xx+x0+camX)&7)]){sd[p]=Math.max(a*.85,62);sd[p+1]=a*.12;sd[p+2]=a*.14;}ld[p]=ld[p+1]=ld[p+2]=Math.min(255,Lo+rl);}
   sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);}
 let KLB=null;
 function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-camX,gy=L.y*K-camY-6,R=135,c=sctx,g=c.createRadialGradient(gx,gy,0,gx,gy,R),v=L.v;
