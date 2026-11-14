@@ -1506,11 +1506,11 @@ const HELP_LINE={pam:'มาๆเอื้อยช่วยขน',jp:'มา�
 function saveCkpt(){ckpt={seed:mapSeed,hero,useBot,stock,kills,weapon:player.weapon,hasHoe:player.hasHoe,hoeTaken:!!(hoe&&hoe.taken),snakes:player.snakes,botAlive:!!(bot&&!bot.dead),
   wp:JSON.stringify(woodPiles),wi:JSON.stringify(woodItems),gr:JSON.stringify(grounds),sk:JSON.stringify(fireP.sk),fireF:fireP.F,
   plants:clumps.map(C=>C.plants.map(p=>[p.bunch||0,p.cut,p.hp,p.fallA]))};}
-function retryN3(){const c=ckpt;if(!c)return;initAudio();menu.classList.add('hidden');endEl.classList.add('hidden');hero=c.hero;useBot=c.useBot;newGame(c.seed);
+function retryN3(){const c=ckpt;if(!c)return;const byKr=!!(death&&death.kr);initAudio();menu.classList.add('hidden');endEl.classList.add('hidden');hero=c.hero;useBot=c.useBot;newGame(c.seed);
   night=3;stock=c.stock;kills=c.kills;player.weapon=c.weapon;player.hasHoe=c.hasHoe;if(hoe)hoe.taken=c.hoeTaken;player.snakes=c.snakes;if(!c.botAlive)bot=null;
   woodPiles=JSON.parse(c.wp);woodItems=JSON.parse(c.wi);grounds=JSON.parse(c.gr);fireP.sk=JSON.parse(c.sk);fireP.F=Math.max(60,c.fireF);
   clumps.forEach((C,i)=>C.plants.forEach((p,j)=>{const v=c.plants[i]&&c.plants[i][j];if(v){p.bunch=v[0];p.cut=v[1];p.hp=v[2];p.fallA=v[3];}}));
-  toasts=[];state='play';wakeFade=1;startN3();}
+  toasts=[];state='play';wakeFade=1;startN3();if(byKr){startCine();skipCine();}}
 function setBlackout(on){if(on===blackout)return;blackout=on;if(on){postTorches=[];if(pam)pam.torch=0;shake=Math.max(shake,3);nz(1.2,'lowpass',600,80,.35,1);tn('sine',120,40,1.2,.25);toast('ไฟดับหมด!!');}else{toast('ไฟกลับมาแล้ว');}}
 function startN3(){N3={ph:'count',t:60,beep:61,lineT:3};B=null;KRL=null;waveDone=true;zombies.length=0;player.cleared=false;toast('คืนที่ 3 — จุดเช็คพอยต์');}
 function n3Active(){return N3&&N3.ph!=='done';}
@@ -1844,20 +1844,19 @@ function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)retu
   const x0=Math.max(0,Math.floor(L.lx-Rr-camX)),x1=Math.min(vw-1,Math.ceil(L.lx+Rr-camX)),y0=Math.max(0,Math.floor((L.ly-Rr)*K-camY)),y1=Math.min(vh-1,Math.ceil((L.ly+Rr)*K-camY));if(x1<x0||y1<y0)return;
   const w=x1-x0+1,h=y1-y0+1;if(KMC.width!==vw||KMC.height!==vh){KMC.width=vw;KMC.height=vh;}KMX.setTransform(1,0,0,1,0,0);KMX.clearRect(0,0,vw,vh);krShadows(KMX);
   const SD=sctx.getImageData(x0,y0,w,h),LD=lctx.getImageData(x0,y0,w,h),MD=KMX.getImageData(x0,y0,w,h),sd=SD.data,ld=LD.data,md=MD.data;
+  // light value per pixel from KrasueLight, then blurred so the glow spreads soft instead of a hard pixel disc
+  const n=w*h;if(!KLB||KLB.length<n){KLB=new Float32Array(n*2);}const A=KLB.subarray(0,n),Bf=KLB.subarray(n,n*2);A.fill(0);
   for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx,dd2=ddx*ddx+ddy*ddy;if(dd2>=Rc2)continue;
-    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const p=(yy*w+xx)<<2,sh=1-md[p+3]/255;if(sh<=0)continue;
-    const v=KrasueLight.tone(o.r)*sh,sp=o.sr*sh,rl=Math.min(255,(v+sp)*255),Lo=ld[p];
-    if(rl>Lo*.45){const a=sd[p];sd[p]=Math.max(a*.85,62);sd[p+1]=a*.12;sd[p+2]=a*.14;}
-    const nl=Math.min(255,Lo+rl);ld[p]=ld[p+1]=ld[p+2]=nl;}}
-  sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);
-  // leaf litter and broken twigs on the ground catch the red light as bright flecks
-  const s=sctx,l=lctx;s.lineCap=l.lineCap='round';
-  for(let j=Math.floor((L.ly-Rr)/TS);j<=Math.floor((L.ly+Rr)/TS);j++)for(let i=Math.floor((L.lx-Rr)/TS);i<=Math.floor((L.lx+Rr)/TS);i++){if(i<0||j<0||i>=MW||j>=MH)continue;const DL=debris[j*MW+i];if(!DL)continue;
-    for(const d of DL){const ta=d.a*3.1+d.x,nx=Math.cos(ta)*.45,ny=Math.sin(ta)*.45,nz=Math.sqrt(1-nx*nx-ny*ny),o=KrasueLight.shade(L,d.x,d.y,d.h*.5,nx,ny,nz,d.t?.5:.9);if(o.r<.05&&o.sr<.05)continue;
-      if(md[(((Math.round(d.y*K-camY)-y0)*w+(Math.round(d.x-camX)-x0))<<2)+3]>160)continue;   // in someone's shadow
-      const val=KrasueLight.tone(o.r)+o.sr,X1=d.x1-camX,Y1=d.y1*K-camY,X2=d.x2-camX,Y2=d.y2*K-camY;
-      s.strokeStyle=o.sr>.35?'rgb(255,120,132)':'rgb(232,36,56)';l.strokeStyle=gray(Math.min(255,90+val*260));s.lineWidth=l.lineWidth=d.t===2?1.4:d.t?1:1.1;
-      for(const c of[s,l]){c.beginPath();c.moveTo(X1,Y1);c.lineTo(X2,Y2);c.stroke();}}}}
+    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const q=yy*w+xx,sh=1-md[(q<<2)+3]/255;if(sh<=0)continue;
+    A[q]=Math.min(255,(KrasueLight.tone(o.r)+o.sr)*sh*255);}}
+  const box=(src,dst,r,horiz)=>{const L1=horiz?w:h,L2=horiz?h:w,st=horiz?1:w,st2=horiz?w:1,inv=1/(2*r+1);
+    for(let b2=0;b2<L2;b2++){const base=b2*st2;let acc=0;for(let k=-r;k<=r;k++)acc+=src[base+clamp(k,0,L1-1)*st];
+      for(let k=0;k<L1;k++){dst[base+k*st]=acc*inv;acc+=src[base+Math.min(L1-1,k+r+1)*st]-src[base+Math.max(0,k-r)*st];}}};
+  for(let it=0;it<2;it++){box(A,Bf,3,true);box(Bf,A,3,false);}
+  for(let q=0;q<n;q++){const rl=A[q];if(rl<1)continue;const p=q<<2,Lo=ld[p],t=Math.min(1,rl/(Lo*.5+70)),a=sd[p];
+    sd[p]=a+(Math.max(a*.85,62)-a)*t;sd[p+1]=a*(1-.88*t);sd[p+2]=a*(1-.86*t);ld[p]=ld[p+1]=ld[p+2]=Math.min(255,Lo+rl);}
+  sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);}
+let KLB=null;
 function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-camX,gy=L.y*K-camY-6,R=135,c=sctx,g=c.createRadialGradient(gx,gy,0,gx,gy,R),v=L.v;
   g.addColorStop(0,`rgb(255,${255-205*v|0},${255-200*v|0})`);g.addColorStop(.55,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(1,'#fff');
   c.save();c.globalCompositeOperation='multiply';c.fillStyle=g;c.fillRect(gx-R,gy-R,R*2,R*2);c.restore();}
