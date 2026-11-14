@@ -1696,7 +1696,8 @@ function drawUI(dt){
       for(const b of visBtns()){if(b.id==='sleep')continue;b.flash=Math.max(0,b.flash-dt);let bo=b.flash>0;if(b.id==='light')bo=bo||flashOn;if(b.id==='hide')bo=bo||player.hidden||!!nw;
         if(b.id==='look'){const on=look.active&&look.btn;uiCircle(b.x,b.y,b.r,on?FG:BG,2);u.save();u.strokeStyle=on?BG:FG;u.lineWidth=2*s;u.beginPath();u.arc(b.x,b.y,b.r*.62,Math.PI*1.12,Math.PI*1.45);u.stroke();u.beginPath();u.arc(b.x,b.y,b.r*.62,Math.PI*1.55,Math.PI*1.88);u.stroke();
           for(const[ax,dir]of[[Math.PI*1.12,-1],[Math.PI*1.88,1]]){const tx=b.x+Math.cos(ax)*b.r*.62,ty=b.y+Math.sin(ax)*b.r*.62;u.fillStyle=on?BG:FG;u.beginPath();u.moveTo(tx+dir*4*s,ty+2*s);u.lineTo(tx-dir*1*s,ty-4*s);u.lineTo(tx-dir*2*s,ty+4*s);u.closePath();u.fill();}u.restore();
-          uiText('หันมอง',b.x,b.y+5*s,12*s,'center',on?BG:FG);uiText('ลากซ้าย-ขวา',b.x,b.y+b.r+9*s,9*s,'center',FG);continue;}
+          uiText('หันมอง',b.x,b.y+5*s,12*s,'center',on?BG:FG);uiText('ลากหมุน 360°',b.x,b.y+b.r+9*s,9*s,'center',FG);
+          if(on){const d=Math.hypot(look.dx,look.dy)||1,m=Math.min(d,b.r*1.1);u.fillStyle='#5fd35f';u.beginPath();u.arc(b.x+look.dx/d*m,b.y+look.dy/d*m,7*s,0,TAU);u.fill();u.strokeStyle='#5fd35f';u.lineWidth=2*s;u.beginPath();u.moveTo(b.x,b.y);u.lineTo(b.x+look.dx/d*m,b.y+look.dy/d*m);u.stroke();}continue;}
         if(b.id==='drag'){uiCircle(b.x,b.y,b.r,'#8e6036',2);uiText(player.drag?'ปล่อย':'ลาก',b.x,b.y-5*s,11*s,'center',FG);uiText('กิ่ง',b.x,b.y+8*s,11*s,'center',FG);continue;}
         if(b.id==='pickw'){uiCircle(b.x,b.y,b.r,'#c08a52',2);uiText('เก็บ',b.x,b.y-5*s,11*s,'center',BG);uiText('ฟืน',b.x,b.y+8*s,11*s,'center',BG);continue;}
         if(b.id==='carry'){uiCircle(b.x,b.y,b.r,'#e6c43c',2);uiText('แบก',b.x,b.y-5*s,10*s,'center',BG);uiText('กล้วย',b.x,b.y+7*s,9*s,'center',BG);continue;}
@@ -1727,7 +1728,7 @@ ui.addEventListener('pointerdown',e=>{
     if(e.button===0&&state==='play'){mouse.down=true;startCharge();}else if(e.button===2&&state==='play'){if(!showTouch)player.facing=mouseAngle();kick();}return;}
   showTouch=true;mouse.active=false;try{ui.setPointerCapture(e.pointerId);}catch(_){}
   if(state!=='play')return;
-  const lb=btns.find(b=>b.id==='look');if(lb&&Math.hypot(x-lb.x,y-lb.y)<lb.r*1.15&&!look.active){look.active=true;look.id=e.pointerId;look.lx=x;look.ly=y;look.btn=true;player.lookA=player.facing;lb.flash=.2;return;}
+  const lb=btns.find(b=>b.id==='look');if(lb&&Math.hypot(x-lb.x,y-lb.y)<lb.r*1.15&&!look.active){look.active=true;look.id=e.pointerId;look.lx=x;look.ly=y;look.btn=true;look.dx=x-lb.x;look.dy=y-lb.y;player.lookA=player.facing;if(Math.hypot(look.dx,look.dy)>lb.r*.3){player.lookA=Math.atan2(look.dy/K,look.dx);player.facing=player.lookA;}lb.flash=.2;return;}
   const b=hitBtn(x,y);if(b){act(b);return;}
   if(Math.hypot(x-fireB.x,y-fireB.y)<fireB.r*1.5&&!aimT.active){aimT.active=true;aimT.id=e.pointerId;aimT.aiming=false;aimT.dx=0;aimT.dy=0;startCharge();return;}
   if(x>=SWc*.55&&!look.active){look.active=true;look.id=e.pointerId;look.lx=x;look.ly=y;player.lookA=player.facing;return;}
@@ -1738,7 +1739,8 @@ ui.addEventListener('pointermove',e=>{
   if(wDrag&&e.pointerId===wDrag.id){wDrag.x=x;wDrag.y=y;return;}   // aim point = start + finger offset
   if(e.pointerType==='mouse'){mouse.x=x;mouse.y=y;mouse.active=true;return;}
   if(joy.active&&e.pointerId===joy.id){joy.kx=x;joy.ky=y;updJoy();}
-  if(look.active&&e.pointerId===look.id){player.lookA-=(x-look.lx)*.014/UIS;look.lx=x;look.ly=y;player.facing=player.lookA;}
+  if(look.active&&e.pointerId===look.id){if(look.btn){const lb=btns.find(b=>b.id==='look'),dx=x-lb.x,dy=y-lb.y;look.dx=dx;look.dy=dy;if(Math.hypot(dx,dy)>lb.r*.3){player.lookA=Math.atan2(dy/K,dx);player.facing=player.lookA;}}   // 360° stick, like the attack button
+    else{player.lookA-=(x-look.lx)*.014/UIS;player.facing=player.lookA;}look.lx=x;look.ly=y;}
   if(aimT.active&&e.pointerId===aimT.id){const dx=x-fireB.x,dy=y-fireB.y;aimT.dx=dx;aimT.dy=dy;if(Math.hypot(dx,dy)>fireB.r*.35){aimT.aiming=true;aimT.ang=Math.atan2(dy/K,dx);}else aimT.aiming=false;}
 });
 function ptrEnd(e){
