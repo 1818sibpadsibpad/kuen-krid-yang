@@ -962,6 +962,7 @@ function updateCommon(dt){
   for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vh-=320*dt;p.h+=p.vh*dt;if(p.h<=0){if(p.leaf){wctx.save();wctx.translate(p.x,p.y);wctx.rotate(p.rot);wctx.fillStyle=p.col;ell(wctx,0,0,1.6,.9);wctx.restore();}else bakeSplat(p.x,p.y,1+rnd()*1.6);particles.splice(i,1);}else if(p.leaf){p.vh=Math.max(p.vh,-40);p.vx*=.97;p.vy*=.97;}}
   for(let i=gibs.length-1;i>=0;i--){const g=gibs[i];g.x+=g.vx*dt;g.y+=g.vy*dt;g.vh-=320*dt;g.h+=g.vh*dt;g.rot+=g.vr*dt;
     if(g.h<=0){g.h=0;if(!g.bounced&&g.vh<-50){g.bounced=true;if(g.type==='half'||g.type==='parm'){shake=Math.max(shake,g.type==='half'?6:3);sfx.kick();bakeSplat(g.x,g.y,5);for(let k=0;k<14;k++){const an=rnd()*TAU,sp=20+rnd()*60;particles.push({x:g.x,y:g.y,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp,h:2,vh:30+rnd()*50});}}g.vh=-g.vh*.3;g.vx*=.5;g.vy*=.5;g.vr*=.5;bakeSplat(g.x,g.y,3);}else{bakeGib(g);gibs.splice(i,1);}}}
+  for(const[k,v]of treeShake){const nv=v-dt*1.1;if(nv<=0)treeShake.delete(k);else treeShake.set(k,nv);}
   for(let i=toasts.length-1;i>=0;i--){toasts[i].life-=dt;if(toasts[i].life<=0)toasts.splice(i,1);}
   if(flickT>0)flickT-=dt;
   for(const P of plights){if(P.kind!=='fire'||blackout)continue;const d=Math.hypot(P.x-player.x,P.y-player.y);if(d>420||P.F<=0)continue;
@@ -1226,7 +1227,7 @@ const B4=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];function bayer(x,y){return B4[(
 let W=1,H=1,IDX=null,DEP=null,SEEN=null,bx0=1e9,by0=1e9,bx1=-1,by1=-1,DIM=false;
 const ZK=0.75,VD=[0,-0.6,-0.8];
 const HR=5.2;   // head size unit (px)
-const R={zoff:6,glow:1,moon:null,pin:null,pull:[0,0],dead:false,R:HR,yaw:-Math.PI/2,yawV:0,roll:0,pitch:0,jaw:0.2,lunge:0,hx:0,hy:0,hz:18,F:[1,0,0],S:[0,1,0],U:[0,0,1],chain:[],hair:[]};
+const R={flashI:0,zoff:6,glow:1,moon:null,pin:null,pull:[0,0],dead:false,R:HR,yaw:-Math.PI/2,yawV:0,roll:0,pitch:0,jaw:0.2,lunge:0,hx:0,hy:0,hz:18,F:[1,0,0],S:[0,1,0],U:[0,0,1],chain:[],hair:[]};
 const NCH=67,SEG=i=>i<9?3.4:3.0;
 function vlen(a){return Math.hypot(a[0],a[1],a[2]);}
 function initRig(x,y){
@@ -1384,6 +1385,8 @@ function drawHead(lx,ly,lz){const ca=Math.cos(0.5),sa=Math.sin(0.5),F=[R.F[0]*ca
    if(c===null){const v=moon*1.2+o*0.7;c=v>0.9&&((Math.round(hs*9+hu*5)&3)==0)?1:0;}}      // hair cap
   if(skin){const v=0.75+moon*1.6+red*0.5+o*0.9;c=v<0.75?1:v<1.75?2:3;
    if(red*1.1+o*0.5>0.95&&c<3)c=5;if(spec*1.6+o*0.4>0.85)c=6;}
+  if(R.flashI>0&&c!=null){const M=R.moon,hx=M[0]-VD[0],hy=M[1]-VD[1],hz=M[2]-VD[2],hm=Math.hypot(hx,hy,hz),fs=Math.pow(Math.max(0,(n[0]*hx+n[1]*hy+n[2]*hz)/hm),10)*R.flashI,fd=Math.max(0,n[0]*M[0]+n[1]*M[1]+n[2]*M[2])*R.flashI;
+   if(fs+o*.3>.55)c=4;else if(fd+o*.4>.62&&c<=2)c=c===0?2:c+1;}   // the torch beam catches its face
   putPx(cx0+px,cy0+py,c,R.hy);}
  // two white eyes, one pixel each, placed on the face in 3D and shown only when that side faces the camera
  const E=ELL[0];
@@ -1395,6 +1398,7 @@ function drawHead(lx,ly,lz){const ca=Math.cos(0.5),sa=Math.sin(0.5),F=[R.F[0]*ca
   putPx(e[0],e[1],4,R.hy+0.5);}}
 
 function tubeCol(p,n,lx,ly,lz,o){
+ if(R.flashI>0){const M=R.moon,hx=M[0]-VD[0],hy=M[1]-VD[1],hz=M[2]-VD[2],hm=Math.hypot(hx,hy,hz),fs=Math.pow(Math.max(0,(n[0]*hx+n[1]*hy+n[2]*hz)/hm),12)*R.flashI;if(fs+o*.3>.5)return fs>.8?4:7;}
  let gx=lx-p[0],gy=ly-p[1],gz=lz-p[2];const gd=Math.hypot(gx,gy,gz)||1;gx/=gd;gy/=gd;gz/=gd;
  const att=R.glow*Math.max(0,1-gd/95)**1.4,ndl=Math.max(0,n[0]*gx+n[1]*gy+n[2]*gz)*att;
  const moon=!!R.moon?Math.max(0,n[0]*R.moon[0]+n[1]*R.moon[1]+n[2]*R.moon[2]):0;
@@ -1471,7 +1475,7 @@ function drawKrasue(t,lx,ly,lz){
   else if(o[1]==6){const j=o[2],A=R.si[j-1],B=R.si[j];tube(A,B,proj(A),proj(B),B[1],false,Math.sin(j*1.15+t*1.4)*0.7);}
   else if(o[1]==1)drawLungs(t,ch[6][1],lx,ly,lz);
   else if(o[1]==2){const p=ch[8],s=proj(p);blob(s[0],s[1],2.2,1.6,1,2,5,p[1]);}
-  else if(o[1]==4){const h=o[3],i=o[2],A=h.nodes[i-1].p,B=h.nodes[i].p;line(proj(A),proj(B),h.col,B[1],i>8);}
+  else if(o[1]==4){const h=o[3],i=o[2],A=h.nodes[i-1].p,B=h.nodes[i].p;line(proj(A),proj(B),R.flashI>.3&&((i+(h.ph*3|0))%3===0)?(h.col?3:2):h.col,B[1],i>8);}
   else drawHead(lx,ly,lz);}
 }
 
@@ -1594,10 +1598,14 @@ function beginFight(){setBlackout(true);if(!B){const g=gatePos(),o=gateOut();B=m
   const st=stations();npcs().forEach((e,i)=>{e.station=st[i%st.length];e.say=null;});for(const e of npcs())e.goal=null;
   toast('กระสือ!! ล่อให้มันชนต้นไม้/รั้ว แล้วจับหาง');sfx.screech(0);shake=Math.max(shake,4);}
 /* ---------- the boss ---------- */
-function makeBoss(x,y){KRS.init(x,y);return{x,y,vx:0,vy:0,state:'roam',t:0,rt:0,hp:90,hpMax:90,cd1:3,cd2:7,biteCd:2,glow:1,ph:0,q:0,angry:0,teth:null,taut:0,wp:null,side:1,hitF:0,bt:-1};}
+function makeBoss(x,y){KRS.init(x,y);return{x,y,vx:0,vy:0,state:'roam',t:0,rt:0,hp:45,hpMax:45,cd1:3,cd2:7,biteCd:2,glow:1,ph:0,q:0,angry:0,teth:null,taut:0,wp:null,side:1,hitF:0,bt:-1};}
+const treeShake=new Map();
+function shakeTree(idx,str){if(idx==null)return;const cur=treeShake.get(idx)||0;treeShake.set(idx,Math.min(1.4,cur+str));const cx=(idx%MW)*TS+8,cy=((idx/MW)|0)*TS+8;
+  const n=Math.round(6+str*16);for(let k=0;k<n;k++)particles.push({x:cx+(rnd()-.5)*46,y:cy+(rnd()-.5)*18,vx:(rnd()-.5)*18,vy:(rnd()-.5)*8,h:28+rnd()*80,vh:rnd()*14,leaf:1,col:gray(90+rnd()*100),rot:rnd()*TAU});
+  if(near({x:cx,y:cy},280)){nz(.5,'bandpass',900,2600,.12+.1*str,1.2);tn('sine',70,45,.2,.25*str);}}
 function kMove(b,dx,dy){const st=Math.max(1,Math.ceil(Math.hypot(dx,dy)/4));let hit=false;
   for(let s=0;s<st;s++){b.x+=dx/st;b.y+=dy/st;const i0=Math.floor((b.x-12)/TS),i1=Math.floor((b.x+12)/TS),j0=Math.floor((b.y-12)/TS),j1=Math.floor((b.y+12)/TS);
-    for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++)if(tAt(i,j)===TT){const cx=i*TS+8,cy=j*TS+8,ex=b.x-cx,ey=b.y-cy,d=Math.hypot(ex,ey),m=RT+5;if(d<m){const k=(m-d)/(d||1);b.x+=ex*k;b.y+=ey*k;hit=true;}}
+    for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++)if(tAt(i,j)===TT){const cx=i*TS+8,cy=j*TS+8,ex=b.x-cx,ey=b.y-cy,d=Math.hypot(ex,ey),m=RT+5;if(d<m){const k=(m-d)/(d||1);b.x+=ex*k;b.y+=ey*k;hit=true;b.hitTile=j*MW+i;}}
     b.x=clamp(b.x,24,MW*TS-24);b.y=clamp(b.y,24,MH*TS-24);}return hit;}
 function bossObstacle(b){if(b.x<=26||b.y<=26||b.x>=MW*TS-26||b.y>=MH*TS-26)return true;const t=tAt(Math.floor(b.x/TS),Math.floor(b.y/TS));if(t===TFN||t===TW||t===TK)return true;
   for(let j=Math.floor((b.y-12)/TS);j<=Math.floor((b.y+12)/TS);j++)for(let i=Math.floor((b.x-12)/TS);i<=Math.floor((b.x+12)/TS);i++)if(tAt(i,j)===TT&&Math.hypot(b.x-i*TS-8,b.y-j*TS-8)<RT+6.5)return true;return false;}
@@ -1609,7 +1617,7 @@ function pickWeave(b){const P=player,want=Math.max(34,80-b.rt*7);let best=null,b
   const a=Math.atan2(b.y-P.y,b.x-P.x)+.9*b.side;return{x:P.x+Math.cos(a)*want,y:P.y+Math.sin(a)*want};}
 function rigTick(dt,biteT,faceA){const b=B,T=performance.now()/1000,R=KRS.R;
   // the headlamp catches its skin when you shine on it
-  R.moon=MOON0;if(curL&&curL.i>.2&&lampLit(b.x,b.y)>.12){const v=[curL.x-b.x,curL.y-b.y,22],m=Math.hypot(...v);R.moon=[v[0]/m,v[1]/m,v[2]/m];}
+  R.moon=MOON0;R.flashI=0;const lit=curL&&curL.i>.2?lampLit(b.x,b.y):0;if(lit>.08){const v=[curL.x-b.x,curL.y-b.y,22],m=Math.hypot(...v);R.moon=[v[0]/m,v[1]/m,v[2]/m];R.flashI=Math.min(1,lit*1.4);}
   R.glow=b.state==='dead'?Math.max(0,1-b.t/2.5)*.6:b.glow;
   if(b.teth){const h=b.teth==='player'?player:b.teth;R.pin=[h.x+Math.cos(h.facing)*3,h.y+Math.sin(h.facing)*3,9];}else R.pin=null;
   KRS.update(dt,T,b.x,b.y,b.vx,b.vy,biteT,faceA);
@@ -1648,8 +1656,8 @@ function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.state==='dead'){b.vx*=.9
       if(b.rt>2.4&&d<135&&d>28){if(b.cd2<=0&&b.hp<=b.hpMax*.3&&(b.cd1>0||rnd()<.5)){b.state='stare2';b.t=0;b.ph=0;b.rt=0;}else if(b.cd1<=0){b.state='stare1';b.t=0;b.ph=0;b.rt=0;}}
       break;}
     case 'stare1':case 'stare2':{faceA=ang;blink();b.vx*=.86;b.vy*=.86;if(b.state==='stare2'){const k=Math.min(1,dt*5);b.vx+=(-dx/d*15-b.vx)*k;b.vy+=(-dy/d*15-b.vy)*k;}
-      if(b.t>=3){if(b.teth&&b.taut>1.5){if(b.state==='stare1')b.cd1=5;else b.cd2=5;b.state='roam';b.t=0;b.q=1.2;toast('ไส้ตึง! มันพุ่งไม่ได้');tn('sine',300,120,.2,.1);break;}
-        b.dir=ang;b.t=0;b.d0=d;if(b.state==='stare1'){b.state='dash';b.cd1=10;}else{b.state='charge';b.cd2=10;}sfx.screech((b.x-P.x)/200);}
+      if(b.t>=3){if(b.teth&&b.taut>1.5){if(b.state==='stare1')b.cd1=3.5;else b.cd2=3.5;b.state='roam';b.t=0;b.q=1.2;toast('ไส้ตึง! มันพุ่งไม่ได้');tn('sine',300,120,.2,.1);break;}
+        b.dir=ang;b.t=0;b.d0=d;if(b.state==='stare1'){b.state='dash';b.cd1=7;}else{b.state='charge';b.cd2=7;}sfx.screech((b.x-P.x)/200);}
       break;}
     case 'dash':{const v=270;b.vx=Math.cos(b.dir)*v;b.vy=Math.sin(b.dir)*v;faceA=b.dir;
       if(b.t>Math.min(.6,(b.d0+26)/v)||(b.teth&&b.taut>2)){b.state='miss';b.t=0;b.q=1.3;break;}break;}
@@ -1657,7 +1665,7 @@ function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.state==='dead'){b.vx*=.9
       if(b.teth&&b.taut>2){b.state='miss';b.t=0;b.q=1.3;break;}
       if(b.t>3.5){b.state='miss';b.t=0;b.q=1.3;}break;}
     case 'miss':{b.vx*=Math.exp(-6*dt);b.vy*=Math.exp(-6*dt);if(b.t>1){b.state='roam';b.t=0;}break;}
-    case 'tangle':{b.vx=b.vy=0;const pulls=Math.floor(b.t);if(pulls!==b.lastPull&&b.t<5){b.lastPull=pulls;b.jx=(rnd()-.5)*5;b.jy=(rnd()-.5)*3;if(near(b,280)){nz(.3,'bandpass',500,1500,.2,2);tn('sawtooth',160,320,.25,.06);}shake=Math.max(shake,1.5);}
+    case 'tangle':{b.vx=b.vy=0;const pulls=Math.floor(b.t);if(pulls!==b.lastPull&&b.t<5){b.lastPull=pulls;if(b.tTile!=null)shakeTree(b.tTile,.45);b.jx=(rnd()-.5)*5;b.jy=(rnd()-.5)*3;if(near(b,280)){nz(.3,'bandpass',500,1500,.2,2);tn('sawtooth',160,320,.25,.06);}shake=Math.max(shake,1.5);}
       b.jx=(b.jx||0)*Math.exp(-6*dt);b.jy=(b.jy||0)*Math.exp(-6*dt);faceA=b.tA+(b.jx||0)*.08;
       if(P.holdTail){b.holdT-=dt;let h=nearestHolder();if(h&&h.d<30){b.teth=h.e;P.holdTail=false;b.t=Math.max(b.t,4.2);sayE(h.e,'จับใว้ๆ');toast('ส่งหางให้ '+(h.e===praewa?'แพรวา':h.e===pam?'แพม':BOTNAME())+' แล้ว! ฟันมันเลย');sfx.ready();}
         else if(b.holdT<=0){P.holdTail=false;b.teth=null;b.t=5;toast('หางหลุดมือ!');}}
@@ -1665,7 +1673,7 @@ function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.state==='dead'){b.vx*=.9
       break;}
     case 'bite':{b.bt+=dt;biteT=b.bt;faceA=ang;b.vx*=.8;b.vy*=.8;
       if(b.bt-dt<.23&&b.bt>=.23){const mx=b.x+Math.cos(KRS.R.yaw)*8,my=b.y+Math.sin(KRS.R.yaw)*8;if(near(b,240))sfx.bite();if(Math.hypot(mx-P.x,my-P.y)<12&&bossGrab())return;}
-      if(b.bt>.55){b.state='roam';b.t=0;b.biteCd=2.2;b.bt=-1;}break;}
+      if(b.bt>.55){b.state='roam';b.t=0;b.biteCd=1.54;b.bt=-1;}break;}
     case 'knock':{const f=Math.exp(-3.5*dt);b.vx*=f;b.vy*=f;if(b.t>.5){b.state='regroup';b.t=0;b.side=rnd()<.5?-1:1;}break;}
     case 'regroup':{const a=Math.atan2(b.y-P.y,b.x-P.x)+1.3*b.side*dt*2,R2=110;tx=P.x+Math.cos(a)*R2;ty=P.y+Math.sin(a)*R2;sp=95;if(b.t>1.7){b.state='roam';b.t=0;b.rt=1.5;b.wp=null;}break;}
   }
@@ -1673,8 +1681,9 @@ function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.state==='dead'){b.vx*=.9
     b.vx+=(mx/ml*sp-b.vx)*k;b.vy+=(my/ml*sp-b.vy)*k;}
   else if(b.state==='roam'||b.state==='regroup'){b.vx*=.9;b.vy*=.9;}
   const hitTree=kMove(b,b.vx*dt+(b.state==='tangle'?(b.jx||0)*dt*4:0),b.vy*dt);
+  {const v=Math.hypot(b.vx,b.vy);if(hitTree&&v>85&&(b.lastShake||0)<T-.35){b.lastShake=T;shakeTree(b.hitTile,Math.min(1,v/260));}}
   if(b.state==='dash'){if(hitTree){b.state='miss';b.t=0;b.q=1.3;shake=Math.max(shake,3);sfx.kick();}else if(d<12&&bossGrab())return;}
-  if(b.state==='charge'){if(d<12&&bossGrab())return;if(hitTree||bossObstacle(b)){b.state='tangle';b.t=0;b.lastPull=-1;b.tA=Math.atan2(b.vy,b.vx);b.vx=b.vy=0;shake=Math.max(shake,6);sfx.kick();nz(.5,'bandpass',800,200,.4,1);toast('ผมพันติด!! รีบไปจับหางมัน');}}
+  if(b.state==='charge'){if(d<12&&bossGrab())return;if(hitTree||bossObstacle(b)){if(hitTree)shakeTree(b.hitTile,1.2);b.tTile=hitTree?b.hitTile:null;b.state='tangle';b.t=0;b.lastPull=-1;b.tA=Math.atan2(b.vy,b.vx);b.vx=b.vy=0;shake=Math.max(shake,6);sfx.kick();nz(.5,'bandpass',800,200,.4,1);toast('ผมพันติด!! รีบไปจับหางมัน');}}
   rigTick(dt,biteT,faceA);
   // gut tension: once tethered the head can't fly further than its intestines reach
   if(b.teth){const p=KRS.R.pull,pl=Math.hypot(p[0],p[1]);b.taut=pl;
@@ -1831,13 +1840,28 @@ function krLightPass(T){const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)return;const
   const SD=sctx.getImageData(x0,y0,w,h),LD=lctx.getImageData(x0,y0,w,h),MD=KMX.getImageData(x0,y0,w,h),sd=SD.data,ld=LD.data,md=MD.data;
   for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx;if(ddx*ddx+ddy*ddy>=L.R2)continue;
     const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const p=(yy*w+xx)<<2,sh=1-md[p+3]/255;if(sh<=0)continue;
-    const v=KrasueLight.tone(o.r)*sh,sp=o.sr*sh,rl=Math.min(255,(v+sp)*230),Lo=ld[p];
-    if(rl>Lo*.45){const a=sd[p];if(sp>.3){sd[p]=255;sd[p+1]=70;sd[p+2]=84;}else{sd[p]=Math.max(a,86);sd[p+1]=a*.14;sd[p+2]=a*.14;}}
+    const v=KrasueLight.tone(o.r)*sh,sp=o.sr*sh,rl=Math.min(255,(v*.5+sp*.6)*200),Lo=ld[p];
+    if(rl>Lo*.45){const a=sd[p];sd[p]=Math.max(a*.85,62);sd[p+1]=a*.12;sd[p+2]=a*.14;}
     const nl=Math.min(255,Lo+rl);ld[p]=ld[p+1]=ld[p+2]=nl;}}
-  sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);}
+  sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);
+  // leaf litter and broken twigs on the ground catch the red light as bright flecks
+  const s=sctx,l=lctx;s.lineCap=l.lineCap='round';
+  for(let j=Math.floor((L.ly-Rr)/TS);j<=Math.floor((L.ly+Rr)/TS);j++)for(let i=Math.floor((L.lx-Rr)/TS);i<=Math.floor((L.lx+Rr)/TS);i++){if(i<0||j<0||i>=MW||j>=MH)continue;const DL=debris[j*MW+i];if(!DL)continue;
+    for(const d of DL){const ta=d.a*3.1+d.x,nx=Math.cos(ta)*.45,ny=Math.sin(ta)*.45,nz=Math.sqrt(1-nx*nx-ny*ny),o=KrasueLight.shade(L,d.x,d.y,d.h*.5,nx,ny,nz,d.t?.5:.9);if(o.r<.05&&o.sr<.05)continue;
+      if(md[(((Math.round(d.y*K-camY)-y0)*w+(Math.round(d.x-camX)-x0))<<2)+3]>160)continue;   // in someone's shadow
+      const val=KrasueLight.tone(o.r)*.9+o.sr*1.4,X1=d.x1-camX,Y1=d.y1*K-camY,X2=d.x2-camX,Y2=d.y2*K-camY;
+      s.strokeStyle=o.sr>.35?'rgb(255,120,132)':'rgb(232,36,56)';l.strokeStyle=gray(Math.min(255,90+val*260));s.lineWidth=l.lineWidth=d.t===2?1.4:d.t?1:1.1;
+      for(const c of[s,l]){c.beginPath();c.moveTo(X1,Y1);c.lineTo(X2,Y2);c.stroke();}}}}
 function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-camX,gy=L.y*K-camY-6,R=135,c=sctx,g=c.createRadialGradient(gx,gy,0,gx,gy,R),v=L.v;
   g.addColorStop(0,`rgb(255,${255-205*v|0},${255-200*v|0})`);g.addColorStop(.55,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(1,'#fff');
   c.save();c.globalCompositeOperation='multiply';c.fillStyle=g;c.fillRect(gx-R,gy-R,R*2,R*2);c.restore();}
+const CRC=document.createElement('canvas');CRC.width=140;CRC.height=300;const CRX=CRC.getContext('2d');
+function canopyRim(s,l,cv,x0,y0,cx,cy,al){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=150;if(d>RR)return;const it=clamp(L.v*(1.15-d/RR),0,1)*al;if(it<.04)return;
+  if(!cv.red){const m=mk(140,300),q=m.getContext('2d');q.drawImage(cv.img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgb(236,40,62)';q.fillRect(0,0,140,300);cv.red=m;}
+  const a=Math.atan2(Math.max(18,dy*K+40),dx),ux=Math.round(Math.cos(a)*1.4),uy=Math.round(Math.sin(a)*1.4);
+  CRX.globalCompositeOperation='source-over';CRX.clearRect(0,0,140,300);CRX.drawImage(cv.red,0,0);CRX.globalCompositeOperation='destination-out';CRX.drawImage(cv.red,-ux,-uy);
+  CRX.globalCompositeOperation='destination-in';const g=CRX.createLinearGradient(0,0,0,300);g.addColorStop(0,'rgba(0,0,0,.15)');g.addColorStop(.6,'rgba(0,0,0,.6)');g.addColorStop(1,'#000');CRX.fillStyle=g;CRX.fillRect(0,0,140,300);CRX.globalCompositeOperation='source-over';   // lower limbs catch more of it
+  s.globalAlpha=it;s.drawImage(CRC,x0,y0);l.globalAlpha=it;l.drawImage(CRC,x0,y0);s.globalAlpha=1;l.globalAlpha=1;}
 function treeRim(s,l,cx,cy,bx,by){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=blackout?140:80;if(d>RR||d<4)return;const it=L.v*Math.min(1,1.3-d/RR),sd=dx>0?1:-1,top=Math.max(by-68,by-14-L.z*.75-40);
   s.fillStyle='rgb(236,40,62)';s.fillRect(bx+sd*2.2-.6,top,1.3,by-top);l.fillStyle=gray(255*clamp(it,0,1));l.fillRect(bx+sd*2.2-.6,top,1.3,by-top);
   if(dy>0){s.fillRect(bx-2.5,by-1,5,1);l.fillRect(bx-2.5,by-1,5,1);}}
@@ -2261,13 +2285,13 @@ function drawObj(o,T,s,l){
     const v=lightAt(hs.si*TS+8,hs.sj*TS+10);F(l,v,x-.6,yt,10,hh);break;}
   case 26:{const q=o.q,x=q.x-camX,yb=q.y*K-camY,top=yb-ROOFH;F(s,46,x-1.3,top,2.6,ROOFH);F(s,112,x-.4,top,.8,ROOFH);F(l,lightAt(q.x,q.y+3),x-1.3,top,2.6,ROOFH);break;}
   case 27:{const b=o.b,v=lightAt(b.x,b.y);drawBig(s,b,null);drawBig(l,b,gray(Math.max(14,v)));break;}
-  case 1:{const {i,j}=o,cx=i*TS+8,cy=j*TS+8,bx=cx-camX,by=cy*K-camY;
+  case 1:{const {i,j}=o,cx=i*TS+8,cy=j*TS+8,shk=treeShake.get(j*MW+i)||0,bx=cx-camX+(shk?Math.round(Math.sin(T*42+i)*1.6*shk):0),by=cy*K-camY;
     if(!false){s.fillStyle='rgba(0,0,0,.5)';ell(s,bx,by,5,2);}
     s.drawImage(trunkCv[(i*7+j*13)&3],bx-9,by-71);
     let v;const L=curL;if(L){const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy)||1;v=lightAt(cx+dx/d*(RT+1.5),cy+dy/d*(RT+1.5));}else v=lightAt(cx,cy+RT+2);
     F(l,v,bx-3,by-68,6,69);F(l,v,bx+2,by-11,6,6);treeRim(s,l,cx,cy,bx,by);
     {const cv=canopyCv[(i*5+j*11)%6],cx0=bx-70,cy0=by-71-298,ppx=player.x-camX,ppy=player.y*K-camY-(player.ev||0)*PLH-10,see=Math.abs(ppx-bx)<30&&ppy>cy0-4&&ppy<by-40&&player.y<cy+4,al=see?.28:1,vc=Math.max(dawn*.7,lightAt(cx,cy+4)*.5);   // see-through when you walk under it
-      s.globalAlpha=al;s.drawImage(cv.img,cx0,cy0);s.globalAlpha=1;l.globalAlpha=al;l.drawImage(cv.b,cx0,cy0);l.globalAlpha=al*clamp(vc/255,0,1);l.drawImage(cv.w,cx0,cy0);l.globalAlpha=1;}
+      const sx0=cx0+(shk?Math.sin(T*38+j)*3.2*shk:0);s.globalAlpha=al;s.drawImage(cv.img,sx0,cy0);s.globalAlpha=1;l.globalAlpha=al;l.drawImage(cv.b,sx0,cy0);l.globalAlpha=al*clamp(vc/255,0,1);l.drawImage(cv.w,sx0,cy0);l.globalAlpha=1;canopyRim(s,l,cv,sx0,cy0,cx,cy,al);}
     break;}
   case 2:{const t=o.t,x=t.i*TS+1-camX,y0=t.j*TS+3,y1=(t.j+t.h)*TS-2,w=t.w*TS-2,H=6,ty=y0*K-camY-H,th=(y1-y0)*K,fy=y1*K-camY-H;
     if(t.bamboo){F(s,30,x-1,ty-1,w+2,th+H+2);F(s,178,x,ty,w,th);for(let xx=1;xx<w;xx+=2)F(s,120,x+xx,ty,1,th);F(s,150,x,ty+th*.5,w,.8);F(s,110,x,fy,w,H);F(s,60,x,fy,w,1);}
