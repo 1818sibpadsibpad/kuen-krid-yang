@@ -451,7 +451,8 @@ function alertNear(r,h=player){for(const z of zombies){if(Math.hypot(z.x-h.x,z.y
 function startCharge(h=player){if(h===player&&player.drag&&state==='play'){toggleDrag();return;}if(h===player&&player.carry&&state==='play'){dropBunch();return;}if(h===player&&player.wood&&state==='play'){dropWood();return;}if(state!=='play'||h.hidden||h.swingT>0||h.cd>0||h.charging)return;h.charging=true;h.charge=0;h.ready=false;}
 function lungeTarget(h,ang,R){let best=null,bd=1e9;for(const z of zombies){if(z.dieOnLand||z.state==='eatB')continue;const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d>R)continue;const ad=Math.abs(angDiff(ang,Math.atan2(dy,dx)));if(ad>1.25||!los(h.x,h.y,z.x,z.y))continue;const sc=d+ad*25;if(sc<bd){bd=sc;best=z;}}
   return best?{z:best,d:Math.hypot(best.x-h.x,best.y-h.y),a:Math.atan2(best.y-h.y,best.x-h.x)}:null;}
-function lungeTo(h,t,stand){const mv=Math.min(24,Math.max(0,t.d-stand));if(mv<1)return;h.lunge={ux:Math.cos(t.a),uy:Math.sin(t.a),sp:mv/.065,t:.065};h.lean=Math.max(h.lean||0,2.4);}
+function lungeTo(h,t,stand){return;   // dash removed: only aim at the target
+const mv=Math.min(24,Math.max(0,t.d-stand));if(mv<1)return;h.lunge={ux:Math.cos(t.a),uy:Math.sin(t.a),sp:mv/.065,t:.065};h.lean=Math.max(h.lean||0,2.4);}
 function release(angle,h=player){if(h===player)h.autoCh=false;
   if(!h.charging)return;h.charging=false;if(state!=='play')return;
   const p=h.charge;   // longer hold = arm extends further = more reach, more power
@@ -745,7 +746,7 @@ function updateZombies(dt){
         sp=z.spd;
         if(!hidden){
           if(d<48&&sees&&sameLv(z,T)){tx=T.x;ty=T.y;}else{const ft=flowTarget(z,FL);if(ft){tx=ft[0];ty=ft[1];}else{tx=T.x;ty=T.y;}}
-          if(!z.crawl&&!(z.burn>0)&&d<40&&sees&&sameLv(z,T)){z.state='windup';z.t=.3;if(T===player||near(T,250))sfx.screech(-(z.x-player.x)/200);}
+          if(false&&!z.crawl&&!(z.burn>0)&&d<40&&sees&&sameLv(z,T)){z.state='windup';z.t=.3;if(T===player||near(T,250))sfx.screech(-(z.x-player.x)/200);}
         }else{tx=z.lx;ty=z.ly;if(d<20){grab(z);return;}}
         break;
       case 'search':z.t-=dt;tx=z.lx;ty=z.ly;sp=z.spd*.6;if(Math.hypot(z.lx-z.x,z.ly-z.y)<10||z.t<=0){z.state='wander';z.t=1;}if(z.aware>0)z.state='chase';break;
