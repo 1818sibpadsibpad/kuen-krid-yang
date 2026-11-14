@@ -89,7 +89,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
       <li>ฟาดลง <b>แขนขาด</b> · ตวัดขึ้น <b>ขาขาด</b> · ตัวที่ล้มหรือคลาน <b>หัวขาด</b></li>
       <li><b>ถีบ</b>: ระยะเท่ามีด ซอมบี้ล้มหงายไถไปไกล · ตีโดนจะ<b>สโลโมชั่น</b></li>
       <li>ในสวนห่างบ้าน ~50 ม. มี <b style="color:#5fd35f">บักจก</b> (จอบ) ระยะไกลกว่ามีด แรง ×3</li>
-      <li><b style="color:#9ec8ff">กลิ้ง</b>: กลิ้งไป 4 ม. ตามทิศที่เดิน ระหว่างกลิ้ง<b>ไม่โดนอะไรเลย</b></li></ul></div>
+      <li><b style="color:#9ec8ff">กลิ้ง</b>: กลิ้งไป 10 ม. ตามทิศที่เดิน ระหว่างกลิ้ง<b>ไม่โดนอะไรเลย</b></li></ul></div>
     <div class="sec warn"><h3>👹 คืนที่ 3: กระสือ (จุดเช็คพอยต์)</h3><ul>
       <li>ตายในคืนที่ 3 กด <b>เริ่มคืนที่ 3 ใหม่</b> ได้เลย ไม่ต้องเริ่มคืนแรก</li>
       <li>มันจะ<b>จ้องแล้วไฟกะพริบ</b>ถี่ขึ้น 3 วิ ก่อนพุ่ง → <b>กลิ้งหลบ</b>! เลือดเหลือ 30% จะเริ่ม<b>ถอยแล้วพุ่งส่าย</b>ไม่เบรก</li>
@@ -787,7 +787,7 @@ function updatePlay(dt){
   let calm=player.combat<=0;if(calm)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
   const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.snakeBite?.5:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
-  if(player.rollT>0){player.rollT-=dt;const rs=32/.36;moveCircle(player,player.rollDx*rs*dt,player.rollDy*rs*dt,5);player.vx=player.rollDx*rs*.4;player.vy=player.rollDy*rs*.4;player.facing=Math.atan2(player.rollDy,player.rollDx);}
+  if(player.rollT>0){player.rollT-=dt;const rs=80/.42;moveCircle(player,player.rollDx*rs*dt,player.rollDy*rs*dt,5);player.vx=player.rollDx*rs*.4;player.vy=player.rollDy*rs*.4;player.facing=Math.atan2(player.rollDy,player.rollDx);}
   else if(!player.hidden)moveCircle(player,player.vx*dt,player.vy*dt,5);
   const sp=Math.hypot(player.vx,player.vy);player.moveAmt=Math.min(1,sp/40);player.phase+=sp*dt*.24;
   actorTick(player,dt);
@@ -1742,7 +1742,7 @@ function rimRed(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const
   const ga=s.globalAlpha;s.globalAlpha=clamp(str*1.2,0,1);s.drawImage(RMC,x0,y0);lctx.globalAlpha=clamp(str,0,1);lctx.drawImage(RMC,x0,y0);s.globalAlpha=ga;lctx.globalAlpha=1;}
 function doRoll(){const h=player;if(state!=='play'||h.hidden||h.rollT>0||(h.rollCd||0)>0||h.drag)return;
   let mx=h.mvx||0,my=h.mvy||0;if(!h.moving||Math.hypot(mx,my)<.1){mx=Math.cos(h.facing);my=Math.sin(h.facing);}const l=Math.hypot(mx,my)||1;
-  h.rollDx=mx/l;h.rollDy=my/l;h.rollT=.36;h.rollCd=.75;h.charging=false;h.swingT=0;h.kickT=0;h.pendingHit=0;sfx.whoosh();nz(.25,'lowpass',500,140,.35,1);}
+  h.rollDx=mx/l;h.rollDy=my/l;h.rollT=.42;h.rollCd=.8;h.charging=false;h.swingT=0;h.kickT=0;h.pendingHit=0;sfx.whoosh();nz(.25,'lowpass',500,140,.35,1);}
 
 /* ================= RENDER ================= */
 const gameCv=document.getElementById('game'),octx=gameCv.getContext('2d');
@@ -2096,7 +2096,7 @@ function renderObjects(T){
   objs.sort((a,b)=>a.y-b.y);
   fireShadows();krShadows();
   for(const o of objs){const e=o.k===6?o.z:o.k===7?player:o.k===14?bot:o.k===20?praewa:o.k===23?pam:null,ev=e?(e.ev||0)*PLH+(e.lift||0):0;
-    const rot=o.k===7&&player.rollT>0?(1-player.rollT/.36)*TAU*(player.rollDx>=0?1:-1):0,sit=e&&e.sit&&!e.down;
+    const rot=o.k===7&&player.rollT>0?(1-player.rollT/.42)*TAU*(player.rollDx>=0?1:-1):0,sit=e&&e.sit&&!e.down;
     if(ev>.2||rot||sit){for(const c of[sctx,lctx]){c.save();c.translate(0,-ev);if(sit){const gy=e.y*K-camY;c.beginPath();c.rect(e.x-camX-40,gy-80,80,79.4);c.clip();c.translate(0,e===praewa?2.5:5);}
         if(rot){const cx=player.x-camX,cy=player.y*K-camY-9;c.translate(cx,cy);c.rotate(rot);c.translate(-cx,-cy);}}
       drawObj(o,T,sctx,lctx);sctx.restore();lctx.restore();if(sit){sctx.fillStyle='#3a2a1c';sctx.fillRect(e.x-camX-3.5,e.y*K-camY-1,7,2);}}
