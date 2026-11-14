@@ -1753,9 +1753,11 @@ function bunchFireHi(s,l,T){const F=fireP;if(!F||F.F<=0||!postPos||stock<=0)retu
     c.restore();}}
 const RMC=document.createElement('canvas');RMC.width=136;RMC.height=120;const RMX=RMC.getContext('2d');
 function krShadows(c){const L=KRL;if(!L||L.v<.05)return;const R=135;c.save();c.fillStyle='#000';const S=(wx,wy)=>[wx-camX,wy*K-camY];
-  const cast=(x,y,w,len0)=>{const dx=x-L.x,dy=y-L.y,d=Math.hypot(dx,dy);if(d<6||d>R)return;const ux=dx/d,uy=dy/d,Ln=len0+d*.55,px=-uy,py=ux;c.globalAlpha=.85*L.v*Math.pow(1-d/R,.5);
-    const a=S(x+px*w,y+py*w),b=S(x+ux*Ln+px*w*1.8,y+uy*Ln+py*w*1.8),e=S(x+ux*Ln-px*w*1.8,y+uy*Ln-py*w*1.8),f=S(x-px*w,y-py*w);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.lineTo(e[0],e[1]);c.lineTo(f[0],f[1]);c.closePath();c.fill();};
+  const cast=(x,y,w,len0,k=1,sp=1.8)=>{const dx=x-L.x,dy=y-L.y,d=Math.hypot(dx,dy);if(d<6||d>R)return;const ux=dx/d,uy=dy/d,Ln=len0+d*.55,px=-uy,py=ux;c.globalAlpha=Math.min(1,.85*k*L.v*Math.pow(1-d/R,.5));
+    const a=S(x+px*w,y+py*w),b=S(x+ux*Ln+px*w*sp,y+uy*Ln+py*w*sp),e=S(x+ux*Ln-px*w*sp,y+uy*Ln-py*w*sp),f=S(x-px*w,y-py*w);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.lineTo(e[0],e[1]);c.lineTo(f[0],f[1]);c.closePath();c.fill();};
   for(const e of[player,bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null])if(e&&!e.up&&!e.st&&!e.hidden&&!e.gone)cast(e.x,e.y,e===praewa?1.8:2.8,16);
+  {const i0=Math.floor((L.x-R)/TS),i1=Math.floor((L.x+R)/TS),j0=Math.floor((L.y-R)/TS),j1=Math.floor((L.y+R)/TS);   // long torch-like shadows behind trunks and the bamboo fence
+    for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){const t=tAt(i,j);if(t===TT)cast(i*TS+8,j*TS+8,RT+.4,160,1.25,3.4);else if(t===TFN)cast(i*TS+8,j*TS+8,6.5,46,1.1,1.7);}}
   for(const C of clumps){if(Math.abs(C.x-L.x)>R+20||Math.abs(C.y-L.y)>R+20)continue;for(const p of C.plants)if(!p.cut)cast(p.x,p.y,2.6,22+(p.h||30)*.5);}
   for(const p of woodPiles)cast(p.x,p.y,6,9);for(const p of props)cast(p.x,p.y,4,9);if(postPos)cast(postPos.x,postPos.y,1.4,22);for(const b of bigBranches)cast(b.x,b.y,8,5);
   c.restore();}
@@ -1891,7 +1893,7 @@ function treeRim(s,l,cx,cy,bx,by){const L=KRL;if(!L||L.v<.05)return;const dx=L.x
   s.fillStyle='rgb(236,40,62)';s.fillRect(bx+sd*2.2-.6,top,1.3,by-top);l.fillStyle=gray(255*clamp(it,0,1));l.fillRect(bx+sd*2.2-.6,top,1.3,by-top);
   if(dy>0){s.fillRect(bx-2.5,by-1,5,1);l.fillRect(bx-2.5,by-1,5,1);}}
 function krBloom(){const L=KL,Lk=KRL;if(!L||!Lk||Lk.v<.05)return;const gx=L.lx-camX,gy=L.ly*K-camY-L.lz*.4,R=160,v=Lk.v;   // a soft red haze over everything near it
-  let g=lctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,gray(78*v));g.addColorStop(.3,gray(44*v));g.addColorStop(.6,gray(16*v));g.addColorStop(.85,gray(4*v));g.addColorStop(1,'#000');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(gx-R,gy-R,R*2,R*2);lctx.restore();
+  let g=lctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,gray(58*v));g.addColorStop(.3,gray(32*v));g.addColorStop(.6,gray(16*v));g.addColorStop(.85,gray(4*v));g.addColorStop(1,'#000');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(gx-R,gy-R,R*2,R*2);lctx.restore();
   g=sctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(.4,`rgb(255,${255-110*v|0},${255-106*v|0})`);g.addColorStop(.75,`rgb(255,${255-35*v|0},${255-34*v|0})`);g.addColorStop(1,'#fff');sctx.save();sctx.globalCompositeOperation='multiply';sctx.fillStyle=g;sctx.fillRect(gx-R,gy-R,R*2,R*2);sctx.restore();}
 function rimRed(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130;if(dd>RR)return;
   const str=klv(e.x,e.y,12);if(str<=.02)return;const a=Math.atan2(dy*K-L.z*.75+12,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
