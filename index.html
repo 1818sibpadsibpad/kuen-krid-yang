@@ -317,11 +317,11 @@ function bake(){
     Q(56,0,0,W2,1);Q(56,0,H2-1,W2,1);Q(56,0,0,1,H2);Q(56,W2-1,0,1,H2);
     const bx=hs.bed.x-hs.x*TS-9,by=(hs.bed.y-hs.y*TS)*K-5;Q(60,bx,by,18,11);Q(176,bx+1,by+1,16,9);for(let k=2;k<17;k+=2)Q(140,bx+k,by+1,1,9);Q(232,bx+12,by+2,4,6);Q(120,bx+12,by+7,4,1);}
   // rubber tree canopies: thin forked limbs and sparse leaf clumps (6 random designs)
-  canopyCv=[0,1,2,3,4,5].map(v=>{const W2=72,H2=120,cv=mk(W2,H2),g=cv.getContext('2d');g.lineCap='round';const tips=[];
+  canopyCv=[0,1,2,3,4,5].map(v=>{const W2=140,H2=300,cv=mk(W2,H2),g=cv.getContext('2d');g.lineCap='round';const tips=[];
     const br=(x,y,a,len,w,d)=>{const x2=x+Math.cos(a)*len,y2=y+Math.sin(a)*len;g.strokeStyle=gray(30);g.lineWidth=w+.8;g.beginPath();g.moveTo(x,y);g.lineTo(x2,y2);g.stroke();g.strokeStyle=gray(112+rnd()*36);g.lineWidth=w;g.stroke();
-      if(d<2&&len>14){const n=ri(1,2);for(let k=0;k<n;k++)br(x+(x2-x)*(.35+rnd()*.45),y+(y2-y)*(.35+rnd()*.45),a+(rnd()<.5?-1:1)*(.12+rnd()*.25),len*(.45+rnd()*.3),Math.max(.6,w*.62),d+1);}
+      if(d<2&&len>30){const n=ri(1,2);for(let k=0;k<n;k++){const t=.3+rnd()*.4,na=clamp(a+(rnd()<.5?-1:1)*(.08+rnd()*.16),-Math.PI/2-.42,-Math.PI/2+.42);br(x+(x2-x)*t,y+(y2-y)*t,na,Math.min(len*(.5+rnd()*.3),(y+(y2-y)*t-4)/Math.max(.5,-Math.sin(na))),Math.max(.6,w*.62),d+1);}}
       tips.push([x2,y2]);};
-    const limbs=ri(2,3);for(let k=0;k<limbs;k++){const a=-Math.PI/2+(k-(limbs-1)/2)*.2+(rnd()-.5)*.14;br(36+(rnd()-.5)*2,H2,a,80+rnd()*34,2.5,0);}   // long bare V-shaped limbs stretching up
+    const limbs=ri(2,3);for(let k=0;k<limbs;k++){const a=-Math.PI/2+(k-(limbs-1)/2)*.17+(rnd()-.5)*.1;br(W2/2+(rnd()-.5)*2,H2,a,(H2-6)/Math.max(.5,-Math.sin(a))*(.92+rnd()*.06),2.6,0);}   // long bare V-shaped limbs stretching up
     const mask=col=>{const m=mk(W2,H2),q=m.getContext('2d');q.drawImage(cv,0,0);q.globalCompositeOperation='source-in';q.fillStyle=col;q.fillRect(0,0,W2,H2);return m;};
     return{img:cv,w:mask('#fff'),b:mask('#000')};});
   // rubber tree trunks: tapping cut, latex line, black cup
@@ -1448,7 +1448,7 @@ function renderLight(){
 }
 function renderObjects(T){
   const i0=Math.max(0,Math.floor((camX-24)/TS)),i1=Math.min(MW-1,Math.floor((camX+vw+24)/TS));
-  const j0=Math.max(0,Math.floor(camY/K/TS)-1),j1=Math.min(MH-1,Math.floor((camY+vh+200)/K/TS));
+  const j0=Math.max(0,Math.floor(camY/K/TS)-1),j1=Math.min(MH-1,Math.floor((camY+vh+380)/K/TS));
   const objs=[];
   if(home&&home.hs.tiang){const hs=home.hs;objs.push({y:hs.y*TS+.2,k:24},{y:hs.sj*TS+1,k:25});for(const q of hs.posts)objs.push({y:q.y,k:26,q});}
   for(const b of bigBranches)if(b.x>camX-40&&b.x<camX+vw+40&&b.y*K>camY-40&&b.y*K<camY+vh+40)objs.push({y:b.y-2,k:27,b});
@@ -1474,7 +1474,7 @@ function renderObjects(T){
   for(const o of objs){const e=o.k===6?o.z:o.k===7?player:o.k===14?bot:o.k===20?praewa:o.k===23?pam:null,ev=e?(e.ev||0)*PLH:0;
     if(ev>.2){sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);drawObj(o,T,sctx,lctx);sctx.restore();lctx.restore();}else drawObj(o,T,sctx,lctx);}
   drawRoof(T);
-  if(praewa&&praewa.roof>0){const ev=elevOf(praewa);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);drawP(sctx,T,null,praewa);drawP(lctx,T,gray(Math.max(70,lightAt(praewa.x,praewa.y))),praewa);sctx.restore();lctx.restore();}
+  if(praewa&&praewa.roof>0){const ev=elevOf(praewa);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);withOutline(sctx,praewa,c=>drawP(c,T,null,praewa));drawP(lctx,T,gray(Math.max(70,lightAt(praewa.x,praewa.y))),praewa);sctx.restore();lctx.restore();}
   for(const sp of sparks){const x=sp.x-camX,y=sp.y*K-camY-sp.h,f=sp.life/(sp.L0||1),tw=Math.sin(sp.life*40+sp.x)>-.3;
     if(sp.ash){sctx.fillStyle=gray(95);lctx.fillStyle=gray(110*Math.min(1,f*2));sctx.fillRect(x,y,.8,.8);lctx.fillRect(x,y,.8,.8);continue;}
     sctx.fillStyle=f>.7?'rgb(255,236,150)':f>.45?'rgb(246,190,56)':f>.2?'rgb(236,110,30)':'rgb(170,24,16)';sctx.fillRect(x,y,1,1);
@@ -1499,6 +1499,12 @@ function drawRoof(T){const hs=home&&home.hs;if(!hs||!hs.tiang)return;
       c.fillStyle=gray(160);c.fillRect(x0,yR-1,W2*.7,2);c.fillStyle='rgb(120,60,40)';c.fillRect(x0+W2*.7,yR-1.2,W2*.3,2);c.fillStyle=gray(20);c.fillRect(x0,yS-1,W2,1.6);c.fillRect(x0,yN,W2,1);
       c.fillStyle='#6a4a30';c.fillRect(x0+W2*.33,yR-2,1,yS-yR+2);c.fillRect(x0+W2*.81,yN,1,yR-yN);}
     c.restore();}}
+const OLC=document.createElement('canvas');OLC.width=136;OLC.height=120;const OLX=OLC.getContext('2d');
+const OLS=document.createElement('canvas');OLS.width=136;OLS.height=120;const OLSX=OLS.getContext('2d');
+function withOutline(s,e,fn){   // crisp dark outline around a character
+  const x0=Math.round(e.x-camX)-68,y0=Math.round(e.y*K-camY)-92;OLX.setTransform(1,0,0,1,0,0);OLX.clearRect(0,0,136,120);OLX.setTransform(1,0,0,1,-x0,-y0);fn(OLX);
+  OLSX.globalCompositeOperation='source-over';OLSX.clearRect(0,0,136,120);OLSX.drawImage(OLC,0,0);OLSX.globalCompositeOperation='source-in';OLSX.fillStyle='#0a0908';OLSX.fillRect(0,0,136,120);
+  for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])s.drawImage(OLS,x0+dx,y0+dy);s.drawImage(OLC,x0,y0);}
 function drawObj(o,T,s,l){
   const F=(c,v,x,y,w,h)=>{c.fillStyle=typeof v==='number'?gray(v):v;c.fillRect(x,y,w,h);};
   switch(o.k){
@@ -1525,7 +1531,7 @@ function drawObj(o,T,s,l){
     s.drawImage(trunkCv[(i*7+j*13)&3],bx-9,by-71);
     let v;const L=curL;if(L){const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy)||1;v=lightAt(cx+dx/d*(RT+1.5),cy+dy/d*(RT+1.5));}else v=lightAt(cx,cy+RT+2);
     F(l,v,bx-3,by-68,6,69);F(l,v,bx+2,by-11,6,6);
-    {const cv=canopyCv[(i*5+j*11)%6],cx0=bx-36,cy0=by-71-118,ppx=player.x-camX,ppy=player.y*K-camY-(player.ev||0)*PLH-10,see=Math.abs(ppx-bx)<30&&ppy>cy0-4&&ppy<by-40&&player.y<cy+4,al=see?.28:1,vc=Math.max(dawn*.7,lightAt(cx,cy+4)*.5);   // see-through when you walk under it
+    {const cv=canopyCv[(i*5+j*11)%6],cx0=bx-70,cy0=by-71-298,ppx=player.x-camX,ppy=player.y*K-camY-(player.ev||0)*PLH-10,see=Math.abs(ppx-bx)<30&&ppy>cy0-4&&ppy<by-40&&player.y<cy+4,al=see?.28:1,vc=Math.max(dawn*.7,lightAt(cx,cy+4)*.5);   // see-through when you walk under it
       s.globalAlpha=al;s.drawImage(cv.img,cx0,cy0);s.globalAlpha=1;l.globalAlpha=al;l.drawImage(cv.b,cx0,cy0);l.globalAlpha=al*clamp(vc/255,0,1);l.drawImage(cv.w,cx0,cy0);l.globalAlpha=1;}
     break;}
   case 2:{const t=o.t,x=t.i*TS+1-camX,y0=t.j*TS+3,y1=(t.j+t.h)*TS-2,w=t.w*TS-2,H=6,ty=y0*K-camY-H,th=(y1-y0)*K,fy=y1*K-camY-H;
@@ -1536,15 +1542,15 @@ function drawObj(o,T,s,l){
     F(s,26,x-1,ty-1,16,th+H+2);F(s,120,x,ty,14,th);F(s,170,x,fy,14,H);F(s,215,x,fy,14,1);F(s,80,x+7,fy+1,1,H-1);F(s,50,x+5,fy+11,1,3);F(s,50,x+9,fy+11,1,3);
     for(let xx=2;xx<14;xx+=3)F(s,140,x+xx,fy+1,1,H-2);F(s,52,x,fy+H-1,14,1);
     const v=lightAt(i*TS+8,(j+1)*TS+3);F(l,v*.7,x-1,ty-1,16,th+1);F(l,v,x-1,fy,16,H+1);break;}
-  case 6:{drawZ(s,o.z,T,null);drawZ(l,o.z,T,gray(lightAt(o.z.x,o.z.y+1,o.z)));if(o.z.burn>0){drawBodyFire(s,o.z,T,false);drawBodyFire(l,o.z,T,true);}break;}
-  case 7:{if(player.down){drawLying(s,T,null);drawLying(l,T,gray(lightAt(player.x,player.y)));}else{drawP(s,T,null);drawP(l,T,gray(Math.max(curL&&state!=='dying'?150*curL.i:0,lightAt(player.x,player.y))));}break;}
+  case 6:{withOutline(s,o.z,c=>drawZ(c,o.z,T,null));drawZ(l,o.z,T,gray(lightAt(o.z.x,o.z.y+1,o.z)));if(o.z.burn>0){drawBodyFire(s,o.z,T,false);drawBodyFire(l,o.z,T,true);}break;}
+  case 7:{if(player.down){withOutline(s,player,c=>drawLying(c,T,null));drawLying(l,T,gray(lightAt(player.x,player.y)));}else{withOutline(s,player,c=>drawP(c,T,null));drawP(l,T,gray(Math.max(curL&&state!=='dying'?150*curL.i:0,lightAt(player.x,player.y))));}break;}
   case 8:{drawGib(s,o.g,null);drawGib(l,o.g,gray(lightAt(o.g.x,o.g.y)));break;}
   case 9:{const P=o.P,x=P.x-camX,y=P.y*K-camY-P.e,fh=1.6+P.f*1.6;
     F(s,236,x-1,y-4,2,4);F(s,150,x+.6,y-4,.4,4);F(s,'rgb(220,40,24)',x-1,y-4-fh,2,fh);F(s,'#fff',x-.5,y-3.6-fh*.7,1,fh*.7);
     F(l,210,x-1,y-4,2,4);F(l,255,x-1,y-4-fh,2,fh);break;}
   case 10:{drawFire(s,o.P,T,null);drawFire(l,o.P,T,true);break;}
   case 11:{const v=lightAt(o.i*TS+8,o.j*TS+8);drawFence(s,o.i,o.j,null);drawFence(l,o.i,o.j,gray(v));break;}
-  case 14:{if(bot.down){drawLying(s,T,null,bot);drawLying(l,T,gray(lightAt(bot.x,bot.y)),bot);}else{drawP(s,T,null,bot);drawP(l,T,gray(Math.max(30,lightAt(bot.x,bot.y))),bot);}break;}
+  case 14:{if(bot.down){withOutline(s,bot,c=>drawLying(c,T,null,bot));drawLying(l,T,gray(lightAt(bot.x,bot.y)),bot);}else{withOutline(s,bot,c=>drawP(c,T,null,bot));drawP(l,T,gray(Math.max(30,lightAt(bot.x,bot.y))),bot);}break;}
   case 15:{const v=lightAt(o.p.x,o.p.y+3);drawPlant(s,o.p,T,null);drawPlant(l,o.p,T,gray(v));break;}
   case 16:{const g=o.g,v=lightAt(g.x,g.y);drawBunch(s,g.x-camX,g.y*K-camY-2,.9,null,true,g.a);drawBunch(l,g.x-camX,g.y*K-camY-2,.9,gray(Math.max(10,v)),true,g.a);break;}
   case 18:{const w=o.w,v=lightAt(w.x,w.y),lit=lampLit(w.x,w.y),x=w.x-camX,y=w.y*K-camY;drawLog(s,x,y,w.a,w.v,null,1.15,true);drawLog(l,x,y,w.a,w.v,gray(Math.max(14,v)),1.15,true);
@@ -1555,8 +1561,8 @@ function drawObj(o,T,s,l){
     break;}
   case 19:{const v=lightAt(o.p.x,o.p.y+3);drawPile(s,o.p,null);drawPile(l,o.p,gray(v));break;}
   case 22:{drawPostTorch(s,o.t,T,0);drawPostTorch(l,o.t,T,Math.max(60,lightAt(o.t.x,o.t.y)));break;}
-  case 23:{if(pam.down){drawLying(s,T,null,pam);drawLying(l,T,gray(lightAt(pam.x,pam.y)),pam);}else{drawP(s,T,null,pam);drawP(l,T,gray(Math.max(28,lightAt(pam.x,pam.y))),pam);}break;}
-  case 20:{drawP(s,T,null,praewa);drawP(l,T,gray(Math.max(28,lightAt(praewa.x,praewa.y))),praewa);break;}
+  case 23:{if(pam.down){withOutline(s,pam,c=>drawLying(c,T,null,pam));drawLying(l,T,gray(lightAt(pam.x,pam.y)),pam);}else{withOutline(s,pam,c=>drawP(c,T,null,pam));drawP(l,T,gray(Math.max(28,lightAt(pam.x,pam.y))),pam);}break;}
+  case 20:{withOutline(s,praewa,c=>drawP(c,T,null,praewa));drawP(l,T,gray(Math.max(28,lightAt(praewa.x,praewa.y))),praewa);break;}
   case 17:{const v=lightAt(postPos.x,postPos.y+3);drawPost(s,null);drawPost(l,gray(v));break;}
   case 13:{const v=lightAt(hoe.x,hoe.y);drawHoeGround(s,null);drawHoeGround(l,gray(Math.max(v,12)));break;}
   case 12:{const P=o.P,v=lightAt(P.x,P.y+5);drawJar(s,P,null);drawJar(l,P,gray(v));break;}
