@@ -635,6 +635,8 @@ function drawSnake(c,n,mono,T){const M=col=>mono||col,BODY='rgb(108,82,58)',BELL
   for(let i=0;i<N;i++){c.strokeStyle=M('#0d0a07');c.lineWidth=2.1-i*.07;c.beginPath();c.moveTo(pts[i][0],pts[i][1]);c.lineTo(pts[i+1][0],pts[i+1][1]);c.stroke();}
   for(let i=0;i<N;i++){c.strokeStyle=M(BODY);c.lineWidth=1.25-i*.05;c.beginPath();c.moveTo(pts[i][0],pts[i][1]);c.lineTo(pts[i+1][0],pts[i+1][1]);c.stroke();}
   if(!mono){c.strokeStyle=BELLY;c.lineWidth=.35;c.beginPath();c.moveTo(pts[1][0],pts[1][1]+.4);for(let i=2;i<8;i++)c.lineTo(pts[i][0],pts[i][1]+.4);c.stroke();}
+  {c.strokeStyle=mono?'#fff':'rgb(240,222,180)';c.lineWidth=.5;c.beginPath();c.moveTo(pts[1][0],pts[1][1]-.45);for(let i=2;i<N-2;i++)c.lineTo(pts[i][0],pts[i][1]-.45);c.stroke();   // glossy scales catch the light
+    const tt=performance.now()/1000;for(let k=0;k<3;k++){const i=1+((tt*7+k*5+n.seed)|0)%(N-3);c.fillStyle='#fff';c.fillRect(pts[i][0]-.5,pts[i][1]-.9,1,1);}}
   const h0=pts[0];c.fillStyle=M('#0d0a07');c.beginPath();c.ellipse(h0[0],h0[1],1.5,1.1,0,0,TAU);c.fill();c.fillStyle=M(BODY);c.beginPath();c.ellipse(h0[0],h0[1]-.1,1.05,.75,0,0,TAU);c.fill();
   if(!mono){c.fillStyle='#000';c.fillRect(h0[0]+Math.cos(n.a)*.4-.3,h0[1]-.5,.6,.6);
     if(rear&&Math.sin(T*22+n.seed)>.2){c.strokeStyle='rgb(214,30,22)';c.lineWidth=.4;c.beginPath();c.moveTo(h0[0]+Math.cos(n.a)*1.2,h0[1]+Math.sin(n.a)*.6);c.lineTo(h0[0]+Math.cos(n.a)*3,h0[1]+Math.sin(n.a)*1.2);c.stroke();}}}
@@ -1636,7 +1638,7 @@ function drawObj(o,T,s,l){
   case 22:{drawPostTorch(s,o.t,T,0);drawPostTorch(l,o.t,T,Math.max(60,lightAt(o.t.x,o.t.y)));break;}
   case 23:{if(pam.down){withOutline(s,pam,c=>drawLying(c,T,null,pam));drawLying(l,T,gray(lightAt(pam.x,pam.y)),pam);}else{withOutline(s,pam,c=>drawP(c,T,null,pam));drawP(l,T,gray(Math.max(28,lightAt(pam.x,pam.y))),pam);}break;}
   case 28:{drawSkewer(s,o.sk,null,T);drawSkewer(l,o.sk,gray(Math.max(40,lightAt(o.sk.x,o.sk.y))),T);break;}
-  case 29:{drawSnake(s,o.n,null,T);drawSnake(l,o.n,gray(Math.max(22,lightAt(o.n.x,o.n.y))),T);break;}
+  case 29:{drawSnake(s,o.n,null,T);drawSnake(l,o.n,gray(Math.max(70,lightAt(o.n.x,o.n.y))),T);break;}
   case 20:{withOutline(s,praewa,c=>drawP(c,T,null,praewa));drawP(l,T,gray(Math.max(28,lightAt(praewa.x,praewa.y))),praewa);break;}
   case 17:{const v=lightAt(postPos.x,postPos.y+3);drawPost(s,null);drawPost(l,gray(v));break;}
   case 13:{const v=lightAt(hoe.x,hoe.y);drawHoeGround(s,null);drawHoeGround(l,gray(Math.max(v,12)));break;}
