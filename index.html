@@ -764,7 +764,6 @@ function syncDyn(){plights=plights.filter(p=>!p.dyn);const T=performance.now()/1
     plights.push({dyn:1,kind:'lantern',x:lx,y:ly,r:22,v:120,f:1,rays:20,seed:b.x});}
   if(pam&&pam.torch>0)plights.push({dyn:1,kind:'torch',x:pam.x+Math.cos(pam.facing)*28,y:pam.y+Math.sin(pam.facing)*28,r:64,v:165,f:1,rays:36,seed:7});
   for(const t of postTorches)plights.push({dyn:1,kind:'post',x:t.x,y:t.y,r:80,v:175*Math.min(1,t.t/2,t.age/.6),f:1,rays:40,seed:t.seed});
-  if(KRL&&KRL.v>.05)plights.push({dyn:1,kind:'kr',x:KRL.x,y:KRL.y,r:blackout?125:62,v:(blackout?205:115)*KRL.v,f:1,rays:blackout?96:30,seed:5});
   for(const z of zombies)if(z.burn>0)plights.push({dyn:1,kind:'burn',x:z.x,y:z.y,r:82,v:195*Math.min(1,z.burn/1.5,(z.burnMax-z.burn)/.4+.2),f:1,rays:40,seed:z.seed});}
 function computeLights(){
   syncDyn();actL=blackout?plights.filter(p=>p.kind==='kr'):plights;curL=getLight();curLamps=[curL,getBotLight()].filter(Boolean);
@@ -1722,13 +1721,120 @@ function bunchFireHi(s,l,T){const F=fireP;if(!F||F.F<=0||!postPos||stock<=0)retu
     c.globalAlpha=clamp(fl,0,1);c.fillStyle=lp?'#fff':'rgb(255,246,200)';for(let r=0;r<4;r+=2){const gx=side*(3.6+((r*3)%2)),gy=-5+r*3.2+.4;if(Math.sin(T*7+r*2.3+F.seed)>.2)c.fillRect(gx-.5,gy-.5,1,1);}
     c.restore();}}
 const RMC=document.createElement('canvas');RMC.width=136;RMC.height=120;const RMX=RMC.getContext('2d');
-function krShadows(){const L=KRL;if(!blackout||!L||L.v<.05)return;const R=135,c=lctx;c.save();c.fillStyle='#000';const S=(wx,wy)=>[wx-camX,wy*K-camY];
+function krShadows(c){const L=KRL;if(!L||L.v<.05)return;const R=135;c.save();c.fillStyle='#000';const S=(wx,wy)=>[wx-camX,wy*K-camY];
   const cast=(x,y,w,len0)=>{const dx=x-L.x,dy=y-L.y,d=Math.hypot(dx,dy);if(d<6||d>R)return;const ux=dx/d,uy=dy/d,Ln=len0+d*.55,px=-uy,py=ux;c.globalAlpha=.85*L.v*Math.pow(1-d/R,.5);
     const a=S(x+px*w,y+py*w),b=S(x+ux*Ln+px*w*1.8,y+uy*Ln+py*w*1.8),e=S(x+ux*Ln-px*w*1.8,y+uy*Ln-py*w*1.8),f=S(x-px*w,y-py*w);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.lineTo(e[0],e[1]);c.lineTo(f[0],f[1]);c.closePath();c.fill();};
   for(const e of[player,bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null])if(e&&!e.up&&!e.st&&!e.hidden&&!e.gone)cast(e.x,e.y,e===praewa?1.8:2.8,16);
   for(const p of woodPiles)cast(p.x,p.y,6,9);for(const p of props)cast(p.x,p.y,4,9);if(postPos)cast(postPos.x,postPos.y,1.4,22);for(const b of bigBranches)cast(b.x,b.y,8,5);
-  const i0=Math.floor((L.x-R)/TS),i1=Math.floor((L.x+R)/TS),j0=Math.floor((L.y-R)/TS),j1=Math.floor((L.y+R)/TS);for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++)if(tAt(i,j)===TT)cast(i*TS+8,j*TS+8,RT,60);
   c.restore();}
+// แสงของกระสือ — ดึงเฉพาะส่วนแสงออกมาจาก test.html ให้ใช้แยกได้ ไม่พึ่งตัวแปรอื่นในเกม
+//
+// แสงเป็นจุดกำเนิดแสงสีแดงล้วนที่ปอด:
+//   • ส่องแบบกระจาย (diffuse) ตามมุมของผิว  • เกิดประกายสะท้อนสีแดง (specular) บนผิวมันวาว
+//   • ต้นไม้บังแสงเป็นเงารูปลิ่ม  • ความแรงเต้นตามจังหวะหัวใจ  • มีการกดค่าสว่างไม่ให้จ้าเกิน
+//
+// วิธีใช้ทุกเฟรม:
+//   const light = KrasueLight.begin(lungPos, t, glowOn, trees);        // 1 ครั้งต่อเฟรม
+//   for (แต่ละพิกเซล) {
+//     const L = KrasueLight.shade(light, px,py,pz, nx,ny,nz, gloss);   // ตำแหน่งในโลก + normal + ความมันวาว 0..1
+//     // L.r,L.g,L.b = ตัวคูณแสงที่บวกเพิ่ม (คูณกับสีพื้นผิว), L.sr,L.sg,L.sb = ประกายสะท้อน (บวกตรง ๆ 0..1)
+//   }
+// พิกัดโลก: X ไปทางตะวันออก, Y ไปทางใต้ (ลงจอ), Z ขึ้นฟ้า
+
+const KrasueLight = (() => {
+  const BINS = 1024;                       // ความละเอียดของแผนที่เงาตามมุม (360° แบ่ง 1024 ช่อง)
+  const VIEW = [0, 0.6, 0.8];              // ทิศจากพื้นผิวไปหากล้อง (กล้องมองเฉียงลง ~53°)
+  const COLOR = [1.0, 0.08, 0.08];         // สีแสงกระจาย: แดงล้วน
+  const SPEC  = [1.0, 0.05, 0.07];         // สีประกายสะท้อน: แดงล้วน
+  const blk = new Float32Array(BINS);
+
+  // เตรียมแสงของเฟรมนี้: ตำแหน่ง ความแรง และแผนที่เงาจากต้นไม้รอบ ๆ
+  function begin(lung, t, glowOn, trees) {
+    const lx = lung[0], ly = lung[1], lz = Math.max(15, lung[2] + 6);   // ยกจุดแสงขึ้นเล็กน้อยให้ส่องพื้นได้กว้าง
+    const beat = 1 + 0.15 * Math.max(0, Math.sin(t * 5.7)) ** 8;      // กระพือตามหัวใจเต้น
+    const R = glowOn ? 120 : 48, I = (glowOn ? 1.45 : 0.8) * beat;
+    // แผนที่เงา: สำหรับทุกทิศรอบจุดแสง เก็บระยะของลำต้นที่ใกล้ที่สุดที่บังทิศนั้น
+    blk.fill(1e9);
+    if (trees) for (const tr of trees) {
+      const dx = tr.x - lx, dy = tr.y - ly, d = Math.hypot(dx, dy);
+      if (d > R + 8 || d < tr.r + 0.5) continue;
+      const a = Math.atan2(dy, dx), hw = Math.asin(Math.min(1, tr.r / d));
+      const b0 = Math.floor((a - hw) / (2 * Math.PI) * BINS), b1 = Math.ceil((a + hw) / (2 * Math.PI) * BINS);
+      for (let b = b0; b <= b1; b++) {
+        const k = ((b % BINS) + BINS) % BINS, v = d - tr.r * 0.4;
+        if (v < blk[k]) blk[k] = v;
+      }
+    }
+    return { lx, ly, lz, R2: R * R, I };
+  }
+
+  // คำนวณแสงกระสือที่ตกบนจุดหนึ่ง
+  function shade(L, px, py, pz, nx, ny, nz, gloss) {
+    const out = { r: 0, g: 0, b: 0, sr: 0, sg: 0, sb: 0 };
+    const dx = L.lx - px, dy = L.ly - py, dz = L.lz - pz, d2 = dx * dx + dy * dy + dz * dz;
+    if (d2 >= L.R2) return out;
+    const d = Math.sqrt(d2) || 1, ux = dx / d, uy = dy / d, uz = dz / d;
+    const ndl = nx * ux + ny * uy + nz * uz;           // ผิวหันเข้าหาแสงแค่ไหน
+    if (ndl <= 0) return out;
+    // ถูกลำต้นบังหรือเปล่า
+    const d2d = Math.hypot(dx, dy);
+    if (d2d > 1) {
+      const a = Math.atan2(-dy, -dx), k = ((Math.floor(a / (2 * Math.PI) * BINS) % BINS) + BINS) % BINS;
+      if (blk[k] < d2d - 1.2) return out;
+    }
+    // ความแรงลดตามระยะ: ขอบรัศมีนุ่ม × ลดแบบกำลังสองผกผันที่ถูกจำกัดค่า
+    let f = 1 - d2 / L.R2;
+    f = f * f * L.I * 3600 / (3600 + d2) * (nz > 0.5 ? 1.5 : 1);   // พื้นราบได้แสงมากกว่าผนังลำต้นเล็กน้อย
+    const core = Math.max(0, 1 - d2 / (26 * 26));                 // แกนแสงเข้มใกล้ตัว
+    const diff = f * ndl;
+    out.r = diff * COLOR[0] + core * core * ndl * 0.12;
+    out.g = diff * COLOR[1];
+    out.b = diff * COLOR[2];
+    // ประกายสะท้อน (Blinn-Phong): เกิดเฉพาะมุมที่สะท้อนเข้ากล้อง
+    if (gloss > 0) {
+      const hx = ux + VIEW[0], hy = uy + VIEW[1], hz = uz + VIEW[2], hm = Math.hypot(hx, hy, hz);
+      const nh = (nx * hx + ny * hy + nz * hz) / hm;
+      if (nh > 0) {
+        const s = Math.pow(nh, 30) * gloss * f * 1.9;
+        out.sr = s * SPEC[0]; out.sg = s * SPEC[1]; out.sb = s * SPEC[2];
+      }
+    }
+    return out;
+  }
+
+  // กดค่าความสว่างรวม (แสงกระสือ + แสงอื่น) ไม่ให้จ้าจนขาวโพลน
+  function tone(v) { return v / (1 + 0.35 * v); }
+
+  // แสงแดงบนตัวกระสือเอง (หัว / ไส้): คืนค่า [กระจาย, ประกาย] 0..1 สำหรับเลือกเฉดสี
+  function onBody(p, n, glowOn) {
+    let gx = p.lx - n.px, gy = p.ly - n.py, gz = p.lz - n.pz;
+    const gd = Math.hypot(gx, gy, gz) || 1; gx /= gd; gy /= gd; gz /= gd;
+    const att = glowOn ? Math.max(0, 1 - gd / 95) ** 1.4 : Math.max(0, 1 - gd / 40) ** 1.4;
+    const ndl = Math.max(0, n.nx * gx + n.ny * gy + n.nz * gz) * att;
+    const hx = gx + VIEW[0], hy = gy + VIEW[1], hz = gz + VIEW[2], hm = Math.hypot(hx, hy, hz);
+    const sp = Math.pow(Math.max(0, (n.nx * hx + n.ny * hy + n.nz * hz) / hm), 14) * att;
+    return [ndl, sp];
+  }
+
+  return { begin, shade, tone, onBody, BINS };
+})();
+
+
+
+// the krasue's light, per ground pixel, exactly as KrasueLight describes: pure red diffuse + red glints, trunk wedge shadows, heartbeat, tone-mapped
+const KMC=document.createElement('canvas'),KMX=KMC.getContext('2d',{willReadFrequently:true});
+function krLightPass(T){const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)return;const glowOn=Lk.v>.5,RR=glowOn?128:56,trees=[];
+  for(let j=Math.floor((Lk.y-RR)/TS);j<=Math.floor((Lk.y+RR)/TS);j++)for(let i=Math.floor((Lk.x-RR)/TS);i<=Math.floor((Lk.x+RR)/TS);i++)if(tAt(i,j)===TT)trees.push({x:i*TS+8,y:j*TS+8,r:RT});
+  const L=KrasueLight.begin([Lk.x,Lk.y,Lk.z],T,glowOn,trees),Rr=Math.sqrt(L.R2);
+  const x0=Math.max(0,Math.floor(L.lx-Rr-camX)),x1=Math.min(vw-1,Math.ceil(L.lx+Rr-camX)),y0=Math.max(0,Math.floor((L.ly-Rr)*K-camY)),y1=Math.min(vh-1,Math.ceil((L.ly+Rr)*K-camY));if(x1<x0||y1<y0)return;
+  const w=x1-x0+1,h=y1-y0+1;if(KMC.width!==vw||KMC.height!==vh){KMC.width=vw;KMC.height=vh;}KMX.setTransform(1,0,0,1,0,0);KMX.clearRect(0,0,vw,vh);krShadows(KMX);
+  const SD=sctx.getImageData(x0,y0,w,h),LD=lctx.getImageData(x0,y0,w,h),MD=KMX.getImageData(x0,y0,w,h),sd=SD.data,ld=LD.data,md=MD.data;
+  for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx;if(ddx*ddx+ddy*ddy>=L.R2)continue;
+    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const p=(yy*w+xx)<<2,sh=1-md[p+3]/255;if(sh<=0)continue;
+    const v=KrasueLight.tone(o.r)*sh,sp=o.sr*sh,rl=Math.min(255,(v+sp)*230),Lo=ld[p];
+    if(rl>Lo*.45){const a=sd[p];if(sp>.3){sd[p]=255;sd[p+1]=70;sd[p+2]=84;}else{sd[p]=Math.max(a,86);sd[p+1]=a*.14;sd[p+2]=a*.14;}}
+    const nl=Math.min(255,Lo+rl);ld[p]=ld[p+1]=ld[p+2]=nl;}}
+  sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);}
 function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-camX,gy=L.y*K-camY-6,R=135,c=sctx,g=c.createRadialGradient(gx,gy,0,gx,gy,R),v=L.v;
   g.addColorStop(0,`rgb(255,${255-205*v|0},${255-200*v|0})`);g.addColorStop(.55,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(1,'#fff');
   c.save();c.globalCompositeOperation='multiply';c.fillStyle=g;c.fillRect(gx-R,gy-R,R*2,R*2);c.restore();}
@@ -2029,7 +2135,6 @@ function lampBeam(h){
 function beamPath(c,b){c.beginPath();c.moveTo(b.lx,b.ly);c.lineTo(b.p1x,b.p1y);c.lineTo(b.p2x,b.p2y);c.closePath();}
 function renderScene(){
   const c=sctx;c.setTransform(1,0,0,1,0,0);c.globalCompositeOperation='source-over';c.fillStyle='#000';c.fillRect(0,0,vw,vh);blitK(c,world);
-  if(KRL&&KRL.v>.05){const gx=KRL.x-camX,gy=KRL.y*K-camY,g=c.createRadialGradient(gx,gy,0,gx,gy,30);g.addColorStop(0,`rgba(205,26,40,${.4*KRL.v})`);g.addColorStop(1,'rgba(205,26,40,0)');c.fillStyle=g;c.fillRect(gx-30,gy-30,60,60);}
   for(const p of particles){c.fillStyle=p.col||'rgb(220,22,28)';if(p.leaf)c.fillRect(p.x-camX-1,p.y*K-camY-p.h-.6,2,1.2);else c.fillRect(p.x-camX-.7,p.y*K-camY-p.h-.7,1.5,1.5);}
   for(const hh of[player,bot]){if(!hh)continue;const b=lampBeam(hh);if(b){const g=c.createLinearGradient(b.lx,b.ly,b.mx,b.my);g.addColorStop(0,'rgba(240,240,240,.7)');g.addColorStop(.7,'rgba(235,235,235,.18)');g.addColorStop(1,'rgba(235,235,235,0)');beamPath(c,b);c.fillStyle=g;c.fill();}}
 }
@@ -2094,14 +2199,14 @@ function renderObjects(T){
   for(const P of props)if(P.kind==='jar'&&P.x>camX-30&&P.x<camX+vw+30&&P.y*K>camY-30&&P.y*K<camY+vh+40)objs.push({y:P.y,k:12,P});
   for(const P of plights)if(!P.dyn&&P.x>camX-30&&P.x<camX+vw+30&&P.y*K>camY-30&&P.y*K<camY+vh+30)objs.push({y:P.kind==='candle'?P.y+(P.e?6:0)+.5:P.y,k:P.kind==='candle'?9:10,P});
   objs.sort((a,b)=>a.y-b.y);
-  fireShadows();krShadows();
+  fireShadows();
   for(const o of objs){const e=o.k===6?o.z:o.k===7?player:o.k===14?bot:o.k===20?praewa:o.k===23?pam:null,ev=e?(e.ev||0)*PLH+(e.lift||0):0;
     const rot=o.k===7&&player.rollT>0?(1-player.rollT/.42)*TAU*(player.rollDx>=0?1:-1):0,sit=e&&e.sit&&!e.down;
     if(ev>.2||rot||sit){for(const c of[sctx,lctx]){c.save();c.translate(0,-ev);if(sit){const gy=e.y*K-camY;c.beginPath();c.rect(e.x-camX-40,gy-80,80,79.4);c.clip();c.translate(0,e===praewa?2.5:5);}
         if(rot){const cx=player.x-camX,cy=player.y*K-camY-9;c.translate(cx,cy);c.rotate(rot);c.translate(-cx,-cy);}}
       drawObj(o,T,sctx,lctx);sctx.restore();lctx.restore();if(sit){sctx.fillStyle='#3a2a1c';sctx.fillRect(e.x-camX-3.5,e.y*K-camY-1,7,2);}}
     else drawObj(o,T,sctx,lctx);}
-  drawRoof(T);redTint();drawBoss(T);
+  drawRoof(T);drawBoss(T);
   if(praewa&&praewa.roof>0){const ev=elevOf(praewa);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);withOutline(sctx,praewa,c=>drawP(c,T,null,praewa));drawP(lctx,T,gray(Math.max(70,lightAt(praewa.x,praewa.y))),praewa);sctx.restore();lctx.restore();}
   for(const sp of sparks){const x=sp.x-camX,y=sp.y*K-camY-sp.h,f=sp.life/(sp.L0||1),tw=Math.sin(sp.life*40+sp.x)>-.3;
     if(sp.ash){sctx.fillStyle=gray(95);lctx.fillStyle=gray(110*Math.min(1,f*2));sctx.fillRect(x,y,.8,.8);lctx.fillRect(x,y,.8,.8);continue;}
@@ -2534,7 +2639,7 @@ function frame(now){
   const dt=slowT>0?rdt*(.22+.78*Math.pow(1-slowT/.32,2)):rdt;if(slowT>0)slowT-=rdt;   // brief slow-motion after a hit
   if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else computeLights();
   updateCommon(dt);
-  if(player){updateLamps(T);renderScene();renderLight();renderObjects(T);composite();if(B&&!B.hidden)KRS.blit(out32,KRMAP);postFX();octx.putImageData(outImg,0,0);}
+  if(player){updateLamps(T);renderScene();renderLight();krLightPass(T);renderObjects(T);composite();if(B&&!B.hidden)KRS.blit(out32,KRMAP);postFX();octx.putImageData(outImg,0,0);}
   drawUI(dt);
   requestAnimationFrame(frame);
 }
