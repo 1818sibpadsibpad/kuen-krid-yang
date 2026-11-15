@@ -97,7 +97,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v2.8</div>
+  <div class="ver">v2.9</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -105,7 +105,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v2.8</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v2.9</h3><ul>
+      <li>คัตซีนเปลี่ยนตัว: ถอดไฟฉายจากหัว ยื่นให้ อีกคนรับไปสวมเอง · "อย่าลืมมองรอบๆด้วย" / "โอเคลุย!"</li>
       <li>แพรวา: ใส่ไฟฉายบนหัวกลับมา แต่ไม่มีลำแสงพุ่งออกจากหัว</li>
       <li>แพรวา: เอาลำแสงไฟฉายช่วงใกล้ตัวออก เหลือแค่แสงที่ตกบนพื้น</li>
       <li>แพรวา: เอาไฟฉายบนหัวออก เหลือแค่แสงไฟฉายบนพื้น</li>
@@ -499,7 +500,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='2.8';
+let useBot=true,bot=null,hero='fifa';const VERSION='2.9';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2208,7 +2209,7 @@ function drawP(c,T,mono,h=player){
   const ux=Math.cos(psi),uy=Math.sin(psi)*K,hx=shRx+ux*armL*.9,hy=shRy+uy*armL*.9+hv*.8;
   let kx=ux,ky=uy+hv/12;{const l=Math.hypot(kx,ky)||1;kx/=l;ky/=l;}
   const behind=Math.sin(psi)<-.15;
-  const knife=()=>{if(h.weapon==='stick'){stickHands();return;}if(h.weapon==='hoe'){hoeHand();return;}
+  const knife=()=>{if(h.hl)return;if(h.weapon==='stick'){stickHands();return;}if(h.weapon==='hoe'){hoeHand();return;}
     if(PW&&h===player){c.strokeStyle=M('#c9c4bc');c.lineWidth=1.6;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(hx,hy);c.stroke();   // Praewa's frying pan
       const ex=hx+kx*5,ey=hy+ky*5;c.strokeStyle=M('#1a1a1a');c.lineWidth=1.5;c.beginPath();c.moveTo(hx-kx*1.5,hy-ky*1.5);c.lineTo(ex,ey);c.stroke();
       const cx2=ex+kx*4.2,cy2=ey+ky*4.2;c.fillStyle=M('#2b2b2b');c.strokeStyle=M('#000');c.lineWidth=.8;c.beginPath();c.ellipse(cx2,cy2,4.4,3.2,Math.atan2(ky,kx),0,TAU);c.fill();c.stroke();
@@ -2262,9 +2263,14 @@ function drawP(c,T,mono,h=player){
   else{c.fillStyle=M('#0b0b0b');c.beginPath();c.arc(hcx,heY-.7,2.85,Math.PI*.92,TAU+.08);c.fill();
     {const sd=ca>=0?1:-1;c.beginPath();c.moveTo(hcx-3*sd,heY-1.4);c.quadraticCurveTo(hcx,heY-2.4,hcx+3*sd,heY-.6);c.lineTo(hcx+2.3*sd,heY+.5);c.quadraticCurveTo(hcx+.4*sd,heY-.6,hcx-1.6*sd,heY-.2);c.closePath();c.fill();c.fillRect(hcx-2.95,heY-1,.9,1.8);c.fillRect(hcx+2.05,heY-1,.9,1.8);}   // side-swept fringe
     c.fillStyle=M('#111');const ex=fx+ca*1.5,as=Math.abs(sa);c.fillRect(ex-1*as-.5,heY+.3,1,1);if(as>.3)c.fillRect(ex+1*as-.5,heY+.3,1,1);}
-  const HL=(!PW&&!PM)||(PW&&h===player);   // แพรวา wears the headlamp, but no beam shaft is drawn from it
+  const HL=h.hl?h.hl.lamp==='head':(!PW&&!PM)||(PW&&h===player);   // แพรวา wears the headlamp, but no beam shaft is drawn from it
+  if(h.hl){const q=h.hl,d=q.dir,lp=(a,b,t)=>a+(b-a)*t;c.lineCap='round';let mx=0,my=0;   // hand-over: both arms lift the lamp off / reach / put it on
+    for(const sd of[-1,1]){const sx=fx+sd*2.6,sy=shY+1;let hx2=lp(fx+sd*3,hcx+sd*2.9,q.r),hy2=lp(hipY+2,heY-1-q.up*2.5,q.r);hx2=lp(hx2,fx+d*6.2,q.x);hy2=lp(hy2,shY+.5+sd*.9,q.x);
+      const ex=(sx+hx2)/2+sd*2.2*q.r*(1-q.x),ey=(sy+hy2)/2+1.2*(1-q.r);c.strokeStyle=M('#000');c.lineWidth=2.6;c.beginPath();c.moveTo(sx,sy);c.lineTo(ex,ey);c.lineTo(hx2,hy2);c.stroke();
+      c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.stroke();c.fillStyle=M(PW||PM?'#e9c9a8':'#d9b48c');c.fillRect(hx2-.8,hy2-.8,1.6,1.6);mx+=hx2/2;my+=hy2/2;}
+    if(q.lamp==='hand'){c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(mx,my,2.8,.9,0,0,TAU);c.stroke();c.fillStyle='#fff';c.fillRect(mx+d*1.6-1,my-1,2,1.6);}}
   if(HL){c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(hcx,heY-1,2.8,.9,0,0,TAU);c.stroke();}
-  if(HL&&sa>-.6){c.fillStyle=lampOf(h)&&!h.hidden?'#fff':M('#777');c.fillRect(hcx+ca*2-1,heY-2+sa*.5,2,1.6);}
+  if(HL&&sa>-.6){c.fillStyle=(h.hl||lampOf(h))&&!h.hidden?'#fff':M('#777');c.fillRect(hcx+ca*2-1,heY-2+sa*.5,2,1.6);}
   if(PM){const th=h.thrust>0?Math.sin(clamp(1-h.thrust/.4,0,1)*Math.PI):0,tx2=fx+fwx*(1.5+6*th)+px*4.6,ty2=shY+4+fwy*(1.5+6*th)-2*th;   // torch in the right hand
     c.strokeStyle=M('#8c8c8c');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(tx2,ty2);c.stroke();
     const tipx=tx2+fwx*(28+6*th)+px*2,tipy=ty2-12+fwy*(28+6*th)+4*th;c.strokeStyle=M('#2a2018');c.lineWidth=2.2;c.beginPath();c.moveTo(tx2-fwx*8,ty2+3);c.lineTo(tipx,tipy);c.stroke();c.strokeStyle=M('#5a4836');c.lineWidth=1.3;c.stroke();
@@ -2767,11 +2773,16 @@ function startSwap(nh){if(nh===hero||state!=='play')return;let ent=nh==='pam'?pa
   if(!ent){tmp={...player,jp:nh==='jp',pw:nh==='pw',pm:nh==='pam',x:tx-sd*40,y:ty+10,swingT:0,kickT:0,carry:null,wood:0,snakes:0,snakeBite:null,lift:0,sit:false,down:false,fly:null,rollT:0,hidden:false,phase:0,moveAmt:0,_pp:null};ent=tmp;}
   ent.hidden=false;SW={t:0,nh,oh:hero,ent,tmp,tx,ty,said:0};state='swap';player.charging=false;player.swingT=0;player.kickT=0;player.vx=player.vy=0;joyV={x:0,y:0};}
 function updateSwap(dt){const S=SW,e=S.ent;S.t+=dt;computeLights();updateFire(dt);updateBot(dt,'hold');updatePraewa(dt,'cut');updatePam(dt,'cut');
-  if(Math.hypot(e.x-S.tx,e.y-S.ty)>2&&S.t<1.2)followPath(e,S.tx,S.ty,90,dt);else{e.moveAmt=0;if(S.t>=1.2&&Math.hypot(e.x-S.tx,e.y-S.ty)>2){e.x=S.tx;e.y=S.ty;lvSet(e);}}
+  if(Math.hypot(e.x-S.tx,e.y-S.ty)>2&&S.t<1)followPath(e,S.tx,S.ty,90,dt);else{e.moveAmt=0;if(S.t>=1&&Math.hypot(e.x-S.tx,e.y-S.ty)>2){e.x=S.tx;e.y=S.ty;lvSet(e);}}
   e.facing=angLerp(e.facing,Math.atan2(player.y-e.y,player.x-e.x),dt*8);player.facing=angLerp(player.facing,Math.atan2(e.y-player.y,e.x-player.x),dt*8);player.moveAmt=0;
-  if(S.t>.6&&!S.said){S.said=1;tn('sine',700,1100,.18,.12);}
-  if(S.t>=2){finishSwap();}}
-function finishSwap(){const S=SW,e=S.ent,old=S.oh,nh=S.nh,ox=player.x,oy=player.y;SW=null;
+  {const t=S.t,sm=(a,b)=>{const u=clamp((t-a)/(b-a),0,1);return u*u*(3-2*u);},G=player,d=e.x>=G.x?1:-1;
+    G.hl={dir:d,r:sm(1,1.5)*(1-sm(2.7,3.2)),up:sm(1.5,1.9),x:sm(1.9,2.4)*(1-sm(2.6,3.1)),lamp:t<1.5?'head':t<2.6?'hand':'none'};
+    e.hl={dir:-d,r:sm(2.6,3.2)*(1-sm(3.3,3.8)),up:1-sm(2.9,3.2),x:sm(2.15,2.6)*(1-sm(2.6,3.2)),lamp:t<2.6?'none':t<3.2?'hand':'head'};}
+  if(S.t>1.5&&S.said<1){S.said=1;nz(.06,'highpass',3000,1500,.08);}
+  if(S.t>1.9&&S.said<2){S.said=2;tn('square',1100,900,.05,.05);}
+  if(S.t>3.2&&S.said<3){S.said=3;tn('sine',700,1100,.18,.12);tn('square',1300,1000,.05,.05);}
+  if(S.t>=4.2){finishSwap();}}
+function finishSwap(){const S=SW,e=S.ent,old=S.oh,nh=S.nh,ox=player.x,oy=player.y;SW=null;delete player.hl;delete e.hl;player.say={text:'โอเคลุย',t:1.2};
   hero=nh;try{localStorage.setItem('hero',hero);}catch(_){}player.jp=hero==='jp';player.pw=hero==='pw';player.pm=hero==='pam';player.x=e.x;player.y=e.y;lvSet(player);player.facing=Math.atan2(oy-player.y,ox-player.x);
   if(nh==='pam')pam=null;if(nh==='pw')praewa=null;
   if(old==='pam'){pam=makePam();pam.x=ox;pam.y=oy;lvSet(pam);}
@@ -2780,9 +2791,9 @@ function finishSwap(){const S=SW,e=S.ent,old=S.oh,nh=S.nh,ox=player.x,oy=player.
   if(N3&&N3.ph==='fight'){const st=stations();npcs().forEach((q,i)=>{q.station=st[i%st.length];});}
   state='play';flashOn=true;sfx.ready();toast('ส่งไฟคาดหัวให้ '+HERONAME()+' แล้ว');}
 function drawSwapUI(s){const S=SW,e=S.ent,bar=SHc*.09;u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);
-  const hd=q=>[(q.x-camX)*P,(q.y*K-camY-elevOf(q)-(q.pw?12:q.pm?20:21))*P],a=hd(player),b=hd(e),k=clamp((S.t-.55)/.8,0,1),ek=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
-  const x=a[0]+(b[0]-a[0])*ek,y=a[1]+(b[1]-a[1])*ek-Math.sin(ek*Math.PI)*34*s;
-  if(S.t>.4){u.save();u.shadowColor='#fff6c8';u.shadowBlur=18*s;u.fillStyle='#fff6c8';u.beginPath();u.arc(x,y,4.5*s,0,TAU);u.fill();u.restore();u.fillStyle=BG;u.fillRect(x-4*s,y+2.5*s,8*s,2*s);}
+  const hd=q=>[(q.x-camX)*P,(q.y*K-camY-elevOf(q)-(q.pw?12:q.pm?20:21))*P],a=hd(player),b=hd(e);
+  if(S.t>1.9)uiText('อย่าลืมมองรอบๆด้วย',a[0],a[1]-30*s,12*s,'center',FG);
+  if(S.t>3.2)uiText('โอเคลุย!',b[0],b[1]-13*s,12*s,'center',FG);
   uiText('ส่งไฟคาดหัวให้ '+({jp:'แจคพอท',pam:'แพม',pw:'แพรวา'}[S.nh]||'ฟีฟ่า'),SWc/2,SHc-bar/2,15*s,'center',FG);}
 
 /* ================= INPUT ================= */
