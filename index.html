@@ -97,7 +97,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v2.4</div>
+  <div class="ver">v2.5</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -105,7 +105,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v2.4</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v2.5</h3><ul>
+      <li>ประตูรั้วมี<b>เสาประตูสูงเด่น</b> หัวเสาทาขาว มองเห็นทางออกชัด · เอาต้นยางแถวแรกหน้ารั้วบ้านออก</li>
       <li>ฉากหลังเมนู: เปลี่ยนฉากแบบ<b>ตัดภาพทันที</b> ไม่เลื่อนกล้องไปหา</li>
       <li>ฉากหลังเมนู: สลับตัวละครทุกฉาก เปลี่ยนที่บ่อยขึ้น เพิ่มฉากฟันต้นกล้วย · งูกัดแล้วเตะงู · วิ่งหนีซอมบี้ 30 ตัว</li>
       <li>เพิ่มปุ่ม <b>⚙️ ตั้งค่า</b> ที่หน้าเมนู (ความโปร่งใสปุ่ม · ย้ายปุ่ม) · ฉากหลังเมนูเบลอขึ้น</li>
@@ -189,7 +190,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 <script>
 'use strict';
 const TAU=Math.PI*2,TS=16,MW=104,MH=104,DAY_LEN=360,WAVE_AT=300,K=.75,WALLH=20,RT=3;
-const TG=0,TR=1,TF=2,TW=3,TT=4,TFN=5,TB=6,TK=7,TD=8,TPL=9,TST=10;   // TFN = bamboo fence, TPL = raised floor of the เถียงนา, TST = its ladder
+let GATEP=new Map();const TG=0,TR=1,TF=2,TW=3,TT=4,TFN=5,TB=6,TK=7,TD=8,TPL=9,TST=10;   // TFN = bamboo fence, TPL = raised floor of the เถียงนา, TST = its ladder
 const PLH=13,ROOFH=40;
 const BM=[0,0,0,1,0,1,1,1,0,1,0];      // blocks movement (trunks handled as circles)
 const BL=[0,0,0,1,0,0,0,0,0,0,0];      // blocks light (trunks handled as circles)
@@ -240,11 +241,20 @@ function buildTiang(x,y,w,h){   // เถียงนา: an open hut on stilts,
   yardAround(hs,x,y,w,h,fi,fj,si,sj);
   for(let j=y+h+5;j<=y+h+15;j++)for(let i=fi-3;i<=fi+6;i++)if(tAt(i,j)===TT)setT(i,j,TG);   // nothing blocks the gate
 }
+function gateDress(hs,gate,x,y,w,h){
+  // tall gateposts flanking the opening
+  GATEP=new Map();for(const k of gate){const gi=k%MW,gj=(k/MW)|0;for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const ni=gi+dx,nj=gj+dy;if(tAt(ni,nj)===TFN)GATEP.set(nj*MW+ni,{dx:-dx,dy:-dy});}}
+  // clear the front row of rubber trees just outside the gate fence
+  {const sd=hs.side||'b',og={x:sd==='l'?-1:sd==='r'?1:0,y:sd==='t'?-1:sd==='b'?1:0},ol=1;
+   for(let j=y-12;j<=y+h+11;j++)for(let i=x-12;i<=x+w+11;i++){if(tAt(i,j)!==TT)continue;const vx=i*TS+8-hs.gate.x,vy=j*TS+8-hs.gate.y,along=(vx*og.x+vy*og.y)/ol,side=Math.abs(vx*og.y-vy*og.x)/ol;
+     if(along<-12||along>64||side>170)continue;setT(i,j,TG);}}
+}
 function yardAround(hs,x,y,w,h,fi,fj,di,dj){
   for(let j=y-2;j<=y+h+1;j++)for(let i=x-2;i<=x+w+1;i++){const t=tAt(i,j);if(t===TG||t===TT)setT(i,j,TR);}
   const gate=new Set();gate.add((y+h+4)*MW+fi+1);gate.add((y+h+4)*MW+fi+2);
   {const g=[...gate];hs.gate={x:(g.reduce((a,k)=>a+k%MW,0)/g.length)*TS+8,y:(g.reduce((a,k)=>a+((k/MW)|0),0)/g.length)*TS+8};}
   for(let j=y-5;j<=y+h+4;j++)for(let i=x-5;i<=x+w+4;i++){if(!(i===x-5||i===x+w+4||j===y-5||j===y+h+4))continue;setT(i,j,gate.has(j*MW+i)?TR:TFN);}
+  gateDress(hs,gate,x,y,w,h);
   const jp=[di-1,y+h];if(!(jp[0]===fi&&jp[1]===fj)&&tAt(jp[0],jp[1])!==TPL)props.push({kind:'jar',x:jp[0]*TS+8,y:jp[1]*TS+9,r:4.5});
   const bj=y-2;if(tAt(x-2,bj)===TR&&tAt(x-1,bj)===TR){setT(x-2,bj,TB);setT(x-1,bj,TB);tables.push({i:x-2,j:bj,w:2,h:1,bamboo:true});}
 }
@@ -279,6 +289,7 @@ function buildHut(x,y,w,h){
   else{gate.add((fj+1)*MW+x+w+4);gate.add((fj+2)*MW+x+w+4);}
   {const g=[...gate];hs.gate={x:(g.reduce((a,k)=>a+k%MW,0)/g.length)*TS+8,y:(g.reduce((a,k)=>a+((k/MW)|0),0)/g.length)*TS+8};}
   for(let j=y-5;j<=y+h+4;j++)for(let i=x-5;i<=x+w+4;i++){if(!(i===x-5||i===x+w+4||j===y-5||j===y+h+4))continue;setT(i,j,gate.has(j*MW+i)?TR:TFN);}
+  gateDress(hs,gate,x,y,w,h);
   // water jar (โอ่ง) beside the door
   const jp=hs.side==='b'?[di-1,y+h]:hs.side==='t'?[di-1,y-1]:hs.side==='l'?[x-1,dj-1]:[x+w,dj-1];
   if(!(jp[0]===fi&&jp[1]===fj))props.push({kind:'jar',x:jp[0]*TS+8,y:jp[1]*TS+9,r:4.5});
@@ -485,7 +496,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='2.4';
+let useBot=true,bot=null,hero='fifa';const VERSION='2.5';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2479,6 +2490,11 @@ function drawObj(o,T,s,l){
   case 12:{const P=o.P,v=lightAt(P.x,P.y+5);drawJar(s,P,null);drawJar(l,P,gray(v));break;}
   }
 }
+function drawGatePost(c,px,py,C){const ph=31;   // a squat-topped hardwood post, thicker and taller than the bamboo, with a pale lime-washed cap
+  c.fillStyle=C(16);c.fillRect(px-1.2,py-ph-1.2,7.4,ph+1.8);c.fillStyle=C(104);c.fillRect(px,py-ph,5,ph);c.fillStyle=C(140);c.fillRect(px+.6,py-ph,1.3,ph);c.fillStyle=C(66);c.fillRect(px+3.6,py-ph,1.4,ph);
+  c.fillStyle=C(52);for(let k=0;k<4;k++)c.fillRect(px+(k%2?2.4:1.2),py-ph+6+k*6,.8,3);
+  c.fillStyle=C(30);c.fillRect(px-2.2,py-ph-4.2,9.4,4.4);c.fillStyle=C(226);c.fillRect(px-1.4,py-ph-3.6,7.8,2.8);c.fillStyle=C(250);c.fillRect(px-1.4,py-ph-3.6,7.8,.9);
+  c.fillStyle=C(214);c.fillRect(px,py-ph+3,5,1.4);c.fillRect(px,py-11,5,1.4);}
 function drawFence(c,i,j,mono){
   const C=v=>mono||gray(v),hz=tAt(i-1,j)===TFN||tAt(i+1,j)===TFN,vt=tAt(i,j-1)===TFN||tAt(i,j+1)===TFN,sx=i*TS+8-camX,sy=(j*TS+8)*K-camY,x0=i*TS-camX;
   const post=(px,py,k)=>{const ph=17+((i*7+j*5+k)%3)*1.5;c.fillStyle=C(24);c.fillRect(px-.6,py-ph,4,ph+.6);c.fillStyle=C(86);c.fillRect(px,py-ph,2.8,ph);
@@ -2490,6 +2506,7 @@ function drawFence(c,i,j,mono){
       if(i%2===0){c.fillStyle=C(60);c.fillRect(x0+5.6,y-.3,3.6,1.7);}});}
   if(vt){if(j%2===0)post(sx-1.4,(j*TS+8)*K-camY,1);
     RAIL.forEach((ry,k)=>{const y0=j*TS*K-camY-ry;c.fillStyle=C(40);c.fillRect(sx-1,y0,2,12.2);c.fillStyle=C(184);c.fillRect(sx-.6,y0,1.2,12);});}
+  const gp=GATEP.get(j*MW+i);if(gp){if(gp.dx)drawGatePost(c,x0+(gp.dx>0?12:-1),sy+1,C);else drawGatePost(c,sx-2.5,(j*TS+(gp.dy>0?15:2))*K-camY,C);}
 }
 function drawHoeGround(c,mono){
   const M=v=>mono||v;c.save();c.translate(hoe.x-camX,hoe.y*K-camY-1);c.scale(1,K);c.rotate(hoe.a);
