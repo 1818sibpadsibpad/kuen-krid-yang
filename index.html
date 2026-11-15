@@ -94,6 +94,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
       <li>ตายในคืนที่ 3 กด <b>เริ่มคืนที่ 3 ใหม่</b> ได้เลย ไม่ต้องเริ่มคืนแรก</li>
       <li>มันจะ<b>จ้องแล้วไฟกะพริบ</b>ถี่ขึ้น 3 วิ ก่อนพุ่ง → <b>กลิ้งหลบ</b>! เลือดเหลือ 30% จะเริ่ม<b>ถอยแล้วพุ่งส่าย</b>ไม่เบรก</li>
       <li>ล่อให้พุ่งชน<b>ต้นไม้/รั้ว</b> ผมจะพันติด 5 วิ → เข้าใกล้หาง แล้วกดปุ่ม <b style="color:#ff3b30">จับหาง</b></li>
+      <li><b>คืนที่ 4</b>: ระลอกใหญ่ ซอมบี้ 20 ตัวพร้อมกันตอน 05:00 · <b>คืนที่ 5</b>: ตอน 05:00 กระสือโผล่ <b>2 ตัว</b> + ซอมบี้มาทุก 30 วิ จนกว่ากระสือจะตายหมด</li>
       <li>มีเวลา 10 วิ เอาหางไปส่ง<b>บอทที่ยืนริมรั้ว</b> → ไส้ถูกยึดไว้ มันบินได้ไม่เกินความยาวไส้ ฟันได้เลย</li></ul></div>
     <div class="sec"><h3>🔥 กองไฟ &amp; ฟืน</h3><ul>
       <li>ฟืน 1 ท่อน = ไฟ <b>40 วิ</b> (เต็มสุด 2 นาที) · <b>แพรวา</b>หยิบจากกองไปเติมให้</li>
@@ -436,7 +437,7 @@ const flow=new Int16Array(MW*MH),flowB=new Int16Array(MW*MH),fq=new Int32Array(M
 const cam={x:0,y:0};let camX=0,camY=0;
 
 function newGame(seed){
-  mapSeed=seed||(1+((Math.random()*2147483000)|0));RS=mapSeed;genMap();bake();RS=0;N3=null;B=null;KRL=null;blackout=false;
+  mapSeed=seed||(1+((Math.random()*2147483000)|0));RS=mapSeed;genMap();bake();RS=0;N3=null;B=null;BS=[];KRL=null;KL=null;blackout=false;
   player={snakes:0,snakeBite:null,wood:0,woodV:[],woodCd:0,x:startPos.x,y:startPos.y,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,fallA:0,fall:0,
     up:false,st:false,ev:0,charging:false,charge:0,ready:false,swingPow:0,swingReach:KMIN,swingDur:.1,weapon:'knife',hasHoe:false,swingDir:1,nextDir:1,idleT:0,combat:0,fought:false,pantT:0,breathPh:0,breathNext:0,kickT:0,kickHit:0,kcd:0,kickAng:0,armOff:1.2,armHv:6,bloody:0,swingT:0,swingLevel:0,swingAng:0,pendingHit:0,cd:0};
   stock=0;kills=0;gameTime=0;flashOn=true;muzzle=0;shake=0;invertF=0;
@@ -605,7 +606,7 @@ function autoAim(h=player){
   let best=null,bs=1e9;
   for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d>Math.max(90,W(h).kmax+15))continue;const ad=Math.abs(angDiff(h.facing,Math.atan2(dy,dx)));
     if(ad>1.5)continue;if(!los(h.x,h.y,z.x,z.y))continue;const sc=d+ad*40;if(sc<bs){bs=sc;best=z;}}
-  if(h===player&&B&&N3&&N3.ph==='fight'&&!['dead','carry'].includes(B.state)){const d=Math.hypot(B.x-h.x,B.y-h.y);if(d<90&&d<bs)return Math.atan2(B.y-h.y,B.x-h.x);}
+  if(h===player&&N3&&N3.ph==='fight')for(const b of BS){if(['dead','carry'].includes(b.state))continue;const d=Math.hypot(b.x-h.x,b.y-h.y);if(d<90&&d<bs){bs=d;best=b;}}
   return best?Math.atan2(best.y-h.y,best.x-h.x):h.facing;
 }
 function makeBig(x,y){const L=40+rnd()*14,segs=[],pts=[];for(let k=0;k<=5;k++)pts.push([-L/2+L*k/5,k&&k<5?(rnd()-.5)*3.5:0]);
@@ -780,7 +781,7 @@ function updatePlay(dt){
   player.moving=ml>.15;if(ml>.15){player.mvx=mx;player.mvy=my;}
   if(player.hidden){if(ml>.6&&!joy.active)player.hidden=false;mx=my=0;ml=0;}
   {let lz=null,ld=1e9;if(!player.hidden)for(const z of zombies){if(z.dieOnLand||z.state==='eatB'||z.state==='convB')continue;const d=Math.hypot(z.x-player.x,z.y-player.y);if(d<ld&&d<75&&los(player.x,player.y,z.x,z.y)){ld=d;lz=z;}}
-   if(B&&N3&&N3.ph==='fight'&&!['dead','intro','carry'].includes(B.state)){const d=Math.hypot(B.x-player.x,B.y-player.y);if(d<ld&&d<80){ld=d;lz=B;}}
+   if(N3&&N3.ph==='fight')for(const b of BS){if(['dead','intro','carry'].includes(b.state))continue;const d=Math.hypot(b.x-player.x,b.y-player.y);if(d<ld&&d<80){ld=d;lz=b;}}
    player.lock=lz;const free=!player.carry&&!player.drag&&!player.wood&&!player.hidden;
    if(player.charging&&!player.swingT){player.charging=false;player.autoCh=false;}}
   let calm=player.combat<=0;if(calm)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
@@ -1178,6 +1179,7 @@ function edgeSpawn(){   // a zombie walks in from a random edge of the plantatio
     i|=0;j|=0;const tt=tAt(i,j);if(BM[tt]||tt===TT||tt===TPL)continue;const z=makeZ(i*TS+8,j*TS+8);z.hunt=true;z.state='chase';z.aware=3.5;zombies.push(z);return z;}return null;}
 function spawnNight(){waveDone=false;trickleT=4;toast(`คืนที่ ${night} — ซอมบี้ทยอยมาเรื่อยๆ · ตีห้าระลอกใหญ่ ${5*night} ตัว!`);}
 function nightSpawns(dt){if(waveDone)return;
+  if(gameTime>=WAVE_AT&&night===5){waveDone=true;startN5();return;}
   if(gameTime>=WAVE_AT){waveDone=true;const n=5*night;for(let k=0;k<n;k++)edgeSpawn();toast(`ระลอกใหญ่! ซอมบี้ ${n} ตัวบุกมาทุกทิศ`);sfx.screech();shake=Math.max(shake,4);return;}
   trickleT-=dt;if(trickleT<=0){trickleT=30;edgeSpawn();if(rnd()<.3)edgeSpawn();}}
 function pathToBed(){
@@ -1223,7 +1225,7 @@ function nextNight(){
 }
 function win(){state='win';player.charging=false;for(const z of zombies){z.state='wander';z.aware=0;}setTimeout(()=>showEnd(true),1800);}
 
-const KRS=(()=>{
+function mkKRS(){return (()=>{
 const KG=K,PAL=['#0a0610','#2e1a22','#5e4436','#a3845f','#eadbb6','#7a1226','#ea2a44','#f29aa6'];
 const PAL32=new Uint32Array(8);PAL.forEach((h,i)=>{PAL32[i]=(0xFF000000|(parseInt(h.slice(5,7),16)<<16)|(parseInt(h.slice(3,5),16)<<8)|parseInt(h.slice(1,3),16))>>>0;});
 const B4=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];function bayer(x,y){return B4[((y&3)<<2)|(x&3)]/16-0.47;}
@@ -1495,10 +1497,13 @@ function blit(o,map){if(bx1<bx0||!IDX)return;for(let y=by0;y<=by1;y++){const r=y
 function update(dt,t,px,py,vx,vy,biteT,faceA){nearTrees();updateRig(dt,t,px,py,vx,vy,biteT,faceA);}
 function init(x,y){initRig(x,y);for(let i=0;i<90;i++){nearTrees();updateRig(1/60,i/60,x,y,0,0,-1);}}
 return{R,init,update,begin,dep,draw,blit,lung:()=>lungPos(),tail:()=>R.chain[NCH-1].p,NCH,HR};
-})();
+})();}
+let KRS=mkKRS();
 
 /* ================= NIGHT 3: กระสือ (krasue boss) ================= */
-let blackout=false,actL=[];let N3=null,B=null,ckpt=null,mapSeed=0,KRL=null;const MOON0=(()=>{const v=[-0.55,-0.45,0.70],m=Math.hypot(...v);return v.map(x=>x/m);})();
+let blackout=false,actL=[],BS=[];function selB(b){B=b;if(b){KRS=b.rig;KRL=b.krl||null;KL=b.kl||null;}}
+function liveBS(){return BS.filter(b=>b.state!=='dead');}
+let N3=null,B=null,ckpt=null,mapSeed=0,KRL=null;const MOON0=(()=>{const v=[-0.55,-0.45,0.70],m=Math.hypot(...v);return v.map(x=>x/m);})();
 const HOLD_LINES=['ช่วยกันๆ','จับใว้ๆ','จับดีๆนะ','โคตรแน่น','ฮึบๆ'];
 const HERONAME=()=>hero==='jp'?'แจคพอท':'ฟีฟ่า';
 function sayE(e,text){if(!e)return;if(e===player){player.say={text,t:3.2};return;}sayAs(e,text);if(e.say)e.say.t=3.2;}
@@ -1515,7 +1520,11 @@ function retryN3(){const c=ckpt;if(!c)return;const byKr=!!(death&&death.kr);init
   clumps.forEach((C,i)=>C.plants.forEach((p,j)=>{const v=c.plants[i]&&c.plants[i][j];if(v){p.bunch=v[0];p.cut=v[1];p.hp=v[2];p.fallA=v[3];}}));
   toasts=[];state='play';wakeFade=1;startN3();if(byKr){startCine();skipCine();}}
 function setBlackout(on){if(on===blackout)return;blackout=on;if(on){postTorches=[];if(pam)pam.torch=0;shake=Math.max(shake,3);nz(1.2,'lowpass',600,80,.35,1);tn('sine',120,40,1.2,.25);toast('ไฟดับหมด!!');}else{toast('ไฟกลับมาแล้ว');}}
-function startN3(){N3={ph:'count',t:60,beep:61,lineT:3};B=null;KRL=null;waveDone=true;zombies.length=0;player.cleared=false;toast('คืนที่ 3 — จุดเช็คพอยต์');}
+function startN5(){N3={ph:'fight',multi:true,lineT:3,zt:30};BS=[];const cx=home.cx,cy=home.cy,o=gateOut(),a0=Math.atan2(o.y,o.x);
+  for(const sd of[-1,1]){const a=a0+sd*1.1,x=clamp(cx+Math.cos(a)*430,60,MW*TS-60),y=clamp(cy+Math.sin(a)*430,60,MH*TS-60),b=makeBoss(x,y);b.state='roam';b.t=0;b.rt=0;b.cd1=4+(sd+1)*2;b.cd2=9;}
+  const st=stations();npcs().forEach((e,i)=>{e.station=st[i%st.length];e.goal=null;e.say=null;});setBlackout(true);sfx.screech();shake=Math.max(shake,6);
+  toast('กระสือ 2 ตัว!! ซอมบี้มาทุก 30 วิ จนกว่ากระสือจะตาย');}
+function startN3(){N3={ph:'count',t:60,beep:61,lineT:3};B=null;BS=[];KRL=null;KL=null;waveDone=true;zombies.length=0;player.cleared=false;toast('คืนที่ 3 — จุดเช็คพอยต์');}
 function n3Busy(){return n3Active()||!!(N3&&N3.cheer);}
 function n3Active(){return N3&&N3.ph!=='done';}
 function gatePos(){const hs=home.hs;return hs.gate||{x:hs.di*TS+8,y:hs.dj*TS+8};}
@@ -1523,9 +1532,10 @@ function gateOut(){const g=gatePos(),dx=g.x-home.cx,dy=g.y-home.cy,d=Math.hypot(
 function updateN3Play(dt){
   if(N3.ph==='count'){N3.t-=dt;const s=Math.ceil(N3.t);if(s<N3.beep){N3.beep=s;if(s<=10&&s>0)tn('square',s<=3?1200:900,s<=3?1200:900,.07,.12);}
     if(N3.t<=0)startCine();return;}
-  if(B)updateBoss(dt);
+  for(const b of BS.slice()){if(state!=='play'&&state!=='n3cine')break;selB(b);updateBoss(dt);}
+  if(N3.multi&&N3.ph==='fight'){N3.zt-=dt;if(N3.zt<=0){N3.zt=30;edgeSpawn();if(rnd()<.3)edgeSpawn();}}
   if(N3.cheer){const C=N3.cheer;C.t+=dt;if(C.t>=C.next&&C.pool.length){C.next=C.t+.7+rnd()*.6;const who=[player,...npcs()].filter(e=>!e.say);if(who.length){const e=who[(rnd()*who.length)|0];sayE(e,C.pool.splice((rnd()*C.pool.length)|0,1)[0]);}}if(C.t>12)N3.cheer=null;}
-  if(N3.ph==='fight'){N3.lineT-=dt;if(N3.lineT<=0){N3.lineT=2.2+rnd()*1.6;const H=B&&B.teth&&B.teth!=='player'?npcs():[];if(H.length){const e=H[(rnd()*H.length)|0];sayE(e,HOLD_LINES[(rnd()*HOLD_LINES.length)|0]);}}}
+  if(N3.ph==='fight'){N3.lineT-=dt;if(N3.lineT<=0){N3.lineT=2.2+rnd()*1.6;const H=BS.some(b=>b.teth&&b.teth!=='player'&&b.state!=='dead')?npcs():[];if(H.length){const e=H[(rnd()*H.length)|0];sayE(e,HOLD_LINES[(rnd()*HOLD_LINES.length)|0]);}}}
 }
 /* ---------- cinematic: helper, walk home, sit, eat, talk, the light at the gate ---------- */
 function startCine(){state='n3cine';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.swingT=0;player.kickT=0;player.hidden=false;player.vx=player.vy=0;
@@ -1606,7 +1616,8 @@ function beginFight(){setBlackout(true);if(!B){const g=gatePos(),o=gateOut();B=m
   const st=stations();npcs().forEach((e,i)=>{e.station=st[i%st.length];e.say=null;});for(const e of npcs())e.goal=null;
   toast('กระสือ!! ล่อให้มันชนต้นไม้/รั้ว แล้วจับหาง');sfx.screech(0);shake=Math.max(shake,4);}
 /* ---------- the boss ---------- */
-function makeBoss(x,y){const R=KRS.R;R.zoff=6;R.dead=false;R.pin=null;R.pull=[0,0];R.glow=1;R.flashI=0;R.moon=null;KRS.init(x,y);return{x,y,vx:0,vy:0,state:'roam',t:0,rt:0,hp:22,hpMax:22,cdS:5,hits:0,cd1:3,cd2:7,biteCd:2,glow:1,ph:0,q:0,angry:0,teth:null,taut:0,wp:null,side:1,hitF:0,bt:-1};}
+function makeBoss(x,y){const rig=mkKRS(),R=rig.R;R.zoff=6;R.dead=false;R.pin=null;R.pull=[0,0];R.glow=1;R.flashI=0;R.moon=null;rig.init(x,y);const b=mkBossObj(x,y);b.rig=rig;BS.push(b);selB(b);return b;}
+function mkBossObj(x,y){return{x,y,vx:0,vy:0,state:'roam',t:0,rt:0,hp:22,hpMax:22,cdS:5,hits:0,cd1:3,cd2:7,biteCd:2,glow:1,ph:0,q:0,angry:0,teth:null,taut:0,wp:null,side:1,hitF:0,bt:-1};}
 const treeShake=new Map();
 function shakeTree(idx,str){if(idx==null)return;const cur=treeShake.get(idx)||0;treeShake.set(idx,Math.min(1.4,cur+str));const cx=(idx%MW)*TS+8,cy=((idx/MW)|0)*TS+8;
   const n=Math.round(6+str*16);for(let k=0;k<n;k++)particles.push({x:cx+(rnd()-.5)*46,y:cy+(rnd()-.5)*18,vx:(rnd()-.5)*18,vy:(rnd()-.5)*8,h:28+rnd()*80,vh:rnd()*14,leaf:1,col:gray(90+rnd()*100),rot:rnd()*TAU});
@@ -1629,15 +1640,18 @@ function rigTick(dt,biteT,faceA){const b=B,T=performance.now()/1000,R=KRS.R;
   R.glow=b.state==='dead'?Math.max(0,1-b.t/2.5)*.6:b.glow;
   if(b.teth){const h=b.teth==='player'?player:b.teth;R.pin=[h.x+Math.cos(h.facing)*3,h.y+Math.sin(h.facing)*3,9];}else R.pin=null;
   KRS.update(dt,T,b.x,b.y,b.vx,b.vy,biteT,faceA);
-  const lp=KRS.lung();KRL={x:lp[0],y:lp[1],z:lp[2],v:b.state==='dead'||b.hidden?0:b.glow*(b.state==='carry'?clamp(1-(R.hz-26)/50,0,1):1)};}
-function bossGrab(){if(player.rollT>0||state!=='play')return false;const b=B;state='dying';death={kr:true,t:0,x:player.x,y:player.y,blood:0,crunch:.3,shown:false};
+  const lp=KRS.lung();KRL={x:lp[0],y:lp[1],z:lp[2],v:b.state==='dead'||b.hidden?0:b.glow*(b.state==='carry'?clamp(1-(R.hz-26)/50,0,1):1)};b.krl=KRL;}
+function bossGrab(){if(player.rollT>0||state!=='play')return false;const b=B;state='dying';death={kr:true,boss:B,t:0,x:player.x,y:player.y,blood:0,crunch:.3,shown:false};
   dropL={x:player.x+3,y:player.y+24,a:-Math.PI/2-.12,av:0,on:true};if(blocksLightAt(dropL.x,dropL.y)){dropL.x=player.x;dropL.y=player.y;}
   b.state='carry';b.t=0;b.vx=b.vy=0;player.charging=false;player.swingT=0;player.kickT=0;player.holdTail=false;joy.active=false;aimT.active=false;joyV={x:0,y:0};
   shake=11;invertF=3;sfx.screech();sfx.bite();for(const e of npcs())sayE(e,e===praewa?'กรี๊ดดดด!!':'ไม่นะ!!');return true;}
-function tailAvail(){const b=B;if(!b||state!=='play'||b.state!=='tangle'||b.teth||player.holdTail)return false;const t=KRS.tail();return Math.hypot(t[0]-player.x,t[1]-player.y)<26;}
-function grabTail(){if(!tailAvail())return;player.holdTail=true;B.teth='player';B.holdT=10;B.t=Math.min(B.t,1);toast('จับหางได้! พาไปให้บอทใน 10 วิ');sfx.ready();tn('square',500,900,.12,.12);shake=Math.max(shake,3);}
+function tailAvail(){for(const b of BS){selB(b);if(tailAvail1())return true;}return false;}
+function tailAvail1(){const b=B;if(!b||state!=='play'||b.state!=='tangle'||b.teth||player.holdTail)return false;const t=KRS.tail();return Math.hypot(t[0]-player.x,t[1]-player.y)<26;}
+function grabTail(){if(!tailAvail())return;   // tailAvail() leaves B on the krasue whose tail is in reach
+player.holdTail=true;B.teth='player';B.holdT=10;B.t=Math.min(B.t,1);toast('จับหางได้! พาไปให้บอทใน 10 วิ');sfx.ready();tn('square',500,900,.12,.12);shake=Math.max(shake,3);}
 function nearestHolder(){let best=null,bd=1e9;for(const e of npcs()){const d=Math.hypot(e.x-player.x,e.y-player.y);if(d<bd){bd=d;best=e;}}return best?{e:best,d:bd}:null;}
-function bossHits(h,a,R0,arc,kick){const b=B;if(!b||h!==player||!N3||N3.ph!=='fight')return false;if(['dead','carry','intro'].includes(b.state))return false;
+function bossHits(h,a,R0,arc,kick){let hit=false;for(const bb of BS.slice()){selB(bb);if(bossHit1(h,a,R0,arc,kick))hit=true;}return hit;}
+function bossHit1(h,a,R0,arc,kick){const b=B;if(!b||h!==player||!N3||N3.ph!=='fight')return false;if(['dead','carry','intro'].includes(b.state))return false;
   const dx=b.x-h.x,dy=b.y-h.y,d=Math.hypot(dx,dy);if(d-7>R0)return false;if(d>8&&Math.abs(angDiff(a,Math.atan2(dy,dx)))>arc+.3)return false;
   const ux=dx/(d||1),uy=dy/(d||1),m=W(h).m||1,crit=rnd()<.3,dmg=m*(b.state==='tangle'?2:1)*(crit?2:1);b.hp-=dmg;b.hitF=.18;if(crit)critPop(b.x,b.y,24);
   const hz=KRS.R.hz*.75/K;for(let k=0;k<10;k++){const an=Math.atan2(uy,ux)+(rnd()-.5)*1.8,s=40+rnd()*80;particles.push({x:b.x,y:b.y,vx:Math.cos(an)*s,vy:Math.sin(an)*s,h:hz,vh:20+rnd()*50});}
@@ -1649,9 +1663,10 @@ function bossHits(h,a,R0,arc,kick){const b=B;if(!b||h!==player||!N3||N3.ph!=='fi
     if(rnd()<.5)toast(kick?'ถีบหน้ากระสือ!':'ฟันหน้ากระสือ! มันโกรธแล้ว');}
   else if(rnd()<.3)toast('ฟันตอนติด! แรงคูณสอง');
   return true;}
-function killBoss(){const b=B;setTimeout(()=>setBlackout(false),2500);b.state='dead';b.t=0;b.hp=0;b.teth=null;player.holdTail=false;KRS.R.dead=true;N3.ph='done';kills+=30;shake=10;invertF=2;sfx.screech();
+function killBoss(){const b=B;b.state='dead';b.t=0;b.hp=0;if(b.teth==='player')player.holdTail=false;b.teth=null;KRS.R.dead=true;kills+=30;shake=10;invertF=2;sfx.screech();const all=liveBS().length===0;if(all){setTimeout(()=>setBlackout(false),2500);N3.ph='done';if(N3.multi){waveDone=true;player.cleared=false;}}
   for(let k=0;k<30;k++){const an=rnd()*TAU,s=30+rnd()*90;particles.push({x:b.x,y:b.y,vx:Math.cos(an)*s,vy:Math.sin(an)*s,h:16,vh:30+rnd()*60});}
-  toast('กำจัดกระสือได้แล้ว!!');N3.cheer={t:0,next:.5,pool:CHEER.slice()};for(const e of[player,...npcs()])e.cheerT=8;}
+  if(!all){toast('ฆ่ากระสือได้ 1 ตัว! เหลืออีก '+liveBS().length);return;}
+  toast(BS.length>1?'กำจัดกระสือหมดแล้ว!!':'กำจัดกระสือได้แล้ว!!');N3.cheer={t:0,next:.5,pool:CHEER.slice()};for(const e of[player,...npcs()])e.cheerT=8;}
 const CHEER=['เย้','เห้ย','อะหื่ออออ','มันตายละเบาะ','ป้าด','คึเฮ็ดเป็น','ถืกกัดบ่?','เจ็บบ่?','งึด','ตาย้านคัก','เฮ็ดจังได่สิกล้านอนบาดหนิ','กินได้ยุเบาะกระสือหนิ','เอามาปิ้งๆ'];
 function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.state==='dead'){b.vx*=.9;b.vy*=.9;rigTick(dt,-1,null);return;}
   if(b.state==='carry'){rigTick(dt,-1,null);return;}
@@ -1713,29 +1728,30 @@ function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.state==='dead'){b.vx*=.9
     else if(pl>.6&&b.state!=='tangle'){const k=Math.min(1,(pl-.6)/pl);b.x+=p[0]*k;b.y+=p[1]*k;const un=-(b.vx*p[0]+b.vy*p[1])/(pl||1);if(un>0){b.vx+=p[0]/pl*un;b.vy+=p[1]/pl*un;}}}
   else b.taut=0;
 }
-function bossBot(p,dt){if(!N3||N3.ph!=='fight'||!B)return false;let st=p.station;if(!st)return false;
-  const L=npcs(),k=L.indexOf(p);
+function bossBot(p,dt){if(!N3||N3.ph!=='fight'||!BS.length)return false;let st=p.station;if(!st)return false;
+  const live=liveBS(),L=npcs(),k=L.indexOf(p),mine=live.find(b=>b.teth===p),tb=live.find(b=>b.teth&&b.teth!=='player'),T0=mine||tb||live[0]||BS[0];
+  if(mine){p.moveAmt=0;p.vx=p.vy=0;p.facing=angLerp(p.facing,Math.atan2(mine.y-p.y,mine.x-p.x),dt*6);p.phase+=dt*4;return true;}   // dug in, hauling on the gut
   if(player.holdTail){const tx=clamp(player.x,home.ix0+6,home.ix1-6)+(k-1)*9,ty=clamp(player.y,home.iy0+6,home.iy1-6);if(!p._hs){p._hs=1;sayE(p,k===0?'มาๆ ช่วยกัน!':'ช่วยกันๆ');}
     if(Math.hypot(tx-p.x,ty-p.y)>5)followPath(p,clamp(tx,home.ix0+4,home.ix1-4),ty,78,dt);else{p.moveAmt=0;p.facing=angLerp(p.facing,Math.atan2(player.y-p.y,player.x-p.x),dt*6);}return true;}
   p._hs=0;
-  if(B.teth&&B.teth!==p&&B.teth!=='player'){const h=B.teth,dx=h.x-B.x,dy=h.y-B.y,dl=Math.hypot(dx,dy)||1,o=L.filter(e=>e!==h).indexOf(p)+1;   // line up behind whoever holds the gut
+  if(tb){const h=tb.teth,dx=h.x-tb.x,dy=h.y-tb.y,dl=Math.hypot(dx,dy)||1,o=L.filter(e=>e!==h).indexOf(p)+1;   // line up behind whoever holds the gut
     const tx=clamp(h.x+dx/dl*7*o+(-dy/dl)*3*(o%2?1:-1),home.ix0+4,home.ix1-4),ty=clamp(h.y+dy/dl*7*o+(dx/dl)*3*(o%2?1:-1),home.iy0+4,home.iy1-4);
-    if(Math.hypot(tx-p.x,ty-p.y)>4)followPath(p,tx,ty,70,dt);else{p.moveAmt=0;p.vx=p.vy=0;p.facing=angLerp(p.facing,Math.atan2(B.y-p.y,B.x-p.x),dt*6);p.phase+=dt*4;}return true;}
-  if(B.teth===p){p.moveAmt=0;p.vx=p.vy=0;p.facing=angLerp(p.facing,Math.atan2(B.y-p.y,B.x-p.x),dt*6);p.phase+=dt*4;return true;}   // dug in, hauling on the gut
-  if(Math.hypot(st.x-p.x,st.y-p.y)>6)stepYardBot(p,st.x,st.y,52,dt);else{p.moveAmt=0;p.facing=angLerp(p.facing,Math.atan2(B.y-p.y,B.x-p.x),dt*4);}
+    if(Math.hypot(tx-p.x,ty-p.y)>4)followPath(p,tx,ty,70,dt);else{p.moveAmt=0;p.vx=p.vy=0;p.facing=angLerp(p.facing,Math.atan2(tb.y-p.y,tb.x-p.x),dt*6);p.phase+=dt*4;}return true;}
+  if(Math.hypot(st.x-p.x,st.y-p.y)>6)stepYardBot(p,st.x,st.y,52,dt);else{p.moveAmt=0;p.facing=angLerp(p.facing,Math.atan2(T0.y-p.y,T0.x-p.x),dt*4);}
   return true;}
-function updateKrDeath(dt){const D=death,b=B,R=KRS.R;D.t+=dt;computeLights();updateFire(dt);updateBot(dt,'hold');updatePraewa(dt,'cut');updatePam(dt,'cut');
+function updateKrDeath(dt){selB(death.boss);const D=death,b=B,R=KRS.R;D.t+=dt;computeLights();updateFire(dt);updateBot(dt,'hold');updatePraewa(dt,'cut');updatePam(dt,'cut');
   if(!D.gone){const rise=Math.max(0,D.t-.45);R.zoff=6+rise*rise*170;player.x=D.x;player.y=D.y;player.lift=Math.max(0,(R.hz-10)*.75);player.down=false;player.moveAmt=1;player.phase+=dt*30;player.facing+=dt*3;
     b.x=D.x;b.y=D.y;b.vx=0;b.vy=Math.sin(D.t*9)*20;rigTick(dt,D.t<.55?D.t:-1,null);
     if(D.t<.6&&rnd()<dt*20)particles.push({x:D.x,y:D.y,vx:(rnd()-.5)*60,vy:(rnd()-.5)*40,h:14,vh:20+rnd()*40});
-    if(R.hz*.75>vh*.75+60){D.gone=true;player.gone=true;b.hidden=true;KRL=null;D.g=0;tn('sawtooth',500,1400,.6,.06);}}
+    if(R.hz*.75>vh*.75+60){D.gone=true;player.gone=true;b.hidden=true;KRL=null;b.krl=null;D.g=0;tn('sawtooth',500,1400,.6,.06);}}
   else{D.g+=dt;
     if(D.g>.9&&!D.arm){D.arm=1;addGib('parm',D.x+6,D.y+4,190,0,0);const g=gibs[gibs.length-1];g.vh=-40;g.vx=(rnd()-.5)*12;g.vy=(rnd()-.5)*8;g.vr=(rnd()-.5)*10;sfx.whoosh();}
     if(D.g>2.3&&!D.legs){D.legs=1;addGib('half',D.x-2,D.y,230,0,0);const g=gibs[gibs.length-1];g.vh=-60;g.vx=(rnd()-.5)*6;g.vy=(rnd()-.5)*4;g.vr=(rnd()-.5)*4;g.rot=-1.3;sfx.whoosh();}
     if(D.g>5.6&&!D.shown){D.shown=true;showEnd(false);}}
   if(dropL){dropL.a+=dropL.av*dt;dropL.av*=Math.exp(-2.2*dt);}}
 /* ---------- drawing helpers ---------- */
-function drawBoss(T){const b=B;if(!b||b.hidden)return;KRS.begin(vw,vh);
+function drawBoss(T){for(const b of BS){selB(b);drawBoss1(T);}}
+function drawBoss1(T){const b=B;if(!b||b.hidden)return;KRS.begin(vw,vh);
   const i0=Math.max(0,Math.floor((camX-24)/TS)),i1=Math.min(MW-1,Math.floor((camX+vw+24)/TS)),j0=Math.max(0,Math.floor(camY/K/TS)-1),j1=Math.min(MH-1,Math.floor((camY+vh+80)/K/TS));
   for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){if(tiles[j*MW+i]!==TT)continue;const bx=i*TS+8-camX,by=(j*TS+8)*K-camY;KRS.dep(bx-3,by-70,bx+3,by+1,j*TS+8);}
   for(const e of[player,bot,praewa,pam]){if(!e||e.gone||(e===player&&death&&death.kr))continue;const sx=e.x-camX,sy=e.y*K-camY-elevOf(e);KRS.dep(sx-3.5,sy-24,sx+3.5,sy,e.y);}
@@ -1867,15 +1883,17 @@ function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)retu
   const w=x1-x0+1,h=y1-y0+1;if(KMC.width!==vw||KMC.height!==vh){KMC.width=vw;KMC.height=vh;}KMX.setTransform(1,0,0,1,0,0);KMX.clearRect(0,0,vw,vh);krShadows(KMX);
   const SD=sctx.getImageData(x0,y0,w,h),LD=lctx.getImageData(x0,y0,w,h),MD=KMX.getImageData(x0,y0,w,h),sd=SD.data,ld=LD.data,md=MD.data;
   // light value per pixel from KrasueLight, then blurred so the glow spreads soft instead of a hard pixel disc
-  const n=w*h;if(!KLB||KLB.length<n*2){KLB=new Float32Array(n*2);}const A=KLB.subarray(0,n),Bf=KLB.subarray(n,n*2);A.fill(0);
+  const n=w*h;if(!KLB||KLB.length<n*3){KLB=new Float32Array(n*3);}const A=KLB.subarray(0,n),Bf=KLB.subarray(n,n*2),S=KLB.subarray(n*2,n*3);A.fill(0);S.fill(0);
   for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx,dd2=ddx*ddx+ddy*ddy;if(dd2>=Rc2)continue;
-    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35);if(o.r<=.003&&o.sr<=.003)continue;const q=yy*w+xx,sh=1-md[(q<<2)+3]/255;if(sh<=0)continue;   // zero here = behind a trunk: no halo either, so the shadow stays
-    const e=1-dd2/Rc2,halo=Lk.v*52*Math.exp(-dd2/7200)*e*e;A[q]=Math.min(255,((KrasueLight.tone(o.r)+o.sr)*290+halo)*sh*Math.pow(e,1.6));}}
+    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35),q=yy*w+xx,e=1-dd2/Rc2,halo=Lk.v*52*Math.exp(-dd2/7200)*e*e,lit=o.r>.003||o.sr>.003;
+    let v;if(lit)v=KrasueLight.tone(o.r)+o.sr;else{const d2=dd2+L.lz*L.lz,f=(1-d2/L.R2);v=f>0?KrasueLight.tone(f*f*L.I*3600/(3600+d2)*1.5*L.lz/Math.sqrt(d2)):0;}   // the light as if nothing stood in the way, for the soft glow
+    A[q]=Math.min(255,(v*290+halo)*Math.pow(e,1.6));S[q]=lit?1-md[(q<<2)+3]/255:0;}}   // S = crisp shadow mask (trunk wedges + cast shadows), applied after the blur
   const box=(src,dst,r,horiz)=>{const L1=horiz?w:h,L2=horiz?h:w,st=horiz?1:w,st2=horiz?w:1,inv=1/(2*r+1);
     for(let b2=0;b2<L2;b2++){const base=b2*st2;let acc=0;for(let k=-r;k<=r;k++)acc+=src[base+clamp(k,0,L1-1)*st];
       for(let k=0;k<L1;k++){dst[base+k*st]=acc*inv;acc+=src[base+Math.min(L1-1,k+r+1)*st]-src[base+Math.max(0,k-r)*st];}}};
   for(let it=0;it<2;it++){box(A,Bf,6,true);box(Bf,A,6,false);}
-  for(let q=0;q<n;q++){const rl=A[q];if(rl<1)continue;const p=q<<2,Lo=ld[p],t=Math.min(1,rl/(Lo*.5+60)),a=sd[p],xx=q%w,yy=(q/w)|0;
+  box(S,Bf,1,true);box(Bf,S,1,false);
+  for(let q=0;q<n;q++){const rl=A[q]*(.08+.92*S[q]);if(rl<1)continue;const p=q<<2,Lo=ld[p],t=Math.min(1,rl/(Lo*.5+60)),a=sd[p],xx=q%w,yy=(q/w)|0;
     if(t*1.5>B01[(((yy+y0+camY)&7)<<3)|((xx+x0+camX)&7)]){sd[p]=Math.max(a*.85,62);sd[p+1]=a*.12;sd[p+2]=a*.14;}ld[p]=ld[p+1]=ld[p+2]=Math.min(255,Lo+rl);}
   sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);}
 let KLB=null;
@@ -1883,19 +1901,23 @@ function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-cam
   g.addColorStop(0,`rgb(255,${255-205*v|0},${255-200*v|0})`);g.addColorStop(.55,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(1,'#fff');
   c.save();c.globalCompositeOperation='multiply';c.fillStyle=g;c.fillRect(gx-R,gy-R,R*2,R*2);c.restore();}
 const CRC=document.createElement('canvas');CRC.width=140;CRC.height=300;const CRX=CRC.getContext('2d');
-function canopyRim(s,l,cv,x0,y0,cx,cy,al){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130;if(d>RR)return;const it=klv(cx,cy,30)*al;if(it<.04)return;
+function canopyRim(s,l,cv,x0,y0,cx,cy,al){for(const b of BS){selB(b);canopyRim1(s,l,cv,x0,y0,cx,cy,al);}}
+function canopyRim1(s,l,cv,x0,y0,cx,cy,al){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130;if(d>RR)return;const it=klv(cx,cy,30)*al;if(it<.04)return;
   if(!cv.red){const m=mk(140,300),q=m.getContext('2d');q.drawImage(cv.img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgb(236,40,62)';q.fillRect(0,0,140,300);cv.red=m;}
   const a=Math.atan2(Math.max(18,dy*K+40),dx),ux=Math.round(Math.cos(a)*1.4),uy=Math.round(Math.sin(a)*1.4);
   CRX.globalCompositeOperation='source-over';CRX.clearRect(0,0,140,300);CRX.drawImage(cv.red,0,0);CRX.globalCompositeOperation='destination-out';CRX.drawImage(cv.red,-ux,-uy);
   CRX.globalCompositeOperation='destination-in';const g=CRX.createLinearGradient(0,0,0,300);g.addColorStop(0,'rgba(0,0,0,.15)');g.addColorStop(.6,'rgba(0,0,0,.6)');g.addColorStop(1,'#000');CRX.fillStyle=g;CRX.fillRect(0,0,140,300);CRX.globalCompositeOperation='source-over';   // lower limbs catch more of it
   s.globalAlpha=it;s.drawImage(CRC,x0,y0);l.globalAlpha=it;l.drawImage(CRC,x0,y0);s.globalAlpha=1;l.globalAlpha=1;}
-function treeRim(s,l,cx,cy,bx,by){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130;if(d>RR||d<4)return;const it=klv(cx,cy,12);if(it<.04)return;const sd=dx>0?1:-1,top=Math.max(by-68,by-14-L.z*.75-40);
-  s.fillStyle='rgb(236,40,62)';s.fillRect(bx+sd*2.2-.6,top,1.3,by-top);l.fillStyle=gray(255*clamp(it,0,1));l.fillRect(bx+sd*2.2-.6,top,1.3,by-top);
+function treeRim(s,l,cx,cy,bx,by){for(const b of BS){selB(b);treeRim1(s,l,cx,cy,bx,by);}}
+function treeRim1(s,l,cx,cy,bx,by){const L=KRL;if(L&&L.v>.05){const dx0=L.x-cx,dy0=L.y-cy,d0=Math.hypot(dx0,dy0);if(d0<150&&d0>4){const sd0=dx0>0?1:-1,a0=clamp(L.v*(1.2-d0/150),0,.85);l.fillStyle=`rgba(0,0,0,${a0})`;l.fillRect(sd0>0?bx-3:bx,by-68,3.2,69);s.fillStyle=`rgba(20,8,10,${a0*.6})`;s.fillRect(sd0>0?bx-3:bx,by-68,3.2,69);}}if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130;if(d>RR||d<4)return;const it=klv(cx,cy,12);if(it<.04)return;const sd=dx>0?1:-1,top=Math.max(by-68,by-14-L.z*.75-40);
+  s.fillStyle='rgb(236,40,62)';s.fillRect(bx+sd*2.2-.9,top,1.9,by-top);l.fillStyle=gray(255*clamp(it*1.4,0,1));l.fillRect(bx+sd*2.2-.9,top,1.9,by-top);
   if(dy>0){s.fillRect(bx-2.5,by-1,5,1);l.fillRect(bx-2.5,by-1,5,1);}}
-function krBloom(){const L=KL,Lk=KRL;if(!L||!Lk||Lk.v<.05)return;const gx=L.lx-camX,gy=L.ly*K-camY-L.lz*.4,R=160,v=Lk.v;   // a soft red haze over everything near it
+function krBloom(){for(const b of BS){selB(b);krBloom1();}}
+function krBloom1(){const L=KL,Lk=KRL;if(!L||!Lk||Lk.v<.05)return;const gx=L.lx-camX,gy=L.ly*K-camY-L.lz*.4,R=160,v=Lk.v;   // a soft red haze over everything near it
   let g=lctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,gray(58*v));g.addColorStop(.3,gray(32*v));g.addColorStop(.6,gray(16*v));g.addColorStop(.85,gray(4*v));g.addColorStop(1,'#000');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(gx-R,gy-R,R*2,R*2);lctx.restore();
   g=sctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(.4,`rgb(255,${255-110*v|0},${255-106*v|0})`);g.addColorStop(.75,`rgb(255,${255-35*v|0},${255-34*v|0})`);g.addColorStop(1,'#fff');sctx.save();sctx.globalCompositeOperation='multiply';sctx.fillStyle=g;sctx.fillRect(gx-R,gy-R,R*2,R*2);sctx.restore();}
-function rimRed(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130;if(dd>RR)return;
+function rimRed(s,e,x0,y0){for(const b of BS){selB(b);rimRed1(s,e,x0,y0);}}
+function rimRed1(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130;if(dd>RR)return;
   const str=klv(e.x,e.y,12);if(str<=.02)return;const a=Math.atan2(dy*K-L.z*.75+12,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
   RMX.globalCompositeOperation='source-over';RMX.clearRect(0,0,136,120);RMX.drawImage(OLC,0,0);RMX.globalCompositeOperation='source-in';RMX.fillStyle='rgb(255,46,66)';RMX.fillRect(0,0,136,120);
   RMX.globalCompositeOperation='destination-out';RMX.drawImage(OLC,-ux,-uy);RMX.drawImage(OLC,-ux*2,-uy*2);RMX.globalCompositeOperation='source-over';
@@ -2560,21 +2582,21 @@ function drawUI(dt){
         uiText('บ้าน '+Math.round(dm)+' ม.',ax+Math.cos(an)*16*s,ay+Math.sin(an)*14*s+(Math.sin(an)>0?6:-6)*s,10*s);}}
   }
   const gm=Math.min(DAY_LEN,gameTime),hh=Math.floor(gm/60),mm=Math.floor(gm%60);
-  uiText(`0${hh}:${mm<10?'0':''}${mm}`,SWc/2,22*s,22*s);if(n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':'คืนที่ 3 — ฆ่ากระสือให้ได้',SWc/2,44*s,11*s,'center','#ff6b5e');else uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
+  uiText(`0${hh}:${mm<10?'0':''}${mm}`,SWc/2,22*s,22*s);if(n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':`คืนที่ ${night} — ฆ่ากระสือให้ได้`,SWc/2,44*s,11*s,'center','#ff6b5e');else uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
   if(state==='play'&&N3&&N3.ph==='count'){const n=Math.ceil(N3.t),pu=1+.06*Math.sin(performance.now()/120);uiText('นับถอยหลังก่อนเริ่มเกม 1 นาที',SWc/2,SHc*.2,19*s,'center',UIRED);
     u.save();u.font=`900 ${54*s*pu}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineWidth=6*s;u.strokeStyle=BG;u.strokeText(n,SWc/2,SHc*.2+48*s);u.fillStyle='#ff3b30';u.fillText(n,SWc/2,SHc*.2+48*s);u.restore();
     uiText('เก็บฟืน กล้วย งู ให้พร้อม',SWc/2,SHc*.2+86*s,11*s,'center',FG);
     const sb=skipCountBox();u.fillStyle=BG;u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle='#d01c22';u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้ามนับถอยหลัง ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',FG);}
-  if(B&&N3&&(N3.ph==='fight'||B.state==='dead'&&B.t<4)&&state==='play'){const w=Math.min(280*s,SWc*.72),x0=SWc/2-w/2,y0=164*s,f=Math.max(0,B.hp/B.hpMax);u.fillStyle=BG;u.fillRect(x0-3,y0-3,w+6,14*s+6);u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,14*s);u.fillStyle=B.hitF>0?'#fff':'#d01c22';u.fillRect(x0,y0,w*f,14*s);
-    uiText('กระสือ',SWc/2,y0+7*s,10*s,'center',FG);
-    if(!B.hidden&&B.state!=='dead'){const hx=(B.x-camX)*P,hy=(B.y*K-camY-KRS.R.hz*.75-16)*P,tt=performance.now()/1000;
+  if(N3&&state==='play')BS.forEach((B,bi)=>{if(!(N3.ph==='fight'||B.state==='dead'&&B.t<4))return;const w=Math.min(280*s,SWc*.72),x0=SWc/2-w/2,y0=(164+bi*22)*s,f=Math.max(0,B.hp/B.hpMax);u.fillStyle=BG;u.fillRect(x0-3,y0-3,w+6,14*s+6);u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,14*s);u.fillStyle=B.hitF>0?'#fff':'#d01c22';u.fillRect(x0,y0,w*f,14*s);
+    uiText(BS.length>1?'กระสือ '+(bi+1):'กระสือ',SWc/2,y0+7*s,10*s,'center',FG);
+    if(!B.hidden&&B.state!=='dead'){const hx=(B.x-camX)*P,hy=(B.y*K-camY-B.rig.R.hz*.75-16)*P,tt=performance.now()/1000;
       if(B.q>0){u.save();u.font=`900 ${26*s}px system-ui,sans-serif`;u.textAlign='center';u.lineWidth=5*s;u.strokeStyle=BG;u.strokeText('?',hx,hy);u.fillStyle='#ffd27a';u.fillText('?',hx,hy);u.restore();}
       else if(B.state==='stare1'||B.state==='stare2'){uiText(B.state==='stare2'?'!! ระวังพุ่งชน':'!! ระวังพุ่ง',hx,hy,13*s*(1+.1*Math.sin(tt*20)),'center','#ff3b30');}
       else if(B.state==='tangle'&&!B.teth)uiText('ผมพันติด!',hx,hy,12*s,'center','#ffd27a');}
-    if(player.holdTail){const hx=(player.x-camX)*P,hy=(player.y*K-camY-elevOf(player)-44)*P;uiText(`พาหางไปให้บอท ${Math.max(0,Math.ceil(B.holdT))}`,hx,hy,15*s,'center','#ff3b30');
+    if(player.holdTail&&B.teth==='player'){const hx=(player.x-camX)*P,hy=(player.y*K-camY-elevOf(player)-44)*P;uiText(`พาหางไปให้บอท ${Math.max(0,Math.ceil(B.holdT))}`,hx,hy,15*s,'center','#ff3b30');
       const h=nearestHolder();if(h){const dx=h.e.x-player.x,dy=(h.e.y-player.y)*K,an=Math.atan2(dy,dx),px=(player.x-camX)*P,py=(player.y*K-camY-12)*P,r=52*s,ax=px+Math.cos(an)*r,ay=py+Math.sin(an)*r;
         u.save();u.translate(ax,ay);u.rotate(an);u.beginPath();u.moveTo(11*s,0);u.lineTo(-7*s,-7*s);u.lineTo(-3*s,0);u.lineTo(-7*s,7*s);u.closePath();u.lineWidth=3;u.strokeStyle=BG;u.stroke();u.fillStyle='#ff3b30';u.fill();u.restore();}}
-    else if(B.teth&&B.teth!=='player'&&B.state!=='dead'){uiText('ไส้ถูกจับไว้แล้ว — ฟันเลย!',SWc/2,y0+28*s,11*s,'center','#5fd35f');}}
+    else if(B.teth&&B.teth!=='player'&&B.state!=='dead'){uiText('ไส้ถูกจับไว้แล้ว — ฟันเลย!',SWc/2,y0+28*s,11*s,'center','#5fd35f');}});
   uiText('ฆ่า '+kills,SWc-14,22*s,15*s,'right');
   if(wakeFade>0){u.globalAlpha=wakeFade;u.fillStyle=BG;u.fillRect(0,0,SWc,SHc);u.globalAlpha=1;}
   toasts.forEach((t,i)=>{u.globalAlpha=Math.min(1,t.life*2);uiText(t.t,SWc/2,72*s+i*22*s,15*s,'center',/ขาด|หัว/.test(t.t)?UIRED:null);u.globalAlpha=1;});
@@ -2707,7 +2729,7 @@ function frame(now){
   const dt=slowT>0?rdt*(.22+.78*Math.pow(1-slowT/.32,2)):rdt;if(slowT>0)slowT-=rdt;   // brief slow-motion after a hit
   if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else computeLights();
   updateCommon(dt);
-  if(player){updateLamps(T);renderScene();renderLight();krLightPass(T);renderObjects(T);composite();if(B&&!B.hidden)KRS.blit(out32,KRMAP);postFX();octx.putImageData(outImg,0,0);}
+  if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);composite();for(const b of BS)if(!b.hidden)b.rig.blit(out32,KRMAP);postFX();octx.putImageData(outImg,0,0);}
   drawUI(dt);
   requestAnimationFrame(frame);
 }
