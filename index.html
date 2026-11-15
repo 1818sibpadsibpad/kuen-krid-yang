@@ -98,7 +98,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v3.3</div>
+  <div class="ver">v3.4</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -106,7 +106,10 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v3.3</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v3.4</h3><ul>
+      <li>ถือฟืนแล้วเดินไปใกล้กองไฟ จะมีปุ่ม <b>จุดไฟ/เติมไฟ</b> (คีย์บอร์ด R) ใช้ฟืนทีละท่อน</li>
+      <li><b>แตะเพื่อนสองครั้ง</b> ให้รีบทำหน้าที่ 12 วิ: บอท→เฝ้าประตู · แพรวา→เติมไฟ · แพม→จุดไฟเผาซอมบี้</li>
+      <li>ปุ่ม <b>"พร้อมแล้ว! เรียกระลอกใหญ่"</b> ใต้นาฬิกา ฟาร์มพอแล้วกดให้ระลอกใหญ่มาเลย (ข้ามเวลาไป 05:00)</li>
       <li>iPad: กดเริ่มเกมแล้วเข้า<b>โหมดเต็มจอ</b>อัตโนมัติ ซ่อนแถบแท็บ Safari ปัดนิ้วแล้วไม่ดึงแถบลงมา · ถ้าหลุดเต็มจอ แตะจอหรือกด หยุดพัก → เต็มจอ</li>
       <li>iPad/iPhone: กันจอเลื่อนตามนิ้ว และกันปัดขอบจอแล้ว Safari ปิดแท็บ ระหว่างเลื่อนปุ่มเดิน</li>
       <li>ยกปุ่มควบคุมให้พ้นขอบล่างของ Safari · <b>เล่นลื่นสุด:</b> กดปุ่มแชร์ → "เพิ่มไปยังหน้าจอโฮม" แล้วเปิดจากไอคอน จะเต็มจอ ไม่มีแถบ Safari มากวน</li>
@@ -507,7 +510,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='3.3';
+let useBot=true,bot=null,hero='fifa';const VERSION='3.4';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -767,6 +770,19 @@ function dropWood(){if(!player.wood)return;for(const v of player.woodV){const a=
 function placePile(x,y){if(!player.wood)return false;if(fireP&&Math.hypot(x-fireP.x,y-fireP.y)<16){toast('ใกล้กองไฟเกินไป');return false;}if(!inYard(x,y)||BM[tAt(Math.floor(x/TS),Math.floor(y/TS))]){toast('วางได้เฉพาะในเขตรั้วบ้าน');return false;}
   let p=woodPiles.find(p=>Math.hypot(p.x-x,p.y-y)<14);if(!p){p={x,y,logs:[]};woodPiles.push(p);}p.logs.push(...player.woodV);
   toast(`วางฟืน ${player.wood} ท่อน (กองนี้ ${p.logs.length})`);player.wood=0;player.woodV=[];tn('sine',140,70,.15,.4);nz(.25,'lowpass',700,150,.35,1);return true;}
+let npcTap={e:null,t:0};
+function npcAt(x,y){let best=null,bd=1e9;for(const e of npcs()){if(!e||e.dead||e.hidden)continue;const sx=(e.x-camX)*P,sy=(e.y*K-camY-elevOf(e)-10)*P,d=Math.hypot(x-sx,y-sy);if(d<Math.max(26,13*P)&&d<bd){bd=d;best=e;}}return best;}
+function npcDoubleTap(x,y){const e=npcAt(x,y),now=performance.now()/1000;if(!e){npcTap.e=null;return false;}
+  if(npcTap.e===e&&now-npcTap.t<.45){npcTap.e=null;urgeNpc(e);return true;}npcTap={e,t:now};return false;}
+function urgeNpc(e){e.urge=12;
+  if(e===praewa){e.refuelT=0;e.hunger=Math.min(e.hunger,.5);const has=woodPiles.some(q=>q.logs.length);sayAs(e,has?'ได้ค่ะ ไปเติมไฟให้!':'ไม่มีฟืนในกองเลยค่า');toast(has?'แพรวารีบไปเติมไฟ':'แพรวา: ต้องวางกองฟืนในบ้านก่อน');}
+  else if(e===pam){e.igCd=0;e.hunger=Math.min(e.hunger,.5);e.post=null;if(e.torch<=0&&fireP.F>0)e.torch=0;sayAs(e,'ได้เลย แพมจะเผามันให้หมด!');toast('แพมรีบไปจุดไฟ/เผาซอมบี้');}
+  else{e.hunger=Math.min(e.hunger,.5);e.pokeCd=0;sayAs(e,'ได้ๆ เดี๋ยวเฝ้าประตูให้!');toast(BOTNAME()+' ออกไปเฝ้าประตู');}
+  for(let k=0;k<6;k++)sparks.push({x:e.x+(rnd()-.5)*6,y:e.y,h:20,vx:(rnd()-.5)*20,vy:(rnd()-.5)*6,vh:20+rnd()*20,life:.5});tn('square',900,1300,.06,.08);}
+function feedAvail(){return state==='play'&&player.wood>0&&fireP&&!player.hidden&&Math.hypot(fireP.x-player.x,fireP.y-player.y)<46;}
+function feedFire(){if(!feedAvail())return false;const out=fireOut||fireP.F<=0;player.wood--;player.woodV.pop();addLog();player.facing=Math.atan2(fireP.y-player.y,fireP.x-player.x);player.kickT=0;
+  toast(out?`จุดไฟติดแล้ว! (ฟืนเหลือ ${player.wood})`:`เติมฟืน 1 ท่อน (ไฟ ${Math.round(fireP.F)} วิ · ฟืนเหลือ ${player.wood})`);tn('sine',260,520,.12,.18);
+  if(out)for(const e of npcs())if(!e.dead&&rnd()<.6)sayE(e,e===praewa?'ไฟมาแล้ว~':'โล่งอก');return true;}
 function addLog(){const F=fireP;F.F=Math.min(120,F.F+40);F.bt=0;if(fireOut){fireOut=false;}nz(.4,'lowpass',1200,200,.3,1);for(let k=0;k<14;k++)sparks.push({x:F.x+(rnd()-.5)*6,y:F.y+(rnd()-.5)*4,h:5,vx:(rnd()-.5)*20,vy:(rnd()-.5)*10,vh:30+rnd()*40,life:.6+rnd()*.8});}
 function updateFire(dt){
   const F=fireP;if(!F)return;const was=F.F>0;F.F=Math.max(0,F.F-dt);
@@ -1148,13 +1164,13 @@ function updatePam(dt,mode){
   if(p.act>0){p.act-=dt;p.vx*=.8;p.vy*=.8;p.moveAmt=0;if(p.breaking&&rnd()<dt*4){nz(.07,'highpass',1500+rnd()*900,800,.3,1);tn('square',180+rnd()*80,90,.04,.06);p.thrust=.3;}
     if(p.act<=0&&p.doAct){const f=p.doAct;p.doAct=null;p.breaking=false;f();}return;}
   if(fleeUp(p,dt))return;
-  const F=fireP;let gx=null,gy=null,sp=40;
+  if(p.urge>0)p.urge-=dt;const F=fireP;let gx=null,gy=null,sp=40;
   let tz=null,td=1e9;if(p.torch>0)for(const z of zombies){if(z.burn>0||z.dieOnLand||z.state!=='down'||!z.down||z.down.t>z.down.T-.25)continue;   // only zombies lying on the ground
     const ex=clamp(z.x,home.ix0,home.ix1),ey=clamp(z.y,home.iy0,home.iy1);if(Math.hypot(z.x-ex,z.y-ey)>40)continue;const d=Math.hypot(z.x-p.x,z.y-p.y);if(d<td&&d<230){td=d;tz=z;}}
   const brT=bigBranches.find(b=>b.yard&&b!==player.drag);
   if(tz){gx=tz.x;gy=tz.y;sp=54;
     if(td<40&&p.igCd<=0){p.facing=Math.atan2(tz.y-p.y,tz.x-p.x);p.thrust=.4;p.act=.35;p.igCd=1.2;igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}}
-  else if(p.hunger>=1&&food()>0&&foodSpot(p)){const fs=foodSpot(p);gx=fs.x;gy=fs.y;
+  else if(!(p.urge>0)&&p.hunger>=1&&food()>0&&foodSpot(p)){const fs=foodSpot(p);gx=fs.x;gy=fs.y;
     if(Math.hypot(fs.cx-p.x,fs.cy-p.y)<17){const r=eatFood(2);p.hunger=0;p.eatT=2.4;gx=null;sayAs(p,`กิน${r.kind} ${r.got} คำ อิ่มแล้ว`);}}
   else if(brT){gx=brT.x;gy=brT.y;sp=46;if(Math.hypot(brT.x-p.x,brT.y-p.y)<16){p.facing=Math.atan2(brT.y-p.y,brT.x-p.x);p.act=2.6;p.breaking=true;p.doAct=()=>breakBranch(brT);if(rnd()<.6)sayAs(p,'เดี๋ยวแพมหักให้');}}
   else if(p.torch<=0){   // fetch fire from the campfire
@@ -1165,7 +1181,7 @@ function updatePam(dt,mode){
     if(p.post){const q=p.post;gx=q.x;gy=q.y;const ax=clamp(q.x,home.ix0,home.ix1),ay=clamp(q.y,home.iy0,home.iy1);
       if(Math.hypot(ax-p.x,ay-p.y)<9){p.facing=Math.atan2(q.y-p.y,q.x-p.x);p.thrust=.6;p.act=.8;p.doAct=()=>{if(!postTorches.some(t=>t.spot===q)&&postTorches.length<4){postTorches.push({spot:q,x:q.x,y:q.y,t:10+rnd()*25,age:0,seed:rnd()*100});tn('sine',300,600,.08,.2);nz(.3,'bandpass',700,1500,.15,1);}p.post=null;};}}}
   else{if(!p.goal||Math.hypot(p.goal.x-p.x,p.goal.y-p.y)<6||rnd()<dt*.15)p.goal={x:home.ix0+rnd()*(home.ix1-home.ix0),y:home.iy0+rnd()*(home.iy1-home.iy0)};gx=p.goal.x;gy=p.goal.y;sp=20;}
-  stepYardBot(p,gx,gy,sp,dt);
+  stepYardBot(p,gx,gy,p.urge>0?sp*1.5:sp,dt);
 }
 function breakBranch(b){const i=bigBranches.indexOf(b);if(i<0)return;bigBranches.splice(i,1);const n=b.n,logs=[];for(let k=0;k<n;k++)logs.push((rnd()*10)|0);
   let q=woodPiles.find(q=>Math.hypot(q.x-b.x,q.y-b.y)<26);if(!q){let x=b.x,y=b.y;if(fireP&&Math.hypot(x-fireP.x,y-fireP.y)<18){x+=18;}q={x,y,logs:[]};woodPiles.push(q);}q.logs.push(...logs);
@@ -1183,7 +1199,7 @@ function updatePraewa(dt,mode){
   p.sayT-=dt;if(p.sayT<=0&&mode!=='cut'&&!n3Busy()){p.sayT=9+rnd()*9;if(p.hunger>=1&&food()===0)sayAs(p,PW_HUNGRY[(rnd()*PW_HUNGRY.length)|0]);else sayAs(p,PW_LINES[(rnd()*PW_LINES.length)|0]);}
   if(mode!=='play'){if(mode!=='cut')p.moveAmt=0;return;}
   if(bossBot(p,dt))return;
-  p.hunger+=dt/90;p.refuelT-=dt;if(p.eatT>0)p.eatT-=dt;
+  p.hunger+=dt/90;p.refuelT-=dt;if(p.eatT>0)p.eatT-=dt;if(p.urge>0)p.urge-=dt;
   if(fleeUp(p,dt,false))return;   // zombies in the yard: up the ladder! (a dead fire doesn't scare her off — she relights it)
   let gx=null,gy=null,sp=34;const F=fireP;
   if(p.carryLog>=0){gx=F.x+(p.x<F.x?-15:15);gy=F.y+4;sp=32;
@@ -1200,7 +1216,7 @@ function updatePraewa(dt,mode){
   else{if(p.refuelT<=0&&!woodPiles.some(q=>q.logs.length)&&rnd()<dt*.06&&!p.say)sayAs(p,'นู้นๆ ตรงนู้นนนนน');
     p.mindT=(p.mindT||0)-dt;if(p.mindT<=0||!p.goal){p.mindT=3+rnd()*5;p.goal={x:home.ix0+rnd()*(home.ix1-home.ix0),y:home.iy0+rnd()*(home.iy1-home.iy0)};}
     gx=p.goal.x;gy=p.goal.y;sp=22;if(Math.hypot(gx-p.x,gy-p.y)<6)gx=null;}
-  stepYardBot(p,gx,gy,sp,dt);if(p.moveAmt<.05&&p.eatT>0)p.facing=angLerp(p.facing,Math.atan2(postPos.y-p.y,postPos.x-p.x),dt*6);
+  stepYardBot(p,gx,gy,p.urge>0?sp*1.6:sp,dt);if(p.moveAmt<.05&&p.eatT>0)p.facing=angLerp(p.facing,Math.atan2(postPos.y-p.y,postPos.x-p.x),dt*6);
 }
 function updateBot(dt,mode){
   const b=bot;if(!b)return;if(b.say){b.say.t-=dt;if(b.say.t<=0)b.say=null;}
@@ -1220,8 +1236,9 @@ function updateBot(dt,mode){
   if(b.combat>0){b.combat-=dt;if(b.combat<=0&&b.fought){b.fought=false;b.pantT=10;}}
   // he never leaves the yard: guard the fence & gate and push zombies away with the branch
   if(!inYard(b.x,b.y)){const tx=home.hs.di*TS+8,ty=home.hs.dj*TS+8;b.goal={x:tx,y:ty+12};}
-  let tz=null,td=1e9;for(const z of zombies){if(z.dieOnLand||z.state==='eatB')continue;if(fireOut)break;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d>110)continue;   // fire out: blind, can't fend anything off
-    if(!(z.litBy===b||d<60||z.aware>0)||!los(b.x,b.y,z.x,z.y))continue;const dz=d-((z.state==='windup'||z.state==='lunge')&&d<70?40:0);if(dz<td){td=dz;tz=z;}}
+  if(b.urge>0)b.urge-=dt;const ur=b.urge>0;
+  let tz=null,td=1e9;for(const z of zombies){if(z.dieOnLand||z.state==='eatB')continue;if(fireOut&&!ur)break;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d>(ur?190:110))continue;   // fire out: blind, can't fend anything off
+    if(!(ur||z.litBy===b||d<60||z.aware>0)||!los(b.x,b.y,z.x,z.y))continue;const dz=d-((z.state==='windup'||z.state==='lunge')&&d<70?40:0);if(dz<td){td=dz;tz=z;}}
   if(tz)td=Math.hypot(tz.x-b.x,tz.y-b.y);
   let gx=null,gy=null,sp=56,face=null;
   if(tz){face=Math.atan2(tz.y-b.y,tz.x-b.x);b.combat=2;b.fought=true;b.pantT=0;
@@ -1236,6 +1253,7 @@ function updateBot(dt,mode){
      else if(b.up&&!sameLv(b,tz)){const r=platRect(5);gx=clamp(tz.x,r.x0,r.x1);gy=clamp(tz.y,r.y0,r.y1);sp=48;if(Math.hypot(gx-b.x,gy-b.y)<3)gx=null;}   // …and jab down from the floor
      else if(!b.up)b.climbSaid=false;}
     if(rnd()<dt*.25&&!b.say)botSay(rnd()<.5?4:7);}
+  else if(ur){const g=gatePos(),o=gateOut();gx=g.x-o.x*10;gy=g.y-o.y*10;sp=64;face=Math.atan2(o.y,o.x);if(Math.hypot(gx-b.x,gy-b.y)<4)gx=null;}
   else if(b.eatT>0){b.eatT-=dt;b.moveAmt=0;face=Math.atan2(postPos.y-b.y,postPos.x-b.x);}
   else if(b.hunger>=1&&food()>0&&foodSpot(b)){const fs=foodSpot(b);gx=fs.x;gy=fs.y;sp=44;
     if(Math.hypot(fs.cx-b.x,fs.cy-b.y)<18){const r=eatFood(ri(2,3));b.hunger=0;b.eatT=2.6;gx=null;botSay(`กิน${r.kind} ${r.got} คำ แซ่บคัก!`);tn('square',500,700,.05,.05);}}
@@ -1258,10 +1276,14 @@ function updateBot(dt,mode){
 function edgeSpawn(){   // a zombie walks in from a random edge of the plantation and heads for you
   const side=(rnd()*4)|0;for(let k=0;k<80;k++){const t=rnd()*(MW-12)+6,d=2+rnd()*4;let i,j;if(side===0){i=t;j=d;}else if(side===1){i=MW-1-d;j=t;}else if(side===2){i=t;j=MH-1-d;}else{i=d;j=t;}
     i|=0;j|=0;const tt=tAt(i,j);if(BM[tt]||tt===TT||tt===TPL)continue;const z=makeZ(i*TS+8,j*TS+8);z.hunt=true;z.state='chase';z.aware=3.5;zombies.push(z);return z;}return null;}
-function spawnNight(){waveDone=false;trickleT=4;toast(`คืนที่ ${night} — ซอมบี้ทยอยมาเรื่อยๆ · ตีห้าระลอกใหญ่ ${5*night} ตัว!`);}
+let waveNow=false;
+function waveBox(){const s=UIS,w=196*s,h=30*s;return{x:SWc/2-w/2,y:118*s,w,h};}
+function waveAvail(){return state==='play'&&!waveDone&&!n3Active()&&night!==3&&gameTime<WAVE_AT&&!DEMO;}
+function callWave(){if(!waveAvail())return;waveNow=true;gameTime=Math.max(gameTime,WAVE_AT);toast('เรียกระลอกใหญ่แล้ว! เตรียมตัว!!');}
+function spawnNight(){waveDone=false;waveNow=false;trickleT=4;toast(`คืนที่ ${night} — ซอมบี้ทยอยมาเรื่อยๆ · ตีห้าระลอกใหญ่ ${5*night} ตัว!`);}
 function nightSpawns(dt){if(waveDone)return;
-  if(gameTime>=WAVE_AT&&night===5){waveDone=true;startN5();return;}
-  if(gameTime>=WAVE_AT){waveDone=true;const n=5*night;for(let k=0;k<n;k++)edgeSpawn();toast(`ระลอกใหญ่! ซอมบี้ ${n} ตัวบุกมาทุกทิศ`);sfx.screech();shake=Math.max(shake,4);return;}
+  if((gameTime>=WAVE_AT||waveNow)&&night===5){waveDone=true;startN5();return;}
+  if(gameTime>=WAVE_AT||waveNow){waveDone=true;waveNow=false;const n=5*night;for(let k=0;k<n;k++)edgeSpawn();toast(`ระลอกใหญ่! ซอมบี้ ${n} ตัวบุกมาทุกทิศ`);sfx.screech();shake=Math.max(shake,4);return;}
   trickleT-=dt;if(trickleT<=0){trickleT=30;edgeSpawn();if(rnd()<.3)edgeSpawn();}}
 function pathToBed(){
   const blk=(t,tc)=>!passT(tc,t)||t===TT,prev=new Int32Array(MW*MH).fill(-2),q=[];const s=Math.floor(player.y/TS)*MW+Math.floor(player.x/TS);prev[s]=-1;q.push(s);
@@ -2075,7 +2097,7 @@ function resize(){
   joyR=55*s;fireB={x:SWc-92*s,y:SHc-92*s-SAFEB,r:48*s};
   const mkb=(id,label,ang)=>({id,label,x:fireB.x+Math.cos(ang)*98*s,y:fireB.y+Math.sin(ang)*98*s,r:28*s,flash:0});
   sleepBtn.x=SWc-72*s;sleepBtn.y=64*s;sleepBtn.r=34*s;woodBtn.x=fireB.x;woodBtn.y=fireB.y-176*s;woodBtn.r=27*s;
-  btns=[{id:'kick',label:'ถีบ',x:fireB.x-fireB.r*2-18*s,y:fireB.y+4*s,r:fireB.r,flash:0,big:true},mkb('hide','ซ่อน',-Math.PI*.75),{id:'look',label:'หันมอง',x:fireB.x,y:fireB.y-104*s,r:37*s,flash:0},{id:'light',label:'ไฟ',x:SWc-34*s,y:122*s,r:20*s,flash:0},{id:'swap',label:'เปลี่ยนอาวุธ',x:fireB.x+54*s,y:fireB.y-206*s,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'drag',label:'ลากกิ่ง',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-176*s,r:24*s,flash:0},{id:'roll',label:'กลิ้ง',x:fireB.x-fireB.r*2-38*s,y:fireB.y-84*s,r:30*s,flash:0},{id:'tail',label:'จับหาง',x:fireB.x-46*s,y:fireB.y-262*s,r:40*s,flash:0}];
+  btns=[{id:'kick',label:'ถีบ',x:fireB.x-fireB.r*2-18*s,y:fireB.y+4*s,r:fireB.r,flash:0,big:true},mkb('hide','ซ่อน',-Math.PI*.75),{id:'look',label:'หันมอง',x:fireB.x,y:fireB.y-104*s,r:37*s,flash:0},{id:'light',label:'ไฟ',x:SWc-34*s,y:122*s,r:20*s,flash:0},{id:'swap',label:'เปลี่ยนอาวุธ',x:fireB.x+54*s,y:fireB.y-206*s,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'drag',label:'ลากกิ่ง',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-176*s,r:24*s,flash:0},{id:'feed',label:'จุดไฟ',x:fireB.x-122*s,y:fireB.y-176*s,r:27*s,flash:0},{id:'roll',label:'กลิ้ง',x:fireB.x-fireB.r*2-38*s,y:fireB.y-84*s,r:30*s,flash:0},{id:'tail',label:'จับหาง',x:fireB.x-46*s,y:fireB.y-262*s,r:40*s,flash:0}];
   for(const b of btns){b.bx=b.x;b.by=b.y;}fireB.bx=fireB.x;fireB.by=fireB.y;sleepBtn.bx=sleepBtn.x;sleepBtn.by=sleepBtn.y;pauseB.x=26*s;pauseB.y=28*s;pauseB.r=19*s;applyLayout();
 }
 function gradV(t){if(t>=1)return 0;if(t<.22)return 1-t/.22*.1;if(t<.65)return .9-(t-.22)/.43*.52;return .38*(1-(t-.65)/.35);}
@@ -2724,6 +2746,7 @@ function drawUI(dt){
   }
   const gm=Math.min(DAY_LEN,gameTime),hh=Math.floor(gm/60),mm=Math.floor(gm%60);
   uiText(`0${hh}:${mm<10?'0':''}${mm}`,SWc/2,22*s,22*s);if(n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':`คืนที่ ${night} — ฆ่ากระสือให้ได้`,SWc/2,44*s,11*s,'center','#ff6b5e');else uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
+  if(waveAvail()){const wb=waveBox();u.globalAlpha=.88;u.fillStyle=BG;u.fillRect(wb.x-2,wb.y-2,wb.w+4,wb.h+4);u.fillStyle='#8a1418';u.fillRect(wb.x,wb.y,wb.w,wb.h);u.globalAlpha=1;uiText('พร้อมแล้ว! เรียกระลอกใหญ่ ▶',wb.x+wb.w/2,wb.y+wb.h/2+1,12*s,'center',FG);}
   if(state==='play'&&N3&&N3.ph==='count'){const n=Math.ceil(N3.t),pu=1+.06*Math.sin(performance.now()/120);uiText('นับถอยหลังก่อนเริ่มเกม 1 นาที',SWc/2,SHc*.2,19*s,'center',UIRED);
     u.save();u.font=`900 ${54*s*pu}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineWidth=6*s;u.strokeStyle=BG;u.strokeText(n,SWc/2,SHc*.2+48*s);u.fillStyle='#ff3b30';u.fillText(n,SWc/2,SHc*.2+48*s);u.restore();
     uiText('เก็บฟืน กล้วย งู ให้พร้อม',SWc/2,SHc*.2+86*s,11*s,'center',FG);
@@ -2763,6 +2786,7 @@ function drawUI(dt){
         if(b.id==='tail'){const pu=1+.08*Math.sin(performance.now()/90);u.save();u.shadowColor='#ff3b30';u.shadowBlur=22*s;uiCircle(b.x,b.y,b.r*pu,'#d01c22',3);u.restore();uiText('จับหาง',b.x,b.y-4*s,17*s,'center',FG);uiText('กระสือ!',b.x,b.y+14*s,10*s,'center','#ffd27a');continue;}
         if(b.id==='drag'){uiCircle(b.x,b.y,b.r,'#8e6036',2);uiText(player.drag?'ปล่อย':'ลาก',b.x,b.y-5*s,11*s,'center',FG);uiText('กิ่ง',b.x,b.y+8*s,11*s,'center',FG);continue;}
         if(b.id==='pickw'){uiCircle(b.x,b.y,b.r,'#c08a52',2);uiText('เก็บ',b.x,b.y-5*s,11*s,'center',BG);uiText('ฟืน',b.x,b.y+8*s,11*s,'center',BG);continue;}
+        if(b.id==='feed'){const o=fireOut||fireP.F<=0,pu=o?1+.08*Math.sin(performance.now()/110):1;uiCircle(b.x,b.y,b.r*pu,'#e8742a',2);uiText(o?'จุดไฟ':'เติมไฟ',b.x,b.y-5*s,11*s,'center',BG);uiText(`ฟืน ${player.wood}`,b.x,b.y+8*s,9*s,'center',BG);continue;}
         if(b.id==='carry'){uiCircle(b.x,b.y,b.r,'#e6c43c',2);uiText('แบก',b.x,b.y-5*s,10*s,'center',BG);uiText('กล้วย',b.x,b.y+7*s,9*s,'center',BG);continue;}
         if(b.id==='swap'){bo=bo||hoeNear();uiCircle(b.x,b.y,b.r,bo?'#5fd35f':BG,2);uiText('เปลี่ยน',b.x,b.y-5*s,9*s,'center',bo?BG:FG);uiText('อาวุธ',b.x,b.y+6*s,9*s,'center',bo?BG:FG);continue;}
         uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.id==='kick'&&player.snakeBite?'เตะงูออก':b.label,b.x,b.y,(b.big?(player.snakeBite&&b.id==='kick'?14:19):11)*s,'center',player.snakeBite&&b.id==='kick'?'#ff3b30':bo?BG:FG);}
@@ -2824,18 +2848,20 @@ function woodAvail(){return state==='play'&&player.wood>0&&!player.drag&&inYard(
 function hoeNear(){return hoe&&!hoe.taken&&Math.hypot(hoe.x-player.x,hoe.y-player.y)<34;}
 function swapAvail(){return state==='play'&&(hoeNear()||player.hasHoe);}
 function sleepAvail(){return state==='play'&&zombies.length===0&&player.cleared&&!n3Active();}
-function visBtns(){const v=btns.filter(b=>(b.id!=='swap'||swapAvail())&&(b.id!=='carry'||(state==='play'&&!!groundNear()))&&(b.id!=='pickw'||(woodNear()&&!woodAvail()&&!player.drag&&!bigNear()))&&(b.id!=='drag'||(!!player.drag||(!woodAvail()&&!!bigNear())))&&(b.id!=='hide'||!!nearWardrobe())&&(b.id!=='tail'||tailAvail()));if(sleepAvail())v.unshift(sleepBtn);return v;}
+function visBtns(){const v=btns.filter(b=>(b.id!=='swap'||swapAvail())&&(b.id!=='carry'||(state==='play'&&!!groundNear()))&&(b.id!=='pickw'||(woodNear()&&!woodAvail()&&!player.drag&&!bigNear()))&&(b.id!=='drag'||(!!player.drag||(!woodAvail()&&!!bigNear())))&&(b.id!=='hide'||!!nearWardrobe())&&(b.id!=='tail'||tailAvail())&&(b.id!=='feed'||feedAvail()));if(sleepAvail())v.unshift(sleepBtn);return v;}
 function swapWeapon(){if(!swapAvail()||player.charging||player.swingT>0)return;
   if(hoeNear()){hoe.taken=true;player.hasHoe=true;player.weapon='hoe';sfx.ready();tn('square',500,900,.1,.12);toast('ได้ จอบ (บักจก)! ระยะ×3 แรง×3');return;}
   player.weapon=player.weapon==='hoe'?'knife':'hoe';sfx.toggle();toast('ถือ '+W().name);}
 function hitBtn(x,y){for(const b of visBtns())if(Math.hypot(x-b.x,y-b.y)<b.r*1.15)return b;return null;}
-function act(b){b.flash=.15;if(b.id==='light')toggleLight();else if(b.id==='hide')toggleHide();else if(b.id==='kick')kick();else if(b.id==='swap')swapWeapon();else if(b.id==='carry')pickBunch();else if(b.id==='pickw')pickWood();else if(b.id==='drag')toggleDrag();else if(b.id==='sleep'&&sleepAvail())startSleep('clear');else if(b.id==='roll')doRoll();else if(b.id==='tail')grabTail();}
+function act(b){b.flash=.15;if(b.id==='light')toggleLight();else if(b.id==='hide')toggleHide();else if(b.id==='kick')kick();else if(b.id==='swap')swapWeapon();else if(b.id==='carry')pickBunch();else if(b.id==='pickw')pickWood();else if(b.id==='drag')toggleDrag();else if(b.id==='sleep'&&sleepAvail())startSleep('clear');else if(b.id==='roll')doRoll();else if(b.id==='tail')grabTail();else if(b.id==='feed')feedFire();}
 function mouseAngle(){const wx=mouse.x/P+camX,wy=(mouse.y/P+camY+8)/K;return Math.atan2(wy-player.y,wx-player.x);}
 function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l>joyR){dx*=joyR/l;dy*=joyR/l;joy.kx=joy.bx+dx;joy.ky=joy.by+dy;l=joyR;}const m=l/joyR;joyV=m<.12?{x:0,y:0}:{x:dx/joyR,y:dy/joyR};}
 ui.addEventListener('pointerdown',e=>{
   e.preventDefault();initAudio();const x=e.clientX,y=e.clientY;
   if(state==='layout'){layDown(x,y,e.pointerId);try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
   if((state==='play'||state==='n3cine')&&Math.hypot(x-pauseB.x,y-pauseB.y)<pauseB.r*1.5){pauseGame();return;}
+  if(waveAvail()){const wb=waveBox();if(x>wb.x-8&&x<wb.x+wb.w+8&&y>wb.y-8&&y<wb.y+wb.h+8){callWave();return;}}
+  if(state==='play'&&npcDoubleTap(x,y))return;
   if(state==='play'&&N3&&N3.ph==='count'){const sb=skipCountBox();if(x>sb.x-10&&x<sb.x+sb.w+10&&y>sb.y-10&&y<sb.y+sb.h+10){N3.t=0;return;}}
   if(state==='n3cine'){const sb=skipBox();if(x>sb.x-14&&x<sb.x+sb.w+14&&y>sb.y-14&&y<sb.y+sb.h+14)skipCine();return;}
   if(grillAvail()&&Math.hypot(x-(fireB.x-66*UIS),y-(fireB.y-176*UIS))<27*UIS*1.25){gDrag={id:e.pointerId,x,y,sx:x,sy:y,wx:fireP.x+20,wy:fireP.y+24};return;}
@@ -2873,7 +2899,7 @@ function ptrEnd(e){
 ui.addEventListener('pointerup',ptrEnd);ui.addEventListener('pointercancel',ptrEnd);
 ui.addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('keydown',e=>{keys[e.code]=true;if(DEMO)return;if((e.code==='Escape'||e.code==='KeyP')&&(state==='play'||state==='n3cine')&&!(state==='n3cine'&&e.code==='Escape')){pauseGame();return;}if((e.code==='Escape'||e.code==='KeyP')&&state==='paused'){resumeGame();return;}if(state==='n3cine'&&(e.code==='Enter'||e.code==='Escape'||e.code==='Space')){e.preventDefault();skipCine();return;}if(state!=='play')return;
-  if(e.code==='ShiftLeft'||e.code==='ShiftRight'){doRoll();return;}if(e.code==='Enter'&&N3&&N3.ph==='count'){N3.t=0;return;}if(e.code==='KeyT'){grabTail();return;}
+  if(e.code==='ShiftLeft'||e.code==='ShiftRight'){doRoll();return;}if(e.code==='Enter'&&N3&&N3.ph==='count'){N3.t=0;return;}if(e.code==='KeyT'){grabTail();return;}if(e.code==='KeyR'&&feedFire())return;
   if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE'){if(!toggleDrag()&&!pickWood()&&!pickBunch()&&nearWardrobe())toggleHide();}else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');else if(e.code==='KeyR'&&grillAvail()&&Math.hypot(player.x-fireP.x,player.y-fireP.y)<60)grillSnakes();else if(e.code==='KeyV'&&woodAvail())placePile(player.x+Math.cos(player.facing)*10,player.y+Math.sin(player.facing)*10);
   else if(e.code==='Space'){e.preventDefault();tapAttack(mouse.active&&!showTouch?mouseAngle():null);}
   if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();});
