@@ -1606,7 +1606,7 @@ function beginFight(){setBlackout(true);if(!B){const g=gatePos(),o=gateOut();B=m
   const st=stations();npcs().forEach((e,i)=>{e.station=st[i%st.length];e.say=null;});for(const e of npcs())e.goal=null;
   toast('กระสือ!! ล่อให้มันชนต้นไม้/รั้ว แล้วจับหาง');sfx.screech(0);shake=Math.max(shake,4);}
 /* ---------- the boss ---------- */
-function makeBoss(x,y){KRS.init(x,y);return{x,y,vx:0,vy:0,state:'roam',t:0,rt:0,hp:22,hpMax:22,cdS:5,hits:0,cd1:3,cd2:7,biteCd:2,glow:1,ph:0,q:0,angry:0,teth:null,taut:0,wp:null,side:1,hitF:0,bt:-1};}
+function makeBoss(x,y){const R=KRS.R;R.zoff=6;R.dead=false;R.pin=null;R.pull=[0,0];R.glow=1;R.flashI=0;R.moon=null;KRS.init(x,y);return{x,y,vx:0,vy:0,state:'roam',t:0,rt:0,hp:22,hpMax:22,cdS:5,hits:0,cd1:3,cd2:7,biteCd:2,glow:1,ph:0,q:0,angry:0,teth:null,taut:0,wp:null,side:1,hitF:0,bt:-1};}
 const treeShake=new Map();
 function shakeTree(idx,str){if(idx==null)return;const cur=treeShake.get(idx)||0;treeShake.set(idx,Math.min(1.4,cur+str));const cx=(idx%MW)*TS+8,cy=((idx/MW)|0)*TS+8;
   const n=Math.round(6+str*16);for(let k=0;k<n;k++)particles.push({x:cx+(rnd()-.5)*46,y:cy+(rnd()-.5)*18,vx:(rnd()-.5)*18,vy:(rnd()-.5)*8,h:28+rnd()*80,vh:rnd()*14,leaf:1,col:gray(90+rnd()*100),rot:rnd()*TAU});
