@@ -99,7 +99,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v3.9</div>
+  <div class="ver">v4.0</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -107,7 +107,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v3.9</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.0</h3><ul>
+      <li>กิ่งไม้ใหญ่: ส่องไฟฉายแล้วมีไฮไลท์สะท้อนแสงเหมือนฟืนชิ้นเล็ก · <b>ฟัน/ถีบทุบเองได้</b> 2–3 ทีแตกเป็นฟืนชิ้นเล็กๆ ให้เก็บ</li>
       <li>เพื่อนตาย: เวลาหยุดชั่วคราว ขึ้นป้าย "💀 ชื่อ ตายแล้ว" กลางจอ แตะเพื่อเล่นต่อ</li>
       <li>เดินผ่านศพเพื่อน: "อ้าว… ชื่อ ตายแล้วหรอ" · แพรวาเสียใจที่สุด ร้องไห้ฮือๆ</li>
       <li>ถีบ: พุ่งตัวไปข้างหน้า ยกเข่าแล้วยื่นขาตรงจนสุด ฝ่าเท้ากระแทกเต็มแรง ตัวเอนหลังรับแรง</li>
@@ -517,7 +518,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='3.9';
+let useBot=true,bot=null,hero='fifa';const VERSION='4.0';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -626,7 +627,7 @@ function doHit(h=player){
     if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>ARC)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
   alertNear(90+60*p,h);hitter=h;
   const sh=snakeHits(h,a,R0,ARC+.2),bh=bossHits(h,a,R0,ARC,false);
-  if(!best){if(h===player&&!sh&&!bh)hitPlant(h);return;}
+  if(!best){if(h===player&&!sh&&!bh&&!bigHit(h,a,R0,ARC+.15,p>.5?1.5:1))hitPlant(h);return;}
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   if(best.burn>0){const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;shake=Math.max(shake,2.5);sfx.hit();sfx.sever();for(let k=0;k<20;k++)sparks.push({x:z.x+(rnd()-.5)*8,y:z.y+(rnd()-.5)*4,h:4+rnd()*12,vx:ux*40+(rnd()-.5)*40,vy:uy*20+(rnd()-.5)*20,vh:10+rnd()*40,life:.4+rnd()*.6});killZ(z,ux,uy,false);toast('ฟันทีเดียว ร่วงเป็นถ่าน!');return;}
   const z=best,d=bd||1,low=z.crawl||z.state==='down',r0=(z.x-h.x)/d,r1=(z.y-h.y)/d,tip=d-(low?5:3)>R0-Math.max(4,R0*.26);
@@ -674,12 +675,12 @@ function kick(h=player){
   if(h===player&&player.snakeBite&&state==='play'){kickSnake();return;}
   if(h===player&&h.charging&&h.autoCh){h.charging=false;h.autoCh=false;}
   if(state!=='play'||h.hidden||h.fly||h.kickT>0||h.kcd>0||h.charging||h.swingT>0)return;
-  let a=autoAim(h),dash=20;if(h===player){const t=lungeTarget(h,a,WP.knife.kmax+20);if(t){a=t.a;dash=clamp(t.d-13,0,24);}}h.kdash={ux:Math.cos(a),uy:Math.sin(a),d:dash,t:0};h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
+  let a=autoAim(h),dash=20;if(h===player){const t=lungeTarget(h,a,WP.knife.kmax+20);if(t){a=t.a;dash=clamp(t.d-13,0,24);}else{for(const b of bigBranches){const ca=Math.cos(b.a),sa=Math.sin(b.a);for(let k=-2;k<=2;k++){const px=b.x+ca*b.L*k/4.2,py=b.y+sa*b.L*k/4.2,d=Math.hypot(px-h.x,py-h.y);if(d<48&&Math.abs(angDiff(a,Math.atan2(py-h.y,px-h.x)))<.6)dash=Math.min(dash,clamp(d-12,0,24));}}}}h.kdash={ux:Math.cos(a),uy:Math.sin(a),d:dash,t:0};h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
 }
 function doKick(h=player){
   const a=h.kickAng;let best=null,bd=1e9;
   for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-3>(h===player?WP.knife.kmax:19))continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>1.05)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
-  snakeHits(h,a,WP.knife.kmax,1.1);bossHits(h,a,WP.knife.kmax,1.05,true);alertNear(110,h);if(!best)return;
+  snakeHits(h,a,WP.knife.kmax,1.1);bossHits(h,a,WP.knife.kmax,1.05,true);alertNear(110,h);if(!best){if(h===player)bigHit(h,a,WP.knife.kmax+4,1.05,1.5);return;}
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;
   shake=Math.max(shake,4);sfx.kick();toast('ถีบ!');z.aware=6;
@@ -1201,6 +1202,17 @@ function updatePam(dt,mode){
   else{if(!p.goal||Math.hypot(p.goal.x-p.x,p.goal.y-p.y)<6||rnd()<dt*.15)p.goal={x:home.ix0+rnd()*(home.ix1-home.ix0),y:home.iy0+rnd()*(home.iy1-home.iy0)};gx=p.goal.x;gy=p.goal.y;sp=20;}
   stepYardBot(p,gx,gy,p.urge>0?sp*1.5:sp,dt);
 }
+function bigHit(h,a,R,arc,pow){   // smash a fallen branch where the blow lands
+  let best=null,bd=1e9;for(const b of bigBranches){if(b===player.drag)continue;const ca=Math.cos(b.a),sa=Math.sin(b.a);let dm=1e9,am=0;
+    for(let k=-2;k<=2;k++){const px=b.x+ca*b.L*k/4.2,py=b.y+sa*b.L*k/4.2,d=Math.hypot(px-h.x,py-h.y);if(d<dm){dm=d;am=Math.atan2(py-h.y,px-h.x);}}
+    if(dm>R+5||Math.abs(angDiff(a,am))>arc)continue;if(dm<bd){bd=dm;best=b;}}
+  if(!best)return false;const b=best;b.dmg=(b.dmg||0)+pow;b.shk=.25;shake=Math.max(shake,2.5);sfx.kick();
+  for(let k=0;k<6;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.6,y:b.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*40,vy:(rnd()-.5)*16,vh:15+rnd()*25,life:.4+rnd()*.4,ash:1});
+  if(b.dmg>=3){smashBranch(b);}else toast(b.dmg>=2?'กิ่งร้าวแล้ว! อีกที':'ทุบกิ่งไม้! (ทุบอีก)');return true;}
+function smashBranch(b){const i=bigBranches.indexOf(b);if(i<0)return;bigBranches.splice(i,1);const n=b.n+2,ca=Math.cos(b.a),sa=Math.sin(b.a);
+  for(let k=0;k<n;k++){const t=(k/(n-1)-.5)*b.L*.85,r=(rnd()-.5)*8;woodItems.push({x:b.x+ca*t-sa*r,y:b.y+sa*t+ca*r,a:b.a+(rnd()-.5)*1.4,v:(rnd()*10)|0});}
+  for(let k=0;k<14;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.7,y:b.y+(rnd()-.5)*6,h:3,vx:(rnd()-.5)*60,vy:(rnd()-.5)*24,vh:20+rnd()*35,life:.6+rnd()*.6,ash:1});
+  shake=Math.max(shake,5);sfx.sever();nz(.35,'lowpass',900,180,.5,1);toast(`กิ่งไม้แตก! ได้ฟืน ${n} ชิ้น เก็บได้เลย`);}
 function breakBranch(b){const i=bigBranches.indexOf(b);if(i<0)return;bigBranches.splice(i,1);const n=b.n,logs=[];for(let k=0;k<n;k++)logs.push((rnd()*10)|0);
   let q=woodPiles.find(q=>Math.hypot(q.x-b.x,q.y-b.y)<26);if(!q){let x=b.x,y=b.y;if(fireP&&Math.hypot(x-fireP.x,y-fireP.y)<18){x+=18;}q={x,y,logs:[]};woodPiles.push(q);}q.logs.push(...logs);
   for(let k=0;k<10;k++)sparks.push({x:b.x+(rnd()-.5)*14,y:b.y+(rnd()-.5)*6,h:3,vx:(rnd()-.5)*30,vy:(rnd()-.5)*12,vh:10+rnd()*20,life:.6+rnd()*.6,ash:1});
@@ -2528,7 +2540,15 @@ function drawObj(o,T,s,l){
     F(s,40,x-.6,yt,2.4,hh);F(s,40,x+8,yt,2.4,hh);F(s,118,x,yt,1.3,hh);F(s,118,x+8.6,yt,1.3,hh);for(let r=0;r<n;r++){F(s,30,x+1,yt+hh*(r+.6)/(n+.4)+.8,8,1);F(s,160,x+1,yt+hh*(r+.6)/(n+.4),8,1.4);}
     const v=lightAt(hs.si*TS+8,hs.sj*TS+10);F(l,v,x-.6,yt,10,hh);break;}
   case 26:{const q=o.q,x=q.x-camX,yb=q.y*K-camY,top=yb-ROOFH;F(s,46,x-1.3,top,2.6,ROOFH);F(s,112,x-.4,top,.8,ROOFH);F(l,lightAt(q.x,q.y+3),x-1.3,top,2.6,ROOFH);break;}
-  case 27:{const b=o.b,v=lightAt(b.x,b.y);drawBig(s,b,null);drawBig(l,b,gray(Math.max(14,v)));break;}
+  case 27:{const b=o.b,v=lightAt(b.x,b.y),lit=lampLit(b.x,b.y);if(b.shk>0)b.shk-=1/60;const jx=b.shk>0?(rnd()-.5)*1.6:0,ox=b.x;b.x+=jx;drawBig(s,b,null);drawBig(l,b,gray(Math.max(lit>.15?62:14,v)));
+    if(lit>.15){const x0=b.x-camX,y0=b.y*K-camY,ca=Math.cos(b.a),sa=Math.sin(b.a);   // flashlight catches the bark, same as the small sticks
+      for(const c of[s,l]){c.save();c.translate(x0,y0);c.scale(1,K);c.rotate(b.a);c.strokeStyle=c===s?'rgb(236,200,140)':gray(Math.min(255,v+70));c.lineWidth=.9;c.lineCap='round';
+        for(let k=0;k<5;k++){const g=b.segs[k];c.beginPath();c.moveTo(g[0],g[1]-g[4]*.45);c.lineTo(g[2],g[3]-g[4]*.45);c.stroke();}
+        c.lineWidth=.6;for(let k=5;k<b.segs.length;k+=2){const g=b.segs[k];c.beginPath();c.moveTo(g[0],g[1]-.4);c.lineTo(g[2],g[3]-.4);c.stroke();}c.restore();}
+      for(let k=0;k<3;k++){const ph=Math.sin(T*(4.6+k*1.5)+b.x*.31+k*2.3);if(ph<.5)continue;const tt=[-.32,.05,.36][k]*b.L,gx=x0+ca*tt,gy=y0+sa*tt*K-1.6,r=ph>.85?2:1;
+        for(const c of[s,l]){c.fillStyle='#fff';c.fillRect(gx-.5,gy-.5,1,1);if(r>1){c.fillRect(gx-1.5,gy-.5,1,1);c.fillRect(gx+.5,gy-.5,1,1);c.fillRect(gx-.5,gy-1.5,1,1);c.fillRect(gx-.5,gy+.5,1,1);}}}
+      if(b.dmg){for(const c of[s,l]){c.fillStyle=c===s?'rgb(250,226,170)':'#fff';for(let k=0;k<Math.min(3,b.dmg*2);k++){const tt=(k-1)*.18*b.L;c.fillRect(x0+ca*tt-.5,y0+sa*tt*K-1.5,1,2);}}}}   // pale cracks where it was struck
+    b.x=ox;break;}
   case 1:{const {i,j}=o,cx=i*TS+8,cy=j*TS+8,shk=treeShake.get(j*MW+i)||0,bx=cx-camX+(shk?Math.round(Math.sin(T*42+i)*1.6*shk):0),by=cy*K-camY;
     if(!false){s.fillStyle='rgba(0,0,0,.5)';ell(s,bx,by,5,2);}
     s.drawImage(trunkCv[(i*7+j*13)&3],bx-9,by-71);
