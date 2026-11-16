@@ -99,7 +99,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v3.8</div>
+  <div class="ver">v3.9</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -107,7 +107,9 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v3.8</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v3.9</h3><ul>
+      <li>เพื่อนตาย: เวลาหยุดชั่วคราว ขึ้นป้าย "💀 ชื่อ ตายแล้ว" กลางจอ แตะเพื่อเล่นต่อ</li>
+      <li>เดินผ่านศพเพื่อน: "อ้าว… ชื่อ ตายแล้วหรอ" · แพรวาเสียใจที่สุด ร้องไห้ฮือๆ</li>
       <li>ถีบ: พุ่งตัวไปข้างหน้า ยกเข่าแล้วยื่นขาตรงจนสุด ฝ่าเท้ากระแทกเต็มแรง ตัวเอนหลังรับแรง</li>
       <li>ตัวหลักหันหาศัตรูที่อยู่ใกล้อัตโนมัติ (ตอนยืนนิ่ง และตอนกดฟัน/เตะ แม้ศัตรูอยู่ข้างหลัง)</li>
       <li>ตั้งค่า → ย้ายตำแหน่งปุ่ม แยก<b>แนวตั้ง</b>กับ<b>แนวนอน</b> จำแยกกัน หมุนจอแล้วปุ่มสลับไปใช้แบบของแนวนั้นเอง</li>
@@ -515,7 +517,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='3.8';
+let useBot=true,bot=null,hero='fifa';const VERSION='3.9';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -872,7 +874,16 @@ function computeLights(){
     for(const L of curLamps){if(L.i<=.14)continue;const dx=z.x-L.x,dy=z.y-L.y,d=Math.hypot(dx,dy);
       if(d<265&&d>1){const ad=Math.abs(angDiff(L.a,Math.atan2(dy,dx)));if(ad<.62&&castRay(L.x,L.y,dx/d,dy/d,d)>=d-4){const v=clamp((1-d/265*.55)*(1-ad/.62*.5),0,1);if(v>z.lit){z.lit=v;z.ldx=-dx/d;z.ldy=-dy/d;z.litBy=L.owner||null;}}}}}
 }
-function updatePlay(dt){
+let DF=null;   // time stops for a moment when a friend falls
+function onAllyDeath(e,name){e.dname=name;if(DEMO)return;DF={name,t:0};
+  if(praewa&&!praewa.dead&&e!==praewa)setTimeout(()=>{if(praewa){sayAs(praewa,'ฮือๆๆ… '+name+'… ไม่นะ…');praewa.cry=8;}},e===pam?2600:900);
+  else if(player.pw){setTimeout(()=>{player.say={text:'ฮือๆๆ… '+name+'…',t:3.4};player.cry=6;},700);}}
+function mournTick(dt){for(const e of[bot,pam]){if(!e||!e.dead||!e.dname)continue;e.mournCd=Math.max(0,(e.mournCd||0)-dt);
+    if(e.mournCd<=0&&!player.say&&Math.hypot(e.x-player.x,e.y-player.y)<26){e.mournCd=25;
+      if(player.pw){player.say={text:'ฮือๆๆ… '+e.dname+'… ทำไมต้องตายด้วย…',t:3.6};player.cry=6;}else player.say={text:'อ้าว… '+e.dname+' ตายแล้วหรอ',t:3};}
+    if(praewa&&!praewa.dead){praewa.mournCd=Math.max(0,(praewa.mournCd||0)-dt);if(praewa.mournCd<=0&&Math.hypot(e.x-praewa.x,e.y-praewa.y)<30){praewa.mournCd=25;sayAs(praewa,'ฮือๆๆ… '+e.dname+'…');praewa.cry=6;}}}
+  for(const h of[player,praewa])if(h&&h.cry>0)h.cry-=dt;}
+function updatePlay(dt){mournTick(dt);
   if(!n3Active())gameTime+=dt;if(player.rollCd>0)player.rollCd-=dt;
   let mx=joyV.x,my=joyV.y;
   if(keys.KeyA||keys.ArrowLeft)mx-=1;if(keys.KeyD||keys.ArrowRight)mx+=1;if(keys.KeyW||keys.ArrowUp)my-=1;if(keys.KeyS||keys.ArrowDown)my+=1;
@@ -1043,7 +1054,7 @@ function updateDeath(dt){
       else{let tx=bx,ty=by;if(d>40){const ft=flowTarget(z);if(ft){tx=ft[0];ty=ft[1];}}const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,k=Math.min(1,dt*6);
         z.vx+=(ex/el*z.spd*1.15-z.vx)*k;z.vy+=(ey/el*z.spd*1.15-z.vy)*k;const ox=z.x,oy=z.y;moveCircle(z,z.vx*dt,z.vy*dt,5);z.phase+=Math.hypot(z.x-ox,z.y-oy)*.22;z.a=angLerp(z.a,Math.atan2(z.vy,z.vx),dt*6);}}
     else if(z.state==='convP'&&pam){const dx=pam.x-z.x,dy=pam.y-z.y,d=Math.hypot(dx,dy);
-      if(d<11&&sameLv(z,pam)){if(!pam.dead){pam.dead=true;pam.doomed=false;pam.down=true;pam.fall=0;pam.fallA=Math.atan2(pam.y-z.y,pam.x-z.x);pam.deadT=0;pam.torch=0;sayAs(pam,'อ๊ากกก!!');sfx.screech();sfx.bite();if(praewa)setTimeout(()=>praewa&&sayAs(praewa,'พี่แพมมม!!'),700);}
+      if(d<11&&sameLv(z,pam)){if(!pam.dead){pam.dead=true;pam.doomed=false;pam.down=true;pam.fall=0;pam.fallA=Math.atan2(pam.y-z.y,pam.x-z.x);pam.deadT=0;pam.torch=0;sayAs(pam,'อ๊ากกก!!');sfx.screech();sfx.bite();onAllyDeath(pam,'แพม');if(praewa)setTimeout(()=>praewa&&sayAs(praewa,'พี่แพมมม!!'),700);}
         z.state='eatP';z.slot=Math.atan2(z.y-pam.y,z.x-pam.x);}
       else{let tx=pam.x,ty=pam.y;if(d>30||!sameLv(z,pam)){const ft=flowTarget(z,flowB);if(ft){tx=ft[0];ty=ft[1];}}const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,k=Math.min(1,dt*6);
         z.vx+=(ex/el*z.spd*1.1-z.vx)*k;z.vy+=(ey/el*z.spd*1.1-z.vy)*k;const ox=z.x,oy=z.y;moveCircle(z,z.vx*dt,z.vy*dt,5);z.phase+=Math.hypot(z.x-ox,z.y-oy)*.22;z.a=angLerp(z.a,Math.atan2(z.vy,z.vx),dt*6);}}
@@ -1094,7 +1105,7 @@ function makeBot(){const b={jp:hero!=='jp',x:player.x+12,y:player.y+6,vx:0,vy:0,
   say:null,sayT:5+rnd()*4,last:-1,mind:'tag',mindT:3,goal:null,scanA:0,stuck:0};lvSet(b);collide(b,4.5);lvUpd(b);return b;}
 function botSay(i){if(!bot||(bot.dead&&i!==4))return;if(typeof i==='string'){bot.say={text:i,t:2.4};bot.sayT=Math.max(bot.sayT,4);return;}if(i==null){do{i=(rnd()*BOTL().length)|0;}while(i===bot.last&&BOTL().length>1);}bot.last=i;bot.say={text:BOTL()[i],t:3.2};bot.sayT=7+rnd()*7;if(near(bot,300)){tn('square',700+rnd()*300,500,.05,.05);tn('square',900,600,.05,.04,null,.07);}}
 function biteBot(z){
-  const b=bot;if(!b||b.dead)return;b.dead=true;b.down=true;b.charging=false;b.swingT=0;b.kickT=0;b.fallA=Math.atan2(b.y-z.y,b.x-z.x);b.fall=0;b.deadT=0;
+  const b=bot;if(!b||b.dead)return;b.dead=true;b.down=true;onAllyDeath(b,BOTNAME());b.charging=false;b.swingT=0;b.kickT=0;b.fallA=Math.atan2(b.y-z.y,b.x-z.x);b.fall=0;b.deadT=0;
   b.lampDrop={x:b.x+Math.cos(b.facing)*7,y:b.y+Math.sin(b.facing)*7,a:b.facing,av:(rnd()<.5?-1:1)*(6+rnd()*5),on:b.lampOn};if(blocksLightAt(b.lampDrop.x,b.lampDrop.y)){b.lampDrop.x=b.x;b.lampDrop.y=b.y;}
   z.state='eatB';z.t=9+rnd()*4;z.slot=Math.atan2(z.y-b.y,z.x-b.x);
   for(const o of zombies){if(o!==z&&o.state!=='down'&&Math.hypot(o.x-b.x,o.y-b.y)<160&&rnd()<.75){o.state='convB';o.t=14;}}
@@ -2705,6 +2716,12 @@ function drawN3UI(s){const C=N3,bar=SHc*.11;u.fillStyle=BG;u.fillRect(0,0,SWc,ba
   toasts.forEach((t,i)=>{u.globalAlpha=Math.min(1,t.life*2);uiText(t.t,SWc/2,bar+24*s+i*22*s,14*s,'center');u.globalAlpha=1;});}
 const D_INTRO_NAME=4.5;
 const KRMAP=[PG[0],PB[1],PB[3],PB[5],PG[5],PR[1],PR[2],PG[5]];
+function drawDF(){if(!player||DEMO)return;u.setTransform(dpr,0,0,dpr,0,0);const s=UIS,tm=performance.now()/1000;
+  for(const h of[player,praewa])if(h&&h.cry>0&&!h.hidden){const x=(h.x-camX)*P,y=(h.y*K-camY-elevOf(h)-(h.pw?18:20))*P;u.fillStyle='#8fd0ff';   // tears
+    for(const sd of[-1,1])for(let k=0;k<2;k++){const ph=(tm*1.6+k*.5+(sd>0?.25:0))%1;u.globalAlpha=1-ph;u.fillRect(x+sd*1.6*P-1.5,y+ph*7*P,3,4);}u.globalAlpha=1;}
+  if(DF){const s=UIS,a=Math.min(1,DF.t/.25),w=210*s,h=58*s,x=SWc/2-w/2,y=SHc*.4-h/2;u.globalAlpha=.25*a;u.fillStyle='#000';u.fillRect(0,0,SWc,SHc);u.globalAlpha=.92*a;u.fillStyle='#120b0a';u.fillRect(x,y,w,h);u.strokeStyle='#8a1418';u.lineWidth=2*s;u.strokeRect(x,y,w,h);u.globalAlpha=a;
+    uiText('💀 '+DF.name+' ตายแล้ว',SWc/2,y+h*.4,16*s,'center','#ff6b5e');if(DF.t>.5)uiText('แตะเพื่อเล่นต่อ',SWc/2,y+h*.78,10*s,'center','#bdb4a6');u.globalAlpha=1;}
+}
 function drawUI(dt){
   u.setTransform(dpr,0,0,dpr,0,0);u.clearRect(0,0,SWc,SHc);
   if(state==='menu'||!player||(DEMO&&state!=='layout'))return;
@@ -2876,6 +2893,7 @@ function mouseAngle(){const wx=mouse.x/P+camX,wy=(mouse.y/P+camY+8)/K;return Mat
 function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l>joyR){dx*=joyR/l;dy*=joyR/l;joy.kx=joy.bx+dx;joy.ky=joy.by+dy;l=joyR;}const m=l/joyR;joyV=m<.12?{x:0,y:0}:{x:dx/joyR,y:dy/joyR};}
 ui.addEventListener('pointerdown',e=>{
   e.preventDefault();initAudio();const x=e.clientX,y=e.clientY;
+  if(DF){if(DF.t>.5)DF=null;return;}
   if(state==='layout'){layDown(x,y,e.pointerId);try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
   if((state==='play'||state==='n3cine')&&Math.hypot(x-pauseB.x,y-pauseB.y)<pauseB.r*1.5){pauseGame();return;}
   if(waveAvail()){const wb=waveBox();if(x>wb.x-8&&x<wb.x+wb.w+8&&y>wb.y-8&&y<wb.y+wb.h+8){callWave();return;}}
@@ -2916,7 +2934,7 @@ function ptrEnd(e){
 }
 ui.addEventListener('pointerup',ptrEnd);ui.addEventListener('pointercancel',ptrEnd);
 ui.addEventListener('contextmenu',e=>e.preventDefault());
-addEventListener('keydown',e=>{keys[e.code]=true;if(DEMO)return;if((e.code==='Escape'||e.code==='KeyP')&&(state==='play'||state==='n3cine')&&!(state==='n3cine'&&e.code==='Escape')){pauseGame();return;}if((e.code==='Escape'||e.code==='KeyP')&&state==='paused'){resumeGame();return;}if(state==='n3cine'&&(e.code==='Enter'||e.code==='Escape'||e.code==='Space')){e.preventDefault();skipCine();return;}if(state!=='play')return;
+addEventListener('keydown',e=>{keys[e.code]=true;if(DEMO)return;if(DF){if(DF.t>.5)DF=null;return;}if((e.code==='Escape'||e.code==='KeyP')&&(state==='play'||state==='n3cine')&&!(state==='n3cine'&&e.code==='Escape')){pauseGame();return;}if((e.code==='Escape'||e.code==='KeyP')&&state==='paused'){resumeGame();return;}if(state==='n3cine'&&(e.code==='Enter'||e.code==='Escape'||e.code==='Space')){e.preventDefault();skipCine();return;}if(state!=='play')return;
   if(e.code==='ShiftLeft'||e.code==='ShiftRight'){doRoll();return;}if(e.code==='Enter'&&N3&&N3.ph==='count'){N3.t=0;return;}if(e.code==='KeyT'){grabTail();return;}if(e.code==='KeyR'&&feedFire())return;
   if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE'){if(!toggleDrag()&&!pickWood()&&!pickBunch()&&nearWardrobe())toggleHide();}else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');else if(e.code==='KeyR'&&grillAvail()&&Math.hypot(player.x-fireP.x,player.y-fireP.y)<60)grillSnakes();else if(e.code==='KeyV'&&woodAvail())placePile(player.x+Math.cos(player.facing)*10,player.y+Math.sin(player.facing)*10);
   else if(e.code==='Space'){e.preventDefault();tapAttack(mouse.active&&!showTouch?mouseAngle():null);}
@@ -3068,10 +3086,11 @@ function frame(now){
   const rdt=Math.min(.05,(now-last)/1000);last=now;const T=now/1000;
   const dt=slowT>0?rdt*(.22+.78*Math.pow(1-slowT/.32,2)):rdt;if(slowT>0)slowT-=rdt;   // brief slow-motion after a hit
   if(DEMO)demoTick(dt);
-  if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else if(state==='swap')updateSwap(dt);else computeLights();
-  if(state!=='paused'&&state!=='layout')updateCommon(dt);
+  const frz=DF&&state==='play';if(DF){DF.t+=rdt;if(DF.t>3.2)DF=null;}
+  if(frz){}else if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else if(state==='swap')updateSwap(dt);else computeLights();
+  if(state!=='paused'&&state!=='layout'&&!frz)updateCommon(dt);
   if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);composite();for(const b of BS)if(!b.hidden)b.rig.blit(out32,KRMAP);postFX();octx.putImageData(outImg,0,0);}
-  drawUI(dt);
+  drawUI(dt);drawDF();
   requestAnimationFrame(frame);
 }
 addEventListener('resize',resize);for(const ev of['fullscreenchange','webkitfullscreenchange'])document.addEventListener(ev,()=>setTimeout(resize,60));
