@@ -99,7 +99,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v4.2</div>
+  <div class="ver">v4.3</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -107,7 +107,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.2</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.3</h3><ul>
+      <li>กิ่งไม้ใหญ่ผลักและหมุนได้อิสระ · ถ้าปลายข้างหนึ่งติดต้นไม้ ไปผลักตรงอื่น กิ่งจะหมุนรอบจุดที่ติดอยู่</li>
       <li>กิ่งไม้ใหญ่: ยาว 4 ระดับ × 4 แบบ · <b>เดินทะลุไม่ได้แล้ว</b> เดินชนจะดันกิ่งไปช้าๆ (ช้า 3 เท่า) กิ่งหมุนตามจุดที่ดัน · ถ้ากิ่งไปติดต้นไม้/กำแพง จะดันไม่ไปเป็นรั้วกั้น · ซอมบี้ก็ดันได้ และโดนกั้นเหมือนกัน</li>
       <li>กิ่งไม้ใหญ่ 4 แบบ (2.5D) บางกิ่งยาว 2 เท่า บางกิ่งมีกิ่งชี้ขึ้นบังของ · เกิดใหม่ทุกคืน · ยังลากได้</li>
       <li>เดินข้ามกิ่ง <b>ช้าลง 3 เท่า</b> ซอมบี้ก็เช่นกัน · ฟันข้ามกิ่งได้ · ซอมบี้โดนฟาดกระเด็นไปชนกิ่งอื่นจะหยุด</li>
@@ -522,7 +523,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='4.2';
+let useBot=true,bot=null,hero='fifa';const VERSION='4.3';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -728,9 +729,12 @@ function pushBranches(e,r){   // the bough is solid: walking into it shoves it a
     let nlx=lx-bx,nly=ly-by;const nl=Math.hypot(nlx,nly);if(nl<1e-3){nlx=0;nly=ly>=0?1:-1;}else{nlx/=nl;nly/=nl;}
     const nx=nlx*c-nly*s,ny=nlx*s+nly*c,cwx=b.x+c*bx-s*by,cwy=b.y+s*bx+c*by;
     // the branch gives way by a third of the overlap (heavy: you move at 1/3 speed), with a little turn about its middle
-    const push=ov/3,mx=-nx*push,my=-ny*push,rx=cwx-b.x,ry=cwy-b.y,da=clamp((rx*my-ry*mx)/(rx*rx+ry*ry+b.L*b.L/12)*.3,-.012,.012);
-    const ox=b.x,oy=b.y,oa=b.a;b.x+=mx;b.y+=my;b.a+=da;let moved=push;
-    if(branchBlocked(b)){b.a=oa;if(branchBlocked(b)){b.x=ox;b.y=oy;moved=0;}}
+    const push=ov/3,mx=-nx*push,my=-ny*push,rx=cwx-b.x,ry=cwy-b.y,da=clamp((rx*my-ry*mx)/(rx*rx+ry*ry+b.L*b.L/12),-.06,.06);
+    const ox=b.x,oy=b.y,oa=b.a,tryP=(x,y,a)=>{b.x=x;b.y=y;b.a=a;if(!branchBlocked(b))return true;b.x=ox;b.y=oy;b.a=oa;return false;};
+    // free push: slide + spin about the middle; if part of it is pinned (an end caught on a tree), it swings around that point instead
+    const pivot=end=>{const ex=b.x+c*end,ey=b.y+s*end,qx=cwx-ex,qy=cwy-ey,q2=qx*qx+qy*qy;if(q2<4)return false;const th=clamp((qx*my-qy*mx)/q2,-.08,.08),ct=Math.cos(th),st=Math.sin(th),vx=b.x-ex,vy=b.y-ey;return tryP(ex+vx*ct-vy*st,ey+vx*st+vy*ct,oa+th);};
+    const far=Math.abs(bx+b.L/2)>Math.abs(bx-b.L/2)?-b.L/2:b.L/2;
+    let moved=push;if(!(tryP(ox+mx,oy+my,oa+da)||pivot(far)||pivot(-far)||tryP(ox+mx,oy+my,oa)||tryP(ox,oy,oa+da*1.5)))moved=0;
     e.x+=nx*(ov-moved);e.y+=ny*(ov-moved);if(moved>0)b.yard=inYard(b.x,b.y);}}
 function bigPt(b,lx,ly){const c=Math.cos(b.a),s=Math.sin(b.a);return[b.x+c*lx-s*ly,b.y+s*lx+c*ly];}
 function onBranch(e,r=3){for(const b of bigBranches){if(b===player.drag||b.yard)continue;const dx=e.x-b.x,dy=e.y-b.y;if(dx*dx+dy*dy>(b.L*.6+20)**2)continue;const c=Math.cos(b.a),s=Math.sin(b.a),lx=dx*c+dy*s,ly=-dx*s+dy*c;
