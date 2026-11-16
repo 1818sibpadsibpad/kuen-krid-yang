@@ -99,7 +99,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v3.7</div>
+  <div class="ver">v3.8</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -107,7 +107,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v3.7</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v3.8</h3><ul>
+      <li>ถีบ: พุ่งตัวไปข้างหน้า ยกเข่าแล้วยื่นขาตรงจนสุด ฝ่าเท้ากระแทกเต็มแรง ตัวเอนหลังรับแรง</li>
       <li>ตัวหลักหันหาศัตรูที่อยู่ใกล้อัตโนมัติ (ตอนยืนนิ่ง และตอนกดฟัน/เตะ แม้ศัตรูอยู่ข้างหลัง)</li>
       <li>ตั้งค่า → ย้ายตำแหน่งปุ่ม แยก<b>แนวตั้ง</b>กับ<b>แนวนอน</b> จำแยกกัน หมุนจอแล้วปุ่มสลับไปใช้แบบของแนวนั้นเอง</li>
       <li>ปุ่มเรียกระลอกใหญ่ย้ายไปข้างนาฬิกา · กดแล้ว<b>ซอมบี้ที่ยังรอทยอยมาจะมารวมกับระลอกใหญ่ทั้งหมด</b></li>
@@ -514,7 +515,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='3.7';
+let useBot=true,bot=null,hero='fifa';const VERSION='3.8';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -671,7 +672,7 @@ function kick(h=player){
   if(h===player&&player.snakeBite&&state==='play'){kickSnake();return;}
   if(h===player&&h.charging&&h.autoCh){h.charging=false;h.autoCh=false;}
   if(state!=='play'||h.hidden||h.fly||h.kickT>0||h.kcd>0||h.charging||h.swingT>0)return;
-  let a=autoAim(h);if(h===player){const t=lungeTarget(h,a,WP.knife.kmax+20);if(t){a=t.a;lungeTo(h,t,12);}}h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
+  let a=autoAim(h),dash=20;if(h===player){const t=lungeTarget(h,a,WP.knife.kmax+20);if(t){a=t.a;dash=clamp(t.d-13,0,24);}}h.kdash={ux:Math.cos(a),uy:Math.sin(a),d:dash,t:0};h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
 }
 function doKick(h=player){
   const a=h.kickAng;let best=null,bd=1e9;
@@ -930,6 +931,7 @@ function actorTick(h,dt){
   if(h.charging){h.charge=Math.min(1,h.charge+dt/CHARGE_T);if(h.charge>=1&&!h.ready){h.ready=true;}}
   if(h.cd>0)h.cd-=dt;
   if(h.kcd>0)h.kcd-=dt;
+  if(h.kdash){const D=h.kdash,t0=D.t;D.t+=dt;const f=u=>{u=clamp((u-.03)/.17,0,1);return u*u*(3-2*u);},st=(f(D.t)-f(t0))*D.d;if(st>0)kMove(h,D.ux*st,D.uy*st);if(D.t>.22||h.kickT<=0)h.kdash=null;}
   if(h.kickT>0){h.kickT-=dt;h.facing=h.kickAng;if(h.kickHit>0){h.kickHit-=dt;if(h.kickHit<=0)doKick(h);}}
   if(h.swingT>0){
     const s=clamp(1-h.swingT/h.swingDur,0,1),dir=h.swingDir,th=h.swingAng+(dir===1?ARC-2*ARC*s:-ARC+2*ARC*s);
@@ -2228,7 +2230,13 @@ function drawP(c,T,mono,h=player){
       c.lineCap='round';}
     c.fillStyle=M('#0a0a0a');c.fillRect(fx-3.9,hipY-2,7.8,1.8);if(!mono){c.fillStyle='#ececec';c.fillRect(fx-3.5,hipY-1.7,7,.5);}}
   else for(const l of[-1,1]){const h0=fx+px*1.3*l,h1=hipY+py*1.3*l;c.beginPath();c.moveTo(h0,h1);
-    if(l===1&&kk>0){const kx2=h0+fwx*(2+10*kk),ky2=fy+py*1.3+fwy*(2+10*kk)-7*kk;c.lineTo((h0+kx2)/2+fwx*1.5-kk,(h1+ky2)/2-2*kk);c.lineTo(kx2,ky2);c.stroke();c.lineWidth=2.4;c.beginPath();c.moveTo(kx2-fwx,ky2-fwy);c.lineTo(kx2+fwx*1.5,ky2+fwy*1.5);c.stroke();c.lineWidth=1.9;}
+    if(l===1&&kk>0){const u=clamp(1-h.kickT/.32,0,1),sm=v=>v*v*(3-2*v),ch=sm(clamp(u<.5?u/.2:(1-u)/.22,0,1)),ex=sm(clamp(u<.5?(u-.16)/.12:(.8-u)/.18,0,1));   // chamber the knee, then drive the leg out straight to full length and hold
+      const rx=h0,ry=fy+py*1.3,cfx=h0+fwx*3,cfy=fy-4.5+fwy*3,ckx=h0+fwx*6.5,cky=hipY+.5+fwy*6.5,ffx=h0+fwx*14.5,ffy=hipY+1.2+fwy*14.5;
+      let ftx=rx+(cfx-rx)*ch,fty=ry+(cfy-ry)*ch,knx=(h0+ftx)/2+(ckx-(h0+cfx)/2)*ch,kny=(h1+fty)/2+(cky-(h1+cfy)/2)*ch;ftx+=(ffx-ftx)*ex;fty+=(ffy-fty)*ex;knx+=((h0+ftx)/2-knx)*ex;kny+=((h1+fty)/2-kny)*ex;
+      c.lineWidth+=ex*.5;c.lineTo(knx,kny);c.lineTo(ftx,fty);c.stroke();c.lineWidth=2.6;c.strokeStyle=M('#141414');c.beginPath();c.moveTo(ftx-fwx*.6+px*1.2,fty-fwy*.6-1.6);c.lineTo(ftx+fwx*.9-px*.4,fty+fwy*.9+.6);c.stroke();   // the sole, flat-on to the target
+      if(ex>.6&&!mono&&h===player){c.strokeStyle='rgba(255,255,255,'+(.55*ex)+')';c.lineWidth=.8;for(const o of[-2.2,0,2.2]){c.beginPath();c.moveTo(ftx-fwx*7-px*o,fty-fwy*7+o*.5);c.lineTo(ftx-fwx*2.5-px*o,fty-fwy*2.5+o*.5);c.stroke();}}
+      c.strokeStyle=M(JP?SKJ:PW?'#c9c4bc':FF?JEAN:'#2e2e2e');c.lineWidth=JP?1.7:PW?2.2:FF?2.1:1.9;}
+    else if(l===-1&&kk>0){c.lineTo(h0-fwx*2.2*kk,fy+py*1.3*l-fwy*2.2*kk);c.stroke();}   // planted leg braces back
     else c.lineTo(h0+fwx*sw*l*(kk?0:1),fy+py*1.3*l+fwy*sw*l*.6*(kk?0:1));c.stroke();}
   if(PW){c.fillStyle=M('#3a3a46');c.beginPath();c.moveTo(fx-3.4,hipY-1.5);c.lineTo(fx+3.4,hipY-1.5);c.lineTo(fx+4.6,hipY+4.5);c.lineTo(fx-4.6,hipY+4.5);c.closePath();c.fill();}   // little skirt
   if(JP&&kk){c.fillStyle=M('#0a0a0a');c.fillRect(fx-3.6,hipY-1.2,7.2,5.6);   // striped shorts with anchors / ship wheels
@@ -2236,7 +2244,7 @@ function drawP(c,T,mono,h=player){
   // upper body: lean back on the wind-up, throw forward on the swing
   const swinging=h.swingT>0,sP=swinging?clamp(1-h.swingT/h.swingDur,0,1):0;
   let ln=0;if(swinging)ln=(1.5+2.5*h.swingPow)*Math.sin(Math.min(1,sP*1.15)*Math.PI*.62+.1);else if(h.lean>0)ln=h.lean;else if(h.charging)ln=-1.8*h.charge;
-  if(kk)ln=-2.6*kk;
+  if(kk)ln=-3.6*kk;
   const pI=h.pantT>0&&!kk&&!swinging&&!h.charging?Math.min(1,h.pantT/10*1.3):0,br=Math.sin(h.breathPh);if(pI)ln=(2.6+.6*br)*pI*(1-.5*h.moveAmt);
   c.save();if(ln){c.translate(fx,hipY);c.transform(1,0,-fwx*ln/12,1-(fwy*ln+ln*.35)/12,0,0);c.translate(-fx,-hipY);}
   if(pI){c.translate(0,-Math.max(0,br)*.9*pI);}   // shoulders heave with each breath
