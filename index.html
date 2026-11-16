@@ -100,7 +100,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v5.3</div>
+  <div class="ver">v5.4</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -108,7 +108,9 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v5.3</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v5.4</h3><ul>
+      <li>ช้างป่าในที่มืดมืดสนิททั้งตัว (กระดูกสันหลังและซอมบี้บนหลังไม่เรืองแล้ว) · ผิวมีรอยกัดเพิ่ม</li>
+      <li>ทุก 1 นาที เพื่อนจะ<b>โยนคบไฟไปปักซี่โครงช้าง</b> ไฟส่องให้เห็นตัวช้าง 10 วิ แล้วดับ</li>
       <li>ช้างป่าผิวเรียบเนียนขึ้น รอยต่อแต่ละส่วนกลืนกัน · ซอมบี้บนหลังช้างโดนไฟฉายแล้วมีขอบขาวสว่างเด่น</li>
       <li>ช้างป่า<b>ตัวใหญ่ขึ้น 2 เท่า</b> ซอมบี้บนหลังตัวเท่าเดิม · ระยะกระทืบ/ฟาดงวง/กระทืบสองขากว้างขึ้นตามตัว</li>
       <li>เล่นในแอป Claude: เลื่อนจอลงให้พ้นแถบปุ่มด้านบนของแอปอัตโนมัติ · ปรับเองได้ที่ ตั้งค่า → "เลื่อนจอลงจากขอบบน"</li>
@@ -536,7 +538,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='5.3';
+let useBot=true,bot=null,hero='fifa';const VERSION='5.4';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -925,6 +927,7 @@ function syncDyn(){plights=plights.filter(p=>!p.dyn);const T=performance.now()/1
     plights.push({dyn:1,kind:'lantern',x:lx,y:ly,r:22,v:120,f:1,rays:20,seed:b.x});}
   if(pam&&pam.torch>0)plights.push({dyn:1,kind:'torch',x:pam.x+Math.cos(pam.facing)*28,y:pam.y+Math.sin(pam.facing)*28,r:64,v:165,f:1,rays:36,seed:7});
   for(const t of postTorches)plights.push({dyn:1,kind:'post',x:t.x,y:t.y,r:80,v:175*Math.min(1,t.t/2,t.age/.6),f:1,rays:40,seed:t.seed});
+  if(E5&&E5.stuck&&E5.stuck.lit&&E5.stuck.fx!=null)plights.push({dyn:1,kind:'post',e5t:1,x:E5.stuck.fx,y:E5.stuck.fy,r:110,v:185*E5.stuck.fl,f:1,rays:40,seed:5});
   for(const z of zombies)if(z.burn>0)plights.push({dyn:1,kind:'burn',x:z.x,y:z.y,r:82,v:195*Math.min(1,z.burn/1.5,(z.burnMax-z.burn)/.4+.2),f:1,rays:40,seed:z.seed});}
 function computeLights(){
   syncDyn();actL=blackout?plights.filter(p=>p.kind==='kr'):plights;curL=getLight();curLamps=[curL,getBotLight()].filter(Boolean);
@@ -2173,6 +2176,7 @@ function elUpdate(dt,t,x,y,vx,vy){const sp=Math.hypot(vx,vy),fs=Math.min(1,dt*60
   for(let i=4;i<n;i++){const p=tr[i].p,q=tr[i].q;elHit('trunk',p[0],p[1],(4.5+i*0.3)*ELSC,(p[0]-q[0])*60,(p[1]-q[1])*60,rp.strike);}
   const fr=elFW([18,0,0]);elHit('body',fr[0],fr[1],12*ELSC,Math.cos(EL.yaw)*120,Math.sin(EL.yaw)*120,true);}}
 // ---- shading: only what the scene's lights give it
+let SH0=0;
 function elShade(n,P,_x,_y,_z,o){let lit=0,sp=0,red=0;
  for(const L of LIGHTS){let gx=L.x-P[0],gy=L.y-P[1],gz=L.z-P[2];const d2=gx*gx+gy*gy+gz*gz;if(d2>=L.R2)continue;
   let att=1-d2/L.R2;att=att*att*L.I;
@@ -2180,12 +2184,13 @@ function elShade(n,P,_x,_y,_z,o){let lit=0,sp=0,red=0;
   const gd=Math.sqrt(d2)||1;gx/=gd;gy/=gd;gz/=gd;const ndl=Math.max(0,n[0]*gx+n[1]*gy+n[2]*gz),c=(ndl*0.88+0.12)*att;lit+=c;if(L.red)red+=c;
   const hx=gx-VD[0],hy=gy-VD[1],hz=gz-VD[2],hm=Math.hypot(hx,hy,hz)||1;sp+=Math.pow(Math.max(0,(n[0]*hx+n[1]*hy+n[2]*hz)/hm),16)*att;}
  LR=red>lit*0.55?1:0;
- return [AMB*(0.7+0.5*Math.max(0,n[2]))+lit*1.9+o*1.0*Math.min(1,(lit+AMB)*4),sp];}
+ return [SH0=AMB*(0.7+0.5*Math.max(0,n[2]))+lit*1.9+o*1.0*Math.min(1,(lit+AMB)*4),sp];}
 function ramp(v){return v<0.45?0:v<0.95?1:v<1.6?2:v<2.35?3:4;}
 const bone=b=>b<0.5?0:b<1.25?1:b<1.65?2:b<2.25?3:4;    // unlit bone sinks into the dark
 const red=v=>v<0.5?0:v<1.05?1:v<1.75?5:6;                 // blood / raw flesh, only red where light reaches it
 const SOFT=[0,1,2,3,3,5,6,7,4];
-function ePut(X,Y,c,d,wy,raw){if(X<0||Y<0||X>=W||Y>=H)return;const i=Y*W+X;if(DEP[i]>wy+1||d>=EZB[i])return;EZB[i]=d;IDX[i]=(raw?c:SOFT[c])+1+(LR?16:0);if(X<bx0)bx0=X;if(X>bx1)bx1=X;if(Y<by0)by0=Y;if(Y>by1)by1=Y;}
+function ePut(X,Y,c,d,wy,raw){if(X<0||Y<0||X>=W||Y>=H)return;const i=Y*W+X;if(DEP[i]>wy+1||d>=EZB[i])return;EZB[i]=d;if(!raw&&SH0<0.45)c=0;   // where the hide itself is lost in the dark, so are its bones, its wounds and its riders
+ IDX[i]=(raw?c:SOFT[c])+1+(LR&&!raw?16:0);if(X<bx0)bx0=X;if(X>bx1)bx1=X;if(Y<by0)by0=Y;if(Y>by1)by1=Y;}
 function proj(p){return [p[0]-camX,p[1]*KG-camY-p[2]*ZK];}
 // tube from A to B with radius rA->rB (world px); col(n,P,o,k) picks the palette index
 function eTube(A,B,rA,rB,col,bias){bias=bias||0;const a=proj(A),b=proj(B),dx=B[0]-A[0],dy=B[1]-A[1],dz=B[2]-A[2],dm=Math.hypot(dx,dy,dz)||1,ax=[dx/dm,dy/dm,dz/dm];
@@ -2208,11 +2213,16 @@ function eTri(p0,p1,p2,col,bias){bias=bias||0;const a=proj(p0),b=proj(p1),c=proj
   if(w0<-0.02||w1<-0.02||w2<-0.02)continue;const P=[p0[0]*w0+p1[0]*w1+p2[0]*w2,p0[1]*w0+p1[1]*w1+p2[1]*w2,p0[2]*w0+p1[2]*w1+p2[2]*w2];
   const dd=da*w0+db*w1+dc*w2+bias,ii=y*W+x;if(dd>=EZB[ii]||DEP[ii]>P[1]+1)continue;const cc=col(P,bayer(x,y));ePut(x,y,cc,dd,P[1]);}}
 // ---- the hide: rot, wounds, ribs, teeth
+const BITES=[[7,1,23,2.3],[-4,1,14.5,2.0],[-10.5,1,22,2.5],[1.5,1,19.2,1.7],[11.5,1,16.5,1.9],[11,-1,22.5,2.0],[-11.8,-1,21,2.2],[9.5,-1,14.5,1.7]].map(b=>{const y=9.4*Math.sqrt(Math.max(0,1-(b[0]/15.5)**2-((b[2]-18)/10.4)**2));return [b[0],b[1]*y,b[2],b[3]*1.25];})
+ .concat([[5.2,-3.2,0,2.1],[-4.6,3.4,0,2.2],[-1,-2.2,0,1.6]].map(b=>[b[0],b[1],18+10.4*Math.sqrt(Math.max(0.02,1-(b[0]/15.5)**2-(b[1]/9.4)**2)),b[3]]));   // the last three are where its riders have been feeding
 function hideCol(E,hp,nl,v,sh,o){let c;
  const rot=Math.sin(hp[0]*1.3+hp[2]*0.7)*Math.sin(hp[1]*1.7-hp[2]*1.1)+Math.sin(hp[0]*0.45-hp[1]*0.8);
  v-=Math.max(0,Math.min(0.3,(rot-0.35)*0.42))+Math.max(0,Math.min(0.18,(-rot-0.7)*0.4));   // mottling that fades in and out instead of hard-edged patches
  v-=0.07*(0.5+0.5*Math.sin(hp[2]*2.4+Math.sin(hp[0]*0.7)*1.6));                             // faint creases
  c=ramp(v);if(sh>0.55)c=8;else if(sh>0.25)c=Math.min(4,c+1);if(rot>1.55)c=red(v);
+ if(E.k=='body')for(let k=0;k<BITES.length;k++){const B_=BITES[k],dx=hp[0]-B_[0];if(dx>3.6||dx<-3.6)continue;const dz=hp[2]-B_[2];if(dz>3.6||dz<-3.6)continue;const dy=hp[1]-B_[1],r2=B_[3]*B_[3];if(dx*dx+dy*dy+dz*dz>r2*1.7)continue;
+   const q=(dx*dx+dy*dy+dz*dz)/r2+0.22*Math.sin(hp[0]*4.1+hp[2]*3.3+hp[1]*2.7),cres=((dx-B_[3]*0.55)**2+dy*dy+(dz-B_[3]*0.3)**2)/r2;   // a crescent of tooth marks, not a neat hole
+   if(q<1&&cres>0.38){if(q>0.62)c=dz>0?ramp(v+0.45):1;else c=red(v-(((Math.round(hp[0]*3+hp[2]*2))&1)?0.3:0));}break;}
  const HC=headC();
  if(E.k=='head'){const eye=Math.abs(Math.abs(hp[1])-4.7)<0.75&&Math.abs(hp[2]-(HC[2]+1.5))<0.8&&hp[0]>HC[0]+2.5&&hp[0]<HC[0]+4.4;if(eye)c=hp[1]<0?0:bone(v+0.3);}
  // spine: the hide splits along the back; torn lips catch the light, raw meat between
@@ -2236,6 +2246,12 @@ function hideCol(E,hp,nl,v,sh,o){let c;
    else if(dz>-2.3&&dz<-1.7)c=0;
    else c=(dz>-0.55||dz<-3.4)?red(v-((Math.round(hp[0]*3)&1)?0.3:0)):0;}}
  return c;}
+function drawTorch(tc,t){const a=tc.a,b=tc.b;   // a burning brand standing in its flank
+ eTube(a,b,1.0,0.85,(n,P,o)=>{const v=elShade(n,P,0,0,0,o)[0];return v<1.2?1:v<2?2:3;});
+ const hd=[b[0]+(b[0]-a[0])*0.12,b[1]+(b[1]-a[1])*0.12,b[2]+(b[2]-a[2])*0.12];eTube(b,hd,1.5,1.3,()=>1);
+ if(!tc.lit)return;const s0=proj(hd),d=dot3(hd,VD)-3,wy=hd[1],x0=Math.round(s0[0]),y0=Math.round(s0[1]);
+ for(let k=0;k<13;k++){const w=k<3?2.7:k<6?2.2:k<9?1.5:k<11?0.9:0.4,sway=Math.sin(t*13+k*0.9)*(k*0.14)+Math.sin(t*7.3)*0.4;
+  for(let j=-3;j<=3;j++){const u=Math.abs(j-sway);if(u>w+0.3)continue;const c=u<w*0.45&&k<8?10:(u<w*0.8?9:11);if(k>9&&Math.sin(t*31+j*5+k)>0.2)continue;ePut(x0+j,y0-k,c,d,wy,true);}}}
 function drawRider(r,t){if(r.st==='gone'||!r.h)return;const N=r.nodes,Sh=N[0].p,Hp=N[1].p,Ft=N[2].p,h=r.h,lat=EL.F;
  // the plantation's own dead: bone-pale arms, face and feet, a ragged dark shirt and trousers, a hard black rim so they read against the hide —
  // and, like every zombie here, never quite swallowed by the dark
@@ -2332,6 +2348,7 @@ function drawElephant(t){const lx=0,ly=0,lz=0;elBasis();EZB.fill(1e9);const part
   eTube(A,Bp,r0,r1,(n,P,o,u)=>{const sh=elShade(n,P,lx,ly,lz,o);let v=sh[0]-0.1-0.13*(0.5+0.5*Math.sin((i+u)*4.2));if(i==4&&u>0.4&&n[2]<0)return red(v+0.1);return ramp(v);});}
  for(let i=1;i<EL.tail.length;i++){const A=EL.tail[i-1].p,Bp=EL.tail[i].p,r=(i==EL.tail.length-1?1.2:0.55)*ELSC;eTube(A,Bp,r,r,(n,P,o)=>ramp(elShade(n,P,lx,ly,lz,o)[0]-0.3));}
  for(const r of EL.riders)drawRider(r,t);
+ if(EL.torch)drawTorch(EL.torch,t);
  }
 function begin(w,h){if(w!==W||h!==H||!IDX){W=w;H=h;IDX=new Uint8Array(W*H);DEP=new Float32Array(W*H);EZB=new Float32Array(W*H);}
  DEP.fill(-1e9);bx0=by0=1e9;bx1=by1=-1;}
@@ -2352,7 +2369,7 @@ function e5Spot(cx,cy){let best={x:cx,y:cy},bs=-1;   // somewhere roomy between 
   for(let k=0;k<110;k++){const x=cx+(rnd()-.5)*170,y=cy+(rnd()-.5)*170;if(x<80||y<80||x>MW*TS-80||y>MH*TS-80||inYard(x,y))continue;const t=tAt(Math.floor(x/TS),Math.floor(y/TS));if(BM[t]||t===TT)continue;
     let md=1e9;for(let j=Math.floor((y-90)/TS);j<=Math.floor((y+90)/TS);j++)for(let i=Math.floor((x-90)/TS);i<=Math.floor((x+90)/TS);i++){const tt=tAt(i,j);if(tt===TT||BM[tt])md=Math.min(md,Math.hypot(i*TS+8-x,j*TS+8-y));}
     if(home&&Math.hypot(x-home.cx,y-home.cy)<170)continue;if(md>bs){bs=md;best={x,y};}}return best;}
-function mkEl(x,y,yaw){ELE.init(x,y,yaw);return{x,y,vx:0,vy:0,hp:45,hpMax:45,st:'idle',t:0,cd1:7,cd2:3.5,cd3:13,cdA:1.5,hits:0,hitF:0,hurtCd:0,rd:null,tsh:new Map()};}
+function mkEl(x,y,yaw){ELE.init(x,y,yaw);ELE.EL.torch=null;return{x,y,vx:0,vy:0,hp:45,hpMax:45,st:'idle',t:0,cd1:7,cd2:3.5,cd3:13,cdA:1.5,hits:0,hitF:0,hurtCd:0,rd:null,tsh:new Map()};}
 function startE5(skip){N3={ph:'e5',lineT:3,cam:null,stashed:false};B=null;BS=[];KRL=null;KL=null;waveDone=true;waveNow=false;waveExtra=0;zombies.length=0;player.cleared=false;
   const g=gatePos(),o=gateOut(),q=e5Spot(g.x+o.x*230,g.y+o.y*230);
   E5={ph:"pre",t:0,st:0,said:0,step:null,el:mkEl(q.x,q.y,Math.atan2(-o.y,-o.x)+.6),th:[],wood:[],focus:null,ember:null,brood:0};
@@ -2410,7 +2427,8 @@ function e5Push(){if(!E5||!E5.el||E5.ph==='pre')return;
 function e5Lights(){const e=E5.el,b=e5Body(),Ls=[],pts=[[b.x,b.y],[b.x+b.fx*24*ELSC,b.y+b.fy*24*ELSC],[b.x-b.fx*20*ELSC,b.y-b.fy*20*ELSC]];
   const vis=(lx,ly)=>{let n=0;for(const p of pts){const dx=p[0]-lx,dy=p[1]-ly,d=Math.hypot(dx,dy);if(d<30||castRay(lx,ly,dx/d,dy/d,d)>=d-30)n++;}return n/3;};
   for(const L of curLamps){if(!L||L.i<=.14||L.drop)continue;const d=Math.hypot(b.x-L.x,b.y-L.y);if(d>350)continue;const v=vis(L.x,L.y);if(v<=0)continue;Ls.push({x:L.x,y:L.y,z:15,R2:330*330,I:1.55*L.i*(.35+.65*v),cone:1,ca:Math.cos(L.a),sa:Math.sin(L.a),ch:Math.cos(.66)});}
-  for(const P of actL){if(P.kind==='kr'||!(P.v>0))continue;const d=Math.hypot(b.x-P.x,b.y-P.y),R=P.r*1.3+30;if(d>R)continue;const v=vis(P.x,P.y);if(v<=0)continue;Ls.push({x:P.x,y:P.y,z:9,R2:R*R,I:Math.min(2,P.v/150)*(P.f==null?1:P.f)*(.3+.7*v)});}
+  if(E5.stuck&&E5.stuck.lit&&E5.stuck.fx!=null)Ls.push({x:E5.stuck.fx,y:E5.stuck.fy,z:E5.stuck.fz+4,R2:240*240,I:2.5*E5.stuck.fl});
+  for(const P of actL){if(P.kind==='kr'||P.e5t||!(P.v>0))continue;const d=Math.hypot(b.x-P.x,b.y-P.y),R=P.r*1.3+30;if(d>R)continue;const v=vis(P.x,P.y);if(v<=0)continue;Ls.push({x:P.x,y:P.y,z:9,R2:R*R,I:Math.min(2,P.v/150)*(P.f==null?1:P.f)*(.3+.7*v)});}
   for(const k of BS){const l=k.krl;if(!l||l.v<.05||k.hidden)continue;Ls.push({x:l.x,y:l.y,z:l.z,R2:230*230,I:1.9*l.v,red:1});}
   if(E5.ember&&E5.ember.v>0)Ls.push({x:E5.ember.x,y:E5.ember.y,z:5,R2:150*150,I:1.5*E5.ember.v,red:1});
   if(dropL&&dropL.on&&(state==='dying'||state==='dead'))Ls.push({x:dropL.x,y:dropL.y,z:4,R2:90*90,I:.9});
@@ -2429,9 +2447,11 @@ function e5Draw(T){if(!E5||!E5.el)return;const e=E5.el,b=e5Body();ELE.begin(vw,v
   for(const th of E5.th){const sx=th.x-camX,sy=th.y*K-camY-th.h;ELE.dep(sx-8,sy-20,sx+8,sy+3,1e9);}
   const hs=home&&home.hs;if(hs&&hs.tiang&&roofA>.5){const o=10;ELE.dep(hs.x*TS-o-camX,(hs.y*TS-o)*K-camY-ROOFH,(hs.x+hs.w)*TS+o-camX,((hs.y+hs.h)*TS+o)*K-camY-ROOFH,(hs.y+hs.h)*TS+o);}
   e5Lights();ELE.draw(T);}
-function e5Blit(o){if(!E5||!E5.el)return;if(!ELMAPW){ELMAPW=[PG[0],PG[1],PG[2],PG[3],PG[4],PR[1],PR[2],PG[4],PG[5]];ELMAPR=[PG[0],PR[1],PR[1],PR[2],PR[2],PR[1],PR[2],PR[2],PG[5]];}
+function e5Blit(o){if(!E5||!E5.el)return;if(!ELMAPW){ELMAPW=[PG[0],PG[1],PG[2],PG[3],PG[4],PR[1],PR[2],PG[4],PG[5],PO[2],PY[2],PO[1]];ELMAPR=[PG[0],PR[1],PR[1],PR[2],PR[2],PR[1],PR[2],PR[2],PG[5],PO[2],PY[2],PO[1]];}
   ELE.blit(o,ELMAPW,ELMAPR,PG[0]);
-  for(const w of E5.wood){const v=lightAt(w.x,w.y),c=v>90?PB[5]:v>40?PB[4]:v>14?PB[2]:0;if(!c)continue;const sx=w.x-camX,sy=w.y*K-camY-w.h,ca=Math.cos(w.a),sa=Math.sin(w.a)*K;
+  for(const w of E5.wood){const sx=w.x-camX,sy=w.y*K-camY-w.h,ca=Math.cos(w.a),sa=Math.sin(w.a)*K;
+    if(w.torch){for(let k=-4;k<=4;k++){const X=Math.round(sx+ca*k),Y=Math.round(sy+sa*k);if(X>=1&&Y>=1&&X<vw-1&&Y<vh-1){o[Y*vw+X]=k>2?PY[2]:PB[4];if(k>1){o[(Y-1)*vw+X]=PO[2];o[Y*vw+X+1]=PO[2];o[Y*vw+X-1]=PO[1];}}}continue;}   // the burning brand, tumbling end over end
+    const v=lightAt(w.x,w.y),c=v>90?PB[5]:v>40?PB[4]:v>14?PB[2]:0;if(!c)continue;
     for(let k=-2;k<=2;k++){const X=Math.round(sx+ca*k),Y=Math.round(sy+sa*k);if(X>=0&&Y>=0&&X<vw&&Y<vh){o[Y*vw+X]=c;if(Y+1<vh)o[(Y+1)*vw+X]=PB[1];}}}}
 /* ---- cutscene 1: round the fire ---- */
 function e5StartTalk(){const C=E5;if(player.drag)toggleDrag();state='n3cine';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.swingT=0;player.kickT=0;player.hidden=false;player.vx=player.vy=0;
@@ -2545,6 +2565,7 @@ function e5Proj(dt){const C=E5,P=player,e=C.el;
       else{z.a=Math.atan2(-uy,-ux);z.down={t:0,T:2.3,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y,sw:0};z.state='down';z.vx=ux*185;z.vy=uy*185;z.tilt=0;z.torn=true;z.legless=true;z.aware=6;z.hunt=true;zombies.push(z);   // missed: skids on its back, torn in half at the waist
         addGib('leg',z.x,z.y,3,-ux+uy*.5,-uy-ux*.5);addGib('leg',z.x,z.y,3,-ux-uy*.5,-uy+ux*.5);blood(z.x,z.y,4,24,-ux,-uy,120);bakeSplat(z.x,z.y,5);shake=Math.max(shake,6*Math.max(.3,e5Vol(z.x,z.y)));sfx.sever();sfx.kick();e5Leaves(z.x,z.y,12,90);}}}
   for(let i=C.wood.length-1;i>=0;i--){const w=C.wood[i];w.t+=dt;w.vh-=260*dt;w.h+=w.vh*dt;w.x+=w.vx*dt;w.y+=w.vy*dt;w.a+=w.av*dt;
+    if(w.torch&&w.t>=w.T){C.wood.splice(i,1);if(C.ph==='fight'&&e.st!=='dead'){C.stuck={t:0,T:10};e.hp=Math.max(.5,e.hp-.6);e.hitF=.15;e5Trumpet(Math.max(.4,e5Vol(e.x,e.y)));toast('คบไฟปักซี่โครงช้าง! เห็นตัวมันชัด 10 วิ');sfx.hit();tn('sine',300,620,.2,.15);shake=Math.max(shake,4);}continue;}
     if(!w.b&&w.t>=w.T){w.b=1;w.life=.55;w.vx=-w.vx*.3+(rnd()-.5)*90;w.vy=-w.vy*.3+(rnd()-.5)*60;w.vh=50+rnd()*70;w.av*=2;const v=e5Vol(w.x,w.y);tn('square',260,140,.04,.1*v);nz(.05,'highpass',1500,700,.16*v,1);
       if(C.ph==='fight'&&e.st!=='dead'){e.hp-=.15;e.hitF=Math.max(e.hitF,.08);if(e.hp<=0){e5ElDie();}else if(w.head&&e.hurtCd<=0&&e.st!=='hurt'&&e.st!=='retreat')e5Hurt(true);}}
     if(w.b){w.life-=dt;if(w.life<=0||w.h<=0){C.wood.splice(i,1);}}else if(w.t>w.T+1)C.wood.splice(i,1);}}
@@ -2568,6 +2589,20 @@ function e5Npc(p,dt){const C=E5,e=C.el;if(p.dead)return true;const dx=p.x-e.x,dy
   if(Math.hypot(tx-p.x,ty-p.y)>12)followPath(p,tx,ty,sp,dt);else{p.moveAmt=0;p.vx=p.vy=0;p.facing=angLerp(p.facing,ang,dt*7);}
   if(p.eT<=0&&d<300&&e.st!=='dead'){p.eT=2.3+rnd()*1.7;e5ThrowWood(p);}
   return true;}
+const E5TL=[-1.5,-7.3,23.5];   // between the ribs, high on the torn flank
+function e5TorchPts(){const a=ELE.elW(E5TL),L=27/ELE.ES;return[a,ELE.elW([E5TL[0]-.5,E5TL[1]-L*.24,E5TL[2]+L*.97])];}   // standing tall, leaning a little to its left
+function e5Torch(dt){const C=E5,e=C.el,EL=ELE.EL;
+  if(C.ph==='fight'&&e.st!=='dead'){C.torchT=(C.torchT==null?30:C.torchT)-dt;
+    if(C.torchT<=0&&!C.stuck&&!C.wood.some(w=>w.torch)){const L=npcs().filter(p=>!p.dead&&Math.hypot(p.x-e.x,p.y-e.y)<360),p=pam&&L.includes(pam)?pam:L[(rnd()*L.length)|0];
+      if(!p)C.torchT=3;else{C.torchT=60;const tw=e5TorchPts()[0],d=Math.hypot(tw[0]-p.x,tw[1]-p.y),T=clamp(d/170,.6,1.5),th=tw[2]*.75;
+        C.wood.push({x:p.x,y:p.y,h:14,vx:(tw[0]-p.x)/T,vy:(tw[1]-p.y)/T,vh:(th-14)/T+.5*260*T,T,t:0,a:rnd()*TAU,av:(rnd()<.5?-1:1)*11,torch:1,b:0});
+        p.facing=Math.atan2(e.y-p.y,e.x-p.x);p.moveAmt=0;if(p===bot)p.pokeT=.3;else if(p===pam)p.thrust=.45;else if(p===praewa)p.point=.5;sayE(p,p===praewa?'คบไฟไปเลย~!':p===pam?'เอาคบไฟไปกิน!!':'คบไฟมาแล้ว!');sfx.whoosh();tn('sine',260,520,.15,.12);}}}
+  const S=C.stuck;
+  if(S){S.t+=dt;const q=e5TorchPts(),b=q[1];S.fx=b[0];S.fy=b[1];S.fz=b[2];S.lit=S.t<S.T;S.fl=(.82+.14*Math.sin(S.t*23)+.08*Math.sin(S.t*41.3))*Math.min(1,S.t/.35,(S.T-S.t)/.8+.15);EL.torch={a:q[0],b,lit:S.lit};
+    if(S.lit&&rnd()<dt*16)sparks.push({x:b[0]+(rnd()-.5)*3,y:b[1],h:b[2]*.75+5,vx:(rnd()-.5)*16,vy:(rnd()-.5)*6,vh:18+rnd()*34,life:.5+rnd()*.7});
+    if(!S.lit&&!S.out){S.out=1;tn('sine',420,160,.3,.1);nz(.25,'highpass',2400,900,.08);}
+    if(S.t>S.T+1.3||C.ph==='brood'){C.stuck=null;EL.torch=null;}}
+  else if(EL.torch)EL.torch=null;}
 function e5ThrowWood(p){const C=E5,e=C.el,head=rnd()<.1,b=e5Body(),tw=head?ELE.headW():[b.x+(rnd()-.5)*30,b.y+(rnd()-.5)*14,(22+rnd()*20)*ELSC*.8],d=Math.hypot(tw[0]-p.x,tw[1]-p.y),T=clamp(d/210,.35,1.3),th=tw[2]*.75;
   C.wood.push({x:p.x,y:p.y,h:13,vx:(tw[0]-p.x)/T,vy:(tw[1]-p.y)/T,vh:(th-13)/T+.5*260*T,T,t:0,a:rnd()*TAU,av:(rnd()<.5?-1:1)*(10+rnd()*8),head,b:0});
   p.facing=Math.atan2(e.y-p.y,e.x-p.x);p.moveAmt=0;if(p===bot)p.pokeT=.22;else if(p===pam)p.thrust=.3;else if(p===praewa)p.point=.35;if(near(p,240))nz(.1,'bandpass',700,1600,.12,1.2);
@@ -2580,6 +2615,7 @@ function e5Spawn(){const C=E5,e=C.el,ya=ELE.EL.yaw,sx=-Math.sin(ya),sy=Math.cos(
   blood(z.x,z.y,6,10,Math.cos(a),Math.sin(a),70);bakeSplat(z.x,z.y,4);if(near(z,280)){sfx.groan(.3,0);nz(.2,'bandpass',500,200,.3,1.5);}}
 function updateE5Play(dt){const C=E5;if(!C||C.ph==='done')return;C.t+=dt;if(C.ember&&C.ember.v>0)C.ember.v-=dt/6;
   if(C.ph==='pre'){e5Rig(dt);if(C.t>.5&&state==='play'&&!DF&&!(NC&&NC.t<2.2))e5StartTalk();return;}
+  e5Torch(dt);
   if(C.ph==='fight'){e5ElAI(dt);e5Proj(dt);}
   else if(C.ph==='fall'){const e=C.el,EL=ELE.EL;e.vx=e.vy=0;
     if(C.t<.9)EL.ov={hy:Math.sin(C.t*21)*.55,hyK:30,hd:-.6+C.t,flap:1.25,amp:1};   // sways, head rolling
