@@ -100,7 +100,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v5.6</div>
+  <div class="ver">v5.7</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -108,7 +108,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v5.6</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v5.7</h3><ul>
+      <li>ช้างส่วนที่ไม่โดนแสงมืดสนิท · โดนแสงกระสือแดงเฉพาะไฮไลท์ด้านที่รับแสง ไม่มีสีพื้นด้านๆ ทั้งตัวแล้ว</li>
       <li>ช้างโดนแสงกระสือ: ตัวยังมืด แดงเฉพาะส่วนที่เป็นไฮไลท์ · ซอมบี้บนหลังช้างเพิ่มเป็น <b>6 ตัว</b></li>
       <li>หัวช้างเรียวขึ้น โหนกหัวสองลอน คิ้วหนา ตาเฉียงดุ งายาวโค้ง · หูติดกับหัวแล้ว · ช้างเริ่มจากมุมบนขวาของแผนที่ แล้วเดินเข้ามาหา</li>
       <li>ช้างป่าในที่มืดมืดสนิททั้งตัว (กระดูกสันหลังและซอมบี้บนหลังไม่เรืองแล้ว) · ผิวมีรอยกัดเพิ่ม</li>
@@ -540,7 +541,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='5.6';
+let useBot=true,bot=null,hero='fifa';const VERSION='5.7';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2436,8 +2437,8 @@ function e5Lights(){const e=E5.el,b=e5Body(),Ls=[],pts=[[b.x,b.y],[b.x+b.fx*24*E
   for(const L of curLamps){if(!L||L.i<=.14||L.drop)continue;const d=Math.hypot(b.x-L.x,b.y-L.y);if(d>350)continue;const v=vis(L.x,L.y);if(v<=0)continue;Ls.push({x:L.x,y:L.y,z:15,R2:330*330,I:1.55*L.i*(.35+.65*v),cone:1,ca:Math.cos(L.a),sa:Math.sin(L.a),ch:Math.cos(.66)});}
   if(E5.stuck&&E5.stuck.lit&&E5.stuck.fx!=null)Ls.push({x:E5.stuck.fx,y:E5.stuck.fy,z:E5.stuck.fz+4,R2:240*240,I:2.5*E5.stuck.fl});
   for(const P of actL){if(P.kind==='kr'||P.e5t||!(P.v>0))continue;const d=Math.hypot(b.x-P.x,b.y-P.y),R=P.r*1.3+30;if(d>R)continue;const v=vis(P.x,P.y);if(v<=0)continue;Ls.push({x:P.x,y:P.y,z:9,R2:R*R,I:Math.min(2,P.v/150)*(P.f==null?1:P.f)*(.3+.7*v)});}
-  for(const k of BS){const l=k.krl;if(!l||l.v<.05||k.hidden)continue;Ls.push({x:l.x,y:l.y,z:Math.max(l.z,44),R2:300*300,I:2.1*l.v,red:1,wrap:.34});}   // its glow washes right round something that big
-  if(E5.ember&&E5.ember.v>0)Ls.push({x:E5.ember.x,y:E5.ember.y,z:26,R2:280*280,I:2.3*E5.ember.v,red:1,wrap:.4});
+  for(const k of BS){const l=k.krl;if(!l||l.v<.05||k.hidden)continue;Ls.push({x:l.x,y:l.y,z:Math.max(l.z,44),R2:300*300,I:2.1*l.v,red:1});}
+  if(E5.ember&&E5.ember.v>0)Ls.push({x:E5.ember.x,y:E5.ember.y+46,z:58,R2:320*320,I:2.6*E5.ember.v,red:1});   // what is left of the krasue still burns red, throwing its light up the near side
   if(dropL&&dropL.on&&(state==='dying'||state==='dead'))Ls.push({x:dropL.x,y:dropL.y,z:4,R2:90*90,I:.9});
   ELE.setLights(Ls,dawn/255*1.7);}
 function e5Draw(T){if(!E5||!E5.el)return;const e=E5.el,b=e5Body();ELE.begin(vw,vh);if(E5.ph==='pre'||E5.ph==='talk')return;   // nobody has seen it yet
@@ -2454,7 +2455,7 @@ function e5Draw(T){if(!E5||!E5.el)return;const e=E5.el,b=e5Body();ELE.begin(vw,v
   for(const th of E5.th){const sx=th.x-camX,sy=th.y*K-camY-th.h;ELE.dep(sx-8,sy-20,sx+8,sy+3,1e9);}
   const hs=home&&home.hs;if(hs&&hs.tiang&&roofA>.5){const o=10;ELE.dep(hs.x*TS-o-camX,(hs.y*TS-o)*K-camY-ROOFH,(hs.x+hs.w)*TS+o-camX,((hs.y+hs.h)*TS+o)*K-camY-ROOFH,(hs.y+hs.h)*TS+o);}
   e5Lights();ELE.draw(T);}
-function e5Blit(o){if(!E5||!E5.el)return;if(!ELMAPW){ELMAPW=[PG[0],PG[1],PG[2],PG[3],PG[4],PR[1],PR[2],PG[4],PG[5],PO[2],PY[2],PO[1]];ELMAPR=[PG[0],PG[1],PG[1],PR[1],PR[2],PR[1],PR[2],PR[2],PR[2],PO[2],PY[2],PO[1]];}   // under the krasue's glow the bulk stays dark; only what catches the light goes red
+function e5Blit(o){if(!E5||!E5.el)return;if(!ELMAPW){ELMAPW=[PG[0],PG[1],PG[2],PG[3],PG[4],PR[1],PR[2],PG[4],PG[5],PO[2],PY[2],PO[1]];ELMAPR=[PG[0],PG[0],PG[0],PR[1],PR[2],PR[1],PR[2],PR[2],PR[2],PO[2],PY[2],PO[1]];}   // under the krasue's glow the bulk stays dark; everything else stays black; only what catches the light goes red
   ELE.blit(o,ELMAPW,ELMAPR,PG[0]);
   for(const w of E5.wood){const sx=w.x-camX,sy=w.y*K-camY-w.h,ca=Math.cos(w.a),sa=Math.sin(w.a)*K;
     if(w.torch){for(let k=-4;k<=4;k++){const X=Math.round(sx+ca*k),Y=Math.round(sy+sa*k);if(X>=1&&Y>=1&&X<vw-1&&Y<vh-1){o[Y*vw+X]=k>2?PY[2]:PB[4];if(k>1){o[(Y-1)*vw+X]=PO[2];o[Y*vw+X+1]=PO[2];o[Y*vw+X-1]=PO[1];}}}continue;}   // the burning brand, tumbling end over end
