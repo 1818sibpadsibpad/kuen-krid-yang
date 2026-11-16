@@ -99,7 +99,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v4.4</div>
+  <div class="ver">v4.5</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -107,7 +107,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.4</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.5</h3><ul>
+      <li>ทุบกิ่งไม้ใหญ่: กิ่งสั่นสะเทือน มีฝุ่นฟุ้งตรงจุดที่ทุบ · เพื่อนตาย: ป้ายมีรูปโปรไฟล์เล็กๆ</li>
       <li>กิ่งไม้ใหญ่โดนไฟฉาย: สว่างชัดขึ้น ขอบเปลือกเรืองแสง มีแสงวั้บวิ่งตามกิ่ง · ลากกิ่งเดินเร็วเท่าเดินปกติ</li>
       <li>กิ่งไม้ใหญ่ผลักและหมุนได้อิสระ · ถ้าปลายข้างหนึ่งติดต้นไม้ ไปผลักตรงอื่น กิ่งจะหมุนรอบจุดที่ติดอยู่</li>
       <li>กิ่งไม้ใหญ่: ยาว 4 ระดับ × 4 แบบ · <b>เดินทะลุไม่ได้แล้ว</b> เดินชนจะดันกิ่งไปช้าๆ (ช้า 3 เท่า) กิ่งหมุนตามจุดที่ดัน · ถ้ากิ่งไปติดต้นไม้/กำแพง จะดันไม่ไปเป็นรั้วกั้น · ซอมบี้ก็ดันได้ และโดนกั้นเหมือนกัน</li>
@@ -524,7 +525,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='4.4';
+let useBot=true,bot=null,hero='fifa';const VERSION='4.5';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -921,7 +922,7 @@ function computeLights(){
       if(d<265&&d>1){const ad=Math.abs(angDiff(L.a,Math.atan2(dy,dx)));if(ad<.62&&castRay(L.x,L.y,dx/d,dy/d,d)>=d-4){const v=clamp((1-d/265*.55)*(1-ad/.62*.5),0,1);if(v>z.lit){z.lit=v;z.ldx=-dx/d;z.ldy=-dy/d;z.litBy=L.owner||null;}}}}}
 }
 let DF=null;   // time stops for a moment when a friend falls
-function onAllyDeath(e,name){e.dname=name;if(DEMO)return;DF={name,t:0};
+function onAllyDeath(e,name){e.dname=name;if(DEMO)return;const key=e===pam?'pam':e===praewa?'pw':e.jp?'jp':'fifa',im=document.querySelector(`#mChars [data-h=${key}] img`);DF={name,t:0,img:im&&im.complete?im:null};
   if(praewa&&!praewa.dead&&e!==praewa)setTimeout(()=>{if(praewa){sayAs(praewa,'ฮือๆๆ… '+name+'… ไม่นะ…');praewa.cry=8;}},e===pam?2600:900);
   else if(player.pw){setTimeout(()=>{player.say={text:'ฮือๆๆ… '+name+'…',t:3.4};player.cry=6;},700);}}
 function mournTick(dt){for(const e of[bot,pam]){if(!e||!e.dead||!e.dname)continue;e.mournCd=Math.max(0,(e.mournCd||0)-dt);
@@ -929,7 +930,7 @@ function mournTick(dt){for(const e of[bot,pam]){if(!e||!e.dead||!e.dname)continu
       if(player.pw){player.say={text:'ฮือๆๆ… '+e.dname+'… ทำไมต้องตายด้วย…',t:3.6};player.cry=6;}else player.say={text:'อ้าว… '+e.dname+' ตายแล้วหรอ',t:3};}
     if(praewa&&!praewa.dead){praewa.mournCd=Math.max(0,(praewa.mournCd||0)-dt);if(praewa.mournCd<=0&&Math.hypot(e.x-praewa.x,e.y-praewa.y)<30){praewa.mournCd=25;sayAs(praewa,'ฮือๆๆ… '+e.dname+'…');praewa.cry=6;}}}
   for(const h of[player,praewa])if(h&&h.cry>0)h.cry-=dt;}
-function updatePlay(dt){mournTick(dt);updateFlyWood(dt);
+function updatePlay(dt){mournTick(dt);updateFlyWood(dt);updateDust(dt);
   if(!n3Active())gameTime+=dt;if(player.rollCd>0)player.rollCd-=dt;
   let mx=joyV.x,my=joyV.y;
   if(keys.KeyA||keys.ArrowLeft)mx-=1;if(keys.KeyD||keys.ArrowRight)mx+=1;if(keys.KeyW||keys.ArrowUp)my-=1;if(keys.KeyS||keys.ArrowDown)my+=1;
@@ -1253,16 +1254,18 @@ function growBranches(){bigBranches=bigBranches.filter(b=>b.yard||b===player?.dr
   for(let n=0;n<800&&bigBranches.filter(b=>!b.yard).length<18;n++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+8,y=((t/MW)|0)*TS+8;if(tiles[t]===TT||Math.hypot(x-home.cx,y-home.cy)<110)continue;if(bigBranches.some(b=>Math.hypot(b.x-x,b.y-y)<90))continue;if(player&&Math.hypot(player.x-x,player.y-y)<40)continue;const nb=makeBig(x,y);if(branchBlocked(nb))continue;bigBranches.push(nb);}}
 function bigHit(h,a,R,arc,pow){   // smash a fallen branch where the blow lands
   let best=null,bd=1e9;for(const b of bigBranches){if(b===player.drag)continue;const ca=Math.cos(b.a),sa=Math.sin(b.a);let dm=1e9,am=0;
-    for(let k=-2;k<=2;k++){const px=b.x+ca*b.L*k/4.2,py=b.y+sa*b.L*k/4.2,d=Math.hypot(px-h.x,py-h.y);if(d<dm){dm=d;am=Math.atan2(py-h.y,px-h.x);}}
-    if(dm>R+5||Math.abs(angDiff(a,am))>arc)continue;if(dm<bd){bd=dm;best=b;}}
-  if(!best)return false;const b=best;b.dmg=(b.dmg||0)+1;b.shk=.25;const ux=Math.cos(a),uy=Math.sin(a);shake=Math.max(shake,2.5);sfx.kick();
+    let hp0=null;for(let k=-4;k<=4;k++){const px=b.x+ca*b.L*k/8.4,py=b.y+sa*b.L*k/8.4,d=Math.hypot(px-h.x,py-h.y);if(d<dm){dm=d;am=Math.atan2(py-h.y,px-h.x);hp0=[px,py];}}
+    if(dm>R+5||Math.abs(angDiff(a,am))>arc)continue;if(dm<bd){bd=dm;best=b;best.hp0=hp0;}}
+  if(!best)return false;const b=best;b.dmg=(b.dmg||0)+1;b.shk=.45;b.shkA=1.6+pow;const ux=Math.cos(a),uy=Math.sin(a);if(b.hp0)dustPuff(b.hp0[0],b.hp0[1],8+pow*4,ux,uy);shake=Math.max(shake,2.5);sfx.kick();
   for(let k=0;k<6;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.6,y:b.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*40,vy:(rnd()-.5)*16,vh:15+rnd()*25,life:.4+rnd()*.4,ash:1});
   if(b.dmg>=b.hp){smashBranch(b,ux,uy,pow);}else toast(b.hp-b.dmg<=2?'กิ่งใกล้แตกแล้ว!':'ทุบกิ่งไม้!');return true;}
-function bigDamage(b,amt,ux,uy,pow){b.dmg=(b.dmg||0)+amt;b.shk=.2;for(let k=0;k<3;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.5,y:b.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*30,vy:(rnd()-.5)*12,vh:10+rnd()*20,life:.4,ash:1});if(near(b,220))nz(.06,'lowpass',700,200,.12,1);if(b.dmg>=b.hp)smashBranch(b,ux,uy,pow);}
-let flyWood=[];
+function bigDamage(b,amt,ux,uy,pow){b.dmg=(b.dmg||0)+amt;b.shk=.3;b.shkA=.9;for(let k=0;k<3;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.5,y:b.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*30,vy:(rnd()-.5)*12,vh:10+rnd()*20,life:.4,ash:1});if(near(b,220))nz(.06,'lowpass',700,200,.12,1);if(b.dmg>=b.hp)smashBranch(b,ux,uy,pow);}
+let flyWood=[],dusts=[];
+function dustPuff(x,y,n,ux=0,uy=0){for(let k=0;k<n;k++){const a=rnd()*TAU,sp=6+rnd()*22;dusts.push({x,y,h:1+rnd()*4,vx:Math.cos(a)*sp+ux*14,vy:Math.sin(a)*sp*.6+uy*8,vh:6+rnd()*14,r:1.2+rnd()*1.6,t:0,T:.7+rnd()*.8,g:150+rnd()*60|0});}}
+function updateDust(dt){for(let i=dusts.length-1;i>=0;i--){const d=dusts[i];d.t+=dt;if(d.t>=d.T){dusts.splice(i,1);continue;}const f=Math.exp(-3*dt);d.vx*=f;d.vy*=f;d.vh*=f;d.x+=d.vx*dt;d.y+=d.vy*dt;d.h+=d.vh*dt;d.r+=dt*3.2;}}
 function updateFlyWood(dt){for(let i=flyWood.length-1;i>=0;i--){const w=flyWood[i];w.vh-=260*dt;w.h+=w.vh*dt;w.a+=w.av*dt;const nx=w.x+w.vx*dt,ny=w.y+w.vy*dt;if(!BM[tAt(Math.floor(nx/TS),Math.floor(ny/TS))]||w.h>14){w.x=nx;w.y=ny;}else{w.vx*=-.3;w.vy*=-.3;}
   if(w.h<=0){w.h=0;if(w.vh<-60&&!w.b){w.b=1;w.vh*=-.32;w.vx*=.5;w.vy*=.5;w.av*=.5;nz(.05,'highpass',1800,900,.05);}else{flyWood.splice(i,1);woodItems.push({x:w.x,y:w.y,a:w.a,v:w.v});}}}}
-function smashBranch(b,ux=0,uy=0,pow=1){const i=bigBranches.indexOf(b);if(i<0)return;bigBranches.splice(i,1);const n=b.n+2,ca=Math.cos(b.a),sa=Math.sin(b.a);   // the pieces fly up and rain down, further the harder it was hit
+function smashBranch(b,ux=0,uy=0,pow=1){for(let k=-2;k<=2;k++)dustPuff(b.x+Math.cos(b.a)*b.L*k/5,b.y+Math.sin(b.a)*b.L*k/5,6,ux,uy);const i=bigBranches.indexOf(b);if(i<0)return;bigBranches.splice(i,1);const n=b.n+2,ca=Math.cos(b.a),sa=Math.sin(b.a);   // the pieces fly up and rain down, further the harder it was hit
   for(let k=0;k<n;k++){const t=(k/(n-1)-.5)*b.L*.85,r=(rnd()-.5)*8,sp=(25+rnd()*55)*pow,ra=rnd()*TAU;flyWood.push({x:b.x+ca*t-sa*r,y:b.y+sa*t+ca*r,h:3,vh:(50+rnd()*70)*Math.min(1.6,.6+pow*.6),vx:ux*sp+Math.cos(ra)*sp*.45,vy:uy*sp+Math.sin(ra)*sp*.45,a:b.a+(rnd()-.5)*1.4,av:(rnd()-.5)*18,v:(rnd()*10)|0});}
   for(let k=0;k<14;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.7,y:b.y+(rnd()-.5)*6,h:3,vx:(rnd()-.5)*60,vy:(rnd()-.5)*24,vh:20+rnd()*35,life:.6+rnd()*.6,ash:1});
   shake=Math.max(shake,5);sfx.sever();nz(.35,'lowpass',900,180,.5,1);if(near(b,260))toast(`กิ่งไม้แตก! ได้ฟืน ${n} ชิ้น เก็บได้เลย`);}
@@ -2512,6 +2515,7 @@ function renderObjects(T){
   if(home&&home.hs.tiang){const hs=home.hs;objs.push({y:hs.y*TS+.2,k:24},{y:hs.sj*TS+1,k:25});for(const q of hs.posts)objs.push({y:q.y,k:26,q});}
   for(const b of bigBranches)if(b.x>camX-b.L&&b.x<camX+vw+b.L&&b.y*K>camY-b.L&&b.y*K<camY+vh+b.L){objs.push({y:b.y-2,k:27,b});for(const u of b.ups)objs.push({y:bigPt(b,u.lx,u.ly)[1]+.5,k:33,b,u});}
   for(const w of flyWood)objs.push({y:w.y,k:34,w});
+  for(const d of dusts)objs.push({y:d.y+2,k:35,d});
   for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){const t=tiles[j*MW+i];if(t===TFN)objs.push({y:j*TS+8,k:11,i,j});else if(t===TW)objs.push({y:(j+1)*TS,k:0,i,j});else if(t===TT)objs.push({y:j*TS+8,k:1,i,j});else if(t===TK)objs.push({y:(j+1)*TS-1,k:3,i,j});}
   for(const t of tables)if(t.i+t.w>=i0-1&&t.i<=i1+1&&t.j+1>=j0&&t.j<=j1)objs.push({y:(t.j+t.h)*TS-1,k:2,t});
   for(const g of gibs)objs.push({y:g.y,k:8,g});
@@ -2595,7 +2599,7 @@ function drawObj(o,T,s,l){
     F(s,40,x-.6,yt,2.4,hh);F(s,40,x+8,yt,2.4,hh);F(s,118,x,yt,1.3,hh);F(s,118,x+8.6,yt,1.3,hh);for(let r=0;r<n;r++){F(s,30,x+1,yt+hh*(r+.6)/(n+.4)+.8,8,1);F(s,160,x+1,yt+hh*(r+.6)/(n+.4),8,1.4);}
     const v=lightAt(hs.si*TS+8,hs.sj*TS+10);F(l,v,x-.6,yt,10,hh);break;}
   case 26:{const q=o.q,x=q.x-camX,yb=q.y*K-camY,top=yb-ROOFH;F(s,46,x-1.3,top,2.6,ROOFH);F(s,112,x-.4,top,.8,ROOFH);F(l,lightAt(q.x,q.y+3),x-1.3,top,2.6,ROOFH);break;}
-  case 27:{const b=o.b,v=lightAt(b.x,b.y),lit=lampLit(b.x,b.y);if(b.shk>0)b.shk-=1/60;const jx=b.shk>0?(rnd()-.5)*1.6:0,ox=b.x;b.x+=jx;drawBig(s,b,null);drawBig(l,b,gray(Math.max(lit>.15?Math.min(200,90+lit*140):14,v)));
+  case 27:{const b=o.b,v=lightAt(b.x,b.y),lit=lampLit(b.x,b.y);if(b.shk>0)b.shk-=1/60;const sk=Math.max(0,b.shk||0),osc=sk>0?Math.sin(sk*70)*(b.shkA||1.5)*(sk/.45):0,ox=b.x,oy=b.y,oa=b.a;b.x-=Math.sin(b.a)*osc;b.y+=Math.cos(b.a)*osc*.6;b.a+=osc*.012;drawBig(s,b,null);drawBig(l,b,gray(Math.max(lit>.15?Math.min(200,90+lit*140):14,v)));
     if(lit>.15){const x0=b.x-camX,y0=b.y*K-camY,ca=Math.cos(b.a),sa=Math.sin(b.a);   // flashlight catches the bark, same as the small sticks
       for(const c of[s,l]){c.save();c.translate(x0,y0);c.scale(1,K);c.rotate(b.a);c.strokeStyle=c===s?'rgb(250,226,170)':gray(Math.min(255,v+120));c.lineWidth=1.3;c.lineCap='round';
         for(let k=0;k<b.nT;k++){const g=b.segs[k];c.beginPath();c.moveTo(g[0],g[1]-g[4]*.45);c.lineTo(g[2],g[3]-g[4]*.45);c.stroke();}
@@ -2604,7 +2608,7 @@ function drawObj(o,T,s,l){
       for(let k=0;k<5;k++){const ph=Math.sin(T*(4.6+k*1.5)+b.x*.31+k*2.3);if(ph<.35)continue;const tt=[-.4,-.2,.02,.22,.4][k]*b.L,gx=x0+ca*tt,gy=y0+sa*tt*K-1.6,r=ph>.85?2:1;
         for(const c of[s,l]){c.fillStyle='#fff';c.fillRect(gx-.5,gy-.5,1,1);if(r>1){c.fillRect(gx-1.5,gy-.5,1,1);c.fillRect(gx+.5,gy-.5,1,1);c.fillRect(gx-.5,gy-1.5,1,1);c.fillRect(gx-.5,gy+.5,1,1);}}}
       if(b.dmg){for(const c of[s,l]){c.fillStyle=c===s?'rgb(250,226,170)':'#fff';for(let k=0;k<Math.min(5,Math.ceil(b.dmg/b.hp*5));k++){const tt=(k-1)*.18*b.L;c.fillRect(x0+ca*tt-.5,y0+sa*tt*K-1.5,1,2);}}}}   // pale cracks where it was struck
-    b.x=ox;break;}
+    b.x=ox;b.y=oy;b.a=oa;break;}
   case 1:{const {i,j}=o,cx=i*TS+8,cy=j*TS+8,shk=treeShake.get(j*MW+i)||0,bx=cx-camX+(shk?Math.round(Math.sin(T*42+i)*1.6*shk):0),by=cy*K-camY;
     if(!false){s.fillStyle='rgba(0,0,0,.5)';ell(s,bx,by,5,2);}
     s.drawImage(trunkCv[(i*7+j*13)&3],bx-9,by-71);
@@ -2643,6 +2647,7 @@ function drawObj(o,T,s,l){
   case 22:{drawPostTorch(s,o.t,T,0);drawPostTorch(l,o.t,T,Math.max(60,lightAt(o.t.x,o.t.y)));break;}
   case 23:{if(pam.down){withOutline(s,pam,c=>drawLying(c,T,null,pam));drawLying(l,T,gray(lightAt(pam.x,pam.y)),pam);}else{withOutline(s,pam,c=>drawP(c,T,null,pam));drawP(l,T,gray(Math.max(28,lightAt(pam.x,pam.y))),pam);}break;}
   case 33:{const[wx,wy]=bigPt(o.b,o.u.lx,o.u.ly),v=lightAt(wx,wy),lit=lampLit(wx,wy);drawBigUp(s,o.b,o.u,null,lit,v);drawBigUp(l,o.b,o.u,gray(Math.max(lit>.15?70:14,v)),lit,v);break;}
+  case 35:{const d=o.d,u=d.t/d.T,a=(1-u)*(u<.15?u/.15:1)*.55,x=d.x-camX,y=d.y*K-camY-d.h,v=lightAt(d.x,d.y);s.globalAlpha=a;s.fillStyle=`rgb(${d.g},${d.g-12},${d.g-30})`;s.beginPath();s.arc(x,y,d.r,0,TAU);s.fill();s.globalAlpha=1;l.globalAlpha=a*.8;l.fillStyle=gray(Math.min(255,v+40));l.beginPath();l.arc(x,y,d.r,0,TAU);l.fill();l.globalAlpha=1;break;}
   case 34:{const w=o.w,v=lightAt(w.x,w.y),x=w.x-camX,y=w.y*K-camY-w.h;drawLog(s,x,y,w.a,w.v,null,1.15,true);drawLog(l,x,y,w.a,w.v,gray(Math.max(62,v)),1.15,true);break;}
   case 28:{drawSkewer(s,o.sk,null,T);drawSkewer(l,o.sk,gray(Math.max(40,lightAt(o.sk.x,o.sk.y))),T);break;}
   case 29:{drawSnake(s,o.n,null,T);drawSnake(l,o.n,gray(Math.max(70,lightAt(o.n.x,o.n.y))),T);break;}
@@ -2797,8 +2802,9 @@ const KRMAP=[PG[0],PB[1],PB[3],PB[5],PG[5],PR[1],PR[2],PG[5]];
 function drawDF(){if(!player||DEMO)return;u.setTransform(dpr,0,0,dpr,0,0);const s=UIS,tm=performance.now()/1000;
   for(const h of[player,praewa])if(h&&h.cry>0&&!h.hidden){const x=(h.x-camX)*P,y=(h.y*K-camY-elevOf(h)-(h.pw?18:20))*P;u.fillStyle='#8fd0ff';   // tears
     for(const sd of[-1,1])for(let k=0;k<2;k++){const ph=(tm*1.6+k*.5+(sd>0?.25:0))%1;u.globalAlpha=1-ph;u.fillRect(x+sd*1.6*P-1.5,y+ph*7*P,3,4);}u.globalAlpha=1;}
-  if(DF){const s=UIS,a=Math.min(1,DF.t/.25),w=210*s,h=58*s,x=SWc/2-w/2,y=SHc*.4-h/2;u.globalAlpha=.25*a;u.fillStyle='#000';u.fillRect(0,0,SWc,SHc);u.globalAlpha=.92*a;u.fillStyle='#120b0a';u.fillRect(x,y,w,h);u.strokeStyle='#8a1418';u.lineWidth=2*s;u.strokeRect(x,y,w,h);u.globalAlpha=a;
-    uiText('💀 '+DF.name+' ตายแล้ว',SWc/2,y+h*.4,16*s,'center','#ff6b5e');if(DF.t>.5)uiText('แตะเพื่อเล่นต่อ',SWc/2,y+h*.78,10*s,'center','#bdb4a6');u.globalAlpha=1;}
+  if(DF){const s=UIS,a=Math.min(1,DF.t/.25),w=230*s,h=72*s,x=SWc/2-w/2,y=SHc*.4-h/2;u.globalAlpha=.25*a;u.fillStyle='#000';u.fillRect(0,0,SWc,SHc);u.globalAlpha=.92*a;u.fillStyle='#120b0a';u.fillRect(x,y,w,h);u.strokeStyle='#8a1418';u.lineWidth=2*s;u.strokeRect(x,y,w,h);u.globalAlpha=a;
+    const ph=h-10*s,pw=ph*84/102,px=x+6*s,py=y+5*s;if(DF.img){u.save();u.imageSmoothingEnabled=false;u.filter='grayscale(1) brightness(.75)';u.drawImage(DF.img,px,py,pw,ph);u.restore();u.strokeStyle='#8a1418';u.lineWidth=1.5*s;u.strokeRect(px,py,pw,ph);u.strokeStyle='rgba(208,28,34,.85)';u.lineWidth=2*s;u.beginPath();u.moveTo(px+3*s,py+3*s);u.lineTo(px+pw-3*s,py+ph-3*s);u.stroke();}
+    const tx=DF.img?(px+pw+(x+w))/2:SWc/2;uiText('💀 '+DF.name+' ตายแล้ว',tx,y+h*.4,15*s,'center','#ff6b5e');if(DF.t>.5)uiText('แตะเพื่อเล่นต่อ',tx,y+h*.78,10*s,'center','#bdb4a6');u.globalAlpha=1;}
 }
 function drawUI(dt){
   u.setTransform(dpr,0,0,dpr,0,0);u.clearRect(0,0,SWc,SHc);
