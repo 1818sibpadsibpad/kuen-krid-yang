@@ -99,7 +99,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v4.1</div>
+  <div class="ver">v4.2</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -107,7 +107,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.1</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.2</h3><ul>
+      <li>กิ่งไม้ใหญ่: ยาว 4 ระดับ × 4 แบบ · <b>เดินทะลุไม่ได้แล้ว</b> เดินชนจะดันกิ่งไปช้าๆ (ช้า 3 เท่า) กิ่งหมุนตามจุดที่ดัน · ถ้ากิ่งไปติดต้นไม้/กำแพง จะดันไม่ไปเป็นรั้วกั้น · ซอมบี้ก็ดันได้ และโดนกั้นเหมือนกัน</li>
       <li>กิ่งไม้ใหญ่ 4 แบบ (2.5D) บางกิ่งยาว 2 เท่า บางกิ่งมีกิ่งชี้ขึ้นบังของ · เกิดใหม่ทุกคืน · ยังลากได้</li>
       <li>เดินข้ามกิ่ง <b>ช้าลง 3 เท่า</b> ซอมบี้ก็เช่นกัน · ฟันข้ามกิ่งได้ · ซอมบี้โดนฟาดกระเด็นไปชนกิ่งอื่นจะหยุด</li>
       <li>ต้องทุบ 4–10 ครั้งถึงแตก (กิ่งยาวทนกว่า) · ซอมบี้แกะกิ่งได้แต่แรงแค่ 1/3 · กระสือพุ่งชนก็พัง · แตกแล้วฟืนกระเด็นลอยขึ้นตามแรงกระแทก</li>
@@ -521,7 +522,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='4.1';
+let useBot=true,bot=null,hero='fifa';const VERSION='4.2';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -562,6 +563,7 @@ function collide(e,r){
   if(clumps)for(const C of clumps){const dx=e.x-C.x,dy=e.y-C.y;if(Math.abs(dx)>20||Math.abs(dy)>20)continue;if(!C.plants.some(p=>!p.cut))continue;const rr=r+6;if(dx*dx+dy*dy<rr*rr){const d=Math.hypot(dx,dy)||.01;e.x=C.x+dx/d*rr;e.y=C.y+dy/d*rr;}}
   for(const P of props){const dx=e.x-P.x,dy=e.y-P.y,rr=r+P.r;if(dx*dx+dy*dy<rr*rr){const d=Math.hypot(dx,dy)||.01;e.x=P.x+dx/d*rr;e.y=P.y+dy/d*rr;}}
   for(const P of plights){if(P.kind!=='fire')continue;const dx=e.x-P.x,dy=e.y-P.y,rr=r+8;if(dx*dx+dy*dy<rr*rr){const d=Math.hypot(dx,dy)||.01;e.x=P.x+dx/d*rr;e.y=P.y+dy/d*rr;}}
+  if(bigBranches.length&&!e.fly)pushBranches(e,r);
   const x0=Math.floor((e.x-r-RT)/TS),x1=Math.floor((e.x+r+RT)/TS),y0=Math.floor((e.y-r-RT)/TS),y1=Math.floor((e.y+r+RT)/TS);
   for(let j=y0;j<=y1;j++)for(let i=x0;i<=x1;i++){const t=tAt(i,j);
     if(t===TT){const cx=i*TS+8,cy=j*TS+8,dx=e.x-cx,dy=e.y-cy,d2=dx*dx+dy*dy,rr=r+RT;if(d2<rr*rr){const d=Math.sqrt(d2)||.01;e.x=cx+dx/d*rr;e.y=cy+dy/d*rr;}continue;}
@@ -702,16 +704,34 @@ function autoAim(h=player){
   return best?Math.atan2(best.y-h.y,best.x-h.x):h.facing;
 }
 function makeBig(x,y){   // 4 looks: 0 straight bough · 1 forked Y · 2 bristling with upright twigs · 3 crooked limb with a dead-leaf clump; ~30% are twice as long
-  const kind=ri(0,3),long=rnd()<.3,L=(40+rnd()*14)*(long?2:1),nT=long?9:5,segs=[],pts=[],ups=[],leaves=[];const bend=kind===3?(rnd()<.5?-1:1)*(4+rnd()*4):0;
+  const kind=ri(0,3),lv=ri(0,3),long=lv>=2,L=(40+rnd()*14)*[1,1.5,2,2.6][lv],nT=[5,7,9,11][lv],segs=[],pts=[],ups=[],leaves=[];const bend=kind===3?(rnd()<.5?-1:1)*(4+rnd()*4):0;
   for(let k=0;k<=nT;k++){const u=k/nT;pts.push([-L/2+L*u,(k&&k<nT?(rnd()-.5)*3.5:0)+bend*Math.sin(u*Math.PI)]);}
-  const w0=long?3.6:2.6;for(let k=0;k<nT;k++)segs.push([...pts[k],...pts[k+1],w0-(w0-.8)*k/nT]);
+  const w0=[2.6,3,3.6,4.1][lv];for(let k=0;k<nT;k++)segs.push([...pts[k],...pts[k+1],w0-(w0-.8)*k/nT]);
   const twig=(fx,fy,fa,fl,w)=>{const ex=fx+Math.cos(fa)*fl,ey=fy+Math.sin(fa)*fl;segs.push([fx,fy,ex,ey,w]);const tx=fx+(ex-fx)*.6,ty=fy+(ey-fy)*.6,ta=fa+(rnd()<.5?-1:1)*(.5+rnd()*.4),tl=4+rnd()*5;segs.push([tx,ty,tx+Math.cos(ta)*tl,ty+Math.sin(ta)*tl,.75]);};
   if(kind===1){const k=Math.round(nT*.6),[fx,fy]=pts[k],sd=rnd()<.5?-1:1;let px=fx,py=fy,a=sd*.45;for(let q=0;q<3;q++){const l=L*.14,nx=px+Math.cos(a)*l,ny=py+Math.sin(a)*l;segs.push([px,py,nx,ny,(w0-1.2)-q*.4]);if(q===1)twig(nx,ny,a-sd*.7,8+rnd()*6,.9);px=nx;py=ny;a+=sd*.12;}}
-  const nf=ri(2,4)+(long?3:0);for(let f=0;f<nf;f++){const k=ri(1,nT-1),[fx,fy]=pts[k],sd=rnd()<.5?-1:1;twig(fx,fy,sd*(.35+rnd()*.55),10+rnd()*13,1.35-k/nT*.6);}
-  const nu=kind===2?ri(2,3)+(long?1:0):rnd()<.35?1:0;for(let q=0;q<nu;q++){const k=ri(1,nT-1);ups.push({lx:pts[k][0],ly:pts[k][1],h:12+rnd()*14,lean:(rnd()-.5)*.7,w:1.6-rnd()*.5,fork:rnd()<.7?{t:.55+rnd()*.25,a:(rnd()<.5?-1:1)*(.5+rnd()*.4),l:4+rnd()*6}:null});}   // twigs pointing up: they stand in front of whatever is behind them
+  const nf=ri(2,4)+lv*2;for(let f=0;f<nf;f++){const k=ri(1,nT-1),[fx,fy]=pts[k],sd=rnd()<.5?-1:1;twig(fx,fy,sd*(.35+rnd()*.55),10+rnd()*13,1.35-k/nT*.6);}
+  const nu=kind===2?ri(2,3)+(lv>>1):rnd()<.35?1:0;for(let q=0;q<nu;q++){const k=ri(1,nT-1);ups.push({lx:pts[k][0],ly:pts[k][1],h:12+rnd()*14,lean:(rnd()-.5)*.7,w:1.6-rnd()*.5,fork:rnd()<.7?{t:.55+rnd()*.25,a:(rnd()<.5?-1:1)*(.5+rnd()*.4),l:4+rnd()*6}:null});}   // twigs pointing up: they stand in front of whatever is behind them
   if(kind===3){const[ex,ey]=pts[nT];for(let q=0;q<14;q++)leaves.push([ex-4+(rnd()-.5)*12,ey+(rnd()-.5)*10,rnd()*TAU,ri(0,2)]);}
-  const hp=ri(4,10)+(long?2:0);
-  return{x,y,a:rnd()*TAU,L,segs,nT,ups,leaves,kind,long,n:ri(3,5)+(long?3:0),hp,dmg:0,tone:46+rnd()*18,yard:false};}
+  const hp=ri(4,10)+lv;
+  return{x,y,a:rnd()*TAU,L,segs,nT,ups,leaves,kind,long,lv,n:ri(3,5)+lv*2,hp,dmg:0,tone:46+rnd()*18,yard:false};}
+function branchBlocked(b){const c=Math.cos(b.a),s=Math.sin(b.a);   // would any of the bough sit in a wall, fence or tree?
+  for(let k=0;k<b.nT;k++){const g=b.segs[k],n=Math.max(1,Math.ceil(Math.hypot(g[2]-g[0],g[3]-g[1])/5)),w=g[4]*.5;
+    for(let q=0;q<=n;q++){const lx=g[0]+(g[2]-g[0])*q/n,ly=g[1]+(g[3]-g[1])*q/n,x=b.x+c*lx-s*ly,y=b.y+s*lx+c*ly,i=Math.floor(x/TS),j=Math.floor(y/TS);
+      if(x<20||y<20||x>MW*TS-20||y>MH*TS-20)return true;
+      for(let jj=j-1;jj<=j+1;jj++)for(let ii=i-1;ii<=i+1;ii++){const t=tAt(ii,jj);if(t===TT){if(Math.hypot(x-(ii*TS+8),y-(jj*TS+8))<RT+w+1)return true;}else if(BM[t]&&t!==TST){if(x>ii*TS-w&&x<ii*TS+TS+w&&y>jj*TS-w&&y<jj*TS+TS+w)return true;}}}}
+  for(const P of props)if(Math.hypot(P.x-b.x,P.y-b.y)<b.L*.6+P.r)for(let k=0;k<=b.nT;k++){const u=k/b.nT-.5;if(Math.hypot(b.x+c*u*b.L-P.x,b.y+s*u*b.L-P.y)<P.r+2)return true;}
+  return false;}
+function pushBranches(e,r){   // the bough is solid: walking into it shoves it along at a third of your pace; jammed against a tree or wall it holds like a fence
+  for(const b of bigBranches){if(b===player.drag)continue;const dx=e.x-b.x,dy=e.y-b.y,R=b.L*.6+r+6;if(dx*dx+dy*dy>R*R)continue;const c=Math.cos(b.a),s=Math.sin(b.a),lx=dx*c+dy*s,ly=-dx*s+dy*c;
+    let bd=1e9,bx=0,by=0,bw=0;for(let k=0;k<b.nT;k++){const g=b.segs[k],ex=g[2]-g[0],ey=g[3]-g[1],l2=ex*ex+ey*ey||1,u=clamp(((lx-g[0])*ex+(ly-g[1])*ey)/l2,0,1),px=g[0]+ex*u,py=g[1]+ey*u,d=Math.hypot(lx-px,ly-py);if(d-g[4]*.5<bd){bd=d-g[4]*.5;bx=px;by=py;bw=g[4]*.5;}}
+    const ov=r-bd;if(ov<=0)continue;
+    let nlx=lx-bx,nly=ly-by;const nl=Math.hypot(nlx,nly);if(nl<1e-3){nlx=0;nly=ly>=0?1:-1;}else{nlx/=nl;nly/=nl;}
+    const nx=nlx*c-nly*s,ny=nlx*s+nly*c,cwx=b.x+c*bx-s*by,cwy=b.y+s*bx+c*by;
+    // the branch gives way by a third of the overlap (heavy: you move at 1/3 speed), with a little turn about its middle
+    const push=ov/3,mx=-nx*push,my=-ny*push,rx=cwx-b.x,ry=cwy-b.y,da=clamp((rx*my-ry*mx)/(rx*rx+ry*ry+b.L*b.L/12)*.3,-.012,.012);
+    const ox=b.x,oy=b.y,oa=b.a;b.x+=mx;b.y+=my;b.a+=da;let moved=push;
+    if(branchBlocked(b)){b.a=oa;if(branchBlocked(b)){b.x=ox;b.y=oy;moved=0;}}
+    e.x+=nx*(ov-moved);e.y+=ny*(ov-moved);if(moved>0)b.yard=inYard(b.x,b.y);}}
 function bigPt(b,lx,ly){const c=Math.cos(b.a),s=Math.sin(b.a);return[b.x+c*lx-s*ly,b.y+s*lx+c*ly];}
 function onBranch(e,r=3){for(const b of bigBranches){if(b===player.drag||b.yard)continue;const dx=e.x-b.x,dy=e.y-b.y;if(dx*dx+dy*dy>(b.L*.6+20)**2)continue;const c=Math.cos(b.a),s=Math.sin(b.a),lx=dx*c+dy*s,ly=-dx*s+dy*c;
     for(let k=0;k<b.nT;k++){const g=b.segs[k],ex=g[2]-g[0],ey=g[3]-g[1],l2=ex*ex+ey*ey,u=clamp(((lx-g[0])*ex+(ly-g[1])*ey)/l2,0,1);if(Math.hypot(g[0]+ex*u-lx,g[1]+ey*u-ly)<g[4]+r)return b;}}return null;}
@@ -917,8 +937,7 @@ function updatePlay(dt){mournTick(dt);updateFlyWood(dt);
    player.lock=lz;const free=!player.carry&&!player.drag&&!player.wood&&!player.hidden;
    if(player.charging&&!player.swingT){player.charging=false;player.autoCh=false;}}
   let calm=player.combat<=0;if(calm)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
-  const onBr=onBranch(player);
-  const spd=(onBr?1/3:1)*64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.snakeBite?.5:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
+  const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.snakeBite?.5:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
   if(player.fly){flyTick(dt);}
   else if(player.rollT>0){player.rollT-=dt;const rs=80/.42;moveCircle(player,player.rollDx*rs*dt,player.rollDy*rs*dt,5);player.vx=player.rollDx*rs*.4;player.vy=player.rollDy*rs*.4;player.facing=Math.atan2(player.rollDy,player.rollDx);}
@@ -1032,8 +1051,8 @@ function updateZombies(dt){
         if(D.t>=D.T){z.state='chase';z.aware=5;z.down=null;}break;}
     }
     if(z.burn>0&&sp>0)sp/=3;
-    {const br=onBranch(z,2);if(br){if(sp>0)sp/=3;z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.brT=1.2+rnd()*.6;bigDamage(br,1/3,Math.cos(z.a),Math.sin(z.a),.5);}}   // a zombie wading the branch claws at it: a third of a player's blow
-      else if(Math.hypot(z.vx,z.vy)>60&&(z.state==='down'||z.state==='stagger'||z.state==='fall')&&onBranch({x:z.x+z.vx*dt*2,y:z.y+z.vy*dt*2},2)){z.vx*=.08;z.vy*=.08;if(z.down)z.down.landed=true;shake=Math.max(shake,1.5);}}   // flung into another branch: it stops dead against it
+    {const br=onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.brT=1.2+rnd()*.6;bigDamage(br,1/3,Math.cos(z.a),Math.sin(z.a),.5);}}   // a zombie wading the branch claws at it: a third of a player's blow
+}
     if(tx!==null&&sp>0&&(z.state==='chase'||z.state==='search')){const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,r=antiStuck(z,ex/el,ey/el,dt);if(r[2]){tx=z.x+r[0]*20;ty=z.y+r[1]*20;}}
     if(tx!==null){const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,k=Math.min(1,dt*6);z.vx+=(ex/el*sp-z.vx)*k;z.vy+=(ey/el*sp-z.vy)*k;}
     const ox=z.x,oy=z.y;moveCircle(z,z.vx*dt,z.vy*dt,5);
@@ -1226,7 +1245,7 @@ function updatePam(dt,mode){
   stepYardBot(p,gx,gy,p.urge>0?sp*1.5:sp,dt);
 }
 function growBranches(){bigBranches=bigBranches.filter(b=>b.yard||b===player?.drag);flyWood=[];   // a fresh fall of branches every night
-  for(let n=0;n<800&&bigBranches.filter(b=>!b.yard).length<18;n++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+8,y=((t/MW)|0)*TS+8;if(tiles[t]===TT||Math.hypot(x-home.cx,y-home.cy)<110)continue;if(bigBranches.some(b=>Math.hypot(b.x-x,b.y-y)<90))continue;if(player&&Math.hypot(player.x-x,player.y-y)<40)continue;bigBranches.push(makeBig(x,y));}}
+  for(let n=0;n<800&&bigBranches.filter(b=>!b.yard).length<18;n++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+8,y=((t/MW)|0)*TS+8;if(tiles[t]===TT||Math.hypot(x-home.cx,y-home.cy)<110)continue;if(bigBranches.some(b=>Math.hypot(b.x-x,b.y-y)<90))continue;if(player&&Math.hypot(player.x-x,player.y-y)<40)continue;const nb=makeBig(x,y);if(branchBlocked(nb))continue;bigBranches.push(nb);}}
 function bigHit(h,a,R,arc,pow){   // smash a fallen branch where the blow lands
   let best=null,bd=1e9;for(const b of bigBranches){if(b===player.drag)continue;const ca=Math.cos(b.a),sa=Math.sin(b.a);let dm=1e9,am=0;
     for(let k=-2;k<=2;k++){const px=b.x+ca*b.L*k/4.2,py=b.y+sa*b.L*k/4.2,d=Math.hypot(px-h.x,py-h.y);if(d<dm){dm=d;am=Math.atan2(py-h.y,px-h.x);}}
