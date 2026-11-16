@@ -99,7 +99,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v4.3</div>
+  <div class="ver">v4.4</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -107,7 +107,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.3</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v4.4</h3><ul>
+      <li>กิ่งไม้ใหญ่โดนไฟฉาย: สว่างชัดขึ้น ขอบเปลือกเรืองแสง มีแสงวั้บวิ่งตามกิ่ง · ลากกิ่งเดินเร็วเท่าเดินปกติ</li>
       <li>กิ่งไม้ใหญ่ผลักและหมุนได้อิสระ · ถ้าปลายข้างหนึ่งติดต้นไม้ ไปผลักตรงอื่น กิ่งจะหมุนรอบจุดที่ติดอยู่</li>
       <li>กิ่งไม้ใหญ่: ยาว 4 ระดับ × 4 แบบ · <b>เดินทะลุไม่ได้แล้ว</b> เดินชนจะดันกิ่งไปช้าๆ (ช้า 3 เท่า) กิ่งหมุนตามจุดที่ดัน · ถ้ากิ่งไปติดต้นไม้/กำแพง จะดันไม่ไปเป็นรั้วกั้น · ซอมบี้ก็ดันได้ และโดนกั้นเหมือนกัน</li>
       <li>กิ่งไม้ใหญ่ 4 แบบ (2.5D) บางกิ่งยาว 2 เท่า บางกิ่งมีกิ่งชี้ขึ้นบังของ · เกิดใหม่ทุกคืน · ยังลากได้</li>
@@ -523,7 +524,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='4.3';
+let useBot=true,bot=null,hero='fifa';const VERSION='4.4';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -941,7 +942,7 @@ function updatePlay(dt){mournTick(dt);updateFlyWood(dt);
    player.lock=lz;const free=!player.carry&&!player.drag&&!player.wood&&!player.hidden;
    if(player.charging&&!player.swingT){player.charging=false;player.autoCh=false;}}
   let calm=player.combat<=0;if(calm)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
-  const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.drag?.6:1)*(player.snakeBite?.5:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
+  const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(player.wood))*(player.snakeBite?.5:1)*(player.carry?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
   if(player.fly){flyTick(dt);}
   else if(player.rollT>0){player.rollT-=dt;const rs=80/.42;moveCircle(player,player.rollDx*rs*dt,player.rollDy*rs*dt,5);player.vx=player.rollDx*rs*.4;player.vy=player.rollDy*rs*.4;player.facing=Math.atan2(player.rollDy,player.rollDx);}
@@ -2594,12 +2595,13 @@ function drawObj(o,T,s,l){
     F(s,40,x-.6,yt,2.4,hh);F(s,40,x+8,yt,2.4,hh);F(s,118,x,yt,1.3,hh);F(s,118,x+8.6,yt,1.3,hh);for(let r=0;r<n;r++){F(s,30,x+1,yt+hh*(r+.6)/(n+.4)+.8,8,1);F(s,160,x+1,yt+hh*(r+.6)/(n+.4),8,1.4);}
     const v=lightAt(hs.si*TS+8,hs.sj*TS+10);F(l,v,x-.6,yt,10,hh);break;}
   case 26:{const q=o.q,x=q.x-camX,yb=q.y*K-camY,top=yb-ROOFH;F(s,46,x-1.3,top,2.6,ROOFH);F(s,112,x-.4,top,.8,ROOFH);F(l,lightAt(q.x,q.y+3),x-1.3,top,2.6,ROOFH);break;}
-  case 27:{const b=o.b,v=lightAt(b.x,b.y),lit=lampLit(b.x,b.y);if(b.shk>0)b.shk-=1/60;const jx=b.shk>0?(rnd()-.5)*1.6:0,ox=b.x;b.x+=jx;drawBig(s,b,null);drawBig(l,b,gray(Math.max(lit>.15?62:14,v)));
+  case 27:{const b=o.b,v=lightAt(b.x,b.y),lit=lampLit(b.x,b.y);if(b.shk>0)b.shk-=1/60;const jx=b.shk>0?(rnd()-.5)*1.6:0,ox=b.x;b.x+=jx;drawBig(s,b,null);drawBig(l,b,gray(Math.max(lit>.15?Math.min(200,90+lit*140):14,v)));
     if(lit>.15){const x0=b.x-camX,y0=b.y*K-camY,ca=Math.cos(b.a),sa=Math.sin(b.a);   // flashlight catches the bark, same as the small sticks
-      for(const c of[s,l]){c.save();c.translate(x0,y0);c.scale(1,K);c.rotate(b.a);c.strokeStyle=c===s?'rgb(236,200,140)':gray(Math.min(255,v+70));c.lineWidth=.9;c.lineCap='round';
+      for(const c of[s,l]){c.save();c.translate(x0,y0);c.scale(1,K);c.rotate(b.a);c.strokeStyle=c===s?'rgb(250,226,170)':gray(Math.min(255,v+120));c.lineWidth=1.3;c.lineCap='round';
         for(let k=0;k<b.nT;k++){const g=b.segs[k];c.beginPath();c.moveTo(g[0],g[1]-g[4]*.45);c.lineTo(g[2],g[3]-g[4]*.45);c.stroke();}
-        c.lineWidth=.6;for(let k=b.nT;k<b.segs.length;k+=2){const g=b.segs[k];c.beginPath();c.moveTo(g[0],g[1]-.4);c.lineTo(g[2],g[3]-.4);c.stroke();}c.restore();}
-      for(let k=0;k<3;k++){const ph=Math.sin(T*(4.6+k*1.5)+b.x*.31+k*2.3);if(ph<.5)continue;const tt=[-.32,.05,.36][k]*b.L,gx=x0+ca*tt,gy=y0+sa*tt*K-1.6,r=ph>.85?2:1;
+        c.lineWidth=.8;for(let k=b.nT;k<b.segs.length;k++){const g=b.segs[k];c.beginPath();c.moveTo(g[0],g[1]-.4);c.lineTo(g[2],g[3]-.4);c.stroke();}c.restore();}
+      {const sw=((T*.55+b.x*.013)%1.6)/1.2;if(sw<1){const tt=(sw-.5)*b.L,gx=x0+ca*tt,gy=y0+sa*tt*K-1.8;for(const c of[s,l]){c.fillStyle='rgba(255,255,255,.85)';c.fillRect(gx-2.5,gy-.6,5,1.2);c.fillRect(gx-.6,gy-2.5,1.2,5);c.fillStyle='#fff';c.fillRect(gx-1,gy-1,2,2);}}}   // a bright gleam runs down the bark: วั้บ
+      for(let k=0;k<5;k++){const ph=Math.sin(T*(4.6+k*1.5)+b.x*.31+k*2.3);if(ph<.35)continue;const tt=[-.4,-.2,.02,.22,.4][k]*b.L,gx=x0+ca*tt,gy=y0+sa*tt*K-1.6,r=ph>.85?2:1;
         for(const c of[s,l]){c.fillStyle='#fff';c.fillRect(gx-.5,gy-.5,1,1);if(r>1){c.fillRect(gx-1.5,gy-.5,1,1);c.fillRect(gx+.5,gy-.5,1,1);c.fillRect(gx-.5,gy-1.5,1,1);c.fillRect(gx-.5,gy+.5,1,1);}}}
       if(b.dmg){for(const c of[s,l]){c.fillStyle=c===s?'rgb(250,226,170)':'#fff';for(let k=0;k<Math.min(5,Math.ceil(b.dmg/b.hp*5));k++){const tt=(k-1)*.18*b.L;c.fillRect(x0+ca*tt-.5,y0+sa*tt*K-1.5,1,2);}}}}   // pale cracks where it was struck
     b.x=ox;break;}
