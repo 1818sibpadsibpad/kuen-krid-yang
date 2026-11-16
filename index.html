@@ -2197,7 +2197,7 @@ function eTube(A,B,rA,rB,col,bias){bias=bias||0;const a=proj(A),b=proj(B),dx=B[0
    const P=[C[0]+n[0]*r,C[1]+n[1]*r,C[2]+n[2]*r],s=proj(P),X=Math.round(s[0]),Y=Math.round(s[1]);
    if(X<0||Y<0||X>=W||Y>=H)continue;const dd=dot3(P,VD)+bias,ii=Y*W+X;if(dd>=EZB[ii]||DEP[ii]>P[1]+1)continue;   // hidden: don't bother shading it
    const c=col(n,P,bayer(X,Y),u);ePut(X,Y,c,dd,P[1]);}}}
-function eBall(C,r,col){const cam=[-VD[0],-VD[1],-VD[2]],rt=[1,0,0],dn=[0,cam[2],-cam[1]],st=0.5/Math.max(1,r);   // a ball joint: the camera-facing half of a sphere
+function eBall(C,r,col){const cam=[-VD[0],-VD[1],-VD[2]],rt=[1,0,0],dn=[0,cam[2],-cam[1]],st=0.72/Math.max(1,r);   // a ball joint: the camera-facing half of a sphere
  for(let b=-1;b<=1.001;b+=st)for(let a=-1;a<=1.001;a+=st){const q=a*a+b*b;if(q>1)continue;const c=Math.sqrt(1-q),n=[rt[0]*a+dn[0]*b+cam[0]*c,rt[1]*a+dn[1]*b+cam[1]*c,rt[2]*a+dn[2]*b+cam[2]*c],P=[C[0]+n[0]*r,C[1]+n[1]*r,C[2]+n[2]*r],s=proj(P),X=Math.round(s[0]),Y=Math.round(s[1]);
   if(X<0||Y<0||X>=W||Y>=H)continue;const dd=dot3(P,VD),ii=Y*W+X;if(dd>=EZB[ii]||DEP[ii]>P[1]+1)continue;ePut(X,Y,col(n,P,bayer(X,Y),0.5),dd,P[1]);}}
 function eTri(p0,p1,p2,col,bias){bias=bias||0;const a=proj(p0),b=proj(p1),c=proj(p2);
@@ -2253,39 +2253,40 @@ function drawRider(r,t){if(r.st==='gone'||!r.h)return;const N=r.nodes,Sh=N[0].p,
  {const mp=add3(hc,d,2.5);for(const dx of[0,1]){const s2=proj(mp),X=Math.round(s2[0])+dx,Y=Math.round(s2[1])+1,sh=elShade(d,mp,0,0,0,bayer(X,Y));ePut(X,Y,sh[0]+0.5<1.4?5:6,dot3(mp,VD)-1.5,mp[1]);}}}   // a wet red mouth working at the hide
 function drawElephant(t){const lx=0,ly=0,lz=0;elBasis();EZB.fill(1e9);const parts=elParts(),F=EL.F,S=EL.S,U=EL.U,O=EL.O,dl=[dot3(VD,F)/ES,dot3(VD,S)/ES,dot3(VD,U)/ES];
  const c0=proj(elW([2,0,18])),bxc=Math.round(c0[0]),byc=Math.round(c0[1]);
- for(const e of parts){const w=elW(xfF(e.ops,e.c)),p=proj(w);e.bx=p[0];e.by=p[1];e.br=Math.max(...e.r)*ES*1.25+2;}
+ for(const e of parts){const w=elW(xfF(e.ops,e.c)),p=proj(w);e.bx=p[0];e.by=p[1];e.br=Math.max(...e.r)*ES*1.25+2;e.rm=Math.min(e.r[0],e.r[1],e.r[2]);e.d2=e.ops?rotV(e.ops,dl,-1):dl;e.dd=[e.d2[0]/e.r[0],e.d2[1]/e.r[1],e.d2[2]/e.r[2]];e.da=dot3(e.dd,e.dd);}
  // body, head and spine
  let qx0=1e9,qx1=-1e9,qy0=1e9,qy1=-1e9;for(const e of parts){if(e.bx-e.br<qx0)qx0=e.bx-e.br;if(e.bx+e.br>qx1)qx1=e.bx+e.br;if(e.by-e.br<qy0)qy0=e.by-e.br;if(e.by+e.br>qy1)qy1=e.by+e.br;}
  qx0=Math.max(0,Math.floor(qx0));qx1=Math.min(W-1,Math.ceil(qx1));qy0=Math.max(0,Math.floor(qy0));qy1=Math.min(H-1,Math.ceil(qy1));const ZR=110*ELSC;
  for(let sy=qy0;sy<=qy1;sy++){const row=parts.filter(e=>Math.abs(sy-e.by)<=e.br);if(!row.length)continue;let rx0=1e9,rx1=-1e9;for(const e of row){if(e.bx-e.br<rx0)rx0=e.bx-e.br;if(e.bx+e.br>rx1)rx1=e.bx+e.br;}
   for(let sx=Math.max(qx0,Math.floor(rx0));sx<=Math.min(qx1,Math.ceil(rx1));sx++){if(DEP[sy*W+sx]>1e8)continue;
    const R0=[sx+camX,(sy+camY+ZK*ZR)/KG,ZR],rel=[R0[0]-O[0],R0[1]-O[1],R0[2]-O[2]],ol=[dot3(rel,F)/ES,dot3(rel,S)/ES,dot3(rel,U)/ES];
-   let best=1e9,E=null,bo=null,bd=null;
-   for(const e of row){if(Math.abs(sx-e.bx)>e.br)continue;const o2=e.ops?xfI(e.ops,ol):ol,d2=e.ops?rotV(e.ops,dl,-1):dl;
-    const oc=[(o2[0]-e.c[0])/e.r[0],(o2[1]-e.c[1])/e.r[1],(o2[2]-e.c[2])/e.r[2]],dd=[d2[0]/e.r[0],d2[1]/e.r[1],d2[2]/e.r[2]];
-    const a=dot3(dd,dd),b=2*dot3(oc,dd),c=dot3(oc,oc)-1,D=b*b-4*a*c;if(D<0)continue;const tt=(-b-Math.sqrt(D))/(2*a);if(tt<best){best=tt;E=e;bo=o2;bd=d2;}}
+   let best=1e9,E=null,b0=0,b1=0;const o0=ol[0],o1=ol[1],o2z=ol[2];
+   for(let k=0;k<row.length;k++){const e=row[k];if(Math.abs(sx-e.bx)>e.br)continue;const o_=e.ops,r_=e.r,c_=e.c;let p0=o0,p1=o1;if(o_){const x=o0-o_.tx,y=o1-o_.ty;p0=x*o_.ca+y*o_.sa;p1=-x*o_.sa+y*o_.ca;}
+    const c0_=(p0-c_[0])/r_[0],c1_=(p1-c_[1])/r_[1],c2_=(o2z-c_[2])/r_[2],dd=e.dd,b=2*(c0_*dd[0]+c1_*dd[1]+c2_*dd[2]),c=c0_*c0_+c1_*c1_+c2_*c2_-1,D=b*b-4*e.da*c;if(D<0)continue;const tt=(-b-Math.sqrt(D))/(2*e.da);if(tt<best){best=tt;E=e;b0=p0;b1=p1;}}
    if(!E)continue;
-   const hp=[bo[0]+bd[0]*best,bo[1]+bd[1]*best,bo[2]+bd[2]*best];
+   const bd=E.d2,hp=[b0+bd[0]*best,b1+bd[1]*best,o2z+bd[2]*best];
    const nl0=[(hp[0]-E.c[0])/(E.r[0]*E.r[0]),(hp[1]-E.c[1])/(E.r[1]*E.r[1]),(hp[2]-E.c[2])/(E.r[2]*E.r[2])],nm=Math.hypot(...nl0),nl=rotV(E.ops,nl0,1);
    let n;
    if(E.k=='vert')n=[(F[0]*nl[0]+S[0]*nl[1]+U[0]*nl[2])/nm,(F[1]*nl[0]+S[1]*nl[1]+U[1]*nl[2])/nm,(F[2]*nl[0]+S[2]*nl[1]+U[2]*nl[2])/nm];
    else{   // one continuous hide, not a pile of ellipsoids: where two masses meet, their normals melt into each other
-    const Lp=[ol[0]+dl[0]*best,ol[1]+dl[1]*best,ol[2]+dl[2]*best];let ax=0,ay=0,az=0;
-    for(const e of row){if(e.k=='vert'||Math.abs(sx-e.bx)>e.br+4)continue;const pe=e.ops?xfI(e.ops,Lp):Lp,qx=(pe[0]-e.c[0])/e.r[0],qy=(pe[1]-e.c[1])/e.r[1],qz=(pe[2]-e.c[2])/e.r[2],m=Math.hypot(qx,qy,qz)||1e-6,f=(m-1)*Math.min(e.r[0],e.r[1],e.r[2]);
-     if(e!==E&&f>3.2)continue;const w=e===E?1:Math.exp(-0.9*Math.max(0,f));let g=[qx/e.r[0],qy/e.r[1],qz/e.r[2]];const gl=Math.hypot(g[0],g[1],g[2])||1;g=[g[0]/gl,g[1]/gl,g[2]/gl];if(e.ops)g=rotV(e.ops,g,1);ax+=g[0]*w;ay+=g[1]*w;az+=g[2]*w;}
+    const L0=ol[0]+dl[0]*best,L1=ol[1]+dl[1]*best,L2=ol[2]+dl[2]*best;let ax=0,ay=0,az=0;
+    for(let k=0;k<row.length;k++){const e=row[k];if(e.k=='vert'||Math.abs(sx-e.bx)>e.br+4)continue;const o_=e.ops,r_=e.r,c_=e.c;let p0=L0,p1=L1;if(o_){const x=L0-o_.tx,y=L1-o_.ty;p0=x*o_.ca+y*o_.sa;p1=-x*o_.sa+y*o_.ca;}
+     const qx=(p0-c_[0])/r_[0],qy=(p1-c_[1])/r_[1],qz=(L2-c_[2])/r_[2],m=Math.sqrt(qx*qx+qy*qy+qz*qz)||1e-6;let w=1;if(e!==E){const f=(m-1)*e.rm;if(f>3.2)continue;w=f>0?Math.exp(-0.9*f):1;}
+     let g0=qx/r_[0],g1=qy/r_[1],g2=qz/r_[2];const gl=w/(Math.sqrt(g0*g0+g1*g1+g2*g2)||1);if(o_){const t=g0*o_.ca-g1*o_.sa;g1=g0*o_.sa+g1*o_.ca;g0=t;}ax+=g0*gl;ay+=g1*gl;az+=g2*gl;}
     const al=Math.hypot(ax,ay,az)||1;ax/=al;ay/=al;az/=al;n=[F[0]*ax+S[0]*ay+U[0]*az,F[1]*ax+S[1]*ay+U[1]*az,F[2]*ax+S[2]*ay+U[2]*az];}
    const P=[R0[0]+VD[0]*best,R0[1]+VD[1]*best,R0[2]+VD[2]*best];if(P[2]<-0.5)continue;const o=bayer(sx,sy),sh=elShade(n,P,lx,ly,lz,o);
    const c=E.k=='vert'?(hp[2]<E.c[2]-0.6?bone(sh[0]-0.2):(sh[1]>0.55?8:bone(sh[0]+0.25+(nl[2]>0.5?0.3:0)))):hideCol(E,hp,nl,sh[0],sh[1],o);
    ePut(sx,sy,c,dot3(P,VD),P[1]);}}
  // legs: column-like, wrinkled, toenails on the front of each foot
  const legCol=(n,P,o,u)=>{const sh=elShade(n,P,lx,ly,lz,o);let v=sh[0]-0.09*(0.5+0.5*Math.sin(P[2]*1.1));return sh[1]>0.55?8:ramp(v);};
- for(const L of EL.legs){eTube(L.H,L.K,3.5*ES,3.1*ES,legCol);eTube(L.K,L.A,3.1*ES,2.8*ES,legCol);eBall(L.K,3.1*ES,legCol);eBall(L.A,2.9*ES,legCol);eBall(L.H,3.5*ES,legCol);eTube(L.A,L.P,3.0*ES,3.4*ES,(n,P,o)=>ramp(elShade(n,P,lx,ly,lz,o)[0]-0.15));
+ for(const L of EL.legs){eTube(L.H,L.K,3.5*ES,3.1*ES,legCol);eTube(L.K,L.A,3.1*ES,2.8*ES,legCol);eBall(L.K,3.1*ES,legCol);eBall(L.A,2.9*ES,legCol);eTube(L.A,L.P,3.0*ES,3.4*ES,(n,P,o)=>ramp(elShade(n,P,lx,ly,lz,o)[0]-0.15));
   if(!EL.dead)for(const s of [-1,0,1]){const tn_=add3(add3(L.P,EL.F,3.2*ES),EL.S,s*1.3*ES);tn_[2]=0.9*ES;const q=proj(tn_),nv=elShade(elDir([0.8,0,0.6]),tn_,0,0,0,bayer(Math.round(q[0]),Math.round(q[1])));ePut(Math.round(q[0]),Math.round(q[1]),nv[1]>0.5?8:bone(nv[0]+0.3),dot3(tn_,VD)-1,tn_[1]);}}
  // exposed shoulder blades and hip bones: they rock with the leg beneath them
  const surfY=(x,z)=>9.4*Math.sqrt(Math.max(0,1-(x/15.5)**2-((z-18)/10.4)**2));
  const onBody=(x,z,sd,lift)=>(x>-2?elFW:elW)([x,sd*(surfY(x,z)+lift),z]);
  const chaikin=q=>{const o=[];for(let i=0;i<q.length;i++){const a=q[i],b=q[(i+1)%q.length];o.push([a[0]*0.75+b[0]*0.25,a[1]*0.75+b[1]*0.25],[a[0]*0.25+b[0]*0.75,a[1]*0.25+b[1]*0.75]);}return o;};
- const blade=(poly,sd)=>{const R=chaikin(chaikin(poly)),m=R.length;let cx=0,cz=0;for(const q of R){cx+=q[0];cz+=q[1];}cx/=m;cz/=m;const nrm=elDir([0,sd*0.9,0.45]);
+ const blade=(poly,sd)=>{const nrm=elDir([0,sd*0.9,0.45]);if(dot3(nrm,VD)>0.35)return;   // on the far side: nothing to see
+  const R=chaikin(poly),m=R.length;let cx=0,cz=0;for(const q of R){cx+=q[0];cz+=q[1];}cx/=m;cz/=m;
   const fan=(k,lift,col,bias)=>{const O=R.map(q=>onBody(cx+(q[0]-cx)*k,cz+(q[1]-cz)*k,sd,lift)),M=R.map(q=>onBody(cx+(q[0]-cx)*k*0.5,cz+(q[1]-cz)*k*0.5,sd,lift+0.25)),C=onBody(cx,cz,sd,lift+0.35);
    for(let i=0;i<m;i++){const i2=(i+1)%m;eTri(C,M[i],M[i2],col,bias);eTri(M[i],O[i],O[i2],col,bias);eTri(M[i],O[i2],M[i2],col,bias);}};
   fan(1.3,0.35,(P,o)=>{const v=elShade(nrm,P,lx,ly,lz,o)[0];return o>0.3?Math.min(1,ramp(v)):red(v);},0);                    // torn flesh around the bone
