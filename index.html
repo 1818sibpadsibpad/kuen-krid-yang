@@ -100,7 +100,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v5.7</div>
+  <div class="ver">v5.8</div>
   <div id="mMain" class="mscr">
     <div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div>
@@ -108,7 +108,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v5.7</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v5.8</h3><ul>
+      <li>ช้างบังแสง: ส่องไฟฉาย/แสงกระสือ/กองไฟใส่ช้าง ด้านหลังช้างเป็นเงามืดทอดยาวเหมือนเงาต้นไม้</li>
       <li>ช้างส่วนที่ไม่โดนแสงมืดสนิท · โดนแสงกระสือแดงเฉพาะไฮไลท์ด้านที่รับแสง ไม่มีสีพื้นด้านๆ ทั้งตัวแล้ว</li>
       <li>ช้างโดนแสงกระสือ: ตัวยังมืด แดงเฉพาะส่วนที่เป็นไฮไลท์ · ซอมบี้บนหลังช้างเพิ่มเป็น <b>6 ตัว</b></li>
       <li>หัวช้างเรียวขึ้น โหนกหัวสองลอน คิ้วหนา ตาเฉียงดุ งายาวโค้ง · หูติดกับหัวแล้ว · ช้างเริ่มจากมุมบนขวาของแผนที่ แล้วเดินเข้ามาหา</li>
@@ -541,7 +542,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='5.7';
+let useBot=true,bot=null,hero='fifa';const VERSION='5.8';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -828,6 +829,7 @@ function fireShadows(){if(blackout)return;const F=fireP;if(!F||F.F<=0)return;con
   for(const z of zombies)if(!z.up&&!z.st)cast(z.x,z.y,z.crawl||z.state==='down'?4:2.8,z.crawl||z.state==='down'?4:12);
   for(const p of woodPiles)cast(p.x,p.y,6,7);for(const p of props)cast(p.x,p.y,4,7);if(postPos)cast(postPos.x,postPos.y,1.4,18);
   for(const w of woodItems)cast(w.x,w.y,2.4,3);for(const b of bigBranches)cast(b.x,b.y,8,4);for(const n of snakes)if(n.st!=='fly')cast(n.x,n.y,1.5,3);
+  for(const q of e5Circles())cast(q[0],q[1],q[2],110);
   c.restore();}
 function scatterWood(n){for(let k=0;k<n*6&&n>0;k++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+2+rnd()*12,y=((t/MW)|0)*TS+2+rnd()*12;if(inYard(x,y)||tiles[t]===TT)continue;if(home&&Math.hypot(x-home.cx,y-home.cy)<90)continue;woodItems.push({x,y,a:rnd()*TAU,v:(rnd()*10)|0});n--;}}
 function woodNear(){if(state!=='play'||player.carry||player.hidden)return false;for(const w of woodItems)if(Math.abs(w.x-player.x)<33&&Math.abs(w.y-player.y)<33&&Math.hypot(w.x-player.x,w.y-player.y)<32)return true;return false;}
@@ -2420,6 +2422,8 @@ function elHit(kind,x,y,r,vx,vy,strike){if(!E5||state!=='play'||E5.ph!=='fight')
 function e5Fling(ux,uy,v){const P=player;if(P.fly||state!=='play')return;if(P.drag)toggleDrag();P.fly={ph:'air',t:0,vx:ux*v,vy:uy*v,h:3,vh:150,b:0};P.charging=false;P.swingT=0;P.kickT=0;P.kdash=null;P.lunge=null;shake=Math.max(shake,8);sfx.kick();sfx.sweep();slowT=.25;toast('โดนฟาดกระเด็น!');}
 /* ---- movement and body ---- */
 function e5Body(){const c=ELE.elW([2,0,18]);return{x:c[0],y:c[1],fx:Math.cos(ELE.EL.yaw),fy:Math.sin(ELE.EL.yaw)};}
+function e5Circles(){if(!E5||!E5.el||E5.ph==='pre'||E5.ph==='talk')return[];const b=e5Body(),h=ELE.headW(),o=[];   // its bulk on the ground, as a row of discs, for anything that wants to throw its shadow
+  for(const[t,r]of[[-40,21],[-19,25],[3,25],[25,23]])o.push([b.x+b.fx*t,b.y+b.fy*t,r]);o.push([(b.x+b.fx*36+h[0])/2,(b.y+b.fy*36+h[1])/2,17],[h[0],h[1],13]);return o;}
 function e5Closest(px,py){const b=e5Body(),t=clamp((px-b.x)*b.fx+(py-b.y)*b.fy,-22*ELSC,26*ELSC),cx=b.x+b.fx*t,cy=b.y+b.fy*t,dx=px-cx,dy=py-cy,d=Math.hypot(dx,dy)||1,r=Math.min(d,13*ELSC);return{x:cx+dx/d*r,y:cy+dy/d*r,cx,cy,d};}
 function e5Move(e,dx,dy,ghost){let nx=clamp(e.x+dx,90,MW*TS-90),ny=clamp(e.y+dy,90,MH*TS-90);const fx=Math.cos(ELE.EL.yaw),fy=Math.sin(ELE.EL.yaw);
   if(!ghost){const hit=(cx,cy)=>{for(const o of[-22,6,36])for(const w of[-16,0,16]){const x=cx+fx*o-fy*w,y=cy+fy*o+fx*w,t=tAt(Math.floor(x/TS),Math.floor(y/TS));if((BM[t]&&t!==TT&&t!==TFN)||t===TST)return true;}return false;};   // house walls stop it; a bamboo fence does not
@@ -2703,6 +2707,7 @@ function krShadows(c){const L=KRL;if(!L||L.v<.05)return;const R=135;c.save();c.f
     for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){const t=tAt(i,j);if(t===TT)cast(i*TS+8,j*TS+8,RT+.4,160,1.25,3.4);else if(t===TFN)cast(i*TS+8,j*TS+8,6.5,46,1.1,1.7);}}
   for(const C of clumps){if(Math.abs(C.x-L.x)>R+20||Math.abs(C.y-L.y)>R+20)continue;for(const p of C.plants)if(!p.cut)cast(p.x,p.y,2.6,22+(p.h||30)*.5);}
   for(const p of woodPiles)cast(p.x,p.y,6,9);for(const p of props)cast(p.x,p.y,4,9);if(postPos)cast(postPos.x,postPos.y,1.4,22);for(const b of bigBranches)cast(b.x,b.y,8,5);
+  for(const q of e5Circles())cast(q[0],q[1],q[2],150,1.25,2.2);
   c.restore();}
 // แสงของกระสือ — ดึงเฉพาะส่วนแสงออกมาจาก test.html ให้ใช้แยกได้ ไม่พึ่งตัวแปรอื่นในเกม
 //
@@ -3220,6 +3225,8 @@ function renderLight(){
     h.fillStyle='#000';
     for(const z of zombies){if(z.lit<=0)continue;const dx=z.x-L.x,dy=z.y-L.y,d=Math.hypot(dx,dy);if(d<3)continue;const w=z.crawl?5:6.8,nx=-dy/d*w,ny=dx/d*w,k=(d+(z.crawl?60:190))/d;
       const p1x=z.x+nx,p1y=z.y+ny,p2x=z.x-nx,p2y=z.y-ny;h.beginPath();h.moveTo(p1x,p1y);h.lineTo(p2x,p2y);h.lineTo(L.x+(p2x-L.x)*k,L.y+(p2y-L.y)*k);h.lineTo(L.x+(p1x-L.x)*k,L.y+(p1y-L.y)*k);h.closePath();h.fill();}
+    for(const q of e5Circles()){const dx=q[0]-L.x,dy=q[1]-L.y,d=Math.hypot(dx,dy);if(d<q[2]+2||d>330)continue;const w=q[2],nx=-dy/d*w,ny=dx/d*w,k=(d+300)/d;   // the elephant blocks the beam: behind it lies as dark as behind a tree
+      const p1x=q[0]+nx,p1y=q[1]+ny,p2x=q[0]-nx,p2y=q[1]-ny;h.beginPath();h.moveTo(p1x,p1y);h.lineTo(p2x,p2y);h.lineTo(L.x+(p2x-L.x)*k,L.y+(p2y-L.y)*k);h.lineTo(L.x+(p1x-L.x)*k,L.y+(p1y-L.y)*k);h.closePath();h.fill();h.beginPath();h.arc(q[0]+dx/d*w*.5,q[1]+dy/d*w*.5,w*.86,0,TAU);h.fill();}
     h.setTransform(1,0,0,1,0,0);
     c.globalCompositeOperation='lighter';c.drawImage(hc,0,0);}
   for(const hh of[player,bot]){if(!hh)continue;const b=lampBeam(hh);if(b){c.globalCompositeOperation='lighter';const g=c.createLinearGradient(b.lx,b.ly,b.mx,b.my);g.addColorStop(0,gray(200*b.i));g.addColorStop(.6,gray(90*b.i));g.addColorStop(1,gray(30*b.i));beamPath(c,b);c.fillStyle=g;c.fill();}}
