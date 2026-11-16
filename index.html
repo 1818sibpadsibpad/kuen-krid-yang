@@ -117,7 +117,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v6.2</div>
+  <div class="ver">v6.3</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i>เวอร์ชันแนวนอน<i></i></div></div>
@@ -125,7 +125,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v6.2</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v6.3</h3><ul>
+      <li>หลอดเลือดกระสือย้ายขึ้นไปอยู่ใต้นาฬิกา ไม่บังหน้าจอ · หมุนจอแล้วปุ่มไม่หลุดออกนอกเฟรม (เกมวัดขนาดจอใหม่หลังหมุนเสร็จ) · แนวนอนเลิกขยับปุ่มหลบเอง เพราะแอปเว้นขอบให้อยู่แล้ว</li>
       <li><b>เมนูเวอร์ชันแนวนอน</b>ออกแบบใหม่: ชื่อเกมซ้าย ปุ่มขวา พอดีจอ ไม่ล้น · แนวนอนในแอป Claude ภาพเกมเต็มจอ ไม่ถูกดันลงแล้ว เฉพาะปุ่มหยุด/ข้อมูลมุมบนขยับหลบปุ่มของแอปและรอยบากจอ</li>
       <li>ระยะ "เลื่อนจอลงจากขอบบน" แยกเก็บแนวตั้งกับแนวนอน: ปรับตอนแนวตั้งจะไม่ทำให้แนวนอนเลื่อนตาม (ค่าเดิมที่เคยตั้งไว้ใช้กับแนวตั้ง ส่วนแนวนอนกลับเป็นค่าเริ่มต้น)</li>
       <li>ช้างป่าโครงกระดูกสมจริงขึ้น (ยังมีหนังหุ้ม): เบ้าตากลมลึกแบบกะโหลก มีประกายแดงอยู่ข้างใน · ขมับบุ๋ม ร่องจมูกกะโหลก ปลอกงา · ซี่โครงนูนใต้หนัง · สันหลังเป็นแง่งกระดูกเรียงถี่ · ขาผอมเห็นข้อเข่า/ข้อเท้า มีเล็บเท้า · มีแผ่นกระดูกเชิงกรานโผล่ที่ก้นเหมือนสะบัก</li>
@@ -563,7 +564,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='6.2';
+let useBot=true,bot=null,hero='fifa';const VERSION='6.3';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2955,8 +2956,8 @@ function resize(){
   TOPI=topInset();document.documentElement.style.setProperty('--topi',TOPI+'px');for(const c of[gameCv,ui])c.style.top=TOPI+'px';ui.style.height=(innerHeight-TOPI)+'px';
   SWc=innerWidth;SHc=innerHeight-TOPI;P=Math.max(2,Math.min(SWc,SHc)/140);
   {const land=innerWidth>innerHeight,touch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
-   UTOP=land&&TOPI<30&&inApp()?1:0;                     // landscape in the Claude app: its close / share buttons float over the top corners
-   SAFEX=land&&touch&&Math.min(innerWidth,innerHeight)<600?36:0;}          // landscape phone: keep HUD clear of the notch on either side
+   UTOP=0;                     // landscape in the Claude app: its close / share buttons float over the top corners
+   SAFEX=0;}   // without viewport-fit=cover iOS (and the Claude app) already keep the page clear of the notch and the app's bar          // landscape phone: keep HUD clear of the notch on either side
   vw=Math.ceil(SWc/P);vh=Math.ceil(SHc/P);
   gameCv.width=vw;gameCv.height=vh;gameCv.style.width=vw*P+'px';gameCv.style.height=vh*P+'px';
   sc=mk(vw,vh);sctx=sc.getContext('2d',{willReadFrequently:true});lc=mk(vw,vh);lctx=lc.getContext('2d',{willReadFrequently:true});hc=mk(vw,vh);hctx=hc.getContext('2d');sctx.imageSmoothingEnabled=false;lctx.imageSmoothingEnabled=false;
@@ -3658,8 +3659,8 @@ function drawUI(dt){
     uiText('เก็บฟืน กล้วย งู ให้พร้อม',SWc/2,SHc*.2+86*s,11*s,'center',FG);
     const sb=skipCountBox();u.fillStyle=BG;u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle='#d01c22';u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้ามนับถอยหลัง ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',FG);}
   if(E5&&state==='play'&&(E5.ph==='fight'||E5.ph==='fall')){const e=E5.el,xl=Math.max(SWc*.44,150*s),w=SWc-12*s-xl,x0=xl,y0=58*s,f=Math.max(0,e.hp/e.hpMax);u.fillStyle=BG;u.fillRect(x0-3,y0-3,w+6,14*s+6);u.fillStyle='#3a2a1c';u.fillRect(x0,y0,w,14*s);u.fillStyle=e.hitF>0?'#fff':'#b08a4a';u.fillRect(x0,y0,w*f,14*s);uiText('ช้างป่า',x0+w/2,y0+7*s,11*s,'center',FG);}
-  if(N3&&state==='play')BS.forEach((B,bi)=>{if(!(N3.ph==='fight'||B.state==='dead'&&B.t<4))return;const w=Math.min(280*s,SWc*.72),x0=SWc/2-w/2,y0=(164+bi*22)*s,f=Math.max(0,B.hp/B.hpMax);u.fillStyle=BG;u.fillRect(x0-3,y0-3,w+6,14*s+6);u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,14*s);u.fillStyle=B.hitF>0?'#fff':'#d01c22';u.fillRect(x0,y0,w*f,14*s);
-    uiText(BS.length>1?'กระสือ '+(bi+1):'กระสือ',SWc/2,y0+7*s,10*s,'center',FG);
+  if(N3&&state==='play')BS.forEach((B,bi)=>{if(!(N3.ph==='fight'||B.state==='dead'&&B.t<4))return;const w=Math.min(230*s,SWc*.6),x0=SWc/2-w/2,y0=(55+bi*17)*s,bh=12*s,f=Math.max(0,B.hp/B.hpMax);u.fillStyle=BG;u.fillRect(x0-2,y0-2,w+4,bh+4);u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,bh);u.fillStyle=B.hitF>0?'#fff':'#d01c22';u.fillRect(x0,y0,w*f,bh);   // right under the clock, out of the way of the fight
+    uiText(BS.length>1?'กระสือ '+(bi+1):'กระสือ',SWc/2,y0+bh/2,9*s,'center',FG);
     if(!B.hidden&&B.state!=='dead'){const hx=(B.x-camX)*P,hy=(B.y*K-camY-B.rig.R.hz*.75-16)*P,tt=performance.now()/1000;
       if(B.q>0){u.save();u.font=`900 ${26*s}px system-ui,sans-serif`;u.textAlign='center';u.lineWidth=5*s;u.strokeStyle=BG;u.strokeText('?',hx,hy);u.fillStyle='#ffd27a';u.fillText('?',hx,hy);u.restore();}
       else if(B.state==='stare1'||B.state==='stare2'){uiText(B.state==='stare2'?'!! ระวังพุ่งชน':'!! ระวังพุ่ง',hx,hy,13*s*(1+.1*Math.sin(tt*20)),'center','#ff3b30');}
@@ -3968,7 +3969,9 @@ function frame(now){
   drawUI(dt);drawDF();
   requestAnimationFrame(frame);
 }
-addEventListener('resize',resize);for(const ev of['fullscreenchange','webkitfullscreenchange'])document.addEventListener(ev,()=>setTimeout(resize,60));
+addEventListener('resize',resize);addEventListener('orientationchange',()=>{for(const d of[80,250,600,1200])setTimeout(resize,d);});if(window.visualViewport)visualViewport.addEventListener('resize',()=>setTimeout(resize,30));
+setInterval(()=>{if(innerWidth!==SWc||innerHeight-TOPI!==SHc)resize();},400);   // if the picture ever ends up a different size from the screen, fix it
+for(const ev of['fullscreenchange','webkitfullscreenchange'])document.addEventListener(ev,()=>setTimeout(resize,60));
 resize();newGame();demoStart();syncHero();
 requestAnimationFrame(frame);
 </script>
