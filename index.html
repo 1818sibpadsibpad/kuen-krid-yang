@@ -125,7 +125,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v7.0</div>
+  <div class="ver">v7.1</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -133,7 +133,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.0</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.1</h3><ul>
+      <li>คัตซีนคุยกันรอบกองไฟคืนที่ 3 ทำใหม่: กล้องโคลสอัปหน้าคนพูดตัวใหญ่ในแสงกองไฟ (มุมเดียวกับภาพปก) เพื่อนนั่งฟังอยู่ด้านหลัง ต้นยางข้างๆ · ประโยคสุดท้ายแพรวาชี้ไปที่แสงสีแดงกลางสวน</li>
       <li>เอาปุ่ม "ลากกิ่ง" แบบเดิมออก (ใช้ปุ่มจับไม้แทน) · กิ่งที่จับไปชนอะไร สิ่งนั้นขึ้นขอบสีขาวให้เห็นในที่มืด พร้อมคำว่า "ติดสิ่งกีดขวาง" สีเหลืองอ่อน 1 วิ</li>
       <li>ซอมบี้ทุบกิ่งไม้ใหญ่ด้วยการชูสองแขนแล้วตบลงมา: กิ่งสั่น เศษไม้เล็กๆ ฟุ้ง เสียงทุบไม้สุ่ม 4 แบบ · ถ้าซอมบี้ทุบจนกิ่งพัง กิ่งแตกกระจุย และซอมบี้ทุกตัวที่อยู่ใกล้สตัน 1 วิ</li>
       <li>กิ่งที่กำลังจับมีขอบเรืองแสงสีขาวบางๆ · หมุนกิ่งแล้วตัวละครหันมองตามทิศที่หมุน (ไฟฉายกวาดตาม)</li>
@@ -583,7 +584,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='7.0';
+let useBot=true,bot=null,hero='fifa';const VERSION='7.1';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1987,19 +1988,21 @@ function updateCine(dt){
   else if(C.step==='eat'){for(const s of seatSpots())s.e.facing=s.a;
     if(C.t>.6&&C.bites<1||C.t>1.8&&C.bites<2){C.bites++;for(const e of[player,...npcs()]){if(food()>0)eatFood(1);if(e.hunger!==undefined)e.hunger=0;}tn('square',500,700,.05,.06);nz(.08,'bandpass',1500,700,.2,1.5);nz(.08,'bandpass',1300,600,.18,1.5,null,.15);}
     if(C.t>3.2){C.step='talk';C.t=0;C.said=0;}}
-  else if(C.step==='talk'){for(const s of seatSpots())if(C.said<4)s.e.facing=s.a;C.cam={x:F.x,y:F.y};
+  else if(C.step==='talk'){for(const s of seatSpots())if(C.said<4)s.e.facing=s.a;
+    {const o=gateOut(),sh=C.t<3.2?0:C.t<9.6?1:2;C.cam={x:F.x+o.x*230,y:F.y+o.y*230};
+     if(!C.cu||C.cu.sh!==sh){C.cu={sh,t:0,who:sh===1?jpSpeaker():(PWE()||jpSpeaker()),red:sh===2};cam.x=C.cam.x;cam.y=C.cam.y;}C.cu.t+=dt;}
     if(C.t>.2&&C.said<1){C.said=1;sayE(PWE(),'ซอมบี้หายไปไหนกันหมดคะ???');}
     if(C.t>3.2&&C.said<2){C.said=2;sayE(jpSpeaker(),'อ้าาาาาย ว่า……….');}
     if(C.t>6&&C.said<3){C.said=3;sayE(jpSpeaker(),'มันอาจสิมีแนวเป็นตาย้านกว่ากะได้เด้');}
     if(C.t>9.6&&C.said<4){C.said=4;const g=gatePos();sayE(PWE(),'นั่นแสงอะไรอ่ะ !!!!');if(praewa)praewa.point=2.5;sfx.screech(0);tn('sine',90,55,1.6,.25);}
     if(C.said>=4){const g=gatePos();for(const e of[player,...npcs()])e.facing=angLerp(e.facing,Math.atan2(g.y-e.y,g.x-e.x),dt*5);}
-    if(C.t>11.5)startIntro();}
+    if(C.t>11.8)startIntro();}
   else if(C.step==='intro')updateIntro(dt);
 }
 function skipCine(){if(state!=='n3cine'||!N3)return;if(e5Cine()){e5Skip();return;}tn('square',900,900,.04,.08);if(N3.step==='n6'){n6Begin();return;}
   if(N3.step!=='intro'){doStash();seatAll();if(fireP)fireP.F=Math.max(fireP.F,60);for(const e of[player,...npcs()])e.say=null;startIntro();}
   else beginFight();}
-function startIntro(){const C=N3;C.step='intro';C.t=0;const g=gatePos(),o=gateOut();seatAll();const gp=gatePos();for(const e of[player,...npcs()])e.facing=Math.atan2(gp.y-e.y,gp.x-e.x);
+function startIntro(){const C=N3;C.step='intro';C.t=0;C.cu=null;const g=gatePos(),o=gateOut();seatAll();const gp=gatePos();for(const e of[player,...npcs()])e.facing=Math.atan2(gp.y-e.y,gp.x-e.x);
   let tE=1e9;if(o.x>.01)tE=Math.min(tE,(MW*TS-40-g.x)/o.x);if(o.x<-.01)tE=Math.min(tE,(40-g.x)/o.x);if(o.y>.01)tE=Math.min(tE,(MH*TS-40-g.y)/o.y);if(o.y<-.01)tE=Math.min(tE,(40-g.y)/o.y);tE=Math.max(200,tE);
   const sx=g.x+o.x*tE,sy=g.y+o.y*tE;B=makeBoss(sx,sy);B.state='intro';C.from={x:sx,y:sy};C.to={x:g.x+o.x*46,y:g.y+o.y*46};C.path=introPath(C.from,C.to);C.plen=C.path.L[C.path.L.length-1];C.D=clamp(C.plen/62,9,16);C.cam={x:sx,y:sy-12};setBlackout(true);
   tn('sine',70,50,2.5,.3);nz(1.5,'bandpass',300,900,.12,2);}
@@ -3745,6 +3748,47 @@ function invPix(x,y){x=Math.round(x);y=Math.round(y);if(x<0||y<0||x>=vw||y>=vh)r
 function invLine(x0,y0,x1,y1,dotted){x0=Math.round(x0);y0=Math.round(y0);x1=Math.round(x1);y1=Math.round(y1);
   const dx=Math.abs(x1-x0),dy=-Math.abs(y1-y0),sx=x0<x1?1:-1,sy=y0<y1?1:-1;let e=dx+dy,n=0;
   for(let g=0;g<2000;g++){if(!dotted||((n>>1)&1)===0)invPix(x0,y0);n++;if(x0===x1&&y0===y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx;}if(e2<=dx){e+=dx;y0+=sy;}}}
+// ---- night-3 talk: close-up shots (the framing of the cover art: one face big in the firelight, the others behind, a trunk at the side)
+let CUB=null;const CUC=[0,1,2].map(()=>document.createElement('canvas')),CUX=CUC.map(c=>c.getContext('2d'));
+function cuBig(e,X,Y,s,lum,rim,T){const fx=e.x-camX,fy=e.y*K-camY,w=Math.ceil(80*s),h=Math.ceil(64*s);
+  for(const cv of CUC){if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}}
+  const[tc,ts,tr]=CUX;for(const c of CUX){c.setTransform(1,0,0,1,0,0);c.globalCompositeOperation='source-over';c.clearRect(0,0,w,h);}
+  const ox=w/2,oy=h-10*s,dr=(c,mono)=>{c.save();c.translate(ox,oy);c.scale(s,s);c.translate(-fx,-fy);drawP(c,T,mono,e);c.restore();};
+  dr(tc,null);ts.drawImage(CUC[0],0,0);ts.globalCompositeOperation='source-in';ts.fillStyle='#0a0908';ts.fillRect(0,0,w,h);
+  const x0=Math.round(X-ox),y0=Math.round(Y-oy),o=Math.max(1,Math.round(s/4));
+  for(const[dx,dy]of[[-o,0],[o,0],[0,-o],[0,o]])sctx.drawImage(CUC[1],x0+dx,y0+dy);sctx.drawImage(CUC[0],x0,y0);
+  tc.clearRect(0,0,w,h);dr(tc,gray(lum));for(const[dx,dy]of[[-o,0],[o,0],[0,-o],[0,o]])lctx.drawImage(CUC[1],x0+dx,y0+dy);lctx.drawImage(CUC[0],x0,y0);
+  if(rim){const[rx,ry,col,rl]=rim;tr.drawImage(CUC[1],0,0);tr.globalCompositeOperation='destination-out';tr.drawImage(CUC[1],-rx,-ry);tr.globalCompositeOperation='source-in';tr.fillStyle=col;tr.fillRect(0,0,w,h);
+    sctx.drawImage(CUC[2],x0,y0);tr.fillStyle=gray(rl);tr.fillRect(0,0,w,h);lctx.drawImage(CUC[2],x0,y0);}}
+function cuTrunk(X,Y,s,v,lum){const x0=Math.round(X-9*s),y0=Math.round(Y-71*s);sctx.imageSmoothingEnabled=false;
+  sctx.drawImage(trunkCv[v],x0,y0,Math.round(18*s),Math.round(74*s));lctx.fillStyle=gray(lum);lctx.fillRect(Math.round(X-3*s),y0,Math.round(6*s),Math.round(72*s));lctx.fillRect(Math.round(X+2*s),Math.round(Y-11*s),Math.round(6*s),Math.round(6*s));
+  sctx.fillStyle='rgb(236,122,30)';lctx.fillStyle=gray(Math.min(255,lum+60));const rw=Math.max(1,Math.round(s*.6));sctx.fillRect(Math.round(X-3*s),y0,rw,Math.round(72*s));lctx.fillRect(Math.round(X-3*s),y0,rw,Math.round(72*s));}
+function cuDraw(T){const C=N3,U=C.cu;if(!U||!U.who)return;const port=vh>vw*1.15,bar=Math.round(vh*.89),fl=.9+.07*Math.sin(T*11)+.03*Math.sin(T*23.7);
+  // the plantation behind sinks into the dark, the fire lights the near ground
+  lctx.save();lctx.globalCompositeOperation='multiply';lctx.fillStyle=gray(110);lctx.fillRect(0,0,vw,vh);lctx.restore();
+  const fX=Math.round(vw*(port?.16:.27)),g=lctx.createRadialGradient(fX,bar,4,fX,bar,vw*(port?1:.6));g.addColorStop(0,gray(140*fl));g.addColorStop(1,'rgba(0,0,0,0)');
+  lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(0,0,vw,vh);lctx.restore();
+  const who=U.who,PW=!!who.pw,hh=PW?.56:(who.jp||who.pm)?.88:1;
+  let s=port?vw/15.5:vh*.85/18.5;if(PW)s*=1.3;s*=1+.05*Math.min(1,U.t/4);   // a slow push in
+  const X=Math.round(vw*(port?.56:.6)),Y=Math.round(port?bar+2*s:bar+11*hh*s)+Math.sin(T*2.1)*.2*s,S0=port?vw/15.5:vh*.85/18.5;
+  // rubber trees: far ones first, then a big one at the side
+  const TRS=port?[[.32,.2,-.16,40],[.74,.24,-.14,45],[.9,.5,-.05,70],[.06,.8,0,120]]:[[.42,.3,-.18,45],[.78,.36,-.14,55],[.9,.6,-.04,75],[.07,.85,.08,125]];
+  for(const[tx,ts,ty,tl]of TRS)cuTrunk(vw*tx,bar+ty*vh,S0*ts,(tx*10|0)&3,Math.round(tl*fl));
+  // the red light between the trees
+  if(U.red){const rx=Math.round(vw*(port?.3:.22)),ry=Math.round(vh*(port?.34:.3)),pu=.7+.3*Math.sin(T*9),r=3+2.5*pu;sctx.fillStyle='rgb(205,22,24)';sctx.beginPath();sctx.arc(rx,ry,r*1.9,0,TAU);sctx.fill();
+    const rg=lctx.createRadialGradient(rx,ry,0,rx,ry,r*1.9);rg.addColorStop(0,'#fff');rg.addColorStop(.35,gray(200*pu));rg.addColorStop(1,'rgba(0,0,0,0)');lctx.fillStyle=rg;lctx.fillRect(rx-r*2,ry-r*2,r*4,r*4);}
+  // the others, further back in the firelight
+  const oth=[player,...npcs()].filter(e=>e&&e!==who&&!e.dead).slice(0,3),pos=port?[[.17,.52],[.88,.5],[.36,.4]]:[[.18,.52],[.92,.52],[.38,.4]];
+  oth.map((e,i)=>[e,pos[i]]).sort((a,b)=>a[1][1]-b[1][1]).forEach(([e,k])=>{const eh=e.pw?.56:(e.jp||e.pm)?.88:1,ss=S0*k[1]*(e.pw?1.3:1),ox=Math.round(vw*k[0]),
+    oy=Math.round(port?bar-vh*.05*(1-k[1])-vh*.03+2*ss:bar+10*eh*ss),c=cuClone(e,U.red?2.8:(ox<X?.9:2.25));
+    cuBig(c,ox,oy,ss,Math.round(172*fl),[-Math.max(1,Math.round(ss/3)),0,'rgb(236,122,30)',230],T);});
+  // the one who speaks
+  const face=U.red?2.55:(Math.PI/2+.4),c=cuClone(who,face);if(U.red)c.point=2;
+  cuBig(c,X,Math.round(Y),s,Math.round(232+20*fl),[-Math.max(1,Math.round(s/3)),0,'rgb(236,122,30)',255],T);
+  CUB=port?{e:who,x:X,y:Y-27.5*hh*s}:{e:who,x:X+(U.red?-1:1)*6*hh*s,y:Y-21*hh*s};
+  // the campfire in the foreground
+  for(const[c,lp]of[[sctx,false],[lctx,true]]){c.save();c.translate(fX,bar+1);c.scale(S0*.32,S0*.32);flames(c,0,0,6,2.6,15*fl,T,7,lp,2.2);c.restore();}}
+function cuClone(e,face){return Object.assign({},e,{facing:face,moveAmt:0,phase:0,swingT:0,kickT:0,charging:false,climb:null,sit:false,roof:0,up:false,ev:0,down:false,hidden:false,carry:null,drag:null,grip:null,eatT:0,pokeT:0,thrust:0,lift:0,fly:null,rollT:0});}
 function composite(){
   const s=sctx.getImageData(0,0,vw,vh).data,l=lctx.getImageData(0,0,vw,vh).data,o=out32;let i=0;
   for(let y=0;y<vh;y++){const by=((y+camY)&7)<<3;for(let x=0;x<vw;x++,i++){const p=i<<2,r=s[p],L=l[p],bt=B01[by|((x+camX)&7)],gg=s[p+1],bb=s[p+2];if(r>gg+60&&gg>bb+60){const t=LUTR[(r*L)>>8],b=t|0;o[i]=PO[(t-b)>bt?b+1:b];}else if(gg>bb+60&&r>bb+60){const t=LUTR[(gg*L)>>8],b=t|0;o[i]=PY[(t-b)>bt?b+1:b];}else if(r>gg+45){const t=LUTR[(r*L)>>8],b=t|0;o[i]=PR[(t-b)>bt?b+1:b];}else if(r>gg+20&&gg>bb+14){const t=LUTG[(r*L)>>8],b=t|0;o[i]=PB[(t-b)>bt?b+1:b];}else{const t=LUTG[(r*L)>>8],b=t|0;o[i]=PG[(t-b)>bt?b+1:b];}}}
@@ -3769,11 +3813,11 @@ function uiCircle(x,y,r,fill,lw){u.beginPath();u.arc(x,y,r,0,TAU);if(fill){u.fil
 function uiText(t,x,y,size,align,col){u.font=`bold ${size}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;u.textAlign=align||'center';u.textBaseline='middle';u.lineJoin='round';
   if(!col||col===UIRED){u.lineWidth=4;u.strokeStyle=BG;u.strokeText(t,x,y);}u.fillStyle=col||FG;u.fillText(t,x,y);}
 function drawBubbles(s){
-  for(const sp of[bot,praewa,pam,player]){if(!sp||!sp.say||sp.gone)continue;const isP=sp===praewa,isM=sp===pam,isH=sp===player,bx=(sp.x-camX)*P,by=(sp.y*K-camY-elevOf(sp)-(isP?14:24))*P,fs=11*s;u.font=`bold ${fs}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;
+  for(const sp of[bot,praewa,pam,player]){if(!sp||!sp.say||sp.gone)continue;const isP=sp===praewa,isM=sp===pam,isH=sp===player,cub=CUB&&CUB.e===sp;if(CUB&&!cub)continue;const bx=cub?CUB.x*P:(sp.x-camX)*P,by=cub?CUB.y*P:(sp.y*K-camY-elevOf(sp)-(isP?14:24))*P,fs=(cub?13:11)*s;u.font=`bold ${fs}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;
     const tw=u.measureText(sp.say.text).width,w=tw+14*s,h=fs+12*s,x=clamp(bx-w/2,6,SWc-w-6),y=by-h-8*s,al=Math.min(1,sp.say.t*3);u.globalAlpha=al;
     u.fillStyle=BG;u.fillRect(x-2,y-2,w+4,h+4);u.fillStyle=FG;u.fillRect(x,y,w,h);u.beginPath();u.moveTo(bx-4*s,y+h);u.lineTo(bx+4*s,y+h);u.lineTo(bx,y+h+7*s);u.closePath();u.fill();
     u.fillStyle=BG;u.textAlign='center';u.textBaseline='middle';u.fillText(sp.say.text,x+w/2,y+h/2+1);u.globalAlpha=1;
-    uiText(isH?HERONAME():isP?'แพรวา':isM?'แพม':BOTNAME(),bx,by+4*s,9*s,'center',isH?'#9ec8ff':isP?'#ff9ec8':isM?'#ffb347':'#5fd35f');}
+    uiText(isH?HERONAME():isP?'แพรวา':isM?'แพม':BOTNAME(),cub?x+w/2:bx,cub?y-9*s:by+4*s,(cub?11:9)*s,'center',isH?'#9ec8ff':isP?'#ff9ec8':isM?'#ffb347':'#5fd35f');}
 }
 function skipCountBox(){const s=UIS,w=168*s,h=34*s;return{x:SWc/2-w/2,y:SHc*.2+104*s,w,h};}
 function skipBox(){const s=UIS,w=150*s,h=34*s;return{x:SWc-w-12*s,y:Math.max(8*s,SHc*.11/2-h/2),w,h};}
@@ -4174,7 +4218,7 @@ function frame(now){
   const frz=DF&&state==='play';if(DF){DF.t+=rdt;if(DF.t>3.2)DF=null;}
   if(frz){}else if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else if(state==='swap')updateSwap(dt);else computeLights();
   if(state!=='paused'&&state!=='layout'&&!frz)updateCommon(dt);
-  if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);composite();{const ey=E5&&E5.el?E5.el.y:1e9;for(const b of BS)if(!b.hidden&&b.y<=ey)b.rig.blit(out32,KRMAP);e5Blit(out32);for(const b of BS)if(!b.hidden&&b.y>ey)b.rig.blit(out32,KRMAP);}postFX();octx.putImageData(outImg,0,0);}
+  if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);CUB=null;if(state==='n3cine'&&N3&&N3.cu)cuDraw(T);composite();{const ey=E5&&E5.el?E5.el.y:1e9;for(const b of BS)if(!b.hidden&&b.y<=ey)b.rig.blit(out32,KRMAP);e5Blit(out32);for(const b of BS)if(!b.hidden&&b.y>ey)b.rig.blit(out32,KRMAP);}postFX();octx.putImageData(outImg,0,0);}
   drawUI(dt);drawDF();
   requestAnimationFrame(frame);
 }
