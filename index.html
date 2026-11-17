@@ -125,7 +125,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v6.7</div>
+  <div class="ver">v6.8</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -133,7 +133,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v6.7</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v6.8</h3><ul>
+      <li>กิ่งที่กำลังจับมีขอบเรืองแสงสีขาวบางๆ · หมุนกิ่งแล้วตัวละครหันมองตามทิศที่หมุน (ไฟฉายกวาดตาม)</li>
       <li><b>ปุ่ม "จับไม้"</b> (ขึ้นเมื่ออยู่ใกล้กิ่งไม้ใหญ่): กดค้างเพื่อจับกิ่งตรงจุดที่ยืน ผลัก/ดึงตามตัวช้าๆ · หมุนนิ้วรอบปุ่มแบบคันโยก = หมุนกิ่ง (ช้ากว่าการหันตัว 2 เท่า) · กิ่งที่จับอยู่กันซอมบี้ได้ทันที · ตอนลาก/จับ ตัวละครก้มใช้สองมือจับ · ปลายกิ่งเล็กๆ สั่นเด้งแข็งๆ ตอนขยับ หมุน หรือโดนทุบ (คอม: H จับ, Z/C หมุน)</li>
       <li>คนปีนข้ามกิ่งไม้ใหญ่ได้เอง (ผู้เล่นและบอท) แค่เดินเข้าไป ตัวละครจะเท้ามือแล้วเหวี่ยงขาข้าม · ซอมบี้/มอนสเตอร์ยังข้ามไม่ได้ ใช้ลากมาทำรั้วได้ · ตีซอมบี้ข้ามรั้วกิ่งไม้ กิ่งไม่เสียหาย · ทุบกิ่งได้เฉพาะตอนไม่มีศัตรูอยู่ใกล้</li>
       <li>ปุ่มเปลี่ยนอาวุธย้ายมาซ้ายกลางจอ · คืนที่ 6 มีคัตซีนเปิด: กระสือ 2 ตัวโผล่ที่ขอบสวน คาบซอมบี้แย่งกันจนฉีกขาดสองท่อน (ท่อนบนยังคลานต่อ) แล้วบุกเข้ามา</li>
@@ -580,7 +581,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='6.7';
+let useBot=true,bot=null,hero='fifa';const VERSION='6.8';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -827,6 +828,7 @@ function drawBig(c,b,mono){const M=col=>mono||col,t=b.tone,BR=v=>`rgb(${v+26|0},
   const wb=b.wob||0,bf=x=>{const u=x/(b.L/2);return u>.15?wb*((u-.15)/.85)**2:0;},SG=wb?b.segs.map(g=>[g[0],g[1]+bf(g[0]),g[2],g[3]+bf(g[2]),g[4]]):b.segs;   // the thin end flexes, the butt stays put
   if(!mono){c.save();c.scale(1,K);c.rotate(b.a);c.strokeStyle='rgba(0,0,0,.45)';c.lineCap='round';for(let k=0;k<b.nT;k++){const g=SG[k];c.lineWidth=g[4]+2.4;c.beginPath();c.moveTo(g[0]+1,g[1]+1.6);c.lineTo(g[2]+1,g[3]+1.6);c.stroke();}c.restore();}   // contact shadow
   c.translate(0,-1.4);c.scale(1,K);c.rotate(b.a);c.lineCap='round';   // lifted a little off the ground: 2.5D
+  if(player.grip&&player.grip.b===b){c.strokeStyle=mono?'rgb(240,240,240)':'#ffffff';for(const g of SG){c.lineWidth=g[4]+2.3;c.beginPath();c.moveTo(g[0],g[1]);c.lineTo(g[2],g[3]);c.stroke();}}   // the one in your hands: a thin glowing rim
   c.strokeStyle=M('#0d0a07');for(const g of SG){c.lineWidth=g[4]+1;c.beginPath();c.moveTo(g[0],g[1]);c.lineTo(g[2],g[3]);c.stroke();}
   c.strokeStyle=M(BR(t));for(const g of SG){c.lineWidth=g[4];c.beginPath();c.moveTo(g[0],g[1]);c.lineTo(g[2],g[3]);c.stroke();}
   c.strokeStyle=M(BR(t-22));c.lineWidth=.8;for(let k=0;k<b.nT;k++){const g=SG[k];c.beginPath();c.moveTo(g[0],g[1]+g[4]*.32);c.lineTo(g[2],g[3]+g[4]*.32);c.stroke();}   // shaded underside
@@ -840,7 +842,7 @@ function gripNear(){if(state!=='play'||player.carry||player.drag||player.grip||p
   return best;}
 function startGrip(pid){const q=gripNear();if(!q)return false;const b=q.b,c=Math.cos(b.a),s=Math.sin(b.a),wx=b.x+c*q.gl[0]-s*q.gl[1],wy=b.y+s*q.gl[0]+c*q.gl[1];
   let hx=wx-player.x,hy=wy-player.y;const d=Math.hypot(hx,hy)||1;const R=7;hx=hx/d*R;hy=hy/d*R;   // hands an arm's length away, on that spot of the bough
-  player.grip={b,gl:q.gl,hx,hy,tgt:b.a,pid,fa:null,lx:player.x,ly:player.y};b.yard=false;
+  player.grip={b,gl:q.gl,hx,hy,tgt:b.a,pid,fa:null,lx:player.x,ly:player.y,f0:Math.atan2(hy,hx),rot:0};b.yard=false;
   // snap the bough so the grabbed spot sits in the hands
   b.x=player.x+hx-(c*q.gl[0]-s*q.gl[1]);b.y=player.y+hy-(s*q.gl[0]+c*q.gl[1]);if(branchBlocked(b)){b.x=wx-(c*q.gl[0]-s*q.gl[1]);b.y=wy-(s*q.gl[0]+c*q.gl[1]);player.grip.hx=wx-player.x;player.grip.hy=wy-player.y;}
   b.wv=(b.wv||0)+40;nz(.2,'lowpass',700,200,.25,1);tn('sine',110,80,.08,.2);return true;}
@@ -852,8 +854,8 @@ function gripTick(dt){const G=player.grip;if(!G)return;const b=G.b;if(!bigBranch
   if(keys.KeyZ)G.tgt-=dt*2.3;if(keys.KeyC)G.tgt+=dt*2.3;
   const oa=b.a,ox=b.x,oy=b.y,Hx=player.x+G.hx,Hy=player.y+G.hy,place=a=>{const c=Math.cos(a),s=Math.sin(a);b.a=a;b.x=Hx-(c*G.gl[0]-s*G.gl[1]);b.y=Hy-(s*G.gl[0]+c*G.gl[1]);};
   let d=angDiff(b.a,G.tgt);const mx=2.3*dt;d=clamp(d,-mx,mx);   // turns at half the speed you turn yourself
-  place(b.a+d);
-  if(branchBlocked(b)){place(oa);G.tgt=oa+clamp(angDiff(oa,G.tgt),-.3,.3);if(branchBlocked(b)){player.x=G.lx;player.y=G.ly;const Hx2=player.x+G.hx,Hy2=player.y+G.hy,c=Math.cos(oa),s=Math.sin(oa);b.a=oa;b.x=Hx2-(c*G.gl[0]-s*G.gl[1]);b.y=Hy2-(s*G.gl[0]+c*G.gl[1]);if(branchBlocked(b)){b.x=ox;b.y=oy;}}}
+  place(b.a+d);G.rot+=d;
+  if(branchBlocked(b)){place(oa);G.rot-=d;G.tgt=oa+clamp(angDiff(oa,G.tgt),-.3,.3);if(branchBlocked(b)){player.x=G.lx;player.y=G.ly;const Hx2=player.x+G.hx,Hy2=player.y+G.hy,c=Math.cos(oa),s=Math.sin(oa);b.a=oa;b.x=Hx2-(c*G.gl[0]-s*G.gl[1]);b.y=Hy2-(s*G.gl[0]+c*G.gl[1]);if(branchBlocked(b)){b.x=ox;b.y=oy;}}}
   // zombies the bough sweeps into are shoved out of the way, never through it
   for(const z of zombies){if(z.dieOnLand)continue;pushBranches(z,4);}
   const mv=Math.hypot(b.x-ox,b.y-oy);if(mv>.2&&rnd()<dt*8)nz(.1+rnd()*.08,'lowpass',380+rnd()*300,160,.12,1);
@@ -1079,7 +1081,7 @@ function updatePlay(dt){frameN++;wobTick(Math.max(dt,1e-3));mournTick(dt);update
     else if(player.charging){tgt=autoAim();rate=10;}
     else if(ml>.15){tgt=Math.atan2(my,mx);rate=9;}
     else if(!player.hidden&&!player.drag&&!player.grip){const a=autoAim();if(a!==player.facing){tgt=a;rate=8;}}   // standing still: turn to face whatever is closing in
-    if(player.grip){tgt=Math.atan2(player.grip.hy,player.grip.hx);rate=14;}   // hands on the bough: keep facing it
+    if(player.grip){tgt=player.grip.f0+player.grip.rot;rate=14;}   // hands on the bough: your view swings round with it, like the look button
     if(tgt!==null)player.facing=angLerp(player.facing,tgt,dt*rate);
   }
   flickNext-=dt;if(flickNext<=0){flickT=.5+rnd()*.5;flickNext=18+rnd()*25;}
