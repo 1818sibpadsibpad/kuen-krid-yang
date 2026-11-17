@@ -125,7 +125,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v6.8</div>
+  <div class="ver">v6.9</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -133,7 +133,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v6.8</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v6.9</h3><ul>
+      <li>ซอมบี้ทุบกิ่งไม้ใหญ่ด้วยการชูสองแขนแล้วตบลงมา: กิ่งสั่น เศษไม้เล็กๆ ฟุ้ง เสียงทุบไม้สุ่ม 4 แบบ · ถ้าซอมบี้ทุบจนกิ่งพัง กิ่งแตกกระจุย และซอมบี้ทุกตัวที่อยู่ใกล้สตัน 1 วิ</li>
       <li>กิ่งที่กำลังจับมีขอบเรืองแสงสีขาวบางๆ · หมุนกิ่งแล้วตัวละครหันมองตามทิศที่หมุน (ไฟฉายกวาดตาม)</li>
       <li><b>ปุ่ม "จับไม้"</b> (ขึ้นเมื่ออยู่ใกล้กิ่งไม้ใหญ่): กดค้างเพื่อจับกิ่งตรงจุดที่ยืน ผลัก/ดึงตามตัวช้าๆ · หมุนนิ้วรอบปุ่มแบบคันโยก = หมุนกิ่ง (ช้ากว่าการหันตัว 2 เท่า) · กิ่งที่จับอยู่กันซอมบี้ได้ทันที · ตอนลาก/จับ ตัวละครก้มใช้สองมือจับ · ปลายกิ่งเล็กๆ สั่นเด้งแข็งๆ ตอนขยับ หมุน หรือโดนทุบ (คอม: H จับ, Z/C หมุน)</li>
       <li>คนปีนข้ามกิ่งไม้ใหญ่ได้เอง (ผู้เล่นและบอท) แค่เดินเข้าไป ตัวละครจะเท้ามือแล้วเหวี่ยงขาข้าม · ซอมบี้/มอนสเตอร์ยังข้ามไม่ได้ ใช้ลากมาทำรั้วได้ · ตีซอมบี้ข้ามรั้วกิ่งไม้ กิ่งไม่เสียหาย · ทุบกิ่งได้เฉพาะตอนไม่มีศัตรูอยู่ใกล้</li>
@@ -581,7 +582,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='6.8';
+let useBot=true,bot=null,hero='fifa';const VERSION='6.9';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1174,8 +1175,10 @@ function updateZombies(dt){
         if(D.t>=D.T){z.state='chase';z.aware=5;z.down=null;tornUp(z);}break;}
     }
     if(z.burn>0&&sp>0)sp/=3;
-    {const br=onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.brT=1.2+rnd()*.6;bigDamage(br,1/3,Math.cos(z.a),Math.sin(z.a),.5);}}   // a zombie wading the branch claws at it: a third of a player's blow
-}
+    if(z.slam){const S=z.slam;S.t+=dt;sp=0;z.vx*=.6;z.vy*=.6;if(!bigBranches.includes(S.b)||!(z.state==='chase'||z.state==='search'||z.state==='wander'))z.slam=null;else{z.a=angLerp(z.a,S.a,dt*12);
+      if(!S.hit&&S.t>=.4){S.hit=true;slamHit(z,S.b);}if(S.t>=.66)z.slam=null;}}
+    {const br=!z.slam&&!z.crawl&&onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.brT=1.2+rnd()*.6;z.slam={t:0,b:br,a:Math.atan2(br.y-z.y,br.x-z.x),hit:false};}}}
+    if(z.crawl){const br=onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search')){z.brT=1.4+rnd()*.6;bigDamage(br,1/3,Math.cos(z.a),Math.sin(z.a),.5,true);woodKnock(br,z);}}}   // a zombie wading the branch claws at it: a third of a player's blow
     if(tx!==null&&sp>0&&(z.state==='chase'||z.state==='search')){const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,r=antiStuck(z,ex/el,ey/el,dt);if(r[2]){tx=z.x+r[0]*20;ty=z.y+r[1]*20;}}
     if(tx!==null){const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,k=Math.min(1,dt*6);z.vx+=(ex/el*sp-z.vx)*k;z.vy+=(ey/el*sp-z.vy)*k;}
     const ox=z.x,oy=z.y;moveCircle(z,z.vx*dt,z.vy*dt,5);
@@ -1255,7 +1258,7 @@ function updateCommon(dt){
     if(rnd()<dt*3*(P.hs||1))sparks.push({x:P.x+(rnd()-.5)*8,y:P.y+(rnd()-.5)*4,h:10,vx:(rnd()-.5)*8,vy:(rnd()-.5)*4,vh:10+rnd()*12,life:1.5+rnd()*1.5,ash:1});
     if(rnd()<dt*13*(P.hs||1))sparks.push({x:P.x+(rnd()-.5)*5,y:P.y+(rnd()-.5)*3,h:5,vx:(rnd()-.5)*10,vy:(rnd()-.5)*6,vh:18+rnd()*26,life:.7+rnd()*.9});
     if(d<140&&rnd()<dt*2.5)nz(.04+rnd()*.05,'highpass',2500+rnd()*3000,1500,.05+.12*(1-d/140),1,clamp((P.x-player.x)/140,-1,1));}
-  for(let i=sparks.length-1;i>=0;i--){const sp=sparks[i];if(sp.L0===undefined)sp.L0=sp.life;sp.life-=dt;sp.h+=sp.vh*dt;sp.vh*=sp.ash?.97:.985;sp.vx+=(rnd()-.5)*60*dt;sp.x+=sp.vx*dt+Math.sin(sp.life*9+i)*.2;sp.y+=sp.vy*dt;if(sp.life<=0)sparks.splice(i,1);}
+  for(let i=sparks.length-1;i>=0;i--){const sp=sparks[i];if(sp.L0===undefined)sp.L0=sp.life;sp.life-=dt;if(sp.chip){sp.vh-=320*dt;if(sp.h<0){sp.h=0;sp.vh=Math.abs(sp.vh)*.25;sp.vx*=.4;sp.vy*=.4;}}sp.h+=sp.vh*dt;sp.vh*=sp.ash?.97:.985;sp.vx+=(rnd()-.5)*60*dt;sp.x+=sp.vx*dt+Math.sin(sp.life*9+i)*.2;sp.y+=sp.vy*dt;if(sp.life<=0)sparks.splice(i,1);}
   shake*=Math.exp(-7*dt);if(shake<.05)shake=0;
   let tx=player.x,ty=player.y;
   if(DEMO){tx=DEMO.cx;ty=DEMO.cy;}
@@ -1391,13 +1394,24 @@ function bigHit(h,a,R,arc,pow){   // smash a fallen branch where the blow lands
   if(!best)return false;const b=best;b.dmg=(b.dmg||0)+1;b.shk=.45;b.shkA=1.6+pow;b.wv=(b.wv||0)+(rnd()<.5?-1:1)*(70+pow*40);const ux=Math.cos(a),uy=Math.sin(a);if(b.hp0)dustPuff(b.hp0[0],b.hp0[1],8+pow*4,ux,uy);shake=Math.max(shake,2.5);sfx.kick();
   for(let k=0;k<6;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.6,y:b.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*40,vy:(rnd()-.5)*16,vh:15+rnd()*25,life:.4+rnd()*.4,ash:1});
   if(b.dmg>=b.hp){smashBranch(b,ux,uy,pow);}else toast(b.hp-b.dmg<=2?'กิ่งใกล้แตกแล้ว!':'ทุบกิ่งไม้!');return true;}
-function bigDamage(b,amt,ux,uy,pow){b.dmg=(b.dmg||0)+amt;b.shk=.3;b.shkA=.9;b.wv=(b.wv||0)+(rnd()<.5?-1:1)*(45+(pow||1)*25);for(let k=0;k<3;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.5,y:b.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*30,vy:(rnd()-.5)*12,vh:10+rnd()*20,life:.4,ash:1});if(near(b,220))nz(.06,'lowpass',700,200,.12,1);if(b.dmg>=b.hp)smashBranch(b,ux,uy,pow);}
+function woodKnock(b,src){if(!near(src||b,260))return;const v=(rnd()*4)|0,p=-((src||b).x-player.x)/220;   // four kinds of thump: dull, cracking, hollow, splintery
+  if(v===0){nz(.14,'lowpass',620,130,.42,1,p);tn('sine',150,62,.12,.34,p);}
+  else if(v===1){nz(.05,'bandpass',2200,900,.32,4,p);tn('triangle',240,110,.08,.24,p);nz(.09,'lowpass',500,150,.22,1,p,.012);}
+  else if(v===2){tn('sine',270,175,.13,.3,p);tn('sine',410,260,.08,.15,p);nz(.06,'lowpass',950,300,.22,1,p);}
+  else{nz(.2,'bandpass',950,320,.3,2,p);tn('square',92,58,.06,.07,p);nz(.04,'highpass',3200,2400,.12,1,p,.03);}}
+function woodChips(x,y,n,ux,uy){for(let k=0;k<n;k++){const a=rnd()*TAU,sp=15+rnd()*55;sparks.push({x:x+(rnd()-.5)*4,y:y+(rnd()-.5)*3,h:3+rnd()*2,vx:Math.cos(a)*sp+ux*20,vy:Math.sin(a)*sp*.6+uy*20,vh:30+rnd()*60,life:.7+rnd()*.7,chip:1,c:(rnd()*3)|0});}}
+function slamHit(z,b){const c=Math.cos(b.a),s=Math.sin(b.a),dx=z.x-b.x,dy=z.y-b.y,u=clamp(dx*c+dy*s,-b.L/2,b.L/2),hx=b.x+c*u,hy=b.y+s*u,ux=Math.cos(z.a),uy=Math.sin(z.a);   // both fists come down on the wood
+  b.wv=(b.wv||0)+(rnd()<.5?-1:1)*95;b.shk=.4;b.shkA=1.8;woodChips(hx,hy,9,ux,uy);dustPuff(hx,hy,5,ux,uy);woodKnock(b,z);if(near(z,200))shake=Math.max(shake,1.2);
+  bigDamage(b,1/3,ux,uy,.5,true);}
+function bigDamage(b,amt,ux,uy,pow,byZ){b.dmg=(b.dmg||0)+amt;b.shk=.3;b.shkA=.9;b.wv=(b.wv||0)+(rnd()<.5?-1:1)*(45+(pow||1)*25);for(let k=0;k<3;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.5,y:b.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*30,vy:(rnd()-.5)*12,vh:10+rnd()*20,life:.4,ash:1});if(near(b,220))nz(.06,'lowpass',700,200,.12,1);if(b.dmg>=b.hp)smashBranch(b,ux,uy,pow,byZ);}
 let flyWood=[],dusts=[];
 function dustPuff(x,y,n,ux=0,uy=0){for(let k=0;k<n;k++){const a=rnd()*TAU,sp=6+rnd()*22;dusts.push({x,y,h:1+rnd()*4,vx:Math.cos(a)*sp+ux*14,vy:Math.sin(a)*sp*.6+uy*8,vh:6+rnd()*14,r:1.2+rnd()*1.6,t:0,T:.7+rnd()*.8,g:150+rnd()*60|0});}}
 function updateDust(dt){for(let i=dusts.length-1;i>=0;i--){const d=dusts[i];d.t+=dt;if(d.t>=d.T){dusts.splice(i,1);continue;}const f=Math.exp(-3*dt);d.vx*=f;d.vy*=f;d.vh*=f;d.x+=d.vx*dt;d.y+=d.vy*dt;d.h+=d.vh*dt;d.r+=dt*3.2;}}
 function updateFlyWood(dt){for(let i=flyWood.length-1;i>=0;i--){const w=flyWood[i];w.vh-=260*dt;w.h+=w.vh*dt;w.a+=w.av*dt;const nx=w.x+w.vx*dt,ny=w.y+w.vy*dt;if(!BM[tAt(Math.floor(nx/TS),Math.floor(ny/TS))]||w.h>14){w.x=nx;w.y=ny;}else{w.vx*=-.3;w.vy*=-.3;}
   if(w.h<=0){w.h=0;if(w.vh<-60&&!w.b){w.b=1;w.vh*=-.32;w.vx*=.5;w.vy*=.5;w.av*=.5;nz(.05,'highpass',1800,900,.05);}else{flyWood.splice(i,1);woodItems.push({x:w.x,y:w.y,a:w.a,v:w.v});}}}}
-function smashBranch(b,ux=0,uy=0,pow=1){for(let k=-2;k<=2;k++)dustPuff(b.x+Math.cos(b.a)*b.L*k/5,b.y+Math.sin(b.a)*b.L*k/5,6,ux,uy);const i=bigBranches.indexOf(b);if(i<0)return;bigBranches.splice(i,1);const n=b.n+2,ca=Math.cos(b.a),sa=Math.sin(b.a);   // the pieces fly up and rain down, further the harder it was hit
+function smashBranch(b,ux=0,uy=0,pow=1,byZ=false){{const ca=Math.cos(b.a),sa=Math.sin(b.a);for(let k=-3;k<=3;k++)woodChips(b.x+ca*b.L*k/7,b.y+sa*b.L*k/7,7,ux,uy);woodKnock(b);woodKnock(b);}   // it bursts apart in a spray of splinters first
+  if(byZ){for(const z of zombies){if(z.dieOnLand||z.state==='down'||z.state==='eatB'||z.state==='convB')continue;if(Math.hypot(z.x-b.x,z.y-b.y)<b.L*.6+28){z.state='stagger';z.t=1;z.vx*=.2;z.vy*=.2;z.slam=null;z.stun=1;z.tilt=(rnd()-.5)*.5;}}}   // every zombie close by is stunned for a second
+  for(let k=-2;k<=2;k++)dustPuff(b.x+Math.cos(b.a)*b.L*k/5,b.y+Math.sin(b.a)*b.L*k/5,6,ux,uy);const i=bigBranches.indexOf(b);if(i<0)return;bigBranches.splice(i,1);const n=b.n+2,ca=Math.cos(b.a),sa=Math.sin(b.a);   // the pieces fly up and rain down, further the harder it was hit
   for(let k=0;k<n;k++){const t=(k/(n-1)-.5)*b.L*.85,r=(rnd()-.5)*8,sp=(25+rnd()*55)*pow,ra=rnd()*TAU;flyWood.push({x:b.x+ca*t-sa*r,y:b.y+sa*t+ca*r,h:3,vh:(50+rnd()*70)*Math.min(1.6,.6+pow*.6),vx:ux*sp+Math.cos(ra)*sp*.45,vy:uy*sp+Math.sin(ra)*sp*.45,a:b.a+(rnd()-.5)*1.4,av:(rnd()-.5)*18,v:(rnd()*10)|0});}
   for(let k=0;k<14;k++)sparks.push({x:b.x+(rnd()-.5)*b.L*.7,y:b.y+(rnd()-.5)*6,h:3,vx:(rnd()-.5)*60,vy:(rnd()-.5)*24,vh:20+rnd()*35,life:.6+rnd()*.6,ash:1});
   shake=Math.max(shake,5);sfx.sever();nz(.35,'lowpass',900,180,.5,1);if(near(b,260))toast(`กิ่งไม้แตก! ได้ฟืน ${n} ชิ้น เก็บได้เลย`);}
@@ -3148,6 +3162,8 @@ function drawZ(c,z,T,mono){
   if(st==='windup'){cs=.84;jx=Math.sin(T*90+z.seed)*.8;}
   else if(st==='lunge'){const p=clamp(1-z.t/.24,0,1);lift=Math.sin(p*Math.PI)*7;lean=3;reach=13;}
   else if(st==='stagger')lean=-2.5;
+  const SL=z.slam?z.slam.t:-1,up=SL<0?0:SL<.4?Math.sin(Math.min(1,SL/.34)*Math.PI*.5):Math.max(0,1-(SL-.4)/.06),dn=SL>=.4?Math.min(1,(SL-.4)/.06)*(1-Math.max(0,(SL-.52)/.14)):0;   // the overhead double-fist slam
+  if(SL>=0)lean=-1.6*up+3*dn;
   if(eat){cs=.62;lean=4;reach=5+Math.sin(T*9+z.seed)*2.5;bob=Math.sin(T*15+z.seed)*1.6;}
   if(!mono){c.fillStyle='rgba(0,0,0,.55)';ell(c,fx,fy,4.2,1.7);}
   const tl=tdown||z.tilt||0;c.save();if(tl){c.translate(fx,fy);c.rotate(tl);c.translate(-fx,-fy);}
@@ -3163,7 +3179,7 @@ function drawZ(c,z,T,mono){
     if(eat)c.lineTo(h0-fwx*5,y+py*1.3*l-fwy*3);else c.lineTo(h0+fwx*sw*l,y+py*1.3*l+fwy*sw*l*.6);c.stroke();}
   const arms=()=>{c.lineWidth=1.25;for(const[idx,l]of[[0,-1],[1,1]]){const sx=tox+px*2.5*l,sy=shY+fwy*lean*.5+py*2.9*l;
     if(!z.arms[idx]){c.fillStyle=M(RED);c.fillRect(sx-1.1,sy-1,2.2,2.2);continue;}
-    const s2=Math.sin(z.phase*.5+l+z.seed)*1.2,ex=sx+fwx*reach,ey=sy+fwy*reach+1.5+s2;c.strokeStyle=skin;c.beginPath();c.moveTo(sx,sy);c.lineTo(ex,ey);c.stroke();
+    const s2=Math.sin(z.phase*.5+l+z.seed)*1.2;let ex=sx+fwx*reach,ey=sy+fwy*reach+1.5+s2;if(SL>=0){const tx2=tox+fwx*1.5+px*1.2*l,ty2=shY-8.5;ex+=(tx2-ex)*up;ey+=(ty2-ey)*up;const bx2=tox+fwx*11+px*1.1*l,by2=shY+fwy*11+8;ex+=(bx2-ex)*dn;ey+=(by2-ey)*dn;}c.strokeStyle=skin;c.beginPath();c.moveTo(sx,sy);c.lineTo(ex,ey);c.stroke();
     if(!mono&&eat){c.fillStyle='rgb(225,24,30)';c.fillRect(ex-1,ey-1,2,2);}}};
   if(away)arms();
   {const w=.6+.4*Math.abs(sa),top=toy-4.5*cs,bot=toy+4.2*cs,sh=2.7*w,wa=1.15*w+.25;
@@ -3500,6 +3516,7 @@ function renderObjects(T){
   drawRoof(T);krBloom();drawBoss(T);e5Draw(T);
   if(praewa&&praewa.roof>0){const ev=elevOf(praewa);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);withOutline(sctx,praewa,c=>drawP(c,T,null,praewa));drawP(lctx,T,gray(Math.max(70,lightAt(praewa.x,praewa.y))),praewa);sctx.restore();lctx.restore();}
   for(const sp of sparks){const x=sp.x-camX,y=sp.y*K-camY-sp.h,f=sp.life/(sp.L0||1),tw=Math.sin(sp.life*40+sp.x)>-.3;
+    if(sp.chip){sctx.fillStyle=['#8a6a44','#a3825a','#5e4630'][sp.c];lctx.fillStyle=gray(Math.max(lightAt(sp.x,sp.y),60)*Math.min(1,f*3));sctx.fillRect(x,y,1,.8);lctx.fillRect(x,y,1,.8);continue;}
     if(sp.ash){sctx.fillStyle=gray(95);lctx.fillStyle=gray(110*Math.min(1,f*2));sctx.fillRect(x,y,.8,.8);lctx.fillRect(x,y,.8,.8);continue;}
     sctx.fillStyle=f>.7?'rgb(255,236,150)':f>.45?'rgb(246,190,56)':f>.2?'rgb(236,110,30)':'rgb(170,24,16)';sctx.fillRect(x,y,1,1);
     lctx.fillStyle=tw?(f>.2?'#fff':gray(150)):gray(90);lctx.fillRect(x,y,1,1);}
