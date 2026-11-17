@@ -125,7 +125,7 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v7.2</div>
+  <div class="ver">v7.3</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -133,8 +133,8 @@ hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.2</h3><ul>
-      <li>คัตซีนคุยกันรอบกองไฟคืนที่ 3 ทำใหม่: ภาพจอกว้าง 21:9 เห็นทุกคนนั่งล้อมกองไฟ ฉากหลังป่ายางกับรั้วไม้ไผ่ · ประโยคสุดท้ายแพรวาชี้ไปที่แสงสีแดงหลังรั้ว ทุกคนหันไปมอง</li>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.3</h3><ul>
+      <li>คัตซีนคืนที่ 3 จอกว้าง 21:9 ขยับ 30 เฟรม/วิ: รั้วเสาไม้คานไม้ไผ่ ต้นยางอยู่นอกรั้ว · แพรวาหยิบฟืนจากกองโยนเข้าไฟ ไฟลุกพรึบ สะเก็ดไฟลอยฟุ้ง · ฟีฟ่าปอกกล้วยกิน · แจ็คพอทลุกขึ้นยืนพูด · แพมจุ่มไม้เรียวยาวในกองไฟ คุยจบยกขึ้นเป็นคบเพลิง</li>
       <li>เอาปุ่ม "ลากกิ่ง" แบบเดิมออก (ใช้ปุ่มจับไม้แทน) · กิ่งที่จับไปชนอะไร สิ่งนั้นขึ้นขอบสีขาวให้เห็นในที่มืด พร้อมคำว่า "ติดสิ่งกีดขวาง" สีเหลืองอ่อน 1 วิ</li>
       <li>ซอมบี้ทุบกิ่งไม้ใหญ่ด้วยการชูสองแขนแล้วตบลงมา: กิ่งสั่น เศษไม้เล็กๆ ฟุ้ง เสียงทุบไม้สุ่ม 4 แบบ · ถ้าซอมบี้ทุบจนกิ่งพัง กิ่งแตกกระจุย และซอมบี้ทุกตัวที่อยู่ใกล้สตัน 1 วิ</li>
       <li>กิ่งที่กำลังจับมีขอบเรืองแสงสีขาวบางๆ · หมุนกิ่งแล้วตัวละครหันมองตามทิศที่หมุน (ไฟฉายกวาดตาม)</li>
@@ -584,7 +584,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='7.2';
+let useBot=true,bot=null,hero='fifa';const VERSION='7.3';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1990,13 +1990,13 @@ function updateCine(dt){
     if(C.t>3.2){C.step='talk';C.t=0;C.said=0;}}
   else if(C.step==='talk'){for(const s of seatSpots())if(C.said<4)s.e.facing=s.a;
     {const o=gateOut(),sh=C.t<3.2?0:C.t<9.6?1:2;C.cam={x:F.x+o.x*230,y:F.y+o.y*230};
-     if(!C.cu||C.cu.sh!==sh){C.cu={sh,t:0,who:sh===1?jpSpeaker():(PWE()||jpSpeaker()),red:sh===2};cam.x=C.cam.x;cam.y=C.cam.y;}C.cu.t+=dt;}
+     if(!C.cu){C.cu={t:0};cam.x=C.cam.x;cam.y=C.cam.y;}C.cu.sh=sh;C.cu.who=sh===1?jpSpeaker():(PWE()||jpSpeaker());C.cu.red=sh===2;C.cu.t+=dt;}
     if(C.t>.2&&C.said<1){C.said=1;sayE(PWE(),'ซอมบี้หายไปไหนกันหมดคะ???');}
     if(C.t>3.2&&C.said<2){C.said=2;sayE(jpSpeaker(),'อ้าาาาาย ว่า……….');}
     if(C.t>6&&C.said<3){C.said=3;sayE(jpSpeaker(),'มันอาจสิมีแนวเป็นตาย้านกว่ากะได้เด้');}
     if(C.t>9.6&&C.said<4){C.said=4;const g=gatePos();sayE(PWE(),'นั่นแสงอะไรอ่ะ !!!!');if(praewa)praewa.point=2.5;sfx.screech(0);tn('sine',90,55,1.6,.25);}
     if(C.said>=4){const g=gatePos();for(const e of[player,...npcs()])e.facing=angLerp(e.facing,Math.atan2(g.y-e.y,g.x-e.x),dt*5);}
-    if(C.t>11.8)startIntro();}
+    if(C.t>12.9)startIntro();}
   else if(C.step==='intro')updateIntro(dt);
 }
 function skipCine(){if(state!=='n3cine'||!N3)return;if(e5Cine()){e5Skip();return;}tn('square',900,900,.04,.08);if(N3.step==='n6'){n6Begin();return;}
@@ -3284,10 +3284,10 @@ function drawP(c,T,mono,h=player){
     if(!mono){for(let r=0;r<5;r+=2){c.fillStyle='#ededed';c.fillRect(fx-3.2,hipY-.8+r*1.05,6.4,1);}c.fillStyle='#0a0a0a';c.fillRect(fx-1.6,hipY+.2,.6,.6);c.fillRect(fx+1.4,hipY+2.3,.6,.6);c.fillStyle='#ededed';c.fillRect(fx+.2,hipY+1.3,.6,.6);c.fillRect(fx-2.4,hipY+3.4,.6,.6);}}
   // upper body: lean back on the wind-up, throw forward on the swing
   const swinging=h.swingT>0,sP=swinging?clamp(1-h.swingT/h.swingDur,0,1):0;
-  const HOLD=h===player&&(player.grip||player.drag)?(player.grip?[player.x+player.grip.hx,player.y+player.grip.hy]:(()=>{const b=player.drag,d=Math.hypot(b.x-player.x,b.y-player.y)||1;return[player.x+(b.x-player.x)/d*5,player.y+(b.y-player.y)/d*5];})()):null;
+  const HOLD=h.hold?h.hold:h===player&&(player.grip||player.drag)?(player.grip?[player.x+player.grip.hx,player.y+player.grip.hy]:(()=>{const b=player.drag,d=Math.hypot(b.x-player.x,b.y-player.y)||1;return[player.x+(b.x-player.x)/d*5,player.y+(b.y-player.y)/d*5];})()):null;
   let ln=0;if(swinging)ln=(1.5+2.5*h.swingPow)*Math.sin(Math.min(1,sP*1.15)*Math.PI*.62+.1);else if(h.lean>0)ln=h.lean;else if(h.charging)ln=-1.8*h.charge;
   if(kk)ln=-3.6*kk;
-  if(HOLD)ln=4.6;   // stooped, back bent over the bough
+  if(HOLD)ln=h.hold?(h.holdLean||0):4.6;   // stooped, back bent over the bough
   const pI=h.pantT>0&&!kk&&!swinging&&!h.charging?Math.min(1,h.pantT/10*1.3):0,br=Math.sin(h.breathPh);if(pI)ln=(2.6+.6*br)*pI*(1-.5*h.moveAmt);
   c.save();if(ln){c.translate(fx,hipY);c.transform(1,0,-fwx*ln/12,1-(fwy*ln+ln*.35)/12,0,0);c.translate(-fx,-hipY);}
   if(pI){c.translate(0,-Math.max(0,br)*.9*pI);}   // shoulders heave with each breath
@@ -3352,7 +3352,7 @@ function drawP(c,T,mono,h=player){
     if(OL_PASS){h._stk=ops;}else for(const o of ops){c.strokeStyle=M(o[5]);c.lineWidth=o[4];c.beginPath();c.moveTo(o[0],o[1]);c.lineTo(o[2],o[3]);c.stroke();}};
   const lp=swinging?-side*.6*(sP<.5?sP*2:1):0;
   const run=h.combat>0||h.charging||swinging?0:Math.sin(h.phase)*.7*h.moveAmt;const leftArm=()=>{if(HOLD)return;c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(shLx+Math.cos(a-(run?1.3:.5)+lp+run)*5,shLy+Math.sin(a-(run?1.3:.5)+lp+run)*5*K+5);c.stroke();};
-  if(h.carry||h.wood||(PM&&h!==player)||(PW&&h!==player&&(!UPG()||h.carryLog>=0))){}else if(PW&&h!==player){if(away||behind)knife();}else if(PM){if(away||behind)knife();}else if(h.weapon==='stick'){if(away)knife();}else{if(away||behind)knife();if(away)leftArm();}
+  if(h.hold){if(away||behind)holdArms();}else if(h.carry||h.wood||(PM&&h!==player)||(PW&&h!==player&&(!UPG()||h.carryLog>=0))){}else if(PW&&h!==player){if(away||behind)knife();}else if(PM){if(away||behind)knife();}else if(h.weapon==='stick'){if(away)knife();}else{if(away||behind)knife();if(away)leftArm();}
   c.fillStyle=M(JP?NAVY:PW?'#f6f6f6':PM?'#8c8c8c':FRED);c.strokeStyle=M('#000');c.lineWidth=.9;c.beginPath();c.ellipse(fx,toY,JP?3.5:PW?3.4:3.1,JP?4.9:PW?4.4:4.6,0,0,TAU);c.fill();c.stroke();
   if(FF){c.fillStyle=M(FRED);c.beginPath();c.moveTo(fx-3,toY);c.lineTo(fx+3,toY);c.lineTo(fx+3.3,hipY+.8);c.lineTo(fx-3.3,hipY+.8);c.closePath();c.fill();c.strokeStyle=M('#000');c.lineWidth=.5;c.beginPath();c.moveTo(fx-3.3,hipY+.8);c.lineTo(fx+3.3,hipY+.8);c.stroke();}   // untucked red work shirt
   if(JP){c.fillStyle=M(NAVY);c.beginPath();c.moveTo(fx-3.45,toY);c.lineTo(fx+3.45,toY);c.lineTo(fx+3.9,hipY+1.8);c.lineTo(fx-3.9,hipY+1.8);c.closePath();c.fill();c.fillStyle=M('#1a1d28');c.fillRect(fx-3.9,hipY+.8,7.8,1);c.strokeStyle=M('#000');c.lineWidth=.5;c.beginPath();c.moveTo(fx-3.9,hipY+1.8);c.lineTo(fx+3.9,hipY+1.8);c.stroke();}   // long hoodie hem
@@ -3393,7 +3393,7 @@ function drawP(c,T,mono,h=player){
     if(q.lamp==='hand'){c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(mx,my,2.8,.9,0,0,TAU);c.stroke();c.fillStyle='#fff';c.fillRect(mx+d*1.6-1,my-1,2,1.6);}}
   if(HL){c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(hcx,heY-1,2.8,.9,0,0,TAU);c.stroke();}
   if(HL&&sa>-.6){c.fillStyle=(h.hl||lampOf(h))&&!h.hidden?'#fff':M('#777');c.fillRect(hcx+ca*2-1,heY-2+sa*.5,2,1.6);}
-  if(PM){const th=h.thrust>0?Math.sin(clamp(1-h.thrust/.4,0,1)*Math.PI):0,tx2=fx+fwx*(1.5+6*th)+px*4.6,ty2=shY+4+fwy*(1.5+6*th)-2*th;   // torch in the right hand
+  if(PM&&!h.hold){const th=h.thrust>0?Math.sin(clamp(1-h.thrust/.4,0,1)*Math.PI):0,tx2=fx+fwx*(1.5+6*th)+px*4.6,ty2=shY+4+fwy*(1.5+6*th)-2*th;   // torch in the right hand
     if(h!==player){c.strokeStyle=M('#8c8c8c');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(tx2,ty2);c.stroke();
     const tipx=tx2+fwx*(28+6*th)+px*2,tipy=ty2-12+fwy*(28+6*th)+4*th;c.strokeStyle=M('#2a2018');c.lineWidth=2.2;c.beginPath();c.moveTo(tx2-fwx*8,ty2+3);c.lineTo(tipx,tipy);c.stroke();c.strokeStyle=M('#5a4836');c.lineWidth=1.3;c.stroke();
     c.fillStyle=M('#1c1c1c');c.fillRect(tipx-1,tipy-1,2,2);
@@ -3403,8 +3403,8 @@ function drawP(c,T,mono,h=player){
   if(h===player&&h.snakes>0&&!away){for(let k=0;k<h.snakes;k++){const o=k*.5,dl=6.5+k*.9;   // dead snakes draped around the neck
       c.lineCap='round';c.strokeStyle=M('#0d0a07');c.lineWidth=1.5;c.beginPath();c.moveTo(fx-2.6-o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx-3.6-o*.4,toY,fx-3+o*.2,toY-4.6+dl);c.moveTo(fx+2.6+o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx+3.6+o*.4,toY,fx+3-o*.2,toY-4.6+dl*.9);c.moveTo(fx-2.6-o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx,toY-6.4-o*.3,fx+2.6+o*.3,toY-4.6+o*.2);c.stroke();
       c.strokeStyle=M('rgb(108,82,58)');c.lineWidth=.7;c.stroke();}}
-  if(h!==player&&!PM){drawLantern(c,fx-px*(PW?4.4:3.8),hipY+(PW?2.5:1.5),mono);}   // small lantern hung at the hip
-  if(PM&&h!==player){}else if(PM){if(!behind&&!h.carry&&!h.wood)knife();}else if(PW&&h!==player){const sk=M('#c9c4bc');c.strokeStyle=sk;c.lineWidth=1.6;
+  if(h!==player&&(!PM||h.hold)){drawLantern(c,fx-px*(PW?4.4:3.8),hipY+(PW?2.5:1.5),mono);}   // small lantern hung at the hip
+  if(h.hold){if(!away&&!behind)holdArms();}else if(PM&&h!==player){}else if(PM){if(!behind&&!h.carry&&!h.wood)knife();}else if(PW&&h!==player){const sk=M('#c9c4bc');c.strokeStyle=sk;c.lineWidth=1.6;
     if(h.carryLog>=0){const lx=fx+fwx*3,ly=shY+4+fwy*3;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(lx+px*2,ly);c.moveTo(shLx,shLy);c.lineTo(lx-px*2,ly);c.stroke();drawLog(c,lx,ly+.5,Math.atan2(py,px),h.carryLog,mono,.8,false);}
     else if(UPG()){const sw2=Math.sin(h.phase)*2*h.moveAmt;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(shLx-fwx*sw2,shLy+6);c.stroke();if(!away&&!behind)knife();}   // her sickle
     else{const sw2=Math.sin(h.phase)*2*h.moveAmt;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(shRx+fwx*sw2,shRy+6);c.moveTo(shLx,shLy);c.lineTo(shLx-fwx*sw2,shLy+6);c.stroke();}
@@ -3750,10 +3750,10 @@ function invLine(x0,y0,x1,y1,dotted){x0=Math.round(x0);y0=Math.round(y0);x1=Math
   for(let g=0;g<2000;g++){if(!dotted||((n>>1)&1)===0)invPix(x0,y0);n++;if(x0===x1&&y0===y1)break;const e2=2*e;if(e2>=dy){e+=dy;x0+=sx;}if(e2<=dx){e+=dx;y0+=sy;}}}
 // ---- night-3 talk: close-up shots (the framing of the cover art: one face big in the firelight, the others behind, a trunk at the side)
 let CUB=null;const CUC=[0,1,2].map(()=>document.createElement('canvas')),CUX=CUC.map(c=>c.getContext('2d'));
-function cuBig(e,X,Y,s,lum,rim,T,sit){const fx=e.x-camX,fy=e.y*K-camY,w=Math.ceil(80*s),h=Math.ceil(64*s);
+function cuBig(e,X,Y,s,lum,rim,T,sit,post){const sk=sit===true?1:(sit||0);const fx=e.x-camX,fy=e.y*K-camY,w=Math.ceil(80*s),h=Math.ceil(64*s);
   for(const cv of CUC){if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}}
   const[tc,ts,tr]=CUX;for(const c of CUX){c.setTransform(1,0,0,1,0,0);c.globalCompositeOperation='source-over';c.clearRect(0,0,w,h);}
-  const ox=w/2,oy=h-10*s,dr=(c,mono)=>{c.save();if(sit){c.beginPath();c.rect(0,0,w,oy-.6*s);c.clip();c.translate(0,(e.pw?2.5:5)*s);}c.translate(ox,oy);c.scale(s,s);c.translate(-fx,-fy);drawP(c,T,mono,e);c.restore();};
+  const ox=w/2,oy=h-10*s,dr=(c,mono)=>{c.save();if(sk>0){c.beginPath();c.rect(0,0,w,oy-.6*s+(1-sk)*30*s);c.clip();c.translate(0,(e.pw?2.5:5)*sk*s);}c.translate(ox,oy);c.scale(s,s);c.translate(-fx,-fy);drawP(c,T,mono,e);if(post)post(c,mono,fx,fy);c.restore();};
   dr(tc,null);ts.drawImage(CUC[0],0,0);ts.globalCompositeOperation='source-in';ts.fillStyle='#0a0908';ts.fillRect(0,0,w,h);
   const x0=Math.round(X-ox),y0=Math.round(Y-oy),o=Math.max(1,Math.round(s/4));
   for(const[dx,dy]of[[-o,0],[o,0],[0,-o],[0,o]])sctx.drawImage(CUC[1],x0+dx,y0+dy);sctx.drawImage(CUC[0],x0,y0);
@@ -3764,35 +3764,93 @@ function cuTrunk(X,Y,s,v,lum,far){const x0=Math.round(X-9*s),y0=Math.round(Y-71*
   sctx.drawImage(trunkCv[v],x0,y0,Math.round(18*s),Math.round(74*s));lctx.fillStyle=gray(lum);lctx.fillRect(Math.round(X-3*s),y0,Math.round(6*s),Math.round(72*s));lctx.fillRect(Math.round(X+2*s),Math.round(Y-11*s),Math.round(6*s),Math.round(6*s));
   if(far)return;sctx.fillStyle='rgb(236,122,30)';lctx.fillStyle=gray(Math.min(255,lum+60));const rw=Math.max(1,Math.round(s*.6));sctx.fillRect(Math.round(X-3*s),y0,rw,Math.round(72*s));lctx.fillRect(Math.round(X-3*s),y0,rw,Math.round(72*s));}
 function cuBand(){const f=Math.min(1,SWc*9/21/SHc);return f;}   // 21:9 letterbox
-function cuDraw(T){const C=N3,U=C.cu;if(!U||!U.who)return;const fl=.9+.07*Math.sin(T*11)+.03*Math.sin(T*23.7),fr=cuBand(),fh=vh*fr,y0=(vh-fh)/2,y1=y0+fh;
-  const s=fh*.52/18*(1+.03*Math.min(1,U.t/4)),cx=vw/2,fY=y0+fh*.8,G=(fx,fy)=>Math.max(0,1-Math.hypot((fx-cx)/(fh*1.6),(fy-fY)/(fh*.9)));
-  // the stage: night sky through the trees, ground lit by the fire
+const cuSm=x=>x<=0?0:x>=1?1:x*x*(3-2*x),cuAng=(a,b,k)=>{let d=(b-a)%TAU;if(d>Math.PI)d-=TAU;if(d<-Math.PI)d+=TAU;return a+d*k;};
+function cuBanana(c,M,x,y,sc,pl,eat,tilt){c.save();c.translate(x,y);c.scale(sc,sc);c.rotate(tilt||0);c.lineCap='round';const mid=-2.6,top=-6.6;
+  const ln=(x0,y0,x1,y1,w,col)=>{c.strokeStyle=M(col);c.lineWidth=w;c.beginPath();c.moveTo(x0,y0);c.quadraticCurveTo((x0+x1)/2+.5,(y0+y1)/2,x1,y1);c.stroke();};
+  ln(0,1,.2,mid,2.3,'#2c2410');ln(0,1,.2,mid,1.5,'rgb(214,188,64)');                           // the bottom of the peel in the fist
+  const fl=(top-mid)*(1-eat);if(eat<1){ln(.2,mid,.6,mid+fl,1.9,'#3a3020');ln(.2,mid,.6,mid+fl,1.1,'rgb(238,230,198)');}   // the fruit
+  for(const[i,dir]of[[2,-.5],[0,-1],[1,1]]){const k=cuSm(pl*3-i),A=-Math.PI/2+dir*k*2.5,L=3.2,ex=.2+Math.cos(A)*L+(k<.05?.4:0),ey=mid+Math.sin(A)*L;   // three strips folding down
+    ln(.2,mid,ex,ey,1.7,'#2c2410');ln(.2,mid,ex,ey,1,i===2?'rgb(170,150,50)':'rgb(222,196,70)');if(k<.05&&i===1){c.fillStyle=M('#2a2010');c.fillRect(ex-.4,ey-.6,.9,.9);}}
+  c.restore();}
+function cuDraw(T){const C=N3,U=C.cu;if(!U)return;const t=Math.floor(C.t*30)/30,T3=200+t;   // everything in the shot moves at 30 frames a second
+  const fr=cuBand(),fh=vh*fr,y0=(vh-fh)/2,s=fh*.52/18,cx=vw/2,fY=y0+fh*.8,fs=s*.75,TL=6.3;
+  const flare=t>=TL?1+1.1*Math.exp(-(t-TL)*.75):1,flk=.9+.07*Math.sin(t*11)+.03*Math.sin(t*23.7),lg=flk*(1+.3*(flare-1));
+  const G=(x,y)=>Math.max(0,1-Math.hypot((x-cx)/(fh*1.6*(1+.15*(flare-1))),(y-fY)/(fh*.9)));
+  // embers: a few always, a burst when the log lands
+  const fi=Math.floor(C.t*30);if(U.f===undefined){U.f=fi;U.sp=[];}
+  const ember=m=>({x:cx+(Math.random()-.5)*7*fs,y:fY-3*fs,vx:(Math.random()-.5)*fh*.16*m,vy:-fh*(.16+Math.random()*.32)*m,l:.8+Math.random()*1.9*m,ph:Math.random()*6});
+  while(U.f<fi){U.f++;const dt=1/30,tt=U.f/30;if(U.f%4===0)U.sp.push(ember(1));
+    if(tt>=TL&&!U.burst){U.burst=1;for(let k=0;k<80;k++)U.sp.push(ember(1.5));}
+    for(const q of U.sp){q.vy*=.982;q.vx=q.vx*.97+Math.sin(tt*4+q.ph)*fh*.012;q.x+=q.vx*dt;q.y+=q.vy*dt;q.l-=dt;}U.sp=U.sp.filter(q=>q.l>0&&q.y>y0);}
+  // sounds: bites, the log hitting the fire, the torch lifting out
+  const once=(k,f)=>{if(!U['s'+k]){U['s'+k]=1;f();}};
+  // ---- the stage: ground lit by the fire, rubber trees outside the fence
   sctx.fillStyle=gray(70);sctx.fillRect(0,0,vw,vh);lctx.fillStyle='#000';lctx.fillRect(0,0,vw,vh);
-  sctx.fillStyle='rgb(96,86,74)';sctx.fillRect(0,y0+fh*.56,vw,fh*.44);
-  const gg=lctx.createRadialGradient(cx,fY,2,cx,fY,fh*1.5);gg.addColorStop(0,gray(185*fl));gg.addColorStop(.45,gray(70*fl));gg.addColorStop(1,gray(14));lctx.fillStyle=gg;lctx.fillRect(0,y0+fh*.56,vw,fh*.44);
-  lctx.fillStyle=gray(10);lctx.fillRect(0,y0,vw,fh*.56);
-  // far rows of rubber trees, then the bamboo fence, then the near trunks
-  for(let k=0;k<14;k++){const x=((k*37)%100)/100*vw*1.1-vw*.05,ts=s*(.32+((k*7)%3)*.05),by=y0+fh*(.5+((k*5)%3)*.02);cuTrunk(x,by,ts,k&3,Math.round(18+60*G(x,by)*fl),true);}
-  const fT=y0+fh*.47,fB=y0+fh*.64,pw=Math.max(1,Math.round(s*1.1));
-  for(let x=0;x<vw;x+=pw+1){const L=Math.round(45+180*G(x,fB)*fl),hj=((x*13)%5)*s*.25;sctx.fillStyle=gray(176);sctx.fillRect(x,fT-hj,pw,fB-fT+hj);sctx.fillStyle=gray(110);sctx.fillRect(x+pw,fT-hj,1,fB-fT+hj);
-    for(let ny=fT+((x*7)%4)*s;ny<fB;ny+=s*4){sctx.fillStyle=gray(120);sctx.fillRect(x,ny,pw,Math.max(1,s*.35));}lctx.fillStyle=gray(L);lctx.fillRect(x,fT-hj,pw+1,fB-fT+hj);}
-  for(const ry of[.53,.6]){const y=y0+fh*ry;sctx.fillStyle=gray(130);sctx.fillRect(0,y,vw,Math.max(1,s*.7));sctx.fillStyle=gray(60);sctx.fillRect(0,y+Math.max(1,s*.7),vw,1);}
-  for(const[tx,ts,ty]of[[.07,1.15,1.04],[.94,1.05,1.02],[.2,.62,.74],[.82,.6,.72]]){const x=vw*tx,by=y0+fh*ty;cuTrunk(x,by,s*ts,(tx*10|0)&3,Math.round(30+120*G(x,by)*fl));}
-  // the red light out beyond the fence
-  if(U.red){const rx=Math.round(vw*.13),ry=Math.round(y0+fh*.32),pu=.7+.3*Math.sin(T*9),r=(1.2+pu)*s*.6;sctx.fillStyle='rgb(205,22,24)';sctx.beginPath();sctx.arc(rx,ry,r*1.9,0,TAU);sctx.fill();
+  sctx.fillStyle='rgb(96,86,74)';sctx.fillRect(0,y0+fh*.5,vw,fh*.5);
+  const gg=lctx.createRadialGradient(cx,fY,2,cx,fY,fh*1.5*(1+.2*(flare-1)));gg.addColorStop(0,gray(Math.min(255,185*lg)));gg.addColorStop(.45,gray(70*lg));gg.addColorStop(1,gray(14));lctx.fillStyle=gg;lctx.fillRect(0,y0+fh*.5,vw,fh*.5);
+  lctx.fillStyle=gray(10);lctx.fillRect(0,y0,vw,fh*.5);
+  for(let k=0;k<16;k++){const x=((k*37)%100)/100*vw*1.1-vw*.05,ts=s*(.3+((k*7)%3)*.05),by=y0+fh*(.48+((k*5)%3)*.02);cuTrunk(x,by,ts,k&3,Math.round(16+50*G(x,by)*lg),true);}
+  for(let k=0;k<6;k++){const x=vw*(.06+k*.18+((k*13)%5)*.012),by=y0+fh*(.57+(k%2)*.015);cuTrunk(x,by,s*.5,(k+1)&3,Math.round(24+80*G(x,by)*lg),true);}
+  // the red light out among the trees
+  if(U.red){const rx=Math.round(vw*.13),ry=Math.round(y0+fh*.3),pu=.7+.3*Math.sin(t*9),r=(1.2+pu)*s*.6;sctx.fillStyle='rgb(205,22,24)';sctx.beginPath();sctx.arc(rx,ry,r*1.9,0,TAU);sctx.fill();
     const rg=lctx.createRadialGradient(rx,ry,0,rx,ry,r*1.9);rg.addColorStop(0,'#fff');rg.addColorStop(.35,gray(200*pu));rg.addColorStop(1,'rgba(0,0,0,0)');lctx.fillStyle=rg;lctx.fillRect(rx-r*2,ry-r*2,r*4,r*4);}
-  // everyone round the fire: two behind it facing us, two at the sides
-  const who=U.who,all=[player,...npcs()].filter(e=>e&&!e.dead),pw2=all.find(e=>e.pw),jp=all.find(e=>e.jp&&e!==pw2),rest=all.filter(e=>e!==pw2&&e!==jp),order=[pw2,jp,...rest].filter(Boolean);
-  const SL=[[.42,.74,.9,Math.PI/2+.35,[0,1]],[.58,.74,.9,Math.PI/2-.35,[0,1]],[.29,.9,1,1.15,[1,0]],[.71,.9,1,Math.PI-1.15,[-1,0]]];
-  const drawOne=(e,k)=>{const sl=SL[k],x=Math.round(vw*sl[0]),y=Math.round(y0+fh*sl[1]),ss=s*sl[2]*(e.pw?1.25:1),sp=e===who,face=U.red?(sp?2.6:sl[0]<.5?2.6:2.05):sl[3],c=cuClone(e,face);c.combat=0;c.torch=0;if(U.red&&sp)c.point=2;
-    sctx.fillStyle='#3a2a1c';sctx.fillRect(x-4*ss,y-1.2*ss,8*ss,2.2*ss);lctx.fillStyle=gray(Math.round(60+110*G(x,y)*fl));lctx.fillRect(x-4*ss,y-1.2*ss,8*ss,2.2*ss);   // the log they sit on
-    const o=Math.max(1,Math.round(ss/2.5));cuBig(c,x,y,ss,Math.round(Math.min(255,(sp?150:105)+140*G(x,y)*fl)),[sl[4][0]*o,sl[4][1]*o-(sl[4][1]?0:0),'rgb(236,122,30)',255],T,true);
-    if(sp){const hh=e.pw?.56:(e.jp||e.pm)?.88:1;CUB={e,x,y:y-(e.pw?20:23)*hh*ss};}};
-  order.slice(0,2).forEach((e,i)=>drawOne(e,i));
-  // the campfire: stones, logs, flames
-  {const fs=s*.75;sctx.fillStyle=gray(60);for(let k=0;k<7;k++){const a=k/7*TAU;sctx.fillRect(cx+Math.cos(a)*6*fs-fs,fY+Math.sin(a)*2.2*fs-fs*.6,2*fs,1.3*fs);}lctx.fillStyle=gray(150*fl);for(let k=0;k<7;k++){const a=k/7*TAU;lctx.fillRect(cx+Math.cos(a)*6*fs-fs,fY+Math.sin(a)*2.2*fs-fs*.6,2*fs,1.3*fs);}
-   for(const[c,lp]of[[sctx,false],[lctx,true]]){c.save();c.translate(cx,fY);c.scale(fs,fs);flames(c,0,0,6,2.4,15*fl,T,7,lp,2.1);c.restore();}}
-  order.slice(2,4).forEach((e,i)=>drawOne(e,i+2));
+  // ---- the fence: rough wooden posts, long bamboo poles tied across, sagging a little
+  {const L=(x,y)=>gray(Math.round(Math.min(255,28+175*G(x,y)*lg)));
+   for(const[px,lean]of[[.04,.02],[.27,-.03],[.5,.015],[.73,-.02],[.95,.03]]){const x=vw*px,top=y0+fh*.37,bot=y0+fh*.655,w=Math.max(2,s*1.6);
+     for(const[c,col]of[[sctx,'rgb(104,80,56)'],[lctx,L(x,bot)]]){c.fillStyle=col;c.beginPath();c.moveTo(x-w/2,bot);c.lineTo(x-w*.4+lean*fh,top);c.lineTo(x+w*.45+lean*fh,top+s*.3);c.lineTo(x+w/2,bot);c.closePath();c.fill();}
+     sctx.fillStyle='rgb(44,32,22)';sctx.fillRect(x-w*.1,top+fh*.06,Math.max(1,w*.25),fh*.18);}
+   const pole=(xa,ya,xb,yb,sag)=>{const th=Math.max(1,Math.round(s*.45));for(const c of[sctx,lctx]){c.lineCap='butt';c.lineWidth=th+1;c.strokeStyle=c===sctx?'rgb(58,48,32)':'#000';c.beginPath();c.moveTo(xa,ya);c.quadraticCurveTo((xa+xb)/2,(ya+yb)/2+sag,xb,yb);c.stroke();
+       c.lineWidth=th;c.strokeStyle=c===sctx?'rgb(200,184,136)':L((xa+xb)/2,(ya+yb)/2);c.stroke();}
+     for(let u=.08;u<1;u+=6*s/Math.abs(xb-xa||1)){const xx=xa+(xb-xa)*u,yy=ya+(yb-ya)*u+sag*4*u*(1-u)*.5;sctx.fillStyle='rgb(150,132,90)';sctx.fillRect(Math.round(xx),Math.round(yy-th/2),1,th);}};   // the nodes
+   const H=[.41,.47,.525,.575,.62];H.forEach((hy,i)=>{const y=y0+fh*hy;pole(-4,y+(i%2?s*.6:-s*.4),vw*.62,y+(i%2?-s*.3:s*.5),s*.6);pole(vw*.38,y+(i%2?s*.2:s*.7),vw+4,y+(i%2?s*.9:-s*.2),s*.8);});
+   sctx.strokeStyle='rgb(150,132,92)';sctx.lineWidth=1;for(const[xa,xb]of[[.12,.17],[.62,.58],[.84,.88]]){sctx.beginPath();sctx.moveTo(vw*xa,y0+fh*.4);sctx.lineTo(vw*xb,y0+fh*.63);sctx.stroke();}}
+  // ---- who is who
+  const all=[player,...npcs()].filter(e=>e&&!e.dead),PWe=all.find(e=>e.pw),PMe=all.find(e=>e.pm),JPe=all.find(e=>e.jp),FFe=all.find(e=>!e.pw&&!e.pm&&!e.jp),who=U.who;
+  const scOf=e=>e.pw?.56:(e.jp||e.pm)?.88:1;let rel=null;CUB=null;
+  const act=(e,sl,face,base,o)=>{const x=Math.round(vw*sl[0]),y=Math.round(y0+fh*sl[1]),ss=s*sl[2]*(e.pw?1.25:1),c=cuClone(e,face);c.combat=0;c.torch=0;if(o.point)c.point=2;if(o.lean)c.lean=o.lean;
+    if(o.hold){c.hold=[e.x+o.hold[0],e.y+o.hold[1]];c.holdLean=o.holdLean||0;}const sk=o.sit===undefined?1:o.sit,sh=(e.pw?2.5:5)*sk*ss,sc=scOf(e);
+    sctx.fillStyle='#3a2a1c';sctx.fillRect(x-4*ss,y-1.2*ss,8*ss,2.2*ss);lctx.fillStyle=gray(Math.round(60+110*G(x,y)*lg));lctx.fillRect(x-4*ss,y-1.2*ss,8*ss,2.2*ss);   // the log seat
+    const r=Math.max(1,Math.round(ss/2.5));cuBig(c,x,y,ss,Math.round(Math.min(255,base+140*G(x,y)*lg)),[sl[3][0]*r,sl[3][1]*r,'rgb(236,122,30)',255],T3,sk,o.post);
+    if(e===who)CUB={e,x,y:y+sh-27*sc*ss};
+    return{x,y,ss,sc,sh,hand:o.hold?[x+o.hold[0]*sc*ss,y+(o.hold[1]*K-1.6)*sc*ss+sh]:null};};
+  const fw=f=>[Math.cos(f),Math.sin(f)];
+  // ---- the woodpile behind แพรวา
+  {const px=vw*.35,py=y0+fh*.68,sp=s*1.05,P0={x:camX,y:camY/K,logs:[0,1,2,3,4,5,6,7,8,9,0,1,2]};for(const[c,m]of[[sctx,null],[lctx,gray(Math.round(40+120*G(px,py)*lg))]]){c.save();c.translate(px,py);c.scale(sp,sp);drawPile(c,P0,m);c.restore();}}
+  // ---- แพรวา (back left): asks, turns to the pile, takes a log, throws it on the fire, then points at the red light
+  if(PWe){let f=Math.PI/2+.35,h=null,hl=0,carry=false;
+    if(!U.red&&t>=4.5&&t<6.4){if(t<5.15){const k=cuSm((t-4.5)/.4);f=cuAng(Math.PI/2+.35,-2.35,k);const v=fw(f);h=[v[0]*5*k,v[1]*5*k-4];hl=2.6*k;}
+      else if(t<5.6){const k=cuSm((t-5.15)/.35);f=cuAng(-2.35,.7,k);const v=fw(f);h=[v[0]*2.5,v[1]*2.5-12.5];carry=true;}
+      else if(t<6){const k=cuSm((t-5.6)/.25),v=fw(.7);f=.7;h=[v[0]*(2.5+3.5*k),v[1]*(2.5+3.5*k)-12.5-6*k];carry=t<5.85;}
+      else{const k=cuSm((t-6)/.4);f=cuAng(.7,Math.PI/2+.35,k);}}
+    if(U.red)f=2.6;
+    const A=act(PWe,[.42,.74,.9,[0,1]],f,105,{point:U.red,hold:h,holdLean:hl,post:carry?(c,mono,fx,fy)=>{const v=fw(f),hx=fx+h[0]*.56,hy=fy+(h[1]*K-1.6)*.56;drawLog(c,hx,hy,Math.atan2(v[0],-v[1])*.2,3,mono,.75,false);}:null});
+    if(h&&t>=5.82&&t<5.86&&!U.rel)U.rel=A.hand;}
+  // ---- ฟีฟ่า (back right): peels a banana and eats it, three bites
+  if(FFe){const B=[4.1,7.0,8.9],f=U.red?2.6:Math.PI/2-.35,v=fw(f);let up=0;for(const b of B)up=Math.max(up,cuSm((t-b+.4)/.3)*(1-cuSm((t-b-.15)/.3)));
+    const eat=B.filter(b=>t>=b).length/3,pl=cuSm((t-.8)/2.7),h=[v[0]*2.6,v[1]*2.6-8.5-12.5*up];B.forEach((b,i)=>{if(t>=b)once('b'+i,()=>{tn('square',500,700,.05,.05);nz(.08,'bandpass',1500,700,.16,1.5);});});
+    act(FFe,[.58,.74,.9,[0,1]],f,105,{hold:h,post:(c,mono,fx,fy)=>{const M=col=>mono||col;cuBanana(c,M,fx+h[0],fy+h[1]*K-1.6,.7,pl,eat,-.5*up);}});}
+  // ---- the fire, the log flying into it, the flare
+  {for(let k=0;k<7;k++){const a=k/7*TAU,X=cx+Math.cos(a)*6*fs-fs,Y=fY+Math.sin(a)*2.2*fs-fs*.6;sctx.fillStyle=gray(60);sctx.fillRect(X,Y,2*fs,1.3*fs);lctx.fillStyle=gray(Math.min(255,150*lg));lctx.fillRect(X,Y,2*fs,1.3*fs);}
+   if(t>=TL)for(const[c,m]of[[sctx,null],[lctx,gray(140)]]){c.save();c.translate(cx,fY-fs*.5);c.scale(fs*1.1,fs*1.1);drawLog(c,0,0,.12,3,m,.8,false);c.restore();}
+   for(const[c,lp]of[[sctx,false],[lctx,true]]){c.save();c.translate(cx,fY);c.scale(fs,fs);flames(c,0,0,6,2.4*(1+.18*(flare-1)),15*flk*(1+.75*(flare-1)),T3,7,lp,2.1);c.restore();}
+   if(flare>1.02){const r=fh*.55*flare,g2=lctx.createRadialGradient(cx,fY-fh*.15,2,cx,fY-fh*.15,r);g2.addColorStop(0,gray(Math.round(90*(flare-1))));g2.addColorStop(1,'rgba(0,0,0,0)');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g2;lctx.fillRect(cx-r,fY-fh*.15-r,r*2,r*2);lctx.restore();}
+   if(U.rel&&t>=5.85&&t<TL){const k=(t-5.85)/(TL-5.85),X=U.rel[0]+(cx-U.rel[0])*k,Y=U.rel[1]+(fY-fs*2-U.rel[1])*k-fh*.2*4*k*(1-k);
+     for(const[c,m]of[[sctx,null],[lctx,gray(Math.round(90+120*G(X,Y)*lg))]]){c.save();c.translate(X,Y);c.scale(fs*1.1,fs*1.1);drawLog(c,0,0,k*5.5,3,m,.8,false);c.restore();}}
+   if(t>=TL)once('land',()=>{nz(.25,'lowpass',500,120,.35,1);nz(.5,'bandpass',2600,900,.16,2,null,.05);for(let k=0;k<6;k++)nz(.03,'highpass',3000+k*300,2500,.1,1,null,.1+k*.09);});}
+  // ---- แพม (front left): a long thin stick, its tip resting in the fire; when the talk is over she lifts it out, a torch
+  if(PMe){const lift=cuSm((t-10.4)/.8),f=U.red?cuAng(.3,2.5,cuSm((t-9.7)/.5)):.3,v=fw(.3),h=[v[0]*4,v[1]*4-9-5*lift];
+    const A=act(PMe,[.29,.9,1,[1,0]],f,105,{hold:h});
+    const hx=A.hand[0],hy=A.hand[1],ta=Math.atan2(fY-fs*1.5-hy,cx-hx),Ls=Math.hypot(cx-hx,fY-fs*1.5-hy)*1.04,a=ta+(-2.3-ta)*lift,tx=hx+Math.cos(a)*Ls,ty=hy+Math.sin(a)*Ls+(lift?0:Math.sin(t*2)*.4*s);
+    const bx=hx-Math.cos(a)*4*s,by=hy-Math.sin(a)*4*s,th=Math.max(1,Math.round(A.ss*.42)),lum=Math.round(Math.min(255,105+140*G(hx,hy)*lg));
+    for(const[c,col,col2]of[[sctx,'rgb(40,30,22)','rgb(168,140,96)'],[lctx,gray(lum),gray(Math.min(255,lum+40))]]){c.lineCap='round';c.lineWidth=th+1;c.strokeStyle=col;c.beginPath();c.moveTo(bx,by);c.lineTo(tx,ty);c.stroke();c.lineWidth=Math.max(1,th-1);c.strokeStyle=col2;c.beginPath();c.moveTo(bx,by);c.lineTo(hx+(tx-hx)*.92,hy+(ty-hy)*.92);c.stroke();}
+    if(lift>0){once('torch',()=>{nz(.5,'bandpass',900,300,.18,1);if(PMe.torch!==undefined)PMe.torch=30;});const q=Math.min(1,lift*1.4);
+      for(const[c,lp]of[[sctx,false],[lctx,true]]){c.save();c.translate(tx,ty);c.scale(A.ss*.95,A.ss*.95);flames(c,0,0,3,1,7*q,T3,3,lp,1.3);c.restore();}
+      const g3=lctx.createRadialGradient(tx,ty,1,tx,ty,fh*.35);g3.addColorStop(0,gray(Math.round(110*q)));g3.addColorStop(1,'rgba(0,0,0,0)');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g3;lctx.fillRect(tx-fh*.35,ty-fh*.35,fh*.7,fh*.7);lctx.restore();}}
+  // ---- แจ็คพอท (front right): sits, then gets up to talk, the whole of him in the firelight
+  if(JPe){const r=cuSm((t-2.9)/.7),f=U.red?2.3:t<2.9?Math.PI-1.15:cuAng(Math.PI-1.15,Math.PI/2+.55,cuSm((t-3.2)/.4));
+    act(JPe,[.71,.9,1,[-1,0]],f,115,{sit:1-r,lean:2.6*Math.sin(Math.PI*Math.min(1,Math.max(0,(t-2.9)/.7)))});}
+  // ---- sparks drifting up
+  for(const q of U.sp){const a=Math.min(1,q.l/1.2),on=Math.sin(t*20+q.ph*5)>-.6,X=Math.round(q.x),Y=Math.round(q.y);if(!on)continue;sctx.fillStyle=a>.55?'rgb(255,214,96)':'rgb(232,72,28)';sctx.fillRect(X,Y,1,1);lctx.fillStyle=gray(Math.round(140+115*a));lctx.fillRect(X,Y,1,1);}
   if(!CUB||CUB.e!==who)CUB=null;}
 function cuClone(e,face){return Object.assign({},e,{facing:face,moveAmt:0,phase:0,swingT:0,kickT:0,charging:false,climb:null,sit:false,roof:0,up:false,ev:0,down:false,hidden:false,carry:null,drag:null,grip:null,eatT:0,pokeT:0,thrust:0,lift:0,fly:null,rollT:0});}
 function composite(){
