@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v7.4</div>
+  <div class="ver">v7.5</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.4</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.5</h3><ul>
+      <li>แพมฟาดแรงขึ้น ซอมบี้ตายใน 1–4 ครั้ง · 30% ฟาดหงายหลังกระเด็นไถพื้นไป ~5 เมตร · ฟาดโดนแขน 60% แขนขาดกระเด็น</li>
       <li>ซอมบี้กลับมา HP เท่าเดิม (3) ไม่อึด 2 เท่าแล้ว</li>
       <li>ปีนข้ามกิ่งไม้ใหญ่ที่ซ้อนกันหลายชั้นได้ไม่จำกัด กระโดดเป็นจังหวะทีละกิ่งจนพ้นกอง (ผู้เล่นและบอท)</li>
       <li>คัตซีนคืนที่ 3 จอกว้าง 21:9 ขยับ 30 เฟรม/วิ: รั้วเสาไม้คานไม้ไผ่ ต้นยางอยู่นอกรั้ว · แพรวาหยิบฟืนจากกองโยนเข้าไฟ ไฟลุกพรึบ สะเก็ดไฟลอยฟุ้ง · ฟีฟ่าปอกกล้วยกิน · แจ็คพอทลุกขึ้นยืนพูด · แพมจุ่มไม้เรียวยาวในกองไฟ คุยจบยกขึ้นเป็นคบเพลิง</li>
@@ -607,7 +608,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='7.4';
+let useBot=true,bot=null,hero='fifa';const VERSION='7.5';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -750,7 +751,12 @@ function doHit(h=player){
   if(h===player&&hero==='pam'&&UPG()&&!(z.burn>0)){igniteZ(z);toast('จุดไฟเผาซอมบี้! ไหม้ตายใน 5 วิ');}
   if(h===player&&W(h).blunt){const head=rnd()<.1;   // แพม: 10% critical (head) chance per hitz.aware=6;pamEmbers(z.x,z.y,ux,uy,head?46:22);
     if(head){critPop(z.x,z.y,20);shake=Math.max(shake,4);blood(z.x,z.y,14,8,ux,uy,80);sfx.hit();sfx.sever();killZ(z,ux,uy,false);toast('คริติคอล! ฟาดโดนหัว');return;}
-    const dmg=(.75+.75*Math.min(1,p))*.5;z.hp-=dmg;shake=Math.max(shake,1.4+2.2*p);blood(z.x,z.y,12,3+Math.round(3*p),ux,uy,40);sfx.hit();
+    const dmg=1+.9*Math.min(1,p),sideArm=(h.swingDir===1||rnd()<.35)&&z.arms&&(z.arms[0]||z.arms[1]);   // the blow lands on an arm
+    if(sideArm&&rnd()<.6){z.hp-=dmg*.5;if(z.hp<=.01){killZ(z,ux,uy,false);toast('ฟาดจนร่วง!');return;}shake=Math.max(shake,3);pamEmbers(z.x,z.y,ux,uy,24);cutArm(z,ux,uy,Math.max(.7,p),1.4);toast('ฟาดแขนขาดกระเด็น!');rebound(h);return;}
+    if(!z.crawl&&rnd()<.3){z.hp-=dmg*.6;if(z.hp<=.01){killZ(z,ux,uy,false);toast('ฟาดจนร่วง!');return;}   // flat on its back, flung, skidding ~5 m along the ground
+      z.a=Math.atan2(-uy,-ux);z.down={t:0,T:2.8+rnd()*.5,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y,sw:0};z.state='down';z.vx=ux*PAMFLING;z.vy=uy*PAMFLING;z.tilt=0;
+      shake=Math.max(shake,5);blood(z.x,z.y,12,5,ux,uy,60);sfx.hit();sfx.kick&&sfx.kick();toast('ฟาดหงายหลังกระเด็น!');rebound(h);return;}
+    z.hp-=dmg;shake=Math.max(shake,1.4+2.2*p);blood(z.x,z.y,12,3+Math.round(3*p),ux,uy,40);sfx.hit();
     if(z.hp<=.01){killZ(z,ux,uy,false);toast('ฟาดจนร่วง!');return;}zShove(z,ux,uy);rebound(h);
     toast(p>=.6?'ฟาดเต็มแรง!':'ฟาดไม้');return;}
   if(W(h).kill){shake=Math.max(shake,3);z.aware=6;h.bloody=1;swingSpray(z.x,z.y,tx,ty,ux,uy,16,1,h);blood(z.x,z.y,12,10,ux,uy,70);sfx.hit();sfx.sever();killZ(z,ux,uy,false);toast('แทงหอกทะลุ!');return;}
@@ -763,7 +769,7 @@ function doHit(h=player){
   if(ep>=.75||low){decap(z,ux,uy);return;}
   if(h.swingDir===1)cutArm(z,ux,uy,ep,m);else cutLeg(z,ux,uy,ep,m);
 }
-function zShove(z,ux,uy){z.vx=ux*115;z.vy=uy*115;z.state='stagger';z.t=.26;z.tilt=Math.sign(ux||1)*.3;}   // still on its feet: rocked back ~2 steps, then keeps coming
+let PAMFLING=130;function zShove(z,ux,uy){z.vx=ux*115;z.vy=uy*115;z.state='stagger';z.t=.26;z.tilt=Math.sign(ux||1)*.3;}   // still on its feet: rocked back ~2 steps, then keeps coming
 function rebound(h){if(h!==player)return;h.swingT=0;h.pendingHit=0;h.rbT=.2;h.nextDir=h.swingDir;tn('sine',180,90,.12,.25);}   // the weapon bounces back to the side it came from; the next blow comes from there again
 function nudge(z,ux,uy,p,mul){const sp=(35+55*p)*(mul||1);z.vx=ux*sp;z.vy=uy*sp;z.state='stagger';z.t=.18+.2*p;z.tilt=Math.sign(ux||1)*(.2+.35*p);}
 function knock(z,ux,uy,p,mul){
