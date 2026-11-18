@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v7.5</div>
+  <div class="ver">v7.6</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.5</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.6</h3><ul>
+      <li>ซอมบี้โดนตีทุกครั้งเดินช้าลง 20% สะสมได้สูงสุด 95% (ตีโดย ผู้เล่น บอท เตะ หรือไม้แหย่ของแจ็คพอท)</li>
       <li>แพมฟาดแรงขึ้น ซอมบี้ตายใน 1–4 ครั้ง · 30% ฟาดหงายหลังกระเด็นไถพื้นไป ~5 เมตร · ฟาดโดนแขน 60% แขนขาดกระเด็น</li>
       <li>ซอมบี้กลับมา HP เท่าเดิม (3) ไม่อึด 2 เท่าแล้ว</li>
       <li>ปีนข้ามกิ่งไม้ใหญ่ที่ซ้อนกันหลายชั้นได้ไม่จำกัด กระโดดเป็นจังหวะทีละกิ่งจนพ้นกอง (ผู้เล่นและบอท)</li>
@@ -608,7 +609,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='7.5';
+let useBot=true,bot=null,hero='fifa';const VERSION='7.6';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -745,7 +746,7 @@ function doHit(h=player){
   if(h===player&&hero==='pw'&&!h.rollT){h.lunge=null;h.hopT=.2;h.hopDx=-Math.cos(a);h.hopDy=-Math.sin(a);h.recoilT=.45;h.cd=1;h.lastSw=performance.now()/1000+.88;h.charging=false;shake=Math.max(shake,2.5);tn('square',1400,700,.12,.12);tn('sine',900,880,.35,.08);}   // แพรวา: the pan bounces back off the zombie — she's thrown 3 m, nearly onto her back, 1 s to recover
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   if(best.burn>0){const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;shake=Math.max(shake,2.5);sfx.hit();sfx.sever();for(let k=0;k<20;k++)sparks.push({x:z.x+(rnd()-.5)*8,y:z.y+(rnd()-.5)*4,h:4+rnd()*12,vx:ux*40+(rnd()-.5)*40,vy:uy*20+(rnd()-.5)*20,vh:10+rnd()*40,life:.4+rnd()*.6});killZ(z,ux,uy,false);toast('ฟันทีเดียว ร่วงเป็นถ่าน!');return;}
-  const z=best,d=bd||1,low=z.crawl||z.state==='down',r0=(z.x-h.x)/d,r1=(z.y-h.y)/d,tip=d-(low?5:3)>R0-Math.max(4,R0*.26);
+  slowZ(best);const z=best,d=bd||1,low=z.crawl||z.state==='down',r0=(z.x-h.x)/d,r1=(z.y-h.y)/d,tip=d-(low?5:3)>R0-Math.max(4,R0*.26);
   const th=Math.atan2(r1,r0),tx=h.swingDir===1?Math.sin(th):-Math.sin(th),ty=h.swingDir===1?-Math.cos(th):Math.cos(th);
   let ux=r0+tx*.8,uy=r1+ty*.8;{const l=Math.hypot(ux,uy)||1;ux/=l;uy/=l;}
   if(h===player&&hero==='pam'&&UPG()&&!(z.burn>0)){igniteZ(z);toast('จุดไฟเผาซอมบี้! ไหม้ตายใน 5 วิ');}
@@ -771,6 +772,7 @@ function doHit(h=player){
 }
 let PAMFLING=130;function zShove(z,ux,uy){z.vx=ux*115;z.vy=uy*115;z.state='stagger';z.t=.26;z.tilt=Math.sign(ux||1)*.3;}   // still on its feet: rocked back ~2 steps, then keeps coming
 function rebound(h){if(h!==player)return;h.swingT=0;h.pendingHit=0;h.rbT=.2;h.nextDir=h.swingDir;tn('sine',180,90,.12,.25);}   // the weapon bounces back to the side it came from; the next blow comes from there again
+function slowZ(z){if(z)z.slow=Math.min(.95,(z.slow||0)+.2);}
 function nudge(z,ux,uy,p,mul){const sp=(35+55*p)*(mul||1);z.vx=ux*sp;z.vy=uy*sp;z.state='stagger';z.t=.18+.2*p;z.tilt=Math.sign(ux||1)*(.2+.35*p);}
 function knock(z,ux,uy,p,mul){
   p=p==null?.7:p;const sp=Math.min(420,(70+80*p)*(mul||1));
@@ -811,7 +813,7 @@ function doKick(h=player){
   for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-3>(h===player?WP.knife.kmax:19))continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>1.05)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
   snakeHits(h,a,WP.knife.kmax,1.1);bossHits(h,a,WP.knife.kmax,1.05,true);alertNear(110,h);if(!best){if(h===player)bigHit(h,a,WP.knife.kmax+4,1.05,1.6);return;}
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
-  const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;
+  slowZ(best);const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;
   shake=Math.max(shake,4);sfx.kick();toast('ถีบ!');z.aware=6;
   if(z.crawl){z.vx=ux*200;z.vy=uy*200;z.state='stagger';z.t=.6;z.tilt=Math.sign(ux||1)*.5;return;}
   // flung backwards, lands flat on its back and ploughs ~3 m (24px) through the leaf litter
@@ -1252,7 +1254,7 @@ function updateZombies(dt){
         if(D.t<.3){const f=Math.exp(-2.5*dt);z.vx*=f;z.vy*=f;}else{if(!D.landed){D.landed=true;shake=Math.max(shake,1.5);bakeSplat(z.x,z.y,2.5);nz(.12,'lowpass',500,120,.35,1);}z.vx*=.7;z.vy*=.7;}
         if(D.t>=D.T){z.state='chase';z.aware=5;z.down=null;tornUp(z);}break;}
     }
-    if(z.burn>0&&sp>0)sp/=3;
+    if(z.burn>0&&sp>0)sp/=3;if(z.slow&&sp>0)sp*=1-z.slow;   // every blow taken slows it 20%, at most 95%
     if(z.slam){const S=z.slam;S.t+=dt;sp=0;z.vx*=.6;z.vy*=.6;if(!bigBranches.includes(S.b)||!(z.state==='chase'||z.state==='search'||z.state==='wander'))z.slam=null;else{z.a=angLerp(z.a,S.a,dt*12);
       if(!S.hit&&S.t>=.4){S.hit=true;slamHit(z,S.b);}if(S.t>=.66)z.slam=null;}}
     {const br=!z.slam&&!z.crawl&&onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.brT=1.2+rnd()*.6;z.slam={t:0,b:br,a:Math.atan2(br.y-z.y,br.x-z.x),hit:false};}}}
@@ -1376,7 +1378,7 @@ function eatBotTick(z,dt){
   if(Math.hypot(player.x-z.x,player.y-z.y)<26&&!player.hidden){z.state='chase';z.aware=4;z.tgt=player;}
 }
 function inYard(x,y){return home&&x>home.ix0&&x<home.ix1&&y>home.iy0&&y<home.iy1;}
-function poke(b,z){
+function poke(b,z){slowZ(z);
   // long dry branch: reach 4 m (32 px). Pushes 1 m back, 30% a hard thrust that knocks it flat and slides it 3 m. No damage.
   const d=Math.hypot(z.x-b.x,z.y-b.y)||1,ux=(z.x-b.x)/d,uy=(z.y-b.y)/d;b.pokeT=.22;b.pokeCd=.5+rnd()*.25;b.facing=Math.atan2(uy,ux);z.aware=Math.max(z.aware,4);
   if(near(b,260)){nz(.12,'bandpass',600,1400,.18,1.2);tn('sine',130,70,.08,.35);}
