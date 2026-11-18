@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v7.7</div>
+  <div class="ver">v7.8</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,9 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.7</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v7.8</h3><ul>
+      <li>หยุดกดโจมตีเกิน 3 วิ กลับมาวิ่งเร็วได้เหมือนเดิม (ท่าถีบไม่นับ)</li>
+      <li>แจ็คพอทและแพม: ปุ่มถีบเปลี่ยนเป็น “ผลัก” แทงอาวุธยาวตรงไปข้างหน้า ซอมบี้ที่ปลายอาวุธกระเด็นล้มเหมือนโดนถีบ</li>
       <li>ซอมบี้โดนตีทุกครั้งเดินช้าลง 20% สะสมได้สูงสุด 95% (ตีหรือเตะโดน)</li>
       <li>แพมฟาดแรงขึ้น ซอมบี้ตายใน 1–4 ครั้ง · 30% ฟาดหงายหลังกระเด็นไถพื้นไป ~5 เมตร · ฟาดโดนแขน 60% แขนขาดกระเด็น</li>
       <li>ซอมบี้กลับมา HP เท่าเดิม (3) ไม่อึด 2 เท่าแล้ว</li>
@@ -609,7 +611,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='7.7';
+let useBot=true,bot=null,hero='fifa';const VERSION='7.8';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -806,15 +808,16 @@ function kick(h=player){
   if(h===player&&player.snakeBite&&state==='play'){kickSnake();return;}
   if(h===player&&h.charging&&h.autoCh){h.charging=false;h.autoCh=false;}
   if(state!=='play'||h.hidden||h.fly||h.kickT>0||h.kcd>0||h.charging||h.swingT>0)return;
-  let a=autoAim(h),dash=20;if(h===player){const t=lungeTarget(h,a,WP.knife.kmax+20);if(t){a=t.a;dash=clamp(t.d-13,0,24);}else{for(const b of bigBranches){const ca=Math.cos(b.a),sa=Math.sin(b.a);for(let k=-2;k<=2;k++){const px=b.x+ca*b.L*k/4.2,py=b.y+sa*b.L*k/4.2,d=Math.hypot(px-h.x,py-h.y);if(d<48&&Math.abs(angDiff(a,Math.atan2(py-h.y,px-h.x)))<.6)dash=Math.min(dash,clamp(d-12,0,24));}}}}h.kdash={ux:Math.cos(a),uy:Math.sin(a),d:dash,t:0};h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
+  let a=autoAim(h),dash=20;if(h===player){const t=lungeTarget(h,a,WP.knife.kmax+20);if(t){a=t.a;dash=clamp(t.d-13,0,24);}else{for(const b of bigBranches){const ca=Math.cos(b.a),sa=Math.sin(b.a);for(let k=-2;k<=2;k++){const px=b.x+ca*b.L*k/4.2,py=b.y+sa*b.L*k/4.2,d=Math.hypot(px-h.x,py-h.y);if(d<48&&Math.abs(angDiff(a,Math.atan2(py-h.y,px-h.x)))<.6)dash=Math.min(dash,clamp(d-12,0,24));}}}}h.push=h===player&&(hero==='jp'||hero==='pam');h.kdash={ux:Math.cos(a),uy:Math.sin(a),d:dash,t:0};h.kickAng=a;h.facing=a;h.kickT=.32;h.kcd=.62;h.kickHit=.1;h.combat=2.2;h.fought=true;h.pantT=0;if(h===player||near(h,220))sfx.whoosh();
 }
 function doKick(h=player){
   const a=h.kickAng;let best=null,bd=1e9;
-  for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-3>(h===player?WP.knife.kmax:19))continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>1.05)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
+  const PU=h===player&&h.push,RCH=PU?44:(h===player?WP.knife.kmax:19);   // a push reaches to the tip of the long weapon, straight ahead
+  for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-3>RCH)continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>(PU?.55:1.05))continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
   snakeHits(h,a,WP.knife.kmax,1.1);bossHits(h,a,WP.knife.kmax,1.05,true);alertNear(110,h);if(!best){if(h===player)bigHit(h,a,WP.knife.kmax+4,1.05,1.6);return;}
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   slowZ(best);const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;
-  shake=Math.max(shake,4);sfx.kick();toast('ถีบ!');z.aware=6;
+  shake=Math.max(shake,4);sfx.kick();toast(PU?'ผลัก!':'ถีบ!');z.aware=6;
   if(z.crawl){z.vx=ux*200;z.vy=uy*200;z.state='stagger';z.t=.6;z.tilt=Math.sign(ux||1)*.5;return;}
   // flung backwards, lands flat on its back and ploughs ~3 m (24px) through the leaf litter
   z.a=Math.atan2(-uy,-ux);z.down={t:0,T:2.6+rnd()*.5,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y,sw:0};
@@ -1136,7 +1139,8 @@ function updatePlay(dt){frameN++;tickBlk(dt);wobTick(Math.max(dt,1e-3));mournTic
    if(E5&&E5.ph==='fight'){const c=e5Closest(player.x,player.y),d=Math.hypot(c.x-player.x,c.y-player.y);if(d<ld&&d<64){ld=d;lz={x:c.x,y:c.y};}}
    player.lock=lz;const free=!player.carry&&!player.drag&&!player.grip&&!player.wood&&!player.hidden;
    if(player.charging&&!player.swingT){player.charging=false;player.autoCh=false;}}
-  let calm=player.combat<=0;if(calm)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
+  player.atkIdle=((player.charging&&!player.autoCh)||player.swingT>0)?0:(player.atkIdle||0)+dt;   // 3 s without a blow: free to run again (kicks don't count)
+  let calm=player.combat<=0||player.atkIdle>3;if(calm&&player.atkIdle<=3)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
   const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(PAMSLED()?player.wood*2/3:player.wood))*(player.snakeBite?.5:1)*(player.carry?(PAMSLED()&&player.wood?.75:hero==='pw'?.25:.5):1)*(player.grip?(hero==='pw'?.21:.42):1)*(player.drag&&hero==='pw'?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
   if(player.fly){flyTick(dt);}
@@ -3341,7 +3345,7 @@ function drawP(c,T,mono,h=player){
   const fwx=ca,fwy=sa*K,px=-sa,py=ca*K,away=sa<-.25,sw=Math.sin(h.phase)*3.2*h.moveAmt;
   const hipY=fy-10.5,shY=fy-18,toY=fy-14.5,heY=fy-22.3;
   c.lineCap='round';c.strokeStyle=M(JP?SKJ:PW?'#c9c4bc':FF?JEAN:'#2e2e2e');c.lineWidth=JP?1.7:PW?2.2:FF?2.1:1.9;
-  const kk=h.kickT>0?Math.sin(clamp(1-h.kickT/.32,0,1)*Math.PI):0;
+  const pth=h.push&&h.kickT>0?Math.sin(clamp(1-h.kickT/.32,0,1)*Math.PI):0,kk=h.kickT>0&&!h.push?Math.sin(clamp(1-h.kickT/.32,0,1)*Math.PI):0;
   c.save();if(CP&&CP.tuck>0){c.translate(fx,hipY);c.transform(1,0,CP.roll*-1.2,1-.5*CP.tuck,0,0);c.translate(-fx,-hipY);}   // knees drawn up as the legs swing over
   if(JP&&!kk){for(const l of[-1,1]){const h0=fx+px*1.5*l,h1=hipY+py*1.3*l,f0=h0+fwx*sw*l+px*1.5*l,f1=fy+py*1.3*l+fwy*sw*l*.6+py*.5*l;   // feet splayed out
       const kx=h0+(f0-h0)*.72,ky=h1+(f1-h1)*.72;c.strokeStyle=M(SKJ);c.lineWidth=1.6;c.beginPath();c.moveTo(kx,ky);c.lineTo(f0,f1);c.stroke();
@@ -3383,14 +3387,15 @@ function drawP(c,T,mono,h=player){
   if(swinging){const e=sP<.55?Math.pow(sP/.55,2)*.8:.8+.2*(1-Math.pow(1-(sP-.55)/.45,2));
     const a0=a+side*back,a1=a-side*thru;psi=a0+(a1-a0)*e;
     const v0=side===1?-(4+8*p):(4+5*p),v1=side===1?(4+3*p):-(4+7*p);hv=v0+(v1-v0)*e;}
+  else if(pth>0){psi=a+side*.12;hv=1;}                               // the push: straight forward
   else if(h.charging){psi=a+side*back;hv=side===1?-(3+9*p):(4+6*p);}
   else if(CP&&CP.hands){psi=a+side*.25;hv=9;}                       // vaulting: hand planted on the bough
   else if(h.combat>0){psi=a+side*1.05;hv=side===1?-5:6;}          // guard: wait at the other side's wind-up
   else{const ph=Math.sin(h.phase),m=h.moveAmt;psi=a+1.3-ph*.6*m;hv=6+1.5*m*Math.abs(ph);}   // running arm swing
-  if(!mono){if(swinging||h.charging){const t=swinging?1:.35;h.armOff+=(angDiff(a,psi)-h.armOff)*t;h.armHv+=(hv-h.armHv)*t;}
+  if(!mono){if(swinging||h.charging||pth>0){const t=swinging||pth>0?1:.35;h.armOff+=(angDiff(a,psi)-h.armOff)*t;h.armHv+=(hv-h.armHv)*t;}
     else{h.armOff+=(angDiff(a,psi)-h.armOff)*.22;h.armHv+=(hv-h.armHv)*.22;}}
   psi=a+h.armOff;hv=h.armHv;
-  const RF=h===player&&swinging?reachF(sP):0,armR=armL*.9+(RF?(h.visArm||0)*RF:0),WX=RF?(h.visW||0)*RF:0;   // stretch toward the real reach during the stroke
+  const RF=h===player&&swinging?reachF(sP):0,armR=armL*.9+(RF?(h.visArm||0)*RF:0)+5*pth,WX=(RF?(h.visW||0)*RF:0)+6*pth;   // stretch toward the real reach during the stroke
   const ux=Math.cos(psi),uy=Math.sin(psi)*K,hx=shRx+ux*armR,hy=shRy+uy*armR+hv*.8;
   let kx=ux,ky=uy+hv/12;{const l=Math.hypot(kx,ky)||1;kx/=l;ky/=l;}
   const behind=Math.sin(psi)<-.15;
@@ -3400,7 +3405,7 @@ function drawP(c,T,mono,h=player){
     if(swinging&&h===player&&!mono){const a0=a+side*back,R2=armR+(PM?21:h.weapon==='hoe'?15:9)*big+WX,n=7,TRL=PM?[[4.6,'rgba(255,50,10,.22)'],[2.6,'rgba(120,10,0,.5)'],[1.3,'rgba(255,130,60,.92)']]:[[2.4,'rgba(0,0,0,.35)'],[1.1,'rgba(255,255,255,.75)']];   // the stroke leaves a cutting arc in the air (แพม: a red ember smear)
       for(const[lw,col]of TRL){c.strokeStyle=col;c.lineWidth=lw;c.beginPath();for(let k=0;k<=n;k++){const tt=a0+(psi-a0)*k/n,r=R2*(.86+.14*k/n),X=shRx+Math.cos(tt)*r,Y=shRy+Math.sin(tt)*K*r+hv*.5;k?c.lineTo(X,Y):c.moveTo(X,Y);}c.stroke();}}
     if(PM&&h===player&&h.weapon!=='stick'&&h.weapon!=='hoe'){c.strokeStyle=M('#8c8c8c');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo((shRx+hx)/2+uy*.8,(shRy+hy)/2+1.2);c.lineTo(hx,hy);c.stroke();   // Pam swings her torch like a club
-      const SL=24+WX,tipx=hx+kx*SL,tipy=hy+ky*SL-(swinging?0:(h.pt&&h.pt.dip>0?-4:6));c.strokeStyle=M('#2a2018');c.lineWidth=2.2;c.beginPath();c.moveTo(hx-kx*4,hy-ky*4);c.lineTo(tipx,tipy);c.stroke();c.strokeStyle=M('#5a4836');c.lineWidth=1.3;c.stroke();
+      const SL=24+WX,tipx=hx+kx*SL,tipy=hy+ky*SL-(swinging||pth>0?0:(h.pt&&h.pt.dip>0?-4:6));c.strokeStyle=M('#2a2018');c.lineWidth=2.2;c.beginPath();c.moveTo(hx-kx*4,hy-ky*4);c.lineTo(tipx,tipy);c.stroke();c.strokeStyle=M('#5a4836');c.lineWidth=1.3;c.stroke();
       c.fillStyle=M('#1c1c1c');c.fillRect(tipx-1,tipy-1,2,2);if(h.torch>0)flames(c,tipx,tipy+.5,3,1,7,performance.now()/1000,3,!!mono,1.3);
       else if(h.pt){const g=.5+.5*Math.sin(performance.now()/150);c.fillStyle=M(`rgb(255,${50+60*g|0},18)`);c.fillRect(tipx-1.3,tipy-1.3,2.6,2.6);c.fillStyle=M('rgb(255,210,90)');c.fillRect(tipx-.5,tipy-.6,1,1);}return;}
     if(h.weapon==='stick'){stickHands();return;}if(h.weapon==='hoe'){hoeHand();return;}
@@ -3430,7 +3435,7 @@ function drawP(c,T,mono,h=player){
     c.strokeStyle=M('#1a1a1a');c.lineWidth=2.2;c.beginPath();c.moveTo(ex,ey);c.bezierCurveTo(ex+kx*7+qx*3,ey+ky*7+qy*3,ex+kx*10-qx*5,ey+ky*10-qy*5,tx_,ty_);c.stroke();
     c.strokeStyle=M('#e2e2e2');c.lineWidth=1;c.stroke();
     if(!mono&&h.bloody>0){c.strokeStyle=RED;c.beginPath();c.moveTo(ex+kx*8,ey+ky*8);c.quadraticCurveTo(ex+kx*8-qx*4,ey+ky*8-qy*4,tx_,ty_);c.stroke();}};
-  const stickHands=()=>{const th=h.pokeT>0?Math.sin(clamp(1-h.pokeT/.22,0,1)*Math.PI):0,gx2=fx+fwx*(3+5*th),gy2=shY+4+fwy*(3+5*th);
+  const stickHands=()=>{const th=h.pokeT>0?Math.sin(clamp(1-h.pokeT/.22,0,1)*Math.PI):pth,gx2=fx+fwx*(3+5*th),gy2=shY+4+fwy*(3+5*th);
     c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(gx2+px*1.2,gy2+py*1.2);c.moveTo(shLx,shLy);c.lineTo(gx2-fwx*4-px*1.2,gy2-fwy*4-py*1.2);c.stroke();
     const L=34+8*th,bx0=gx2-fwx*9,by0=gy2-fwy*9+1.5,bx1=gx2+fwx*L,by1=gy2+fwy*L-1.5;
     const mx2=(bx0+bx1)/2,my2=(by0+by1)/2,ops=[[bx0,by0,bx1,by1,1.3,'#2a2018'],[bx0,by0,bx1,by1,.6,'#8b7862'],[mx2,my2,mx2+px*3+fwx*2,my2+py*3-2,.6,'#2a2018'],[bx1-fwx*5,by1-fwy*5,bx1-fwx*3-px*2.5,by1-fwy*3-py*2.5-1.5,.6,'#2a2018']];   // thin dry stick
@@ -4110,7 +4115,7 @@ function drawUI(dt){
         if(b.id==='drop'){uiCircle(b.x,b.y,b.r,'#c8b79c',2);uiText('วาง',b.x,b.y-5*s,10*s,'center',BG);uiText(player.carry?'กล้วย':'ฟืน',b.x,b.y+7*s,9*s,'center',BG);continue;}
         if(b.id==='carry'){uiCircle(b.x,b.y,b.r,'#e6c43c',2);uiText('แบก',b.x,b.y-5*s,10*s,'center',BG);uiText('กล้วย',b.x,b.y+7*s,9*s,'center',BG);continue;}
         if(b.id==='swap'){bo=bo||hoeNear();uiCircle(b.x,b.y,b.r,bo?'#5fd35f':BG,2);uiText('เปลี่ยน',b.x,b.y-5*s,9*s,'center',bo?BG:FG);uiText('อาวุธ',b.x,b.y+6*s,9*s,'center',bo?BG:FG);continue;}
-        uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.id==='kick'&&player.snakeBite?'เตะงูออก':b.label,b.x,b.y,(b.big?(player.snakeBite&&b.id==='kick'?14:19):11)*s,'center',player.snakeBite&&b.id==='kick'?'#ff3b30':bo?BG:FG);}
+        uiCircle(b.x,b.y,b.r,bo?FG:BG,2);uiText(b.id==='kick'&&player.snakeBite?'เตะงูออก':b.id==='kick'&&(hero==='jp'||hero==='pam')?'ผลัก':b.label,b.x,b.y,(b.big?(player.snakeBite&&b.id==='kick'?14:19):11)*s,'center',player.snakeBite&&b.id==='kick'?'#ff3b30':bo?BG:FG);}
       u.globalAlpha=1;
     }
   }
