@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v8.0</div>
+  <div class="ver">v8.1</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.0</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.1</h3><ul>
+      <li>แพม: ถ้าไม้ยังติดไฟอยู่ ฟาดโดนมีโอกาส 50% จุดไฟซอมบี้ ตัวที่ติดไฟเหลือ HP 1</li>
       <li>กดโจมตีระหว่างขนของ ฟืน/กล้วยทุกอย่างจะถูกทิ้งลงพื้นก่อนเสมอ แล้วค่อยกลับมาเก็บใหม่ (ทุกตัวละคร)</li>
       <li>ผลัก (แจ็คพอท/แพม): ตัวไม่พุ่งไปข้างหน้า ไม่ทำให้เดินช้า เดินหนีไปพร้อมแทงได้</li>
       <li>หยุดกดโจมตีเกิน 3 วิ กลับมาวิ่งเร็วได้เหมือนเดิม (ท่าถีบไม่นับ)</li>
@@ -613,7 +614,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='8.0';
+let useBot=true,bot=null,hero='fifa';const VERSION='8.1';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -755,6 +756,7 @@ function doHit(h=player){
   const th=Math.atan2(r1,r0),tx=h.swingDir===1?Math.sin(th):-Math.sin(th),ty=h.swingDir===1?-Math.cos(th):Math.cos(th);
   let ux=r0+tx*.8,uy=r1+ty*.8;{const l=Math.hypot(ux,uy)||1;ux/=l;uy/=l;}
   if(h===player&&hero==='pam'&&UPG()&&!(z.burn>0)){igniteZ(z);toast('จุดไฟเผาซอมบี้! ไหม้ตายใน 5 วิ');}
+  else if(h===player&&hero==='pam'&&h.torch>0&&!(z.burn>0)&&rnd()<.5){igniteZ(z);z.hp=1;pamEmbers(z.x,z.y,ux,uy,30);zShove(z,ux,uy);rebound(h);toast('ไม้ติดไฟ จุดไฟซอมบี้!');return;}   // a still-burning stick: 50% sets it alight, left on 1 HP
   if(h===player&&W(h).blunt){const head=rnd()<.1;   // แพม: 10% critical (head) chance per hitz.aware=6;pamEmbers(z.x,z.y,ux,uy,head?46:22);
     if(head){critPop(z.x,z.y,20);shake=Math.max(shake,4);blood(z.x,z.y,14,8,ux,uy,80);sfx.hit();sfx.sever();killZ(z,ux,uy,false);toast('คริติคอล! ฟาดโดนหัว');return;}
     const dmg=1+.9*Math.min(1,p),sideArm=(h.swingDir===1||rnd()<.35)&&z.arms&&(z.arms[0]||z.arms[1]);   // the blow lands on an arm
