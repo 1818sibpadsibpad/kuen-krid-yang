@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v8.1</div>
+  <div class="ver">v8.2</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.1</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.2</h3><ul>
+      <li>แพรวา: ระยะโจมตีเพิ่มขึ้นเท่าพี่ๆ</li>
       <li>แพม: ถ้าไม้ยังติดไฟอยู่ ฟาดโดนมีโอกาส 50% จุดไฟซอมบี้ ตัวที่ติดไฟเหลือ HP 1</li>
       <li>กดโจมตีระหว่างขนของ ฟืน/กล้วยทุกอย่างจะถูกทิ้งลงพื้นก่อนเสมอ แล้วค่อยกลับมาเก็บใหม่ (ทุกตัวละคร)</li>
       <li>ผลัก (แจ็คพอท/แพม): ตัวไม่พุ่งไปข้างหน้า ไม่ทำให้เดินช้า เดินหนีไปพร้อมแทงได้</li>
@@ -614,7 +615,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='8.1';
+let useBot=true,bot=null,hero='fifa';const VERSION='8.2';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -714,7 +715,7 @@ function release(angle,h=player){if(h===player)h.autoCh=false;
   if(!h.charging)return;h.charging=false;if(state!=='play')return;
   h.rbT=0;const p=h.charge;   // longer hold = arm extends further = more reach, more power
   h.swingDir=h.nextDir;h.nextDir=-h.swingDir;h.idleT=0;h.facing=angle;h.swingAng=angle;
-  const w=W(h);h.swingPow=p;h.swingReach=(h.tap?w.kmax*.92:w.kmin+(w.kmax-w.kmin)*p)*(h===player&&hero==='pw'?.5:1);   // แพรวา: half the reach
+  const w=W(h);h.swingPow=p;h.swingReach=(h.tap?w.kmax*.92:w.kmin+(w.kmax-w.kmin)*p);   // แพรวา: same reach as the older ones
   h.swingDur=(.085+.07*p)*(w.m>1?1.3:1);if(h===player&&hero==='pw')h.swingDur*=.5;h.swingT=h.swingDur;h.pendingHit=h.swingDur*.45;h.cd=(.14+.08*p)*(h===player&&hero==='pw'?.5:1);h.charge=0;   // แพรวา swings twice as fast
   if(h===player){const big=hero==='pw'?1.55:hero==='pam'?1.15:1,arm=(5.5+5.5*p)*big*.9,wk=W(h),Lw=wk===WP.pstick?24:wk===WP.hoe?19:wk===WP.spear?18:wk===WP.sickle?11:(hero==='pw'?9.6:9.5);
     const need=Math.max(0,h.swingReach-(2.9+arm+Lw)-2);h.visStep=Math.min(need*.55,15);h.visArm=Math.min((need-h.visStep)*.4,5);h.visW=Math.max(0,need-h.visStep-h.visArm);}   // the stroke is drawn out to the real hit reach: step + lean in, reach the arm, and the weapon makes up the rest
