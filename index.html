@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v8.2</div>
+  <div class="ver">v8.3</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,9 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.2</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.3</h3><ul>
+      <li>คำแทนตัว: แพม “เอื้อย” · แจ็คพอท “พอท” (กับน้อง “อ้าย”) · ฟีฟ่า “อ้าย” · แพรวา “หนู”</li>
+      <li>เล่นเป็นแพรวาหรือแพม: ตัวละครที่ไม่ได้อยู่ในสนาม (ตัวหลักก่อนหน้า) มารับหน้าที่แทน (เติมฟืน/จุดคบไฟ) พูดด้วยน้ำเสียงตัวเอง · เจ้าของหน้าที่กลับมาเป็นบอทเมื่อไร ก็ทำหน้าที่เดิม 100%</li>
       <li>แพรวา: ระยะโจมตีเพิ่มขึ้นเท่าพี่ๆ</li>
       <li>แพม: ถ้าไม้ยังติดไฟอยู่ ฟาดโดนมีโอกาส 50% จุดไฟซอมบี้ ตัวที่ติดไฟเหลือ HP 1</li>
       <li>กดโจมตีระหว่างขนของ ฟืน/กล้วยทุกอย่างจะถูกทิ้งลงพื้นก่อนเสมอ แล้วค่อยกลับมาเก็บใหม่ (ทุกตัวละคร)</li>
@@ -608,15 +610,15 @@ const PANIC=['ห้ะ ไฟดับ !!','มองไม่เห็น!!!',
 const SKJ='rgb(112,80,56)',NAVY='rgb(38,42,58)',FRED='rgb(40,46,64)',JEAN='rgb(30,34,48)';
 const GLARE=['โอ้ยย แสบตา','แสบตาาา!','อย่าส่องหน้าดิ๊','ตาบอดแล้ว~','เอาไฟออกไปปป'];
 const CRY=['ฮือออ...','พี่แพมมม!!','แม่จ๋าาา','ช่วยด้วยยย','ฮึก...ฮือๆ','ยายหิบบบ'];
-const PAM_LINES=['บักพอท!!','พอท เฮ็ดดีดีดุ๊','ไผกินกล้วยเอื้อย','ชั้นหิว','หิวนอนเด้','ไฟมาแล้วจ้า','ลมแรงจังคืนนี้','เผามันเลย!','ตรงไหนมืด เดี๋ยวไปจุดให้','ใครเห็นซอมบี้บอกแพมนะ'];
+const PAM_LINES=['บักพอท!!','พอท เฮ็ดดีดีดุ๊','ไผกินกล้วยเอื้อย','เอื้อยหิว','หิวนอนเด้','ไฟมาแล้วจ้า','ลมแรงจังคืนนี้','เผามันเลย!','ตรงไหนมืด เดี๋ยวไปจุดให้','ใครเห็นซอมบี้บอกเอื้อยนะ'];
 const PAM_BURN=['ไหม้ซะ!','ย่างเลย!!','ร้อนมั้ยล่ะ','เผามันนน'];
 const PW_HUNGRY=['หนูหิ~~~ว','หิวจัง','มีอะไรกินมั้~~~ย','กล้วยหมดแล้วหรอ?','คิดถึงมาม่า'];
 const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระวังโดนกัดเด้อ','นู้นๆ ตรงนู้นนนนน','ไม่หิวกันหรอ','คิดถึงยายหิบ'];
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
-const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','กุยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='8.2';
-const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้อกูแล้ว','พอท ถืกกัดบ่?','กูยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
+const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
+let useBot=true,bot=null,hero='fifa';const VERSION='8.3';
+const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
 const flow=new Int16Array(MW*MH),flowB=new Int16Array(MW*MH),fq=new Int32Array(MW*MH);
@@ -629,7 +631,7 @@ function newGame(seed){
   stock=0;kills=0;gameTime=0;flashOn=true;muzzle=0;shake=0;invertF=0;
   zombies=[];particles=[];gibs=[];toasts=[];spawnT=0;flowT=0;hbT=0;flickT=0;flickNext=14+rnd()*15;death=null;dropL=null;dawn=0;
   player.jp=hero==='jp';player.pw=hero==='pw';player.pm=hero==='pam';lvSet(player);cam.x=player.x;cam.y=player.y;
-  night=1;cut=null;wakeFade=0;bot=useBot?makeBot():null;praewa=hero==='pw'?null:makePraewa();pam=hero==='pam'?null:makePam();postTorches=[];spawnNight();
+  night=1;cut=null;wakeFade=0;bot=useBot?makeBot():null;praewa=hero==='pw'?null:makePraewa();pam=hero==='pam'?null:makePam();subE=null;syncSub();postTorches=[];spawnNight();
   computeFlow(player.x,player.y);
 }
 function makeZ(x,y){return{x,y,vx:0,vy:0,a:rnd()*TAU,hp:3,state:'wander',t:rnd()*3,wa:rnd()*TAU,spd:(30+rnd()*14+(gameTime>120&&rnd()<.3?16:0))*1.3,aware:0,lx:x,ly:y,
@@ -886,7 +888,7 @@ function startClimb(e,tx,ty,bw){const d=Math.hypot(tx-e.x,ty-e.y);   // a vault 
   e.climb={x0:e.x,y0:e.y,x1:tx,y1:ty,t:0,T:d>30?.3+d/70:clamp(.42+d/90,.48,.7),n:Math.max(1,Math.round(d/26)),a:Math.atan2(ty-e.y,tx-e.x),hgt:3+bw*1.6,side:rnd()<.5?-1:1};e.vx=e.vy=0;
   if(e===player&&player.charging){player.charging=false;player.charge=0;}
   if(near(e,260))nz(.18,'bandpass',900,2200,.08,1.4);}
-function climbTick(dt){for(const e of[player,bot,praewa,pam]){if(!e||!e.climb)continue;const C=e.climb;C.t+=dt;const f=Math.min(1,C.t/C.T),m=f<.5?2*f*f:1-2*(1-f)*(1-f);   // ease in, ease out
+function climbTick(dt){for(const e of[player,bot,praewa,pam,subE]){if(!e||!e.climb)continue;const C=e.climb;C.t+=dt;const f=Math.min(1,C.t/C.T),m=f<.5?2*f*f:1-2*(1-f)*(1-f);   // ease in, ease out
     e.x=C.x0+(C.x1-C.x0)*m;e.y=C.y0+(C.y1-C.y0)*m;e.vx=e.vy=0;e.facing=C.a;e.moveAmt=.5;
     if(f>=1){e.climb=null;if(near(e,260)){tn('sine',90,60,.06,.25);nz(.06,'lowpass',400,200,.12,1);}dustPuff&&dustPuff(e.x,e.y,4,Math.cos(C.a),Math.sin(C.a));}}}
 function climbPose(h){if(!h.climb)return null;const C=h.climb,f=Math.min(1,C.t/C.T);   // lift, body roll and leg tuck through the vault
@@ -1025,7 +1027,7 @@ function npcDoubleTap(x,y){const e=npcAt(x,y),now=performance.now()/1000;if(!e){
   if(npcTap.e===e&&now-npcTap.t<.45){npcTap.e=null;urgeNpc(e);return true;}npcTap={e,t:now};return false;}
 function urgeNpc(e){e.urge=12;
   if(e===praewa){e.refuelT=0;e.hunger=Math.min(e.hunger,.5);const has=woodPiles.some(q=>q.logs.length);sayAs(e,has?'ได้ค่ะ ไปเติมไฟให้!':'ไม่มีฟืนในกองเลยค่า');toast(has?'แพรวารีบไปเติมไฟ':'แพรวา: ต้องวางกองฟืนในบ้านก่อน');}
-  else if(e===pam){e.igCd=0;e.hunger=Math.min(e.hunger,.5);e.post=null;if(e.torch<=0&&fireP.F>0)e.torch=0;sayAs(e,'ได้เลย แพมจะเผามันให้หมด!');toast('แพมรีบไปจุดไฟ/เผาซอมบี้');}
+  else if(e===pam){e.igCd=0;e.hunger=Math.min(e.hunger,.5);e.post=null;if(e.torch<=0&&fireP.F>0)e.torch=0;sayAs(e,'ได้เลย เอื้อยจะเผามันให้หมด!');toast('แพมรีบไปจุดไฟ/เผาซอมบี้');}
   else{e.hunger=Math.min(e.hunger,.5);e.pokeCd=0;sayAs(e,'ได้ๆ เดี๋ยวเฝ้าประตูให้!');toast(BOTNAME()+' ออกไปเฝ้าประตู');}
   for(let k=0;k<6;k++)sparks.push({x:e.x+(rnd()-.5)*6,y:e.y,h:20,vx:(rnd()-.5)*20,vy:(rnd()-.5)*6,vh:20+rnd()*20,life:.5});tn('square',900,1300,.06,.08);}
 function feedAvail(){return state==='play'&&player.wood>0&&fireP&&!player.hidden&&Math.hypot(fireP.x-player.x,fireP.y-player.y)<46;}
@@ -1040,13 +1042,13 @@ function updateFire(dt){
   F.hs=on?Math.min(2.15,(.45+1.55*L)*(1+.3*F.boost)):0;                      // flame height: full fuel = 2x the old fire
   F.v=on?Math.min(255,70+185*Math.min(1,L*1.25)+45*F.boost):26; // dead fire = only red embers
   F.r=on?60+110*Math.min(1,L*1.2)+30*F.boost:18;
-  if(was&&!on){fireOut=true;const bs=[bot&&!bot.dead?bot:null,praewa,pam].filter(Boolean);bs.forEach((b,i)=>setTimeout(()=>{if(b.say===undefined)return;sayAs(b,PANIC[(rnd()*PANIC.length)|0]);},i*600));toast('กองไฟดับ! ข้างนอกมืดสนิท');}
+  if(was&&!on){fireOut=true;const bs=[bot&&!bot.dead?bot:null,praewa,pam,subE&&!subE.dead?subE:null].filter(Boolean);bs.forEach((b,i)=>setTimeout(()=>{if(b.say===undefined)return;sayAs(b,PANIC[(rnd()*PANIC.length)|0]);},i*600));toast('กองไฟดับ! ข้างนอกมืดสนิท');}
 }
-function glareTick(dt){const L=curL;for(const b of[bot&&!bot.dead?bot:null,praewa,pam]){if(!b)continue;b.glareCd=(b.glareCd||0)-dt;
+function glareTick(dt){const L=curL;for(const b of[bot&&!bot.dead?bot:null,praewa,pam,subE&&!subE.dead?subE:null]){if(!b)continue;b.glareCd=(b.glareCd||0)-dt;
   let on=false;if(L&&L.i>.5&&!L.drop){const dx=b.x-L.x,dy=b.y-L.y,d=Math.hypot(dx,dy);if(d>6&&d<170&&Math.abs(angDiff(L.a,Math.atan2(dy,dx)))<.24&&Math.abs(angDiff(b.facing,Math.atan2(-dy,-dx)))<1.25&&los(L.x,L.y,b.x,b.y))on=true;}
   b.glare=on?(b.glare||0)+dt:0;if(b.glare>.7&&b.glareCd<=0){b.glare=0;if(rnd()<.6){b.glareCd=10+rnd()*8;sayAs(b,b===praewa?['แสบตาค่าาา','อย่าส่องหนูดิ','โอ้ยย แสบตา'][(rnd()*3)|0]:GLARE[(rnd()*GLARE.length)|0]);b.squint=1.2;}else b.glareCd=5;}
   if(b.squint>0)b.squint-=dt;}}
-function sayAs(b,text){if(b===bot){botSay(text);return;}b.say={text,t:3};b.sayT=Math.max(b.sayT||0,6);if(near(b,300)){tn('square',1100+rnd()*300,900,.05,.05);tn('square',1300,1000,.05,.04,null,.07);}}
+function sayAs(b,text){if(b===bot){botSay(text);return;}if(b&&b.sub)text=subVoice(b,text);b.say={text,t:3};b.sayT=Math.max(b.sayT||0,6);if(near(b,300)){tn('square',1100+rnd()*300,900,.05,.05);tn('square',1300,1000,.05,.04,null,.07);}}
 function hitPlant(h){
   const a=h.swingAng,R0=h.swingReach+4;let best=null,bd=1e9;
   for(const C of clumps){if(Math.hypot(C.x-h.x,C.y-h.y)>R0+16)continue;for(const p of C.plants){if(p.cut)continue;const dx=p.x-h.x,dy=p.y-h.y,d=Math.hypot(dx,dy);if(d-2>R0||Math.abs(angDiff(a,Math.atan2(dy,dx)))>ARC)continue;if(d<bd){bd=d;best=p;}}}
@@ -1105,7 +1107,7 @@ function getBotLight(){if(!bot||blackout)return null;let L=null;
   else if(bot.lampOn&&state!=='dying'){L={x:bot.x+Math.cos(bot.facing)*3,y:bot.y+Math.sin(bot.facing)*3,a:bot.facing,owner:bot};if(blocksLightAt(L.x,L.y)){L.x=bot.x;L.y=bot.y;}}
   if(L)L.i=flickT>0&&rnd()<.3?.15:.42;return L;}
 function syncDyn(){plights=plights.filter(p=>!p.dyn);const T=performance.now()/1000;
-  if(!blackout)for(const b of[bot&&!bot.dead?bot:null,praewa,pam]){if(!b)continue;const lx=b.x-Math.cos(b.facing+1.57)*2.5,ly=b.y-Math.sin(b.facing+1.57)*2.5+1;
+  if(!blackout)for(const b of[bot&&!bot.dead?bot:null,praewa,pam,subE&&!subE.dead?subE:null]){if(!b)continue;const lx=b.x-Math.cos(b.facing+1.57)*2.5,ly=b.y-Math.sin(b.facing+1.57)*2.5+1;
     plights.push({dyn:1,kind:'lantern',x:lx,y:ly,r:22,v:120,f:1,rays:20,seed:b.x});}
   if(hero==='pam'&&player.pt&&!player.hidden){const q=player.pt,o=q.lit?16:20;plights.push({dyn:1,kind:'torch',x:player.x+Math.cos(player.facing)*o,y:player.y+Math.sin(player.facing)*o,r:q.lit?70:18,v:q.lit?170:95,f:1,rays:q.lit?36:12,seed:9});}
    if(pam&&pam.torch>0)plights.push({dyn:1,kind:'torch',x:pam.x+Math.cos(pam.facing)*28,y:pam.y+Math.sin(pam.facing)*28,r:64,v:165,f:1,rays:36,seed:7});
@@ -1339,7 +1341,7 @@ function updateCommon(dt){
   for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vh-=320*dt;p.h+=p.vh*dt;if(p.h<=0){if(p.leaf){wctx.save();wctx.translate(p.x,p.y);wctx.rotate(p.rot);wctx.fillStyle=p.col;ell(wctx,0,0,1.6,.9);wctx.restore();}else bakeSplat(p.x,p.y,1+rnd()*1.6);particles.splice(i,1);}else if(p.leaf){p.vh=Math.max(p.vh,-40);p.vx*=.97;p.vy*=.97;}}
   for(let i=gibs.length-1;i>=0;i--){const g=gibs[i];g.x+=g.vx*dt;g.y+=g.vy*dt;g.vh-=320*dt;g.h+=g.vh*dt;g.rot+=g.vr*dt;
     if(g.h<=0){g.h=0;if(!g.bounced&&g.vh<-50){g.bounced=true;if(g.type==='half'||g.type==='parm'){shake=Math.max(shake,g.type==='half'?6:3);sfx.kick();bakeSplat(g.x,g.y,5);for(let k=0;k<14;k++){const an=rnd()*TAU,sp=20+rnd()*60;particles.push({x:g.x,y:g.y,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp,h:2,vh:30+rnd()*50});}}g.vh=-g.vh*.3;g.vx*=.5;g.vy*=.5;g.vr*=.5;bakeSplat(g.x,g.y,3);}else{bakeGib(g);gibs.splice(i,1);}}}
-  for(const e of[player,bot,praewa,pam]){if(!e||!(e.cheerT>0))continue;e.cheerT-=dt;e.lift=e.cheerT>0&&state==='play'?Math.abs(Math.sin(e.cheerT*9+(e===praewa?1.3:e===pam?2.1:0)))*4:0;}
+  for(const e of[player,bot,praewa,pam,subE]){if(!e||!(e.cheerT>0))continue;e.cheerT-=dt;e.lift=e.cheerT>0&&state==='play'?Math.abs(Math.sin(e.cheerT*9+(e===praewa?1.3:e===pam?2.1:0)))*4:0;}
   for(let i=pops.length-1;i>=0;i--){pops[i].t-=dt;pops[i].h+=dt*30;if(pops[i].t<=0)pops.splice(i,1);}
   for(const[k,v]of treeShake){const nv=v-dt*1.1;if(nv<=0)treeShake.delete(k);else treeShake.set(k,nv);}
   for(let i=toasts.length-1;i>=0;i--){toasts[i].life-=dt;if(toasts[i].life<=0)toasts.splice(i,1);}
@@ -1392,7 +1394,7 @@ function poke(b,z){
   // long dry branch: reach 4 m (32 px). Pushes 1 m back, 30% a hard thrust that knocks it flat and slides it 3 m. No damage.
   const d=Math.hypot(z.x-b.x,z.y-b.y)||1,ux=(z.x-b.x)/d,uy=(z.y-b.y)/d;b.pokeT=.22;b.pokeCd=.5+rnd()*.25;b.facing=Math.atan2(uy,ux);z.aware=Math.max(z.aware,4);
   if(near(b,260)){nz(.12,'bandpass',600,1400,.18,1.2);tn('sine',130,70,.08,.35);}
-  if(UPG()&&b.jp){blood(z.x,z.y,12,12,ux,uy,80);sfx.hit();sfx.sever();bakeSplat(z.x+ux*4,z.y+uy*4,2.5);killZ(z,ux,uy,false);if(rnd()<.4)botSay(rnd()<.5?'หอกแจ็คพอทสิบอก!':'ทะลุเลย!');return;}   // the knife lashed to his stick: one thrust and it is done
+  if(UPG()&&b.jp){blood(z.x,z.y,12,12,ux,uy,80);sfx.hit();sfx.sever();bakeSplat(z.x+ux*4,z.y+uy*4,2.5);killZ(z,ux,uy,false);if(rnd()<.4)botSay(rnd()<.5?'หอกพอทสิบอก!':'ทะลุเลย!');return;}   // the knife lashed to his stick: one thrust and it is done
   if(UPG()&&!b.jp){b.pokeT=0;b.swingDir=b.nextDir;b.nextDir=-b.swingDir;b.swingPow=.7;b.swingDur=.16;b.swingT=.16;b.pokeCd=.55+rnd()*.25;   // Fifa: the rubber-tapping knife, now it bites
     z.hp-=1;blood(z.x,z.y,12,6,ux,uy,50);sfx.hit();if(z.hp<=0){killZ(z,ux,uy,false);return;}nudge(z,ux,uy,.6,1);return;}
   if(z.crawl||z.state==='down'){z.vx=ux*58;z.vy=uy*58;if(!z.crawl&&z.down){return;}z.state='stagger';z.t=.25;return;}
@@ -1440,7 +1442,7 @@ function stepYardBot(p,gx,gy,sp,dt){
   if(inYard(ox,oy)&&!inYard(p.x,p.y)){p.x=ox;p.y=oy;}
   const mv=Math.hypot(p.x-ox,p.y-oy);p.lw=gx!==null?sp*dt:0;p.lm=mv;if(gx!==null&&mv<sp*dt*.2){p.stuck+=dt;if(p.stuck>3){p.stuck=0;p.goal=null;p.post=null;p.safe=null;}}else p.stuck=0;
   p.moveAmt=Math.min(1,mv/dt/30);p.phase+=mv*.3;if(mv>.2)p.facing=angLerp(p.facing,Math.atan2(p.y-oy,p.x-ox),dt*8);}
-function updatePam(dt,mode){
+function updatePam(dt,mode){if(!pam){if(subE&&subE.role==='torch'){pam=subE;try{updatePam(dt,mode);}finally{pam=null;}}return;}
   const p=pam;if(!p)return;if(p.say){p.say.t-=dt;if(p.say.t<=0)p.say=null;}
   for(let i=postTorches.length-1;i>=0;i--){const t=postTorches[i];t.t-=dt;t.age+=dt;if(t.t<=0){postTorches.splice(i,1);   // the wind blows it out
     for(let k=0;k<8;k++)sparks.push({x:t.x+(rnd()-.5)*3,y:t.y,h:15,vx:(rnd()-.5)*30+18,vy:(rnd()-.5)*8,vh:5+rnd()*20,life:.3+rnd()*.4});if(near(t,260))nz(.45,'bandpass',800,300,.2,1);}}
@@ -1460,7 +1462,7 @@ function updatePam(dt,mode){
     if(td<(UPG()&&tz.state!=='down'?24:40)&&p.igCd<=0){p.facing=Math.atan2(tz.y-p.y,tz.x-p.x);p.thrust=.4;p.act=.35;p.igCd=1.2;igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}}
   else if(!(p.urge>0)&&p.hunger>=1&&food()>0&&foodSpot(p)){const fs=foodSpot(p);gx=fs.x;gy=fs.y;
     if(Math.hypot(fs.cx-p.x,fs.cy-p.y)<17){const r=eatFood(2);p.hunger=0;p.eatT=2.4;gx=null;sayAs(p,`กิน${r.kind} ${r.got} คำ อิ่มแล้ว`);}}
-  else if(brT){gx=brT.x;gy=brT.y;sp=46;if(Math.hypot(brT.x-p.x,brT.y-p.y)<16){p.facing=Math.atan2(brT.y-p.y,brT.x-p.x);p.act=2.6;p.breaking=true;p.doAct=()=>breakBranch(brT);if(rnd()<.6)sayAs(p,'เดี๋ยวแพมหักให้');}}
+  else if(brT){gx=brT.x;gy=brT.y;sp=46;if(Math.hypot(brT.x-p.x,brT.y-p.y)<16){p.facing=Math.atan2(brT.y-p.y,brT.x-p.x);p.act=2.6;p.breaking=true;p.doAct=()=>breakBranch(brT);if(rnd()<.6)sayAs(p,'เดี๋ยวเอื้อยหักให้');}}
   else if(p.torch<=0){   // fetch fire from the campfire
     if(F.F>0){gx=F.x+(p.x<F.x?-16:16);gy=F.y+3;if(Math.hypot(F.x-p.x,F.y-p.y)<22){p.facing=Math.atan2(F.y-p.y,F.x-p.x);p.act=.9;p.doAct=()=>{p.torch=55;nz(.35,'bandpass',600,200,.25,1);};}}
     else{if(!p.goal||rnd()<dt*.3)p.goal={x:p.x+(rnd()-.5)*30,y:p.y+(rnd()-.5)*30};gx=p.goal.x;gy=p.goal.y;sp=18;}}
@@ -1517,7 +1519,7 @@ function drawPostTorch(c,t,T,lp){const x=t.x-camX,y=t.y*K-camY;c.lineCap='round'
 function drawLantern(c,x,y,mono,T){c.strokeStyle=mono||'#1c1c1c';c.lineWidth=.7;c.beginPath();c.arc(x,y-2.6,1.3,Math.PI,TAU);c.stroke();
   c.fillStyle=mono||'#2a2a2a';c.fillRect(x-1.5,y-2.6,3,.8);c.fillRect(x-1.5,y+1.4,3,.8);
   c.fillStyle=mono?'#fff':'#f3ece0';c.fillRect(x-1.2,y-1.8,2.4,3.2);if(!mono){c.fillStyle='rgb(230,196,60)';c.fillRect(x-.4,y-.9,.8,1.4);}}
-function updatePraewa(dt,mode){
+function updatePraewa(dt,mode){if(!praewa){if(subE&&subE.role==='fire'){praewa=subE;try{updatePraewa(dt,mode);}finally{praewa=null;}}return;}
   const p=praewa;if(!p)return;if(p.say){p.say.t-=dt;if(p.say.t<=0)p.say=null;}
   p.sayT-=dt;if(p.sayT<=0&&mode!=='cut'&&!n3Busy()){p.sayT=9+rnd()*9;if(p.hunger>=1&&food()===0)sayAs(p,PW_HUNGRY[(rnd()*PW_HUNGRY.length)|0]);else sayAs(p,PW_LINES[(rnd()*PW_LINES.length)|0]);}
   if(mode!=='play'){if(mode!=='cut')p.moveAmt=0;return;}
@@ -1528,7 +1530,7 @@ function updatePraewa(dt,mode){
    if(tz&&nn<=2){const a=Math.atan2(tz.y-p.y,tz.x-p.x);p.combat=1.5;   // the sickle: she stands and fights
     if(td>17)stepYardBot(p,tz.x,tz.y,48,dt);else{p.moveAmt=0;p.vx*=.6;p.vy*=.6;p.facing=angLerp(p.facing,a,dt*12);}
     if(td<=19&&p.cd<=0){p.facing=a;p.swingDir=p.nextDir;p.nextDir=-p.swingDir;p.swingPow=.75;p.swingDur=.18;p.swingT=.18;p.cd=.6+rnd()*.3;const ux=Math.cos(a),uy=Math.sin(a);
-     tz.hp-=1;tz.aware=6;blood(tz.x,tz.y,12,7,ux,uy,55);if(near(p,260)){sfx.swish(1.2);sfx.hit();}if(tz.hp<=0){killZ(tz,ux,uy,false);if(rnd()<.5)sayAs(p,rnd()<.5?'เคียวแพรวาคมนะ!':'อย่ามาใกล้!!');}else nudge(tz,ux,uy,.5,1);}
+     tz.hp-=1;tz.aware=6;blood(tz.x,tz.y,12,7,ux,uy,55);if(near(p,260)){sfx.swish(1.2);sfx.hit();}if(tz.hp<=0){killZ(tz,ux,uy,false);if(rnd()<.5)sayAs(p,rnd()<.5?'เคียวหนูคมนะ!':'อย่ามาใกล้!!');}else nudge(tz,ux,uy,.5,1);}
     return;}}
   if(fleeUp(p,dt,false))return;   // zombies in the yard: up the ladder! (a dead fire doesn't scare her off — she relights it)
   let gx=null,gy=null,sp=34;const F=fireP;
@@ -1947,7 +1949,25 @@ const HERONAME=()=>({jp:'แจคพอท',pam:'แพม',pw:'แพรวา
 const PWE=()=>praewa||(hero==='pw'?player:null),PME=()=>pam||(hero==='pam'?player:null);
 function sayE(e,text){if(!e)return;if(e===player){player.say={text,t:3.2};return;}sayAs(e,text);if(e.say)e.say.t=3.2;}
 function jpSpeaker(){if(hero==='jp')return player;if(bot&&!bot.dead&&bot.jp)return bot;return pam&&!pam.dead?pam:praewa;}
-function npcs(){return[bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null].filter(Boolean);}
+function npcs(){return[bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null,subE&&!subE.dead?subE:null].filter(Boolean);}
+/* ---- stand-ins: when แพรวา (keeps the fire) or แพม (lights the torches) is the one being played, the character left off the field takes over that job, in their own voice;
+   whoever's job it is gets it back the moment they are a bot again */
+let subE=null;
+function syncSub(x,y){const role=hero==='pw'?'fire':hero==='pam'?'torch':null;if(!role){subE=null;return;}
+  const have=new Set([hero]);if(bot)have.add(bot.jp?'jp':'fifa');if(praewa)have.add('pw');if(pam)have.add('pam');
+  const who=['fifa','jp','pw','pam'].find(c=>!have.has(c));if(!who){subE=null;return;}
+  if(subE&&subE.who===who&&subE.role===role)return;
+  const e=role==='fire'?makePraewa():makePam();if(subE){e.x=subE.x;e.y=subE.y;e.dead=subE.dead;}else if(x!=null){e.x=x;e.y=y;}
+  e.pw=false;e.pm=false;e.jp=who==='jp';e.who=who;e.sub=true;e.role=role;e.weapon='stick';e.torch=0;lvSet(e);subE=e;}
+const SUBN={fifa:'ฟีฟ่า',jp:'แจคพอท'};
+function subVoice(e,t){const jp=e.who==='jp',me=jp?(hero==='pw'?'อ้าย':'พอท'):'อ้าย',end=jp?'คับ':'เด้อ';
+  const M={'ไฟลุกแล้ว~':'ไฟลุกแล้ว'+end,'เติมฟืนแล้วค่า':me+'เติมฟืนแล้ว'+end,'นู้นๆ ตรงนู้นนนนน':'ฟืนหมดกองแล้ว ไผไปหาแหน่','เคียวหนูคมนะ!':me+'บ่ย้านดอก!','อย่ามาใกล้!!':'อย่าเข้ามา!!',
+    'งูปิ้งอร่อยจัง~':'งูปิ้งแซบหลาย','ไฟมาแล้ว~':'ไฟมาแล้ว'+end,'คบไฟไปเลย~!':'คบไฟมาแล้ว!','กรี๊ดดดด!!':'ไม่นะ!!','พี่แพมมม!!':'ซ่อยแหน่!!','แสบตาค่าาา':'แสบตา!!','อย่าส่องหนูดิ':'อย่าส่องหน้า'+me+'ดิ',
+    'ได้ค่ะ ไปเติมไฟให้!':me+'ไปเติมไฟให้'+end,'ไม่มีฟืนในกองเลยค่า':'ฟืนในกองหมดแล้ว'+end,'ได้เลย เอื้อยจะเผามันให้หมด!':'ได้เลย '+me+'สิเผามันให้หมด!','เดี๋ยวเอื้อยหักให้':'เดี๋ยว'+me+'หักให้'};
+  if(M[t])return M[t];
+  if(PW_LINES.includes(t)||PW_HUNGRY.includes(t)||PAM_LINES.includes(t)){const L=jp?JP_LINES:FF_LINES;return L[(rnd()*L.length)|0];}
+  if(/^อร่อยจัง/.test(t))return t.replace('อร่อยจัง','แซบหลาย');
+  return t.replace(/เอื้อย|หนู|แพรวา|แพม/g,me).replace(/ค่ะ|ค่า|คะ/g,end);}
 function npcName(e){return e===praewa?'praewa':e===pam?'pam':e===bot?(bot.jp?'jp':'fifa'):'?';}
 const HELP_LINE={pam:'มาๆเอื้อยช่วยขน',jp:'มามา พอทช่วยขนคับ',praewa:'หนูช่วยขนค่ะ',fifa:'อ้ายซอยขน'};
 function saveCkpt(){ckpt=makeSnap();}
@@ -2049,7 +2069,7 @@ function doStash(){if(N3.stashed)return;N3.stashed=true;const F=fireP;
   if(player.carry){stock+=player.carry.count;toast(`แขวนกล้วย ${player.carry.count} ลูกที่เสาแล้ว`);player.carry=null;}
   if(player.snakes>0&&F.sk.length<8){grillSnakes();for(const k of F.sk)k.t=Math.max(k.t,12);}}
 function seatAll(){for(const s of seatSpots()){s.e.x=s.x;s.e.y=s.y;lvSet(s.e);s.e.facing=s.a;s.e.sit=true;s.e.moveAmt=0;s.e.vx=s.e.vy=0;}}
-function unseatAll(){for(const e of[player,bot,praewa,pam])if(e)e.sit=false;}
+function unseatAll(){for(const e of[player,bot,praewa,pam,subE])if(e)e.sit=false;}
 function updateCine(dt){
   if(e5Cine()){updateE5Cine(dt);return;}
   if(N3&&N3.step==='n6'){updateN6Cine(dt);return;}
@@ -2750,7 +2770,7 @@ function e5Draw(T){if(!E5||!E5.el)return;const e=E5.el,b=e5Body();ELE.begin(vw,v
     const stamp=(q,fn)=>{const sx=Math.round(q.x-camX),sy=Math.round(q.y*K-camY);if(Math.abs(sx-sb.x)>110*ELSC||sy<sb.y-130*ELSC||sy>sb.y+70*ELSC||q.y<b.y-34*ELSC)return;const ev=Math.round((q===player||q.roof>0?elevOf(q):0)+(q.lift||0)),x0=sx-MW2/2,y0=sy-MH2+10-ev;
       m.setTransform(1,0,0,1,0,0);m.clearRect(0,0,MW2,MH2);m.setTransform(1,0,0,1,-x0,-y0);try{fn(m);}catch(_){}m.setTransform(1,0,0,1,0,0);const d=m.getImageData(0,0,MW2,MH2).data;
       for(let y=0;y<MH2;y++)for(let x=0;x<MW2;x++)if(d[(y*MW2+x)*4+3]>90){ELE.dep(x0+x-1,y0+y-1,x0+x+1,y0+y+1,q.y);}};
-    for(const p of[player,bot,praewa,pam]){if(!p||p.gone||(p===player&&player.hidden))continue;stamp(p,c=>{if(p.down)drawLying(c,T,'#fff',p);else drawP(c,T,'#fff',p);});}
+    for(const p of[player,bot,praewa,pam,subE]){if(!p||p.gone||(p===player&&player.hidden))continue;stamp(p,c=>{if(p.down)drawLying(c,T,'#fff',p);else drawP(c,T,'#fff',p);});}
     for(const z of zombies)stamp(z,c=>drawZ(c,z,T,'#fff'));}
   for(const th of E5.th){const sx=th.x-camX,sy=th.y*K-camY-th.h;ELE.dep(sx-8,sy-20,sx+8,sy+3,1e9);}
   const hs=home&&home.hs;if(hs&&hs.tiang&&roofA>.5){const o=10;ELE.dep(hs.x*TS-o-camX,(hs.y*TS-o)*K-camY-ROOFH,(hs.x+hs.w)*TS+o-camX,((hs.y+hs.h)*TS+o)*K-camY-ROOFH,(hs.y+hs.h)*TS+o);}
@@ -2993,7 +3013,7 @@ function drawBoss(T){for(const b of BS){selB(b);drawBoss1(T);}}
 function drawBoss1(T){const b=B;if(!b||b.hidden)return;KRS.begin(vw,vh);
   const i0=Math.max(0,Math.floor((camX-24)/TS)),i1=Math.min(MW-1,Math.floor((camX+vw+24)/TS)),j0=Math.max(0,Math.floor(camY/K/TS)-1),j1=Math.min(MH-1,Math.floor((camY+vh+80)/K/TS));
   for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){if(tiles[j*MW+i]!==TT)continue;const bx=i*TS+8-camX,by=(j*TS+8)*K-camY;KRS.dep(bx-3,by-70,bx+3,by+1,j*TS+8);}
-  for(const e of[player,bot,praewa,pam]){if(!e||e.gone||(e===player&&death&&death.kr))continue;const sx=e.x-camX,sy=e.y*K-camY-elevOf(e);KRS.dep(sx-3.5,sy-24,sx+3.5,sy,e.y);}
+  for(const e of[player,bot,praewa,pam,subE]){if(!e||e.gone||(e===player&&death&&death.kr))continue;const sx=e.x-camX,sy=e.y*K-camY-elevOf(e);KRS.dep(sx-3.5,sy-24,sx+3.5,sy,e.y);}
   const hs=home&&home.hs;if(hs&&hs.tiang&&roofA>.5){const o=10;KRS.dep(hs.x*TS-o-camX,(hs.y*TS-o)*K-camY-ROOFH,(hs.x+hs.w)*TS+o-camX,((hs.y+hs.h)*TS+o)*K-camY-ROOFH,(hs.y+hs.h)*TS+o);}
   KRS.draw(T);}
 function drawPileHi(s,l,p,T,v){const x=p.x-camX,y=p.y*K-camY,n=p.logs.length;let i=0;
@@ -3611,6 +3631,7 @@ function renderObjects(T){
   if(bot)objs.push({y:bot.down?bot.y-6:bot.y,k:14});
   if(praewa&&!(praewa.roof>0))objs.push({y:praewa.y,k:20});
   if(pam)objs.push({y:pam.y,k:23});
+  if(subE&&!(subE.roof>0))objs.push({y:subE.y,k:32,e:subE});
   for(const n of snakes)if(n.st!=='att'&&n.x>camX-40&&n.x<camX+vw+40&&n.y*K>camY-40&&n.y*K<camY+vh+40)objs.push({y:n.st==='fly'?n.y+30:n.y,k:29,n});
   if(fireP&&fireP.sk)for(const k of fireP.sk)objs.push({y:k.y,k:28,sk:k});
   for(const t of postTorches)objs.push({y:t.y+.5,k:22,t});
@@ -3631,6 +3652,7 @@ function renderObjects(T){
       drawObj(o,T,sctx,lctx);sctx.restore();lctx.restore();if(sit){sctx.fillStyle='#3a2a1c';sctx.fillRect(e.x-camX-3.5,e.y*K-camY-1,7,2);}}
     else drawObj(o,T,sctx,lctx);}
   drawRoof(T);krBloom();drawBoss(T);e5Draw(T);
+  for(const q of[subE])if(q&&q.roof>0){const ev=elevOf(q);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);withOutline(sctx,q,c=>drawP(c,T,null,q));drawP(lctx,T,gray(Math.max(70,lightAt(q.x,q.y))),q);sctx.restore();lctx.restore();}
   if(praewa&&praewa.roof>0){const ev=elevOf(praewa);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);withOutline(sctx,praewa,c=>drawP(c,T,null,praewa));drawP(lctx,T,gray(Math.max(70,lightAt(praewa.x,praewa.y))),praewa);sctx.restore();lctx.restore();}
   for(const sp of sparks){const x=sp.x-camX,y=sp.y*K-camY-sp.h,f=sp.life/(sp.L0||1),tw=Math.sin(sp.life*40+sp.x)>-.3;
     if(sp.chip){sctx.fillStyle=['#8a6a44','#a3825a','#5e4630'][sp.c];lctx.fillStyle=gray(Math.max(lightAt(sp.x,sp.y),60)*Math.min(1,f*3));sctx.fillRect(x,y,1,.8);lctx.fillRect(x,y,1,.8);continue;}
@@ -3732,6 +3754,7 @@ function drawObj(o,T,s,l){
     break;}
   case 19:{const v=lightAt(o.p.x,o.p.y+3),lit=lampLit(o.p.x,o.p.y);drawPile(s,o.p,null);drawPile(l,o.p,gray(Math.max(95,Math.min(255,v*1.25+lit*110))));if(lit>.15)drawPileHi(s,l,o.p,T,v);break;}
   case 22:{drawPostTorch(s,o.t,T,0);drawPostTorch(l,o.t,T,Math.max(60,lightAt(o.t.x,o.t.y)));break;}
+  case 32:{const q=o.e;if(q.down){withOutline(s,q,c=>drawLying(c,T,null,q));drawLying(l,T,gray(lightAt(q.x,q.y)),q);}else{withOutline(s,q,c=>drawP(c,T,null,q));drawP(l,T,gray(Math.max(28,lightAt(q.x,q.y))),q);}break;}
   case 23:{if(pam.down){withOutline(s,pam,c=>drawLying(c,T,null,pam));drawLying(l,T,gray(lightAt(pam.x,pam.y)),pam);}else{withOutline(s,pam,c=>drawP(c,T,null,pam));drawP(l,T,gray(Math.max(28,lightAt(pam.x,pam.y))),pam);}break;}
   case 33:{const[wx,wy]=bigPt(o.b,o.u.lx,o.u.ly),v=lightAt(wx,wy),lit=lampLit(wx,wy);drawBigUp(s,o.b,o.u,null,lit,v);drawBigUp(l,o.b,o.u,gray(Math.max(lit>.15?70:14,v)),lit,v);break;}
   case 35:{const d=o.d,u=d.t/d.T,a=(1-u)*(u<.15?u/.15:1)*.55,x=d.x-camX,y=d.y*K-camY-d.h,v=lightAt(d.x,d.y);s.globalAlpha=a;s.fillStyle=`rgb(${d.g},${d.g-12},${d.g-30})`;s.beginPath();s.arc(x,y,d.r,0,TAU);s.fill();s.globalAlpha=1;l.globalAlpha=a*.8;l.fillStyle=gray(Math.min(255,v+40));l.beginPath();l.arc(x,y,d.r,0,TAU);l.fill();l.globalAlpha=1;break;}
@@ -3987,11 +4010,11 @@ function uiCircle(x,y,r,fill,lw){u.beginPath();u.arc(x,y,r,0,TAU);if(fill){u.fil
 function uiText(t,x,y,size,align,col){u.font=`bold ${size}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;u.textAlign=align||'center';u.textBaseline='middle';u.lineJoin='round';
   if(!col||col===UIRED){u.lineWidth=4;u.strokeStyle=BG;u.strokeText(t,x,y);}u.fillStyle=col||FG;u.fillText(t,x,y);}
 function drawBubbles(s){
-  for(const sp of[bot,praewa,pam,player]){if(!sp||!sp.say||sp.gone)continue;const isP=sp===praewa,isM=sp===pam,isH=sp===player,cub=CUB&&CUB.e===sp;if(CUB&&!cub)continue;const bx=cub?CUB.x*P:(sp.x-camX)*P,by=cub?CUB.y*P:(sp.y*K-camY-elevOf(sp)-(isP?14:24))*P,fs=(cub?13:11)*s;u.font=`bold ${fs}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;
+  for(const sp of[bot,praewa,pam,subE,player]){if(!sp||!sp.say||sp.gone)continue;const isP=sp===praewa,isM=sp===pam,isH=sp===player,isS=!!sp.sub,cub=CUB&&CUB.e===sp;if(CUB&&!cub)continue;const bx=cub?CUB.x*P:(sp.x-camX)*P,by=cub?CUB.y*P:(sp.y*K-camY-elevOf(sp)-(isP?14:24))*P,fs=(cub?13:11)*s;u.font=`bold ${fs}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;
     const tw=u.measureText(sp.say.text).width,w=tw+14*s,h=fs+12*s,x=clamp(bx-w/2,6,SWc-w-6),y=by-h-8*s,al=Math.min(1,sp.say.t*3);u.globalAlpha=al;
     u.fillStyle=BG;u.fillRect(x-2,y-2,w+4,h+4);u.fillStyle=FG;u.fillRect(x,y,w,h);u.beginPath();u.moveTo(bx-4*s,y+h);u.lineTo(bx+4*s,y+h);u.lineTo(bx,y+h+7*s);u.closePath();u.fill();
     u.fillStyle=BG;u.textAlign='center';u.textBaseline='middle';u.fillText(sp.say.text,x+w/2,y+h/2+1);u.globalAlpha=1;
-    uiText(isH?HERONAME():isP?'แพรวา':isM?'แพม':BOTNAME(),cub?x+w/2:bx,cub?y-9*s:by+4*s,(cub?11:9)*s,'center',isH?'#9ec8ff':isP?'#ff9ec8':isM?'#ffb347':'#5fd35f');}
+    uiText(isH?HERONAME():isS?SUBN[sp.who]:isP?'แพรวา':isM?'แพม':BOTNAME(),cub?x+w/2:bx,cub?y-9*s:by+4*s,(cub?11:9)*s,'center',isH?'#9ec8ff':isP?'#ff9ec8':isM?'#ffb347':'#5fd35f');}
 }
 function skipCountBox(){const s=UIS,w=168*s,h=34*s;return{x:SWc/2-w/2,y:SHc*.2+104*s,w,h};}
 function skipBox(){const s=UIS,w=150*s,h=34*s;return{x:SWc-w-12*s,y:Math.max(8*s,SHc*.11/2-h/2),w,h};}
@@ -4146,7 +4169,7 @@ function layDown(x,y,id){const B=layBoxes(),inB=b=>x>b.x&&x<b.x+b.w&&y>b.y&&y<b.
 function layMove(x,y,id){if(!layDrag||layDrag.pid!==id)return;LAY[layDrag.id]=[layDrag.ox+x-layDrag.sx,layDrag.oy+y-layDrag.sy];applyLayout();}
 /* ---- hand the head-torch to someone else (2 s) ---- */
 let SW=null;
-function startSwap(nh){if(nh===hero||state!=='play')return;let ent=nh==='pam'?pam:nh==='pw'?praewa:(bot&&!bot.dead&&(nh==='jp')===!!bot.jp)?bot:null,tmp=null;
+function startSwap(nh){if(nh===hero||state!=='play')return;let ent=nh==='pam'?pam:nh==='pw'?praewa:(bot&&!bot.dead&&(nh==='jp')===!!bot.jp)?bot:(subE&&!subE.dead&&subE.who===nh)?subE:null,tmp=null;
   const sd=Math.cos(player.facing)>=0?1:-1,tx=player.x+sd*12,ty=player.y+3;
   if(!ent){tmp={...player,jp:nh==='jp',pw:nh==='pw',pm:nh==='pam',x:tx-sd*40,y:ty+10,swingT:0,kickT:0,carry:null,wood:0,snakes:0,snakeBite:null,lift:0,sit:false,down:false,fly:null,rollT:0,hidden:false,phase:0,moveAmt:0,_pp:null};ent=tmp;}
   ent.hidden=false;SW={t:0,nh,oh:hero,ent,tmp,tx,ty,said:0};state='swap';player.charging=false;player.swingT=0;player.kickT=0;player.vx=player.vy=0;joyV={x:0,y:0};}
@@ -4166,6 +4189,7 @@ function finishSwap(){const S=SW,e=S.ent,old=S.oh,nh=S.nh,ox=player.x,oy=player.
   if(old==='pam'){pam=makePam();pam.x=ox;pam.y=oy;lvSet(pam);}
   if(old==='pw'){praewa=makePraewa();praewa.x=ox;praewa.y=oy;lvSet(praewa);}
   if(e===bot){bot.jp=(old==='fifa'||old==='jp')?old==='jp':nh!=='jp';bot.x=ox;bot.y=oy;lvSet(bot);bot.goal=null;}
+  if(e===subE)subE=null;syncSub(ox,oy);
   if(N3&&N3.ph==='fight'){const st=stations();npcs().forEach((q,i)=>{q.station=st[i%st.length];});}
   state='play';flashOn=true;sfx.ready();toast('ส่งไฟคาดหัวให้ '+HERONAME()+' แล้ว');}
 function drawSwapUI(s){const S=SW,e=S.ent,bar=SHc*.09;u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);
@@ -4359,7 +4383,7 @@ let DEMO=null;const DEMO_SCENES=['fight','run','krasue','horde','family','banana
 function demoStart(){DEMO={i:-1,t:0,dur:0,last:null,cx:player.x,cy:player.y,z:1};demoNext();}
 function demoReset(){for(let i=snakes.length-1;i>=0;i--)if(snakes[i].st==='att'||snakes[i].st==='fly')snakes.splice(i,1);state='play';death=null;dropL=null;zombies.length=0;gibs.length=0;particles.length=0;pops.length=0;BS=[];B=null;N3=null;E5=null;KRL=null;KL=null;blackout=false;
   Object.assign(player,{down:false,fall:0,gone:false,lift:0,hidden:false,fly:null,rollT:0,holdTail:false,snakeBite:null,carry:null,wood:0,drag:null,charging:false,swingT:0,kickT:0,lock:null,weapon:'knife'});
-  for(const e of[bot,praewa,pam])if(e){e.dead=false;e.down=false;e.station=null;e.say=null;e.cheerT=0;e.lift=0;e.up=0;e.st=0;e.ev=0;}
+  for(const e of[bot,praewa,pam,subE])if(e){e.dead=false;e.down=false;e.station=null;e.say=null;e.cheerT=0;e.lift=0;e.up=0;e.st=0;e.ev=0;}
   flashOn=true;slowT=0;shake=0;invertF=0;toasts=[];trickleT=1e9;waveDone=true;player.cleared=true;joyV={x:0,y:0};if(fireP)fireP.F=Math.max(fireP.F,80);}
 function demoZ(x,y){edgeSpawn();const z=zombies[zombies.length-1];if(!z)return null;z.x=x;z.y=y;lvSet(z);z.state='chase';z.aware=1;return z;}
 function openSpot(cx,cy,r){for(let k=0;k<40;k++){const a=rnd()*TAU,d=r*(.4+rnd()*.6),x=cx+Math.cos(a)*d,y=cy+Math.sin(a)*d,t=tAt(Math.floor(x/TS),Math.floor(y/TS));if(!BM[t]&&t!==TT&&!inYard(x,y))return{x,y};}return{x:cx,y:cy};}
@@ -4374,7 +4398,7 @@ function demoNext(){const D=DEMO;let sc;do{sc=DEMO_SCENES[(rnd()*DEMO_SCENES.len
     if(!best){demoNext();return;}if(!best.bunch)best.bunch=30;const a=rnd()*TAU;player.x=best.x+Math.cos(a)*10;player.y=best.y+Math.sin(a)*8;D.plant=best;}
   else if(sc==='snake'){const q=openSpot(home.cx+(rnd()<.5?-1:1)*170,home.cy-120,60);player.x=q.x;player.y=q.y;const a=rnd()*TAU;
     snakes.push({x:q.x+Math.cos(a)*16,y:q.y+Math.sin(a)*12,a:a+Math.PI,tw:0,ph:0,st:'hiss',t:0,len:24,seed:rnd()*100,wT:0,hissT:0});D.snake=snakes[snakes.length-1];player.facing=a+Math.PI*.6;}
-  else{player.x=F.x+8;player.y=F.y+26;const fam=[bot,praewa,pam].filter(Boolean);fam.forEach((e,i)=>{e.x=F.x-26+i*20;e.y=F.y+30+(i%2)*6;lvSet(e);});if(pam)pam.torch=25;
+  else{player.x=F.x+8;player.y=F.y+26;const fam=[bot,praewa,pam,subE].filter(Boolean);fam.forEach((e,i)=>{e.x=F.x-26+i*20;e.y=F.y+30+(i%2)*6;lvSet(e);});if(pam)pam.torch=25;
     for(let k=0;k<6;k++)demoZ(g.x-30+k*12,g.y+40+(k%2)*14);}
   lvSet(player);player.facing=rnd()*TAU;D.snap=true;}
 function demoTick(dt){const D=DEMO;D.t+=dt;D.atkT-=dt;const P=player;
