@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v8.3</div>
+  <div class="ver">v8.4</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,9 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.3</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.4</h3><ul>
+      <li>คัตซีนกลับไปนอน: เริ่มเดินจากใกล้บ้าน ไม่ต้องเดินจากจุดที่อยู่จริง</li>
+      <li>บอทแจ็คพอทผลักซอมบี้ไกลขึ้น 2 เท่า</li>
       <li>คำแทนตัว: แพม “เอื้อย” · แจ็คพอท “พอท” (กับน้อง “อ้าย”) · ฟีฟ่า “อ้าย” · แพรวา “หนู”</li>
       <li>เล่นเป็นแพรวาหรือแพม: ตัวละครที่ไม่ได้อยู่ในสนาม (ตัวหลักก่อนหน้า) มารับหน้าที่แทน (เติมฟืน/จุดคบไฟ) พูดด้วยน้ำเสียงตัวเอง · เจ้าของหน้าที่กลับมาเป็นบอทเมื่อไร ก็ทำหน้าที่เดิม 100%</li>
       <li>แพรวา: ระยะโจมตีเพิ่มขึ้นเท่าพี่ๆ</li>
@@ -617,7 +619,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='8.3';
+let useBot=true,bot=null,hero='fifa';const VERSION='8.4';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1397,10 +1399,11 @@ function poke(b,z){
   if(UPG()&&b.jp){blood(z.x,z.y,12,12,ux,uy,80);sfx.hit();sfx.sever();bakeSplat(z.x+ux*4,z.y+uy*4,2.5);killZ(z,ux,uy,false);if(rnd()<.4)botSay(rnd()<.5?'หอกพอทสิบอก!':'ทะลุเลย!');return;}   // the knife lashed to his stick: one thrust and it is done
   if(UPG()&&!b.jp){b.pokeT=0;b.swingDir=b.nextDir;b.nextDir=-b.swingDir;b.swingPow=.7;b.swingDur=.16;b.swingT=.16;b.pokeCd=.55+rnd()*.25;   // Fifa: the rubber-tapping knife, now it bites
     z.hp-=1;blood(z.x,z.y,12,6,ux,uy,50);sfx.hit();if(z.hp<=0){killZ(z,ux,uy,false);return;}nudge(z,ux,uy,.6,1);return;}
-  if(z.crawl||z.state==='down'){z.vx=ux*58;z.vy=uy*58;if(!z.crawl&&z.down){return;}z.state='stagger';z.t=.25;return;}
-  if(rnd()<.3){z.a=Math.atan2(-uy,-ux);z.down={t:0,T:1.8+rnd()*.5,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y};z.state='down';z.vx=ux*95;z.vy=uy*95;z.tilt=0;
+  const PM2=b.jp?2:1;   // แจ็คพอท pushes twice as far
+  if(z.crawl||z.state==='down'){z.vx=ux*58*PM2;z.vy=uy*58*PM2;if(!z.crawl&&z.down){return;}z.state='stagger';z.t=.25;return;}
+  if(rnd()<.3){z.a=Math.atan2(-uy,-ux);z.down={t:0,T:1.8+rnd()*.5,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y};z.state='down';z.vx=ux*(b.jp?145:95);z.vy=uy*(b.jp?145:95);z.tilt=0;
     if(near(b,260)){tn('sine',95,40,.14,.5);}botSay('555+');if(near(b,300)){for(let k=0;k<3;k++)tn('square',520-k*40,420-k*40,.07,.05,null,.12+k*.1);}}
-  else{z.vx=ux*58;z.vy=uy*58;z.state='stagger';z.t=.3;z.tilt=Math.sign(ux||1)*.3;}
+  else{z.vx=ux*58*PM2;z.vy=uy*58*PM2;z.state='stagger';z.t=.3;z.tilt=Math.sign(ux||1)*.3;}
 }
 function makePraewa(){const hs=home.hs,p={pw:true,x:(hs.x+1)*TS+10,y:(hs.y+hs.h)*TS+14,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,dead:false,lampOn:false,weapon:'none',
   charging:false,charge:0,swingT:0,swingDur:.1,swingDir:1,nextDir:1,combat:0,pantT:0,breathPh:0,kickT:0,armOff:1.2,armHv:6,bloody:0,lean:0,cd:0,
@@ -1630,6 +1633,7 @@ function pathToBed(){
 function startSleep(reason){
   state='cutscene';player.charging=false;player.swingT=0;player.kickT=0;player.hidden=false;joy.active=false;aimT.active=false;joyV={x:0,y:0};
   const p=pathToBed();cut={phase:'walk',t:0,reason,pts:p?p.pts:[],idx:1,bed:p&&p.hut.bed};
+  if(p&&p.pts.length>7){const k=p.pts.length-6;player.x=p.pts[k][0];player.y=p.pts[k][1];lvSet(player);cut.idx=k+1;if(bot&&!bot.dead){bot.x=player.x+8;bot.y=player.y+4;lvSet(bot);}}   // the walk starts a few steps from the bed, not from wherever the night ended
   toast(reason==='dawn'?'รุ่งเช้าแล้ว — กลับบ้านไปนอน':'กำจัดซอมบี้หมดแล้ว — กลับบ้านไปนอน');
 }
 function updateCut(dt){
