@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v8.4</div>
+  <div class="ver">v8.5</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.4</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v8.5</h3><ul>
+      <li>โจมตีซอมบี้ข้ามรั้วกิ่งไม้ใหญ่ ระยะโจมตีเพิ่มเป็น 2 เท่าอัตโนมัติ ทุกตัวละคร</li>
       <li>คัตซีนกลับไปนอน: เริ่มเดินจากใกล้บ้าน ไม่ต้องเดินจากจุดที่อยู่จริง</li>
       <li>บอทแจ็คพอทผลักซอมบี้ไกลขึ้น 2 เท่า</li>
       <li>คำแทนตัว: แพม “เอื้อย” · แจ็คพอท “พอท” (กับน้อง “อ้าย”) · ฟีฟ่า “อ้าย” · แพรวา “หนู”</li>
@@ -619,7 +620,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='8.4';
+let useBot=true,bot=null,hero='fifa';const VERSION='8.5';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -748,8 +749,8 @@ function pwTick(dt){if(hero!=='pw')return;const P=player;if(P.recoilT>0)P.recoil
   if((P.grip||P.drag)&&P.moveAmt>.1){P.moanT=(P.moanT||1.5)-dt;if(P.moanT<=0){P.moanT=5+rnd()*3;P.say={text:rnd()<.5?'หนักจัง':'ถ้าเป็นพี่ๆคงไม่หนัก',t:2.4};}}else P.moanT=Math.min(P.moanT||1.5,1.5);if(P.hopT>0&&rnd()<dt*30)sparks.push({x:P.x+(rnd()-.5)*4,y:P.y,h:1,vx:(rnd()-.5)*16,vy:(rnd()-.5)*6,vh:6+rnd()*10,life:.4+rnd()*.3,ash:1});}
 function doHit(h=player){
   const a=h.swingAng,R0=h.swingReach,p=h.swingPow;let best=null,bd=1e9;
-  for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy);if(d-(z.crawl||z.state==='down'?5:3)>R0)continue;
-    if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>ARC)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
+  for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy),dd=d-(z.crawl||z.state==='down'?5:3);if(dd>R0*2)continue;   // across a branch fence the reach doubles
+    if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>ARC)continue;if(!los(h.x,h.y,z.x,z.y))continue;if(dd>R0&&!boughBetween(h.x,h.y,z.x,z.y))continue;if(d<bd){bd=d;best=z;}}
   alertNear(90+60*p,h);hitter=h;
   const sh=snakeHits(h,a,R0,ARC+.2),bh=bossHits(h,a,R0,ARC,false);
   if(!best){if(h===player&&W(h).blunt){const ta=a-(h.swingDir||1)*.3;pamEmbers(h.x+Math.cos(ta)*R0*.85,h.y+Math.sin(ta)*R0*.85,Math.cos(ta),Math.sin(ta),14);}   // แพม: a miss still sheds embers along the arc
@@ -937,6 +938,10 @@ function drawBlk(){if(!blkMarks.length)return;for(const c of[sctx,lctx]){c.save(
       else{const x=m.x-camX,y=m.y*K-camY;c.beginPath();c.ellipse(x,y,m.r+1,(m.r+1)*K,0,0,TAU);c.stroke();c.beginPath();c.moveTo(x-m.r-1,y);c.lineTo(x-m.r-1,y-8);c.moveTo(x+m.r+1,y);c.lineTo(x+m.r+1,y-8);c.stroke();}}
     c.restore();}}
 function drawBlkText(){const s=UIS;for(const m of blkMarks){const wx=m.px??m.x,wy=m.py??m.y,x=(wx-camX)*P,y=(wy*K-camY)*P-14*s;u.globalAlpha=Math.min(1,m.t*2.5);uiText('ติดสิ่งกีดขวาง',x,y,10*s,'center','#fff3b0');u.globalAlpha=1;}}
+function boughBetween(ax,ay,bx,by){   // is any fallen big branch lying across the line between attacker and target?
+  const X=(p1,p2,p3,p4)=>{const d=(p2[0]-p1[0])*(p4[1]-p3[1])-(p2[1]-p1[1])*(p4[0]-p3[0]);if(Math.abs(d)<1e-9)return false;const t=((p3[0]-p1[0])*(p4[1]-p3[1])-(p3[1]-p1[1])*(p4[0]-p3[0]))/d,u=((p3[0]-p1[0])*(p2[1]-p1[1])-(p3[1]-p1[1])*(p2[0]-p1[0]))/d;return t>=0&&t<=1&&u>=0&&u<=1;};
+  for(const b of bigBranches){if(!b.segs)continue;const c=Math.cos(b.a),s=Math.sin(b.a),P=(lx,ly)=>[b.x+c*lx-s*ly,b.y+s*lx+c*ly];
+    for(let k=0;k<(b.nT||b.segs.length);k++){const g=b.segs[k];if(X([ax,ay],[bx,by],P(g[0],g[1]),P(g[2],g[3])))return true;}}return false;}
 function heldBetween(ax,ay,bx,by){const G=player.grip;if(!G)return false;const b=G.b,c=Math.cos(b.a),s=Math.sin(b.a);   // is the bough you hold in the way of this bite?
   const P=(lx,ly)=>[b.x+c*lx-s*ly,b.y+s*lx+c*ly],X=(p1,p2,p3,p4)=>{const d=(p2[0]-p1[0])*(p4[1]-p3[1])-(p2[1]-p1[1])*(p4[0]-p3[0]);if(Math.abs(d)<1e-9)return false;const t=((p3[0]-p1[0])*(p4[1]-p3[1])-(p3[1]-p1[1])*(p4[0]-p3[0]))/d,u=((p3[0]-p1[0])*(p2[1]-p1[1])-(p3[1]-p1[1])*(p2[0]-p1[0]))/d;return t>=0&&t<=1&&u>=0&&u<=1;};
   for(let k=0;k<b.nT;k++){const g=b.segs[k];if(X([ax,ay],[bx,by],P(g[0],g[1]),P(g[2],g[3])))return true;}return false;}
@@ -1462,7 +1467,7 @@ function updatePam(dt,mode){if(!pam){if(subE&&subE.role==='torch'){pam=subE;try{
     const ex=clamp(z.x,home.ix0,home.ix1),ey=clamp(z.y,home.iy0,home.iy1);if(Math.hypot(z.x-ex,z.y-ey)>40)continue;const d=Math.hypot(z.x-p.x,z.y-p.y);if(d<td&&d<230){td=d;tz=z;}}
   const brT=bigBranches.find(b=>b.yard&&b!==player.drag);
   if(tz){gx=tz.x;gy=tz.y;sp=54;
-    if(td<(UPG()&&tz.state!=='down'?24:40)&&p.igCd<=0){p.facing=Math.atan2(tz.y-p.y,tz.x-p.x);p.thrust=.4;p.act=.35;p.igCd=1.2;igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}}
+    if(td<(UPG()&&tz.state!=='down'?24:40)*(boughBetween(p.x,p.y,tz.x,tz.y)?2:1)&&p.igCd<=0){p.facing=Math.atan2(tz.y-p.y,tz.x-p.x);p.thrust=.4;p.act=.35;p.igCd=1.2;igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}}
   else if(!(p.urge>0)&&p.hunger>=1&&food()>0&&foodSpot(p)){const fs=foodSpot(p);gx=fs.x;gy=fs.y;
     if(Math.hypot(fs.cx-p.x,fs.cy-p.y)<17){const r=eatFood(2);p.hunger=0;p.eatT=2.4;gx=null;sayAs(p,`กิน${r.kind} ${r.got} คำ อิ่มแล้ว`);}}
   else if(brT){gx=brT.x;gy=brT.y;sp=46;if(Math.hypot(brT.x-p.x,brT.y-p.y)<16){p.facing=Math.atan2(brT.y-p.y,brT.x-p.x);p.act=2.6;p.breaking=true;p.doAct=()=>breakBranch(brT);if(rnd()<.6)sayAs(p,'เดี๋ยวเอื้อยหักให้');}}
@@ -1532,7 +1537,7 @@ function updatePraewa(dt,mode){if(!praewa){if(subE&&subE.role==='fire'){praewa=s
   if(UPG()&&!p.up&&!(p.eatT>0)){let tz=null,td=1e9,nn=0;for(const z of zombies){if(z.dieOnLand||z.state==='eatB')continue;const d=Math.hypot(z.x-p.x,z.y-p.y);if(d<70&&z.state!=='down')nn++;if(d<60&&d<td&&los(p.x,p.y,z.x,z.y)){td=d;tz=z;}}
    if(tz&&nn<=2){const a=Math.atan2(tz.y-p.y,tz.x-p.x);p.combat=1.5;   // the sickle: she stands and fights
     if(td>17)stepYardBot(p,tz.x,tz.y,48,dt);else{p.moveAmt=0;p.vx*=.6;p.vy*=.6;p.facing=angLerp(p.facing,a,dt*12);}
-    if(td<=19&&p.cd<=0){p.facing=a;p.swingDir=p.nextDir;p.nextDir=-p.swingDir;p.swingPow=.75;p.swingDur=.18;p.swingT=.18;p.cd=.6+rnd()*.3;const ux=Math.cos(a),uy=Math.sin(a);
+    if(td<=19*(boughBetween(p.x,p.y,tz.x,tz.y)?2:1)&&p.cd<=0){p.facing=a;p.swingDir=p.nextDir;p.nextDir=-p.swingDir;p.swingPow=.75;p.swingDur=.18;p.swingT=.18;p.cd=.6+rnd()*.3;const ux=Math.cos(a),uy=Math.sin(a);
      tz.hp-=1;tz.aware=6;blood(tz.x,tz.y,12,7,ux,uy,55);if(near(p,260)){sfx.swish(1.2);sfx.hit();}if(tz.hp<=0){killZ(tz,ux,uy,false);if(rnd()<.5)sayAs(p,rnd()<.5?'เคียวหนูคมนะ!':'อย่ามาใกล้!!');}else nudge(tz,ux,uy,.5,1);}
     return;}}
   if(fleeUp(p,dt,false))return;   // zombies in the yard: up the ladder! (a dead fire doesn't scare her off — she relights it)
@@ -1579,7 +1584,7 @@ function updateBot(dt,mode){
   let gx=null,gy=null,sp=56,face=null;
   if(tz){face=Math.atan2(tz.y-b.y,tz.x-b.x);b.combat=2;b.fought=true;b.pantT=0;
     const dangerous=tz.state==='windup'||tz.state==='lunge';
-    const kn=b.weapon==='knife';if(td-3<=(kn?20:32)&&(b.pokeCd<=0||(dangerous&&b.pokeT<=0)))poke(b,tz);   // a lunging zombie gets jabbed right away
+    const kn=b.weapon==='knife',fr=(kn?20:32)*(boughBetween(b.x,b.y,tz.x,tz.y)?2:1);if(td-3<=fr&&(b.pokeCd<=0||(dangerous&&b.pokeT<=0)))poke(b,tz);   // a lunging zombie gets jabbed right away
     const want=kn?14:tz.state==='windup'||tz.state==='lunge'?30:24;            // keep the zombie at the end of the stick
     if(td>(kn?20:34)){gx=tz.x;gy=tz.y;sp=60;}else if(td<want){gx=b.x-(tz.x-b.x);gy=b.y-(tz.y-b.y);sp=66;}
     let cx=0,cy=0,cn=0;for(const z of zombies){if(z.state==='down'||z.crawl)continue;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d<58){cx+=z.x;cy+=z.y;cn++;}}
