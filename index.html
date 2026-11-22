@@ -161,7 +161,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v10.0</div>
+  <div class="ver">v10.1</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -169,7 +169,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.0</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.1</h3><ul>
+      <li>คัตซีนคืนที่ 6 ใหม่: ซอมบี้เดินมาจากทิศใต้ 100 เมตร กระสือตัวแรกหมุนฟาดหางจนลอยตีลังกา (สโลโมชั่น) ตัวที่สองพุ่งคาบไป ตัวแรกลอยซิกแซกตามมาคาบแย่ง ดึงกันจนขาดสองท่อน แล้วสะบัดก่อนถุยทิ้ง</li>
       <li>ซอมบี้ติดไฟ: ใช้ไฟแบบเดียวกับกระสือ โทนอ่อนลงครึ่งหนึ่ง และติดเฉพาะท่อนบน</li>
       <li>คัตซีนคืนแรก: ระหว่างแจ็คพอตกันหน้ารั้ว แพมถือไม้ไปจุดไฟที่กองไฟด้านหลัง พูดว่า "เอาไฟแป๊บ"</li>
       <li>หลังตัวหลักตายและโดนกินเสร็จ กล้องจะแพนไปหาตัวละครคนถัดไป แทนการตัดภาพ</li>
@@ -678,7 +679,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='10.0';
+let useBot=true,bot=null,hero='fifa';const VERSION='10.1';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2079,35 +2080,71 @@ function n3Active(){return N3&&N3.ph!=='done';}
 /* ---------- night 6: two krasue at once, zombies keep coming every 30 s, both krasue must die ---------- */
 function edgePt(g,o){let tE=1e9;if(o.x>.01)tE=Math.min(tE,(MW*TS-40-g.x)/o.x);if(o.x<-.01)tE=Math.min(tE,(40-g.x)/o.x);if(o.y>.01)tE=Math.min(tE,(MH*TS-40-g.y)/o.y);if(o.y<-.01)tE=Math.min(tE,(40-g.y)/o.y);tE=Math.max(200,tE);return{x:g.x+o.x*tE,y:g.y+o.y*tE};}
 function startN6(){N3={ph:'pre6',multi:true,lineT:3,step:null};B=null;BS=[];KRL=null;KL=null;zombies.length=0;player.cleared=false;waveDone=false;waveNow=false;waveExtra=0;trickleT=4;}
-function n6Cut(){endGrip();N3.ph='cine6';N3.step='n6';N3.t=0;N3.said=0;
-  // the two of them rise at the edge of the plantation, both after the same zombie
-  const g=gatePos(),o=gateOut(),E=edgePt(g,o),C=N3,px=-o.y,py=o.x;const S=openSpot(E.x-o.x*40,E.y-o.y*40,30);C.S=S;C.px=px;C.py=py;C.o=o;
-  const z=makeZ(S.x,S.y);z.state='wander';z.spd=0;z.aware=0;z.a=Math.atan2(-o.y,-o.x);zombies.push(z);C.z=z;
-  [-1,1].forEach((sd,k)=>{const b=makeBoss(clamp(S.x+px*sd*120+o.x*30,30,MW*TS-30),clamp(S.y+py*sd*120+o.y*30,30,MH*TS-30));b.state='intro';b.sd=sd;});
+function n6Cut(){endGrip();N3.ph='cine6';N3.step='n6';N3.t=0;N3.said=0;N3.ev={};N3.slow=1;N3.p='walk';N3.pt=0;
+  // one zombie shambling up towards the house from the south, 100 m out; the two of them both want it
+  const C=N3;const S=openSpot(clamp(home.cx,60,MW*TS-60),clamp(home.cy+800,60,MH*TS-60),30);C.S=S;C.o={x:0,y:1};C.px=-1;C.py=0;
+  const z=makeZ(S.x,S.y);z.state='chase';z.spd=0;z.aware=0;z.a=-Math.PI/2;z.air=0;z.spin=0;zombies.push(z);C.z=z;
+  [[-1,-190,-50],[1,250,150]].forEach(([sd,dx,dy])=>{const b=makeBoss(clamp(S.x+dx,30,MW*TS-30),clamp(S.y+dy,30,MH*TS-30));b.state='intro';b.sd=sd;});C.k1=BS[0];C.k2=BS[1];
   C.cam={x:S.x,y:S.y-10};state='n3cine';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.swingT=0;player.kickT=0;player.vx=player.vy=0;if(player.drag)toggleDrag();
   tn('sine',70,50,2.5,.3);nz(1.5,'bandpass',300,900,.12,2);}
-function updateN6Cine(dt){const C=N3,z=C.z,S=C.S,px=C.px,py=C.py;C.t+=dt;computeLights();updateFire(dt);updateBot(dt,'hold');updatePraewa(dt,'cut');updatePam(dt,'cut');
-  const t=C.t,torn=C.torn;C.cam={x:S.x,y:S.y-10};plights.push({dyn:1,kind:'lantern',x:z.x,y:z.y+3,r:46,v:150,f:1,rays:24,seed:7});   // a patch of moonlight so the victim reads against the red
-  if(!torn){z.phase=(z.phase||0)+dt*(t<3.2?1.2:5);z.x=S.x+(t>3.2?px*Math.sin(t*17)*1.6:0);z.y=S.y+(t>3.2?py*Math.sin(t*17)*1.6:0);z.tilt=t>3.2?Math.sin(t*13)*.35:0;if(t>3.2)z.state='bite';}
-  for(const b of BS){selB(b);const sd=b.sd,stretch=torn?0:t<3.2?0:Math.min(7,(t-3.2)*2.6),tug=t>3.2&&!torn?Math.sin(t*14+(sd>0?0:Math.PI))*2.4:0;
-    let tx,ty;if(!torn){const d=t<3.2?23+Math.max(0,(3.0-t))*42:21+stretch+tug;tx=S.x+px*sd*d;ty=S.y+py*sd*d;}else{const k=Math.min(1,(t-C.tt)*.8);tx=S.x+px*sd*(34+k*20)-C.o.x*k*30;ty=S.y+py*sd*(34+k*20)-C.o.y*k*30;}
-    b.vx+=((tx-b.x)*(t<3.2?2.6:6)-b.vx*4.4)*dt;b.vy+=((ty-b.y)*(t<3.2?2.6:6)-b.vy*4.4)*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;
-    const R=KRS.R;R.zoff=torn?6+Math.min(6,(t-C.tt)*6):t>3.0?2.5+Math.sin(t*9+sd)*.8:6;
-    const face=torn?Math.atan2(-C.o.y,-C.o.x):Math.atan2(S.y-b.y,S.x-b.x),bite=t>3.0&&!torn?(t*3+(sd>0?0:.5))%1:-1;rigTick(dt,bite,face);}
-  if(t>3.2&&C.said<1){C.said=1;sfx.screech(0);shake=Math.max(shake,3);tn('sawtooth',300,120,.4,.08);}
-  if(t>3.2&&!torn&&rnd()<dt*14){const sd=rnd()<.5?-1:1;particles.push({x:S.x+px*sd*5,y:S.y+py*sd*5,vx:px*sd*(20+rnd()*30),vy:py*sd*(20+rnd()*30),h:8+rnd()*6,vh:10+rnd()*30});if(rnd()<.3)bakeSplat(S.x+(rnd()-.5)*10,S.y+(rnd()-.5)*6,1.5);}
-  if(t>4.2&&C.said<2){C.said=2;nz(.6,'bandpass',500,200,.2,1);sfx.hit();}
-  if(t>6.6&&!torn){C.torn=true;C.tt=t;const i=zombies.indexOf(z);   // rip! the legs go one way, the rest crawls out of the other's mouth
-    addGib('half',S.x+px*4,S.y+py*4,10,px,py);const g=gibs[gibs.length-1];g.vx=px*110;g.vy=py*110;g.vh=90;g.vr=7;
-    z.crawl=true;z.legCut=2;z.down=null;z.state='fall';z.t=.6;z.tilt=0;z.vx=-px*90;z.vy=-py*90;z.bleed=4;z.bleedP=2;z.spd=(11+rnd()*5)*1.3;z.aware=3;z.hunt=true;
-    for(const sd of[-1,1]){blood(S.x,S.y,12,40,px*sd,py*sd,150);for(let k=0;k<8;k++)bakeSplat(S.x+px*sd*(4+k*4)+(rnd()-.5)*6,S.y+py*sd*(4+k*4)+(rnd()-.5)*4,1.5+rnd()*2.5);}
-    shake=Math.max(shake,9);invertF=1.2;sfx.sever();sfx.kick();sfx.screech(0);}
-  if(torn){z.vx*=Math.exp(-4*dt);z.vy*=Math.exp(-4*dt);z.x+=z.vx*dt;z.y+=z.vy*dt;z.phase=(z.phase||0)+dt*3;}
-  if(torn&&t>C.tt+1.2&&C.said<3){C.said=3;sfx.screech(0);}
-  if(torn&&t>C.tt+4.2)n6Begin();}
+function n6Mouth(b){const R=b.rig.R,y=R.yaw;return{x:R.hx+(Math.cos(y)>=0?1:-1)*22,y:R.hy,h:R.hz*.75};}   // held out in front of the face, clear of the hair and the guts
+function updateN6Cine(rdt){const C=N3,z=C.z,S=C.S,k1=C.k1,k2=C.k2;
+  C.slow+=((C.slowT==null?1:C.slowT)-C.slow)*Math.min(1,rdt*6);const dt=rdt*C.slow;C.t+=dt;C.pt+=dt;const t=C.t,pt=C.pt;   // slow motion runs the whole scene on a slowed clock
+  computeLights();updateFire(dt);updateBot(rdt,'hold');updatePraewa(rdt,'cut');updatePam(rdt,'cut');
+  const once=(k,fn)=>{if(!C.ev[k]){C.ev[k]=1;fn();}},go=p=>{C.p=p;C.pt=0;},sm=v=>{v=clamp(v,0,1);return v*v*(3-2*v);},
+    steer=(b,tx,ty,kk,cc)=>{b.vx+=((tx-b.x)*kk-b.vx*cc)*dt;b.vy+=((ty-b.y)*kk-b.vy*cc)*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;},
+    zoff=(b,v,k)=>{const R=b.rig.R;R.zoff+=(v-R.zoff)*Math.min(1,dt*(k||4));},
+    hang=(b,sp)=>{const m=n6Mouth(b);z.x=m.x;z.y=m.y;z.air=Math.max(0,m.h-17);if(sp!=null)z.spin=angLerp(z.spin,sp,dt*5);},
+    fly=()=>{z.x+=z.vx*dt;z.y+=z.vy*dt;z.avh-=300*dt;z.air+=z.avh*dt;z.spin+=z.spv*dt;};
+  let f1=null,f2=null,b1=-1,b2=-1;
+  plights.push({dyn:1,kind:'lantern',x:z.x,y:z.y+3,r:46,v:150,f:1,rays:24,seed:7});   // a patch of moonlight so the victim reads against the red
+  if(C.p==='walk'){z.y-=13*dt;z.phase=(z.phase||0)+dt*5;z.a=-Math.PI/2;   // shambling north, towards the house
+    k1.rig.R.zoff=6;steer(k1,z.x-18,z.y+3,pt<1.6?1.4:3.2,3.2);f1=Math.atan2(z.y-k1.y,z.x-k1.x);
+    steer(k2,S.x+230,S.y+120,2,3);f2=Math.atan2(z.y-k2.y,z.x-k2.x);
+    if(pt>2.3&&Math.hypot(z.x-k1.x,z.y-k1.y)<30){k1.state='spin';k1.t=0;k1.spinA=null;go('spin');sfx.screech(0);}}
+  else if(C.p==='spin'){k1.t+=dt;k1.vx*=Math.exp(-6*dt);k1.vy*=Math.exp(-6*dt);k1.x+=k1.vx*dt;k1.y+=k1.vy*dt;   // the spinning tail-whip
+    if(k1.t<.45){f1=Math.atan2(z.y-k1.y,z.x-k1.x);k1.glow=((k1.t*18)|0)%2?1:.35;z.phase+=dt*5;z.y-=13*dt;}
+    else{k1.spinA=(k1.spinA==null?k1.rig.R.yaw:k1.spinA)+dt*13;f1=k1.spinA;if(rnd()<dt*8)nz(.12,'bandpass',400,1200,.15,1.5);}
+    if(k1.t>.8)once('whip',()=>{z.vx=95;z.vy=-28;z.avh=150;z.air=2;z.spv=7.5;z.state='stagger';sfx.kick();sfx.whoosh();shake=Math.max(shake,8);blood(z.x,z.y,8,20,1,0,90);C.slowT=.22;go('air');});}
+  else if(C.p==='air'){fly();if(k1.state==='spin'){k1.t+=dt;k1.spinA+=dt*13;f1=k1.spinA;if(k1.t>1.35){k1.state='intro';k1.spinA=null;}}else{steer(k1,z.x-40,z.y+10,2,3);f1=Math.atan2(z.y-k1.y,z.x-k1.x);}
+    if(pt>.12){const m=n6Mouth(k2),dx=z.x-k2.x,dy=z.y-k2.y,d=Math.hypot(dx,dy)||1;   // the second one comes in like a bolt and takes it out of the air
+      once('dash',()=>{sfx.screech(0);tn('sawtooth',500,1400,.4,.06);});k2.glow=((t*20)|0)%2?1:.4;zoff(k2,Math.max(8,z.air+4),8);const v=640;k2.vx=dx/d*v;k2.vy=dy/d*v;k2.x+=k2.vx*dt;k2.y+=k2.vy*dt;f2=Math.atan2(dy,dx);b2=.3;
+      if(d<14||pt>1.2)once('grab',()=>{C.gd={x:Math.cos(f2)*.55+.6,y:Math.sin(f2)*.4+.75};{const l=Math.hypot(C.gd.x,C.gd.y);C.gd.x/=l;C.gd.y/=l;}k2.vx*=.35;k2.vy*=.35;k2.glow=1;C.slowT=1;sfx.bite();sfx.hit();shake=Math.max(shake,9);blood(z.x,z.y,10,30,C.gd.x,C.gd.y,110);go('carry');});}}
+  else if(C.p==='carry'){const gx=C.gd.x,gy=C.gd.y,lx=-gy,ly=gx;zoff(k2,26,3);steer(k2,k2.x+gx*60,k2.y+gy*60,1.2,1.6);f2=Math.atan2(gy,gx);   // carried off the other way
+    hang(k2,Math.sin(pt*5)*.35);b2=(pt*2)%1<.15?.4:-1;z.phase+=dt*9;
+    const k=sm(pt/1.9),wig=Math.sin(pt*15)*20*(1-k*.75),bx=k2.x-gx*(80-k*62)+lx*wig,by=k2.y-gy*(80-k*62)+ly*wig;   // the first weaves in fast and low, zig-zagging up behind it
+    if(pt<.2)k1.state='intro';zoff(k1,6+k*20,3);steer(k1,bx,by,9,5);f1=Math.atan2(k2.y-k1.y,k2.x-k1.x)+Math.sin(pt*15)*.5*(1-k);k1.glow=.35+k*.65;
+    if(pt>1.9)once('bite2',()=>{C.tug={x:(k1.x+k2.x)/2,y:(k1.y+k2.y)/2,ux:k2.x>=k1.x?1:-1,uy:0};sfx.bite();sfx.screech(0);shake=Math.max(shake,7);blood(z.x,z.y,10,30,-gx,-gy,100);go('tug');});}
+  else if(C.p==='tug'){const T0=C.tug,ux=T0.ux,uy=T0.uy,dur=2.8;   // a tug-of-war: one heaves, the other digs in, over and over
+    const pull=n=>Math.max(0,Math.sin(pt*4.2+n*Math.PI)),sep=42+sm(pt/dur)*16+pull(0)*5+pull(1)*5,shift=(pull(0)-pull(1))*5;
+    T0.x+=ux*shift*dt*.6;T0.y+=uy*shift*dt*.6;
+    zoff(k1,24+pull(1)*3,6);zoff(k2,24+pull(0)*3,6);steer(k1,T0.x-ux*sep/2,T0.y-uy*sep/2,22,9);steer(k2,T0.x+ux*sep/2,T0.y+uy*sep/2,22,9);f1=Math.atan2(uy,ux);f2=Math.atan2(-uy,-ux);
+    const m1=n6Mouth(k1),m2=n6Mouth(k2);z.x=(m1.x+m2.x)/2;z.y=(m1.y+m2.y)/2;z.air=Math.max(0,(m1.h+m2.h)/2-14);z.spin=Math.atan2(ux,-uy*K)+Math.sin(pt*9)*.08;z.phase+=dt*6;
+    if(rnd()<dt*14){const sd=rnd()<.5?-1:1;particles.push({x:z.x+ux*sd*4,y:z.y+uy*sd*4,vx:ux*sd*(20+rnd()*30),vy:uy*sd*(20+rnd()*30),h:z.air+8,vh:rnd()*30});if(rnd()<.4)bakeSplat(z.x+(rnd()-.5)*10,z.y+(rnd()-.5)*6,1.5);}
+    if(pt>.1)once('t1',()=>{tn('sawtooth',300,120,.4,.08);nz(.6,'bandpass',500,200,.2,1);});
+    if(pt>dur){C.torn=true;C.tt=t;   // rip! the legs stay in one mouth, the rest in the other
+      addGib('half',m1.x,m1.y,Math.max(4,m1.h-12),0,0);C.legs=gibs[gibs.length-1];C.legs.vx=C.legs.vy=C.legs.vh=C.legs.vr=0;
+      z.crawl=true;z.legCut=2;z.down=null;z.state='wander';z.tilt=0;z.spd=0;z.bleed=4;z.bleedP=2;
+      for(const sd of[-1,1]){blood(z.x,z.y,12,40,ux*sd,uy*sd,150);for(let k=0;k<8;k++)bakeSplat(z.x+ux*sd*(4+k*4)+(rnd()-.5)*6,z.y+uy*sd*(4+k*4)+(rnd()-.5)*4,1.5+rnd()*2.5);}
+      k1.vx=-ux*160;k1.vy=-uy*160;k2.vx=ux*160;k2.vy=uy*160;shake=Math.max(shake,9);invertF=1.2;sfx.sever();sfx.kick();sfx.screech(0);go('shake');}}
+  else if(C.p==='shake'){const ux=C.tug.ux,uy=C.tug.uy;
+    k1.vx*=Math.exp(-3*dt);k1.vy*=Math.exp(-3*dt);k1.x+=k1.vx*dt;k1.y+=k1.vy*dt;zoff(k1,22,2);f1=Math.atan2(-uy,-ux)+Math.sin(t*2)*.3;   // the legs stay clamped in the first one's jaws
+    const L=C.legs,m1=n6Mouth(k1);if(L&&gibs.includes(L)){L.x=m1.x;L.y=m1.y;L.h=Math.max(4,m1.h-12);L.vx=L.vy=L.vh=L.vr=0;L.rot=f1+Math.PI/2;}
+    k2.vx*=Math.exp(-3*dt);k2.vy*=Math.exp(-3*dt);k2.x+=k2.vx*dt;k2.y+=k2.vy*dt;
+    if(!C.spat){zoff(k2,24,3);const w=pt<1.9?Math.sin(pt*26)*.9+Math.sin(pt*11)*.35:0;f2=Math.atan2(uy,ux)+w;b2=pt<1.9?((pt*6)%1<.5?.25:-1):-1;   // shaking the half it holds, hard
+      hang(k2);z.spin=w*.7;if(pt<1.9&&rnd()<dt*16){const a=f2+(rnd()-.5)*1.5;particles.push({x:z.x,y:z.y,vx:Math.cos(a)*(40+rnd()*40),vy:Math.sin(a)*(30+rnd()*30),h:z.air+6,vh:10+rnd()*30});}
+      if(pt>=1.9){C.spat=true;const a=f2;z.vx=Math.cos(a)*70;z.vy=Math.sin(a)*50;z.avh=30;z.spv=4;b2=.6;nz(.18,'bandpass',900,400,.25,1);sfx.whoosh();}}   // and spits it out onto the ground
+    else{f2=Math.atan2(uy,ux);if(z.air>0){fly();if(z.air<=0){z.air=0;z.spin=0;z.vx=z.vy=0;sfx.kick();shake=Math.max(shake,4);for(let k=0;k<5;k++)bakeSplat(z.x+(rnd()-.5)*10,z.y+(rnd()-.5)*6,1.5+rnd()*2);}}else z.phase+=dt*2;}
+    if(pt>3.6){n6Begin();return;}}
+  for(const[b,f,bt]of[[k1,f1,b1],[k2,f2,b2]]){selB(b);if(C.p==='walk'||C.p==='carry'||C.p==='tug')b.glow=b.glow==null?1:b.glow;rigTick(dt,bt,f==null?Math.atan2(z.y-b.y,z.x-b.x):f);}
+  if(C.p==='carry')hang(k2);else if(C.p==='shake'&&!C.spat)hang(k2);
+  const zy=z.y-((z.air||0)+11)/K,hy=b=>b.rig.R.hy-b.rig.R.hz*.75/K,both=C.p==='carry'||C.p==='tug'||(C.p==='shake'&&!C.spat),   // frame the victim, and both heads while they fight over it
+    fx=both?(k1.rig.R.hx+k2.rig.R.hx+z.x*2)/4:z.x,fy=both?(hy(k1)+hy(k2)+zy*2)/4:zy,q=1-Math.exp(-rdt*4);C.cam={x:C.cam.x+(fx-C.cam.x)*q,y:C.cam.y+(fy-C.cam.y)*q};}
+
 function n6Begin(){const C=N3;if(!C||C.step!=='n6')return;
-  if(!C.torn){const z=C.z,i=zombies.indexOf(z);if(i>=0)zombies.splice(i,1);const q=makeZ(C.S.x,C.S.y);q.crawl=true;q.legCut=2;q.state='chase';q.aware=3;q.hunt=true;q.spd=(11+rnd()*5)*1.3;zombies.push(q);for(let k=0;k<6;k++)bakeSplat(C.S.x+(rnd()-.5)*30,C.S.y+(rnd()-.5)*20,2+rnd()*2);}
-  else if(C.z){C.z.state='chase';C.z.hunt=true;C.z.aware=3;}
+  if(!C.torn){const z=C.z,i=zombies.indexOf(z),zx=z?z.x:C.S.x,zy=z?z.y:C.S.y;if(i>=0)zombies.splice(i,1);const q=makeZ(zx,zy);q.crawl=true;q.legCut=2;q.state='chase';q.aware=3;q.hunt=true;q.spd=(11+rnd()*5)*1.3;zombies.push(q);for(let k=0;k<6;k++)bakeSplat(zx+(rnd()-.5)*30,zy+(rnd()-.5)*20,2+rnd()*2);}
+  else if(C.z){const z=C.z;z.air=0;z.spin=0;z.vx=z.vy=0;z.spd=(11+rnd()*5)*1.3;z.state='chase';z.hunt=true;z.aware=3;}
+  if(C.legs&&gibs.includes(C.legs)){C.legs.vx=(rnd()-.5)*30;C.legs.vy=(rnd()-.5)*20;C.legs.vh=20;C.legs.vr=4;}   // the legs drop out of the first one's mouth as the fight begins
   state='play';C.ph='fight';C.step=null;C.cam=null;BS.forEach((b,k)=>{selB(b);b.state='roam';b.t=0;b.rt=2+k*2;b.cd1=4+k*3;b.cd2=9+k*5;b.cdS=5+k*2;KRS.R.zoff=6;});
   const st=stations();npcs().forEach((e,i)=>{e.station=st[i%st.length];e.goal=null;e.say=null;});
   toast('คืนที่ 6 — กระสือ 2 ตัว!! ฆ่าให้ครบ 2 ตัวถึงจะผ่าน');setTimeout(()=>{if(N3&&N3.multi)toast('ซอมบี้ยังทยอยมาทุก 30 วินาที');},2600);sfx.screech(0);shake=Math.max(shake,4);}
@@ -3672,6 +3709,7 @@ function lightAt(x,y,self){
 
 /* ---- characters (MOBA 3/4 view) ---- */
 function drawZ(c,z,T,mono){
+  if((z.air>0||z.spin)&&!z._ar){const fx=z.x-camX,fy=z.y*K-camY,cy=fy-(z.crawl?1:11)-(z.air||0);if(!mono){c.fillStyle='rgba(0,0,0,.45)';ell(c,fx,fy,4.2,1.7);}c.save();c.translate(fx,cy);c.rotate(z.spin||0);c.translate(-fx,-(fy-(z.crawl?1:11)));z._ar=1;try{drawZ(c,z,T,mono);}finally{z._ar=0;c.restore();}return;}
   if(z.crawl){drawCrawl(c,z,T,mono);return;}
   let tdown=0;if(z.state==='down'&&z.down){const D=z.down;if(D.t>=.07&&D.t<D.T-.2){drawDown(c,z,T,mono);return;}tdown=Math.sign(D.kx||1)*1.25*(D.t<.07?D.t/.07:(D.T-D.t)/.2);}
   const fx=z.x-camX,fy=z.y*K-camY,a=z.a,ca=Math.cos(a),sa=Math.sin(a),M=col=>mono||col;
@@ -3683,7 +3721,7 @@ function drawZ(c,z,T,mono){
   const SL=z.slam?z.slam.t:-1,up=SL<0?0:SL<.4?Math.sin(Math.min(1,SL/.34)*Math.PI*.5):Math.max(0,1-(SL-.4)/.06),dn=SL>=.4?Math.min(1,(SL-.4)/.06)*(1-Math.max(0,(SL-.52)/.14)):0;   // the overhead double-fist slam
   if(SL>=0)lean=-1.6*up+3*dn;
   if(eat){cs=.62;lean=4;reach=5+Math.sin(T*9+z.seed)*2.5;bob=Math.sin(T*15+z.seed)*1.6;}
-  if(!mono){c.fillStyle='rgba(0,0,0,.55)';ell(c,fx,fy,4.2,1.7);}
+  if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.55)';ell(c,fx,fy,4.2,1.7);}
   const tl=tdown||z.tilt||0;c.save();if(tl){c.translate(fx,fy);c.rotate(tl);c.translate(-fx,-fy);}
   const x=fx+jx,y=fy-lift,fwx=ca,fwy=sa*K,px=-sa,py=ca*K,away=sa<-.25,sw=Math.sin(z.phase)*3.2;
   const hipY=y-10.5*cs,shY=y-18*cs,toY=y-14.5*cs,heY=y-22.3*cs;
@@ -3735,7 +3773,7 @@ function drawDown(c,z,T,mono){
 }
 function drawCrawl(c,z,T,mono){
   const M=col=>mono||col,eat=z.state==='eat'||z.state==='bite'||z.state==='eatB'||z.state==='eatC',fall=z.state==='fall';
-  if(!mono){c.fillStyle='rgba(0,0,0,.55)';ell(c,z.x-camX,z.y*K-camY,8,2.6);}
+  if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.55)';ell(c,z.x-camX,z.y*K-camY,8,2.6);}
   c.save();c.translate(z.x-camX,z.y*K-camY-1.2-(fall?z.t*8:0));c.scale(1,K);c.rotate(z.a+(z.tilt||0)*.6);
   const pull=Math.sin(z.phase*1.3);
   c.lineCap='round';c.lineWidth=1.8;
@@ -4021,7 +4059,7 @@ function renderObjects(T){
   for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){const t=tiles[j*MW+i];if(t===TFN)objs.push({y:j*TS+8,k:11,i,j});else if(t===TW)objs.push({y:(j+1)*TS,k:0,i,j});else if(t===TT)objs.push({y:j*TS+8,k:1,i,j});else if(t===TK)objs.push({y:(j+1)*TS-1,k:3,i,j});}
   for(const t of tables)if(t.i+t.w>=i0-1&&t.i<=i1+1&&t.j+1>=j0&&t.j<=j1)objs.push({y:(t.j+t.h)*TS-1,k:2,t});
   for(const g of gibs)objs.push({y:g.y,k:8,g});
-  for(const z of zombies)objs.push({y:z.y,k:6,z});
+  for(const z of zombies)objs.push({y:z.y+(z.air>3?400:0),k:6,z});   // one up in the air is drawn over the trunks
   if(!player.hidden&&!player.gone)objs.push({y:player.down?player.y-6:player.y+(player.ovF?TS*2:0),k:7});
   if(SW&&SW.tmp)objs.push({y:SW.tmp.y,k:31,e:SW.tmp});
   objs.sort((a,b)=>a.y-b.y);
