@@ -47,9 +47,9 @@ button.mb{margin:0;width:100%;font-size:22px;padding:17px 10px;letter-spacing:1p
 button.mb.imp{color:#ff6b5e;border:2px solid rgba(224,58,47,.55);animation:pulse 1.6s infinite}
 button.mb.set{font-size:18px;padding:12px 10px;color:#e6c43c;border:2px solid rgba(230,196,60,.45)}
 button.mb.go{color:#f3ece0;border:2px solid rgba(243,236,224,.5);font-size:28px;padding:20px 10px}
-button.mb.duo{position:relative;font-size:17px;padding:11px 10px;color:#0a0908;background:linear-gradient(180deg,#5cf08a,#1faa52)!important;border:2px solid #b8ffd0;box-shadow:0 0 16px rgba(60,230,120,.55);animation:duog 1.6s ease-in-out infinite}
-button.mb.duo.on{background:linear-gradient(180deg,#1faa52,#0d6e32)!important;color:#eafff0}
-.newtag{position:absolute;right:-10px;top:-13px;padding:3px 9px;font:900 13px system-ui,-apple-system,"Noto Sans Thai",sans-serif;color:#fff;background:#e03a2f;border:2px solid #fff;border-radius:10px;transform:rotate(9deg);box-shadow:0 2px 6px rgba(0,0,0,.6);animation:newb .7s ease-in-out infinite alternate}
+button.duo{display:block;position:relative;margin-top:16px;font:800 12px system-ui,-apple-system,"Noto Sans Thai",sans-serif;padding:6px 14px;border-radius:14px;color:#0a0908;background:linear-gradient(180deg,#5cf08a,#1faa52);border:1.5px solid #b8ffd0;box-shadow:0 0 12px rgba(60,230,120,.55);animation:duog 1.6s ease-in-out infinite;cursor:pointer}
+button.duo.on{background:linear-gradient(180deg,#1faa52,#0d6e32);color:#eafff0}
+.newtag{position:absolute;right:-16px;top:-11px;padding:1px 7px;font:900 10px system-ui,-apple-system,"Noto Sans Thai",sans-serif;color:#fff;background:#e03a2f;border:2px solid #fff;border-radius:10px;transform:rotate(9deg);box-shadow:0 2px 6px rgba(0,0,0,.6);animation:newb .7s ease-in-out infinite alternate}
 @keyframes duog{50%{box-shadow:0 0 26px rgba(60,230,120,.95)}}@keyframes newb{to{transform:rotate(9deg) scale(1.18)}}
 .landtag{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 12px;font:900 15px system-ui,-apple-system,"Noto Sans Thai",sans-serif;letter-spacing:2px;color:#0a0908;background:#e6c43c;box-shadow:4px 4px 0 #5c0a10,0 0 18px rgba(230,196,60,.35);transform:skew(-8deg);animation:tagf 3.2s infinite}
 .landtag i{display:block;width:8px;height:8px;background:#0a0908;transform:rotate(45deg)}
@@ -148,15 +148,17 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v9.4</div>
+  <div class="ver">v9.5</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
-    <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
-    <div class="mbtns"><button id="howBtn" class="mb imp">⚠️ สำคัญ วิธีเล่น</button><button id="setBtn" class="mb set">⚙️ ตั้งค่า</button><button id="duoBtn" class="mb duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button><button id="playBtn" class="mb go">▶ เริ่มเกม</button></div>
+    <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
+    <div class="mbtns"><button id="howBtn" class="mb imp">⚠️ สำคัญ วิธีเล่น</button><button id="setBtn" class="mb set">⚙️ ตั้งค่า</button><button id="playBtn" class="mb go">▶ เริ่มเกม</button></div>
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v9.4</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v9.5</h3><ul>
+      <li>คัตซีน 3: แพรวานอนหลับข้างกองไฟ ตื่น ลุกขึ้นแล้วกรี๊ด ในมุมกล้องจอกว้างแบบคืนที่ 3</li>
+      <li>ปุ่ม iPhone Duo ย้ายไปเป็นปุ่มเล็กใต้ป้ายเวอร์ชันจอ</li>
       <li>ใหม่! ปุ่มสีเขียว “ขยายจอ iPhone Duo” ที่หน้าเมนู: ภาพได้สัดส่วนจอ iPhone Duo และเห็นฉากกว้างขึ้น</li>
       <li>คัตซีน 1: หลังฟีฟ่าฟาดกระสือตัวหนึ่ง อีกตัวกะพริบแล้วพุ่งมาทันที แต่ฟีฟ่ากลิ้งหลบได้</li>
       <li>คัตซีน 2: แพมฟาดซอมบี้กระเด็นหงายหลังทุกตัวก่อนออกไปโยนไฟ · กระสือติดไฟชักดิ้นชักงอโชว์ราว 2 วิ ก่อนโดนฟาด</li>
@@ -642,7 +644,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='9.4';
+let useBot=true,bot=null,hero='fifa';const VERSION='9.5';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2234,9 +2236,9 @@ function pro3Start(){const C=N3;proReset('fifa');BS=[];B=null;KRL=null;KL=null;d
   C.who=[[player,-2.5,2.75],[pam,-.75,.45],[bot,1.6,1.55]].map(([e,a0,a1])=>{let d=120,sx,sy;for(;d>40;d-=12){sx=pw.x+Math.cos(a0)*d;sy=pw.y+Math.sin(a0)*d;if(inYard(sx,sy)&&!BM[tAt(Math.floor(sx/TS),Math.floor(sy/TS))])break;}
     e.x=sx;e.y=sy;lvSet(e);e.say=null;e.moveAmt=0;e.sit=false;return{e,sx,sy,tx:pw.x+Math.cos(a1)*19,ty:pw.y+Math.sin(a1)*15};});
   C.cam={x:pw.x,y:pw.y-6};cam.x=pw.x;cam.y=pw.y-6;}
-function updatePro3(dt){const C=N3,t=(C.t+=dt),pw=praewa;computeLights();updateFire(dt);proSayTick(dt);dawn=215;DAYK=1;C.cam={x:pw.x,y:pw.y-8};
+function updatePro3(dt){const C=N3,tw=(C.t+=dt),t=tw-1.7,pw=praewa;C.wide=tw<3.3;computeLights();updateFire(dt);proSayTick(dt);dawn=215;DAYK=1;C.cam={x:pw.x,y:pw.y-8};
   const once=(k,fn)=>{if(!C.ev[k]){C.ev[k]=1;fn();}},all=txt=>C.who.forEach(w=>{if(w.e===player)player.say={text:txt,t:1.5};else proSay(w.e,txt,1.5);});
-  C.scream=t<1.6;pw.cry=t<1.6?1:0;
+  C.scream=tw>1.55&&tw<3.3;pw.cry=C.scream?1:0;
   if(t>=1.6)once('up',()=>{pw.down=false;pw.fall=0;pw.sit=true;});
   pw.pantT=4;pw.breathPh=(pw.breathPh||0)+dt*10;if(t>1.6&&t<12)pw.y+=0;   // sitting up, breathing hard
   const k1=cuSm(clamp((t-1.7)/1.9,0,1)),k2=cuSm(clamp((t-17.5)/2.6,0,1));   // everyone comes running, inside two seconds
@@ -2262,6 +2264,20 @@ function krFire(T){const o=out32;for(const b of BS){if(!b.char||b.hidden)continu
 function krWrithe(b,dt,ax,ay){b.wt=(b.wt||0)+dt;const w=b.wt;b.x=ax+Math.sin(w*31)*3.2+Math.sin(w*13.7)*4;b.y=ay+Math.cos(w*27)*2.4+Math.sin(w*17.3)*3;b.vx=Math.cos(w*31)*90;b.vy=Math.sin(w*23)*70;   // jerking, arching, curling in on itself
   KRS.R.zoff=3.5+Math.abs(Math.sin(w*15))*5;return(b.wa==null?(b.wa=KRS.R.yaw):b.wa)+Math.sin(w*19)*1.5+Math.sin(w*7.3)*.9;}
 function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
+function proWake(T){const C=N3,tw=C.t,fr=cuBand(),fh=vh*fr,y0=(vh-fh)/2,s=fh*.52/18,cx=vw/2,gy=y0+fh*.5,L=236;   // daytime, the same wide shot as the night-3 campfire
+  sctx.fillStyle='rgb(150,196,226)';sctx.fillRect(0,0,vw,vh);lctx.fillStyle=gray(L);lctx.fillRect(0,0,vw,vh);
+  sctx.fillStyle='rgb(74,132,66)';sctx.fillRect(0,y0,vw,fh*.2);for(let x=0;x<vw;x+=3){const h=fh*(.03+.05*Math.abs(Math.sin(x*.37)+Math.sin(x*.11)));sctx.fillRect(x,y0+fh*.2,3,h);}   // the canopy of the plantation
+  sctx.fillStyle='rgb(132,112,84)';sctx.fillRect(0,gy,vw,fh*.5);
+  for(let k=0;k<16;k++){const x=((k*37)%100)/100*vw*1.1-vw*.05;cuTrunk(x,y0+fh*(.48+((k*5)%3)*.02),s*(.3+((k*7)%3)*.05),k&3,L,true);}
+  for(let k=0;k<6;k++)cuTrunk(vw*(.06+k*.18+((k*13)%5)*.012),y0+fh*(.57+(k%2)*.015),s*.5,(k+1)&3,L,true);
+  for(const[px,lean]of[[.04,.02],[.27,-.03],[.5,.015],[.73,-.02],[.95,.03]]){const x=vw*px,top=y0+fh*.37,bot=y0+fh*.655,w=Math.max(2,s*1.6);sctx.fillStyle='rgb(104,80,56)';sctx.beginPath();sctx.moveTo(x-w/2,bot);sctx.lineTo(x-w*.4+lean*fh,top);sctx.lineTo(x+w*.45+lean*fh,top+s*.3);sctx.lineTo(x+w/2,bot);sctx.closePath();sctx.fill();}   // the bamboo fence
+  {const th=Math.max(1,Math.round(s*.45));sctx.lineCap='butt';[.41,.47,.525,.575,.62].forEach((hy,i)=>{const y=y0+fh*hy;for(const[xa,ya,xb,yb,sag]of[[-4,y+(i%2?s*.6:-s*.4),vw*.62,y+(i%2?-s*.3:s*.5),s*.6],[vw*.38,y+(i%2?s*.2:s*.7),vw+4,y+(i%2?s*.9:-s*.2),s*.8]]){sctx.lineWidth=th+1;sctx.strokeStyle='rgb(58,48,32)';sctx.beginPath();sctx.moveTo(xa,ya);sctx.quadraticCurveTo((xa+xb)/2,(ya+yb)/2+sag,xb,yb);sctx.stroke();sctx.lineWidth=th;sctx.strokeStyle='rgb(206,188,132)';sctx.stroke();}});}
+  {const px=cx-s*22,py=y0+fh*.7,P0={x:camX,y:camY/K,logs:[0,1,2,3,4,5,6,7,8,9,0,1,2]};sctx.save();sctx.translate(px,py);sctx.scale(s*.7,s*.7);drawPile(sctx,P0,null);sctx.restore();}
+  const fX=cx-s*8,fY=y0+fh*.84,fs=s*.75;for(let k=0;k<7;k++){const a=k/7*TAU;sctx.fillStyle=gray(70);sctx.fillRect(fX+Math.cos(a)*6*fs-fs,fY+Math.sin(a)*2.2*fs-fs*.6,2*fs,1.3*fs);}
+  sctx.save();sctx.translate(fX,fY);sctx.scale(fs,fs);flames(sctx,0,0,6,2.2,11,T,7,false,2);sctx.restore();
+  const X=Math.round(cx+s*6),Y=Math.round(y0+fh*.88),ss=s*1.25;   // แพรวา: asleep by the fire · her eyes open and she sits up · on her feet, screaming
+  if(tw<.9){const c=cuClone(praewa,0);c._lie=1;c.fall=1;c.fallA=0;c.cry=0;cuBig(c,X,Y+Math.sin(tw*3)*.2*s,ss*.8,L,null,T);}
+  else{const k=cuSm(clamp((tw-.9)/.6,0,1)),c=cuClone(praewa,Math.PI/2);c.cry=tw>1.55?1:0;c.pantT=0;cuBig(c,X+(tw>1.55?Math.sin(tw*60)*.25*s:0),Y,ss,L,null,T,1-k);}}
 function proBig(e,T,night){const s=Math.min(vh*.62,vw*.9)/16,X=Math.round(vw/2),Y=Math.round(vh*.5+7*s);   // the scream: the same close-up at night and by day
   if(night){lctx.save();lctx.globalCompositeOperation='multiply';lctx.fillStyle=gray(70);lctx.fillRect(0,0,vw,vh);lctx.restore();}
   const c=cuClone(e,Math.PI/2);c.cry=1;c.pantT=0;cuBig(c,X,Y,s,night?215:240,null,T);}
@@ -2269,7 +2285,7 @@ function proDraw(T){const C=N3;if(C.scene===2){
     const L=C.log,H=C.hold&&pam?{x:pam.x+Math.cos(pam.facing)*5,y:pam.y+Math.sin(pam.facing)*5,h:12,t:0}:null,Q=L||H;
     if(Q){const x=Q.x-camX,y=Q.y*K-camY-Q.h;for(const[c,m,lp]of[[sctx,null,false],[lctx,gray(255),true]]){c.save();c.translate(x,y);drawLog(c,0,0,Q.t*11,3,m,1,false);flames(c,0,0,3,1,7,T,3,lp,1.3);c.restore();}}
     if(C.p==='scream')proBig(praewa,T,true);}
-  else if(C.scene===3&&C.scream)proBig(praewa,T,false);}
+  else if(C.scene===3&&C.wide)proWake(T);}
 /* ---------- night 1: the daytime lessons, the 15:00 → 19:00 clock, the first zombie ---------- */
 function startTut(){zombies.length=0;TUT={ph:'wood',t:0,n:0,last:player.wood,cm:0,pl0:woodPiles.reduce((a,p)=>a+p.logs.length,0)};DAYK=1;dawn=215;}
 function tutCam(tx,ty,dur,o){N3=Object.assign({step:'tutcam',t:0,dur,x0:cam.x,y0:cam.y,tx,ty,cam:{x:cam.x,y:cam.y}},o||{});proCine();}
@@ -4192,7 +4208,7 @@ let CUB=null;const CUC=[0,1,2].map(()=>document.createElement('canvas')),CUX=CUC
 function cuBig(e,X,Y,s,lum,rim,T,sit,post){const sk=sit===true?1:(sit||0);const fx=e.x-camX,fy=e.y*K-camY,w=Math.ceil(80*s),h=Math.ceil(64*s);
   for(const cv of CUC){if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h;}}
   const[tc,ts,tr]=CUX;for(const c of CUX){c.setTransform(1,0,0,1,0,0);c.globalCompositeOperation='source-over';c.clearRect(0,0,w,h);}
-  const ox=w/2,oy=h-10*s,dr=(c,mono)=>{c.save();if(sk>0){c.beginPath();c.rect(0,0,w,oy-.6*s+(1-sk)*30*s);c.clip();c.translate(0,(e.pw?2.5:5)*sk*s);}c.translate(ox,oy);c.scale(s,s);c.translate(-fx,-fy);drawP(c,T,mono,e);if(post)post(c,mono,fx,fy);c.restore();};
+  const ox=w/2,oy=h-10*s,dr=(c,mono)=>{c.save();if(sk>0){c.beginPath();c.rect(0,0,w,oy-.6*s+(1-sk)*30*s);c.clip();c.translate(0,(e.pw?2.5:5)*sk*s);}c.translate(ox,oy);c.scale(s,s);c.translate(-fx,-fy);if(e._lie)drawLying(c,T,mono,e);else drawP(c,T,mono,e);if(post)post(c,mono,fx,fy);c.restore();};
   dr(tc,null);ts.drawImage(CUC[0],0,0);ts.globalCompositeOperation='source-in';ts.fillStyle='#0a0908';ts.fillRect(0,0,w,h);
   const x0=Math.round(X-ox),y0=Math.round(Y-oy),o=Math.max(1,Math.round(s/4));
   for(const[dx,dy]of[[-o,0],[o,0],[0,-o],[0,o]])sctx.drawImage(CUC[1],x0+dx,y0+dy);sctx.drawImage(CUC[0],x0,y0);
@@ -4331,7 +4347,7 @@ function skipCountBox(){const s=UIS,w=168*s,h=34*s;return{x:SWc/2-w/2,y:SHc*.2+1
 function skipBox(){const s=UIS,w=150*s,h=34*s;return{x:SWc-w-12*s,y:Math.max(8*s,SHc*.11/2-h/2),w,h};}
 function drawN3UI(s){if(N3.step==='tutcam'){const C=N3,bar=SHc*.11,sb=skipBox();u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle=FG;u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้าม ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',BG);
     if(C.text&&C.t>.5)C.text.forEach((t,k)=>{u.fillStyle='rgba(10,9,8,.62)';u.fillRect(0,SHc*.46+k*26*s-13*s,SWc,26*s);uiText(t,SWc/2,SHc*.46+k*26*s,Math.min(17*s,SWc/26),'center','#ffd27a');});return;}
-  const C=N3,bar=C.cu?SHc*(1-cuBand())/2:SHc*.11;u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);drawBubbles(s);
+  const C=N3,bar=(C.cu||C.wide)?SHc*(1-cuBand())/2:SHc*.11;u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);drawBubbles(s);
   if(C.step==='pro'&&C.scream){const j=()=>(Math.random()-.5)*5*s;u.save();u.font=`900 ${Math.min(30*s,SWc/13)}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineWidth=5*s;u.strokeStyle=BG;const tx=SWc/2+j(),ty=SHc*.2+j();u.strokeText('กรี๊ดดดดดดดดดดด!!!!!!',tx,ty);u.fillStyle=UIRED;u.fillText('กรี๊ดดดดดดดดดดด!!!!!!',tx,ty);u.restore();}
   const sb=skipBox(),pro=C.step==='pro',intro=C.step==='intro'||C.step==='n6'||pro;u.fillStyle=BG;u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle=intro?'#d01c22':FG;u.fillRect(sb.x,sb.y,sb.w,sb.h);
   uiText(pro?'ข้ามคัตซีน '+C.scene+' ▶▶':intro?'ข้ามฉากกระสือ ▶▶':'ข้ามบทพูด ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',intro?FG:BG);
