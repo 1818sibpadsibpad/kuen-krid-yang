@@ -161,7 +161,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v10.1</div>
+  <div class="ver">v10.2</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -169,7 +169,10 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.1</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.2</h3><ul>
+      <li>กระสือติดไฟได้แค่ 5 วิ ระหว่างติดไฟโดนดาเมจ ×2</li>
+      <li>เข้าใกล้ศพ 1 เมตร จะมีปุ่มวิบวับให้เลือกหยิบอาวุธล่าสุดของศพมาใช้</li>
+      <li>คัตซีนคืนที่ 6: ซอมบี้เหมือนในเกม · จบด้วยการสะบัดซากครึ่งบนแล้วเหวี่ยงลอยไกล ไถพื้น 10 เมตรไปหยุดหน้ารั้ว คลานจะเข้าบ้าน แพมเอาไฟมาเผา</li>
       <li>คัตซีนคืนที่ 6 ใหม่: ซอมบี้เดินมาจากทิศใต้ 100 เมตร กระสือตัวแรกหมุนฟาดหางจนลอยตีลังกา (สโลโมชั่น) ตัวที่สองพุ่งคาบไป ตัวแรกลอยซิกแซกตามมาคาบแย่ง ดึงกันจนขาดสองท่อน แล้วสะบัดก่อนถุยทิ้ง</li>
       <li>ซอมบี้ติดไฟ: ใช้ไฟแบบเดียวกับกระสือ โทนอ่อนลงครึ่งหนึ่ง และติดเฉพาะท่อนบน</li>
       <li>คัตซีนคืนแรก: ระหว่างแจ็คพอตกันหน้ารั้ว แพมถือไม้ไปจุดไฟที่กองไฟด้านหลัง พูดว่า "เอาไฟแป๊บ"</li>
@@ -679,7 +682,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='10.1';
+let useBot=true,bot=null,hero='fifa';const VERSION='10.2';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2083,27 +2086,26 @@ function startN6(){N3={ph:'pre6',multi:true,lineT:3,step:null};B=null;BS=[];KRL=
 function n6Cut(){endGrip();N3.ph='cine6';N3.step='n6';N3.t=0;N3.said=0;N3.ev={};N3.slow=1;N3.p='walk';N3.pt=0;
   // one zombie shambling up towards the house from the south, 100 m out; the two of them both want it
   const C=N3;const S=openSpot(clamp(home.cx,60,MW*TS-60),clamp(home.cy+800,60,MH*TS-60),30);C.S=S;C.o={x:0,y:1};C.px=-1;C.py=0;
-  const z=makeZ(S.x,S.y);z.state='chase';z.spd=0;z.aware=0;z.a=-Math.PI/2;z.air=0;z.spin=0;zombies.push(z);C.z=z;
-  [[-1,-190,-50],[1,250,150]].forEach(([sd,dx,dy])=>{const b=makeBoss(clamp(S.x+dx,30,MW*TS-30),clamp(S.y+dy,30,MH*TS-30));b.state='intro';b.sd=sd;});C.k1=BS[0];C.k2=BS[1];
+  const z=makeZ(S.x,S.y);z.state='chase';z.aware=0;z.a=-Math.PI/2;z.air=0;z.spin=0;zombies.push(z);C.z=z;
+  [[-1,-170,-150],[1,250,150]].forEach(([sd,dx,dy])=>{const b=makeBoss(clamp(S.x+dx,30,MW*TS-30),clamp(S.y+dy,30,MH*TS-30));b.state='intro';b.sd=sd;});C.k1=BS[0];C.k2=BS[1];
   C.cam={x:S.x,y:S.y-10};state='n3cine';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.swingT=0;player.kickT=0;player.vx=player.vy=0;if(player.drag)toggleDrag();
   tn('sine',70,50,2.5,.3);nz(1.5,'bandpass',300,900,.12,2);}
 function n6Mouth(b){const R=b.rig.R,y=R.yaw;return{x:R.hx+(Math.cos(y)>=0?1:-1)*22,y:R.hy,h:R.hz*.75};}   // held out in front of the face, clear of the hair and the guts
 function updateN6Cine(rdt){const C=N3,z=C.z,S=C.S,k1=C.k1,k2=C.k2;
   C.slow+=((C.slowT==null?1:C.slowT)-C.slow)*Math.min(1,rdt*6);const dt=rdt*C.slow;C.t+=dt;C.pt+=dt;const t=C.t,pt=C.pt;   // slow motion runs the whole scene on a slowed clock
-  computeLights();updateFire(dt);updateBot(rdt,'hold');updatePraewa(rdt,'cut');updatePam(rdt,'cut');
+  computeLights();updateFire(dt);updateBot(rdt,'hold');updatePraewa(rdt,'cut');if(C.p!=='crawl')updatePam(rdt,'cut');else if(pam&&pam.thrust>0)pam.thrust-=dt;
   const once=(k,fn)=>{if(!C.ev[k]){C.ev[k]=1;fn();}},go=p=>{C.p=p;C.pt=0;},sm=v=>{v=clamp(v,0,1);return v*v*(3-2*v);},
     steer=(b,tx,ty,kk,cc)=>{b.vx+=((tx-b.x)*kk-b.vx*cc)*dt;b.vy+=((ty-b.y)*kk-b.vy*cc)*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;},
     zoff=(b,v,k)=>{const R=b.rig.R;R.zoff+=(v-R.zoff)*Math.min(1,dt*(k||4));},
     hang=(b,sp)=>{const m=n6Mouth(b);z.x=m.x;z.y=m.y;z.air=Math.max(0,m.h-17);if(sp!=null)z.spin=angLerp(z.spin,sp,dt*5);},
     fly=()=>{z.x+=z.vx*dt;z.y+=z.vy*dt;z.avh-=300*dt;z.air+=z.avh*dt;z.spin+=z.spv*dt;};
   let f1=null,f2=null,b1=-1,b2=-1;
-  plights.push({dyn:1,kind:'lantern',x:z.x,y:z.y+3,r:46,v:150,f:1,rays:24,seed:7});   // a patch of moonlight so the victim reads against the red
-  if(C.p==='walk'){z.y-=13*dt;z.phase=(z.phase||0)+dt*5;z.a=-Math.PI/2;   // shambling north, towards the house
-    k1.rig.R.zoff=6;steer(k1,z.x-18,z.y+3,pt<1.6?1.4:3.2,3.2);f1=Math.atan2(z.y-k1.y,z.x-k1.x);
+  if(C.p==='walk'){const oy=z.y;moveCircle(z,0,-z.spd*dt,5);z.phase+=Math.abs(z.y-oy)*.22;z.a=-Math.PI/2;   // shambling north, towards the house
+    k1.rig.R.zoff=6;steer(k1,z.x-18,z.y+3,pt<1.2?2.2:6,4);f1=Math.atan2(z.y-k1.y,z.x-k1.x);
     steer(k2,S.x+230,S.y+120,2,3);f2=Math.atan2(z.y-k2.y,z.x-k2.x);
-    if(pt>2.3&&Math.hypot(z.x-k1.x,z.y-k1.y)<30){k1.state='spin';k1.t=0;k1.spinA=null;go('spin');sfx.screech(0);}}
+    if((pt>2.3&&Math.hypot(z.x-k1.x,z.y-k1.y)<30)||pt>3.4){k1.state='spin';k1.t=0;k1.spinA=null;go('spin');sfx.screech(0);}}
   else if(C.p==='spin'){k1.t+=dt;k1.vx*=Math.exp(-6*dt);k1.vy*=Math.exp(-6*dt);k1.x+=k1.vx*dt;k1.y+=k1.vy*dt;   // the spinning tail-whip
-    if(k1.t<.45){f1=Math.atan2(z.y-k1.y,z.x-k1.x);k1.glow=((k1.t*18)|0)%2?1:.35;z.phase+=dt*5;z.y-=13*dt;}
+    if(k1.t<.45){f1=Math.atan2(z.y-k1.y,z.x-k1.x);k1.glow=((k1.t*18)|0)%2?1:.35;const oy=z.y;moveCircle(z,0,-z.spd*dt,5);z.phase+=Math.abs(z.y-oy)*.22;}
     else{k1.spinA=(k1.spinA==null?k1.rig.R.yaw:k1.spinA)+dt*13;f1=k1.spinA;if(rnd()<dt*8)nz(.12,'bandpass',400,1200,.15,1.5);}
     if(k1.t>.8)once('whip',()=>{z.vx=95;z.vy=-28;z.avh=150;z.air=2;z.spv=7.5;z.state='stagger';sfx.kick();sfx.whoosh();shake=Math.max(shake,8);blood(z.x,z.y,8,20,1,0,90);C.slowT=.22;go('air');});}
   else if(C.p==='air'){fly();if(k1.state==='spin'){k1.t+=dt;k1.spinA+=dt*13;f1=k1.spinA;if(k1.t>1.35){k1.state='intro';k1.spinA=null;}}else{steer(k1,z.x-40,z.y+10,2,3);f1=Math.atan2(z.y-k1.y,z.x-k1.x);}
@@ -2131,15 +2133,36 @@ function updateN6Cine(rdt){const C=N3,z=C.z,S=C.S,k1=C.k1,k2=C.k2;
     k1.vx*=Math.exp(-3*dt);k1.vy*=Math.exp(-3*dt);k1.x+=k1.vx*dt;k1.y+=k1.vy*dt;zoff(k1,22,2);f1=Math.atan2(-uy,-ux)+Math.sin(t*2)*.3;   // the legs stay clamped in the first one's jaws
     const L=C.legs,m1=n6Mouth(k1);if(L&&gibs.includes(L)){L.x=m1.x;L.y=m1.y;L.h=Math.max(4,m1.h-12);L.vx=L.vy=L.vh=L.vr=0;L.rot=f1+Math.PI/2;}
     k2.vx*=Math.exp(-3*dt);k2.vy*=Math.exp(-3*dt);k2.x+=k2.vx*dt;k2.y+=k2.vy*dt;
-    if(!C.spat){zoff(k2,24,3);const w=pt<1.9?Math.sin(pt*26)*.9+Math.sin(pt*11)*.35:0;f2=Math.atan2(uy,ux)+w;b2=pt<1.9?((pt*6)%1<.5?.25:-1):-1;   // shaking the half it holds, hard
+    if(!C.spat){zoff(k2,24,3);const w=pt<1.9?Math.sin(pt*26)*.9+Math.sin(pt*11)*.35:0;f2=Math.atan2(uy,ux)+w;b2=pt<1.9?((pt*6)%1<.5?.25:-1):-1;   // shaking the half it holds, left and right
       hang(k2);z.spin=w*.7;if(pt<1.9&&rnd()<dt*16){const a=f2+(rnd()-.5)*1.5;particles.push({x:z.x,y:z.y,vx:Math.cos(a)*(40+rnd()*40),vy:Math.sin(a)*(30+rnd()*30),h:z.air+6,vh:10+rnd()*30});}
-      if(pt>=1.9){C.spat=true;const a=f2;z.vx=Math.cos(a)*70;z.vy=Math.sin(a)*50;z.avh=30;z.spv=4;b2=.6;nz(.18,'bandpass',900,400,.25,1);sfx.whoosh();}}   // and spits it out onto the ground
-    else{f2=Math.atan2(uy,ux);if(z.air>0){fly();if(z.air<=0){z.air=0;z.spin=0;z.vx=z.vy=0;sfx.kick();shake=Math.max(shake,4);for(let k=0;k<5;k++)bakeSplat(z.x+(rnd()-.5)*10,z.y+(rnd()-.5)*6,1.5+rnd()*2);}}else z.phase+=dt*2;}
-    if(pt>3.6){n6Begin();return;}}
+      if(pt>=1.9){C.spat=true;   // ... and slings it a very long way: it comes down, skids 10 m and stops right at the fence
+        const g0=gatePos(),sx=home.cx+(Math.abs(g0.x-home.cx)<40&&g0.y>home.cy?-44:8);let yy=home.cy;while(yy<MH*TS-20&&inYard(sx,yy))yy+=2;const st={x:sx,y:yy+7},dx=st.x-z.x,dy=st.y-z.y,dl=Math.hypot(dx,dy)||1,du={x:dx/dl,y:dy/dl},land={x:st.x-du.x*80,y:st.y-du.y*80},TF=1.9;
+        C.fl={st,du,land};z.vx=(land.x-z.x)/TF;z.vy=(land.y-z.y)/TF;z.avh=(150*TF*TF-z.air)/TF;z.spv=9;b2=.6;sfx.whoosh();sfx.screech(0);shake=Math.max(shake,5);go('fling');}}
+    else{f2=Math.atan2(uy,ux);}
+    }
+  else if(C.p==='fling'||C.p==='skid'||C.p==='crawl'){const F=C.fl;
+    if(C.p==='fling'){z.x+=z.vx*dt;z.y+=z.vy*dt;z.avh-=300*dt;z.air+=z.avh*dt;z.spin+=z.spv*dt;if(rnd()<dt*20)particles.push({x:z.x,y:z.y,vx:(rnd()-.5)*20,vy:(rnd()-.5)*10,h:z.air+4,vh:-10});
+      if(z.air<=0||pt>3){z.air=0;z.spin=0;z.a=Math.atan2(-F.du.y,-F.du.x);C.sk=Math.hypot(F.st.x-z.x,F.st.y-z.y);C.sk0=C.sk;sfx.kick();sfx.hit();shake=Math.max(shake,8);for(let k=0;k<10;k++)bakeSplat(z.x+(rnd()-.5)*12,z.y+(rnd()-.5)*8,2+rnd()*3);go('skid');}}
+    else if(C.p==='skid'){const v=Math.max(0,C.sk0*2/1.4*(1-pt/1.4)),d=Math.min(C.sk,v*dt);C.sk-=d;z.x+=F.du.x*d;z.y+=F.du.y*d;   // ploughing along the ground
+      if(rnd()<dt*30){bakeSplat(z.x+(rnd()-.5)*4,z.y+(rnd()-.5)*3,1+rnd()*1.5);particles.push({x:z.x,y:z.y,vx:(rnd()-.5)*30,vy:(rnd()-.5)*12,h:1,vh:20+rnd()*30});}
+      if(C.sk<=.5||pt>1.6){z.x=F.st.x;z.y=F.st.y;z.a=Math.atan2(home.cy-z.y,home.cx-z.x);go('crawl');}}
+    else{z.a=angLerp(z.a,Math.atan2(home.cy-z.y,home.cx-z.x),dt*3);const ox=z.x,oy=z.y;moveCircle(z,Math.cos(z.a)*7*dt,Math.sin(z.a)*7*dt,5);if(inYard(z.x,z.y)){z.x=ox;z.y=oy;}z.phase+=dt*2.6+Math.hypot(z.x-ox,z.y-oy)*.22;   // still clawing its way towards the house
+      const pm=pam||(hero==='pam'?player:null);
+      if(pm&&!z.burn){const fx=F.st.x,fy=F.st.y-15,lit=C.lit;   // แพม takes fire from the campfire and comes to burn it
+        if(!lit){const tx=fireP.x-13,ty=fireP.y+7,d=Math.hypot(tx-pm.x,ty-pm.y);if(d>6&&pt<3.5)followPath(pm,tx,ty,125,dt);else{if(d>6){pm.x=tx;pm.y=ty;lvSet(pm);}pm.moveAmt=0;pm.facing=Math.atan2(fireP.y-pm.y,fireP.x-pm.x);
+            C.dip=(C.dip||0)+dt;pm.thrust=Math.max(pm.thrust||0,.2);if(rnd()<dt*8)sparks.push({x:fireP.x+(rnd()-.5)*6,y:fireP.y,h:6,vx:(rnd()-.5)*16,vy:(rnd()-.5)*8,vh:20+rnd()*30,life:.5});
+            if(C.dip>.6){C.lit=true;C.lt=pt;if(pm!==player)pm.torch=30;nz(.3,'lowpass',900,200,.3,1);}}}
+        else{const d=Math.hypot(fx-pm.x,fy-pm.y);if(d>5&&pt<C.lt+4)followPath(pm,fx,fy,135,dt);else{if(d>5){pm.x=fx;pm.y=fy;lvSet(pm);}pm.moveAmt=0;pm.facing=Math.atan2(z.y-pm.y,z.x-pm.x);
+            once('burnz',()=>{C.bt=pt;pm.thrust=.4;igniteZ(z);pamEmbers(z.x,z.y,Math.cos(pm.facing),Math.sin(pm.facing),30);sfx.hit();shake=Math.max(shake,5);toast('ติดไฟ!');});}}}
+      if((z.burn>0&&C.bt!=null&&pt>C.bt+1.8)||(!pm&&pt>2.5)||pt>9)n6Begin();}
+    if(C.p!=='crawl'&&C.p!=='fling'){}
+    if(!C.ended){const L=C.legs,m1=n6Mouth(k1);k1.vx*=Math.exp(-3*dt);k1.vy*=Math.exp(-3*dt);k1.x+=k1.vx*dt;k1.y+=k1.vy*dt;f1=Math.atan2(-C.tug.uy,-C.tug.ux);if(L&&gibs.includes(L)){L.x=m1.x;L.y=m1.y;L.h=Math.max(4,m1.h-12);L.vx=L.vy=L.vh=L.vr=0;L.rot=f1+Math.PI/2;}
+      k2.vx*=Math.exp(-3*dt);k2.vy*=Math.exp(-3*dt);k2.x+=k2.vx*dt;k2.y+=k2.vy*dt;f2=Math.atan2(z.y-k2.y,z.x-k2.x);}
+    if(!N3||N3.step!=='n6')return;}
   for(const[b,f,bt]of[[k1,f1,b1],[k2,f2,b2]]){selB(b);if(C.p==='walk'||C.p==='carry'||C.p==='tug')b.glow=b.glow==null?1:b.glow;rigTick(dt,bt,f==null?Math.atan2(z.y-b.y,z.x-b.x):f);}
   if(C.p==='carry')hang(k2);else if(C.p==='shake'&&!C.spat)hang(k2);
   const zy=z.y-((z.air||0)+11)/K,hy=b=>b.rig.R.hy-b.rig.R.hz*.75/K,both=C.p==='carry'||C.p==='tug'||(C.p==='shake'&&!C.spat),   // frame the victim, and both heads while they fight over it
-    fx=both?(k1.rig.R.hx+k2.rig.R.hx+z.x*2)/4:z.x,fy=both?(hy(k1)+hy(k2)+zy*2)/4:zy,q=1-Math.exp(-rdt*4);C.cam={x:C.cam.x+(fx-C.cam.x)*q,y:C.cam.y+(fy-C.cam.y)*q};}
+    pm=pam||(hero==='pam'?player:null),wp=C.p==='crawl'&&pm&&C.lit,fx=both?(k1.rig.R.hx+k2.rig.R.hx+z.x*2)/4:wp?(z.x+pm.x)/2:z.x,fy=both?(hy(k1)+hy(k2)+zy*2)/4:wp?(zy+pm.y-10)/2:zy,q=1-Math.exp(-rdt*(C.p==='fling'||C.p==='skid'?9:4));C.cam={x:C.cam.x+(fx-C.cam.x)*q,y:C.cam.y+(fy-C.cam.y)*q};}
 
 function n6Begin(){const C=N3;if(!C||C.step!=='n6')return;
   if(!C.torn){const z=C.z,i=zombies.indexOf(z),zx=z?z.x:C.S.x,zy=z?z.y:C.S.y;if(i>=0)zombies.splice(i,1);const q=makeZ(zx,zy);q.crawl=true;q.legCut=2;q.state='chase';q.aware=3;q.hunt=true;q.spd=(11+rnd()*5)*1.3;zombies.push(q);for(let k=0;k<6;k++)bakeSplat(zx+(rnd()-.5)*30,zy+(rnd()-.5)*20,2+rnd()*2);}
@@ -2346,7 +2369,7 @@ function krFire(T){const o=out32;for(const b of BS){if(!b.char||b.hidden)continu
         else if(heat>0){heat-=.05+.045*(1+Math.sin(x*.9+T*9+y*.21))+.045*(1+Math.sin(y*.55+T*17-x*.37));if(heat>.62)o[i]=PY[2];else if(heat>.36)o[i]=PO[2];else if(heat>.1)o[i]=PR[2];}}}}}   // tongues licking up off every part of it
 function krWrithe(b,dt,ax,ay){b.wt=(b.wt||0)+dt;const w=b.wt;b.x=ax+Math.sin(w*31)*3.2+Math.sin(w*13.7)*4;b.y=ay+Math.cos(w*27)*2.4+Math.sin(w*17.3)*3;b.vx=Math.cos(w*31)*90;b.vy=Math.sin(w*23)*70;   // jerking, arching, curling in on itself
   KRS.R.zoff=3.5+Math.abs(Math.sin(w*15))*5;return(b.wa==null?(b.wa=KRS.R.yaw):b.wa)+Math.sin(w*19)*1.5+Math.sin(w*7.3)*.9;}
-function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
+function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.burnT=5;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
 function proWake(T){const C=N3,tw=C.t,fr=cuBand(),fh=vh*fr,y0=(vh-fh)/2,s=fh*.52/18,cx=vw/2,gy=y0+fh*.5,L=236;   // daytime, the same wide shot as the night-3 campfire
   sctx.fillStyle='rgb(150,196,226)';sctx.fillRect(0,0,vw,vh);lctx.fillStyle=gray(L);lctx.fillRect(0,0,vw,vh);
   sctx.fillStyle='rgb(74,132,66)';sctx.fillRect(0,y0,vw,fh*.2);for(let x=0;x<vw;x+=3){const h=fh*(.03+.05*Math.abs(Math.sin(x*.37)+Math.sin(x*.11)));sctx.fillRect(x,y0+fh*.2,3,h);}   // the canopy of the plantation
@@ -2437,7 +2460,8 @@ function deathNext(){const D=death,L=heirs();if(DEMO||!D||D.all||D.el||!L.length
   const cx=D.kr?(dropL?dropL.x:D.x):player.x,cy=D.kr?(dropL?dropL.y:D.y):player.y;let best=L[0],bd=1e9;for(const h of L){const d=Math.hypot(h[0].x-cx,h[0].y-cy);if(d<bd){bd=d;best=h;}}
   if(D.pan){const h=L.find(h=>h[0]===D.pan.e);if(h)best=h;}
   const[e,nh]=best,old=hero,body=D.kr?null:Object.assign({},player,{jp:old==='jp',pw:old==='pw',pm:old==='pam',down:true,fall:1,say:null,x:cx,y:cy});
-  DEADS.add(old);CORPSE={x:cx,y:cy,who:old,name:CNAME[old],body,got:false};
+  const w0=W(player),wk=player.weapon==='hoe'?'hoe':(Object.keys(WP).find(k=>WP[k]===w0)||'knife'),wn=old==='pw'&&player.weapon==='knife'&&!UPG()?'กระทะ':WP[wk].name;
+  DEADS.add(old);CORPSE={x:cx,y:cy,who:old,name:CNAME[old],body,got:false,wk,wn,wTaken:false};
   for(const z of zombies){z.ride=false;if(!['bite','eat','converge'].includes(z.state))continue;z.aware=0;z.vx=z.vy=0;   // the pack stays busy with the body instead of hunting everyone down
     if(!D.kr){z.state='eatC';z.t=10+rnd()*4;z.slot=Math.atan2(z.y-cy,z.x-cx);}else{z.state='wander';z.t=2+rnd()*3;z.wa=rnd()*TAU;}}
   if(D.kr&&D.boss){const b=D.boss;b.hidden=false;if(b.krl0)b.krl=b.krl0;b.state='roam';b.t=0;b.rt=0;b.vx=b.vy=0;b.x=clamp(cx+240,30,MW*TS-30);b.y=clamp(cy-160,30,MH*TS-30);selB(b);KRS.R.zoff=6;}
@@ -2446,6 +2470,8 @@ function deathNext(){const D=death,L=heirs();if(DEMO||!D||D.all||D.el||!L.length
   if(!bot&&subE&&!subE.dead&&(nh==='fifa'||nh==='jp')){const q=subE;bot=makeBot();bot.jp=q.who==='jp';bot.x=q.x;bot.y=q.y;lvSet(bot);subE=null;}syncSub();   // the stand-in goes back to being the ordinary companion
   if(N3&&N3.ph==='fight'){const st=stations();npcs().forEach((q,i)=>{q.station=st[i%st.length];});}
   death=null;state='play';flashOn=false;if(!D.pan){cam.x=player.x;cam.y=player.y;}joyV={x:0,y:0};sfx.ready();toast(CNAME[old]+' ตายแล้ว… ตอนนี้คุณคือ '+HERONAME()+' · ไปเอาไฟคาดหัวที่ศพ');}
+function cwAvail(){const C=CORPSE;return !!(C&&!C.wTaken&&state==='play'&&!player.hidden&&Math.hypot(C.x-player.x,C.y-player.y)<10);}   // within 1 m of the body
+function takeCorpseW(){const C=CORPSE;if(!cwAvail())return;C.wTaken=true;if(C.wk==='hoe'){player.hasHoe=true;player.weapon='hoe';}else{if(C.wk==='knife'&&!WP.rknife)WP.rknife=Object.assign({},WP.knife);player.weapon=C.wk==='knife'?'rknife':C.wk;}sfx.ready();tn('square',500,900,.1,.12);toast('หยิบ '+C.wn+' ของ'+C.name+'มาใช้');}
 function corpseTick(){const C=CORPSE;if(player.noLamp)flashOn=false;if(!C||C.got||!player.noLamp)return;
   if(Math.hypot(C.x-player.x,C.y-player.y)<40){C.got=true;player.noLamp=false;flashOn=true;dropL=null;sfx.ready();tn('sine',700,1100,.18,.12);toast('ได้ไฟคาดหัวมาแล้ว');player.say={text:griefLine(C.who),t:4};}}
 function corpseUI(s){const C=CORPSE;if(!C)return;const x=(C.x-camX)*P,y=(C.y*K-camY)*P,pu=.5+.5*Math.sin(performance.now()/260);
@@ -2453,7 +2479,10 @@ function corpseUI(s){const C=CORPSE;if(!C)return;const x=(C.x-camX)*P,y=(C.y*K-c
     const dx=C.x-player.x,dy=(C.y-player.y)*K,d=Math.hypot(C.x-player.x,C.y-player.y);
     if(d>92){const px=(player.x-camX)*P,py=(player.y*K-camY-12)*P,an=Math.atan2(dy,dx),r=Math.min(80*P,Math.min(SWc,SHc)*.4);u.save();u.translate(px+Math.cos(an)*r,py+Math.sin(an)*r);u.rotate(an);u.beginPath();u.moveTo(15*s,0);u.lineTo(-9*s,-10*s);u.lineTo(-4*s,0);u.lineTo(-9*s,10*s);u.closePath();u.lineWidth=3;u.strokeStyle=BG;u.stroke();u.fillStyle='#5fd35f';u.fill();u.restore();}}
   const ty=y-17*P+Math.sin(performance.now()/500)*2*s;u.save();u.font=`900 ${17*s}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineJoin='round';u.lineWidth=4*s;u.strokeStyle='#fff';u.strokeText('RIP',x,ty);u.fillStyle='#000';u.fillText('RIP',x,ty);u.restore();
-  uiText(C.name,x,ty+13*s,10*s,'center','#fff');}
+  uiText(C.name,x,ty+13*s,10*s,'center','#fff');
+  if(cwAvail()){const T=performance.now()/1000,a=C.btnA=Math.min(1,(C.btnA||0)+.06),bl=.5+.5*Math.sin(T*9),bx=x,by=ty-30*s-(1-a)*18*s,w=150*s,h=34*s;   // a bright, blinking button floats up
+    u.save();u.globalAlpha=a;u.shadowColor='#ffd23c';u.shadowBlur=(8+14*bl)*s;u.fillStyle=bl>.5?'#ffd23c':'#e6a41c';u.beginPath();u.roundRect?u.roundRect(bx-w/2,by-h/2,w,h,10*s):u.rect(bx-w/2,by-h/2,w,h);u.fill();u.shadowBlur=0;u.lineWidth=3*s;u.strokeStyle='#fff';u.stroke();u.restore();
+    u.save();u.globalAlpha=a;uiText('หยิบ '+C.wn,bx,by+1,14*s,'center','#1a1208');u.restore();C.btn={x:bx,y:by,w,h};}else{C.btnA=0;C.btn=null;}}
 function gatePos(){const hs=home.hs;return hs.gate||{x:hs.di*TS+8,y:hs.dj*TS+8};}
 function gateOut(){const g=gatePos(),dx=g.x-home.cx,dy=g.y-home.cy,d=Math.hypot(dx,dy)||1;return{x:dx/d,y:dy/d};}
 function updateN3Play(dt){
@@ -2604,7 +2633,8 @@ function nearestHolder(){let best=null,bd=1e9;for(const e of npcs()){const d=Mat
 function bossHits(h,a,R0,arc,kick){let hit=elHits(h,a,R0,arc,kick);for(const bb of BS.slice()){selB(bb);if(bossHit1(h,a,R0,arc,kick))hit=true;}return hit;}
 function bossHit1(h,a,R0,arc,kick){const b=B;if(!b||h!==player||!N3||N3.ph!=='fight')return false;if(['dead','carry','intro'].includes(b.state))return false;
   const dx=b.x-h.x,dy=b.y-h.y,d=Math.hypot(dx,dy);if(d-7>R0)return false;if(d>8&&Math.abs(angDiff(a,Math.atan2(dy,dx)))>arc+.3)return false;
-  const ux=dx/(d||1),uy=dy/(d||1),m=W(h).m||1,crit=rnd()<.3,dmg=m*(b.state==='tangle'?2:1)*(crit?2:1);b.hp-=dmg;b.hitF=.18;if(crit)critPop(b.x,b.y,24);
+  const ux=dx/(d||1),uy=dy/(d||1),m=W(h).m||1,crit=rnd()<.3,dmg=m*(b.state==='tangle'?2:1)*(crit?2:1)*(b.burnT>0?2:1);b.hp-=dmg;   // double damage while it is on fire
+  b.hitF=.18;if(crit)critPop(b.x,b.y,24);
   const hz=KRS.R.hz*.75/K;for(let k=0;k<10;k++){const an=Math.atan2(uy,ux)+(rnd()-.5)*1.8,s=40+rnd()*80;particles.push({x:b.x,y:b.y,vx:Math.cos(an)*s,vy:Math.sin(an)*s,h:hz,vh:20+rnd()*50});}
   sfx.hit();shake=Math.max(shake,3);if(performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   if(b.hp<=0){killBoss();return true;}
@@ -2624,8 +2654,9 @@ function killBoss(){const b=B;b.state='dead';b.t=0;b.hp=0;if(b.teth==='player')p
   toast(BS.length>1?'กำจัดกระสือหมดแล้ว!!':'กำจัดกระสือได้แล้ว!!');N3.cheer={t:0,next:.5,pool:CHEER.slice()};for(const e of[player,...npcs()])e.cheerT=8;}
 const CHEER=['เย้','เห้ย','อะหื่ออออ','มันตายละเบาะ','ป้าด','คึเฮ็ดเป็น','ถืกกัดบ่?','เจ็บบ่?','งึด','ตาย้านคัก','เฮ็ดจังได่สิกล้านอนบาดหนิ','กินได้ยุเบาะกระสือหนิ','เอามาปิ้งๆ'];
 function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.burnCd>0)b.burnCd-=dt;if(b.state==='dead'){b.vx*=.9;b.vy*=.9;rigTick(dt,-1,null);return;}
-  if(b.state==='burn'){const fa=krWrithe(b,dt,b.bx,b.by);b.fire=b.t>2.5?Math.max(0,(3-b.t)/.5):1;if(rnd()<dt*30)sparks.push({x:b.x+(rnd()-.5)*26,y:b.y+(rnd()-.5)*8,h:10+rnd()*44,vx:(rnd()-.5)*26,vy:(rnd()-.5)*10,vh:30+rnd()*50,life:.5+rnd()*.7});
-    rigTick(dt,(b.t*4)%1,fa);if(b.t>=3){b.state='roam';b.t=0;b.rt=0;b.char=false;b.burnCd=10;b.vx=b.vy=0;KRS.R.zoff=6;b.angry=5;sfx.screech();}return;}   // on fire: three seconds thrashing and curling, stunned
+  if(b.burnT>0){b.burnT-=dt;b.fire=b.burnT<.5?Math.max(0,b.burnT/.5):1;if(b.burnT<=0){b.burnT=0;b.char=false;b.fire=1;}}   // it burns for 5 s in all
+  if(b.state==='burn'){const fa=krWrithe(b,dt,b.bx,b.by);if(rnd()<dt*30)sparks.push({x:b.x+(rnd()-.5)*26,y:b.y+(rnd()-.5)*8,h:10+rnd()*44,vx:(rnd()-.5)*26,vy:(rnd()-.5)*10,vh:30+rnd()*50,life:.5+rnd()*.7});
+    rigTick(dt,(b.t*4)%1,fa);if(b.t>=3){b.state='roam';b.t=0;b.rt=0;b.burnCd=10;b.vx=b.vy=0;KRS.R.zoff=6;b.angry=5;sfx.screech();}return;}   // on fire: three seconds thrashing and curling, stunned
   if(b.state==='carry'){rigTick(dt,-1,null);return;}
   const dx=P.x-b.x,dy=P.y-b.y,d=Math.hypot(dx,dy)||1,ang=Math.atan2(dy,dx),T=performance.now()/1000;
   b.cd1-=dt;b.cd2-=dt;b.biteCd-=dt;b.cdS-=dt;if(b.q>0)b.q-=dt;if(b.angry>0)b.angry-=dt;if(b.hitF>0)b.hitF-=dt;
@@ -4472,7 +4503,7 @@ function drawN3UI(s){if(N3.step==='tutcam'){const C=N3,bar=SHc*.11,sb=skipBox();
   const sb=skipBox(),pro=C.step==='pro',intro=C.step==='intro'||C.step==='n6'||pro;u.fillStyle=BG;u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle=intro?'#d01c22':FG;u.fillRect(sb.x,sb.y,sb.w,sb.h);
   uiText(pro?'ข้ามคัตซีน '+C.scene+' ▶▶':intro?'ข้ามฉากกระสือ ▶▶':'ข้ามบทพูด ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',intro?FG:BG);
   if(!C.cu||bar>30*s)uiText(pro?'คัตซีน '+C.scene:C.step==='n6'?(C.torn?'ฉีกขาดเป็นสองท่อน…':'แสงแดงสองดวงที่ขอบสวน…'):intro?'มีบางอย่างลอยเข้ามา…':C.step==='fetch'?'มีคนวิ่งมาช่วย…':C.step==='walk'?'กลับบ้านด้วยกัน':'รอบกองไฟ',SWc/2,SHc-bar/2,14*s);
-  if(C.step==='n6'&&C.torn&&C.t>C.tt+.8){const al=Math.min(1,(C.t-C.tt-.8)*1.5);u.globalAlpha=al;uiText('กระสือ ×2',SWc/2,SHc*.3,40*s,'center',UIRED);uiText('แย่งเหยื่อกันเอง… แล้วหันมาทางบ้าน',SWc/2,SHc*.3+34*s,12*s,'center',FG);u.globalAlpha=1;}
+  if(C.step==='n6'&&C.torn&&C.t>C.tt+.8&&C.p==='shake'){const al=Math.min(1,(C.t-C.tt-.8)*1.5);u.globalAlpha=al;uiText('กระสือ ×2',SWc/2,SHc*.3,40*s,'center',UIRED);uiText('แย่งเหยื่อกันเอง… แล้วหันมาทางบ้าน',SWc/2,SHc*.3+34*s,12*s,'center',FG);u.globalAlpha=1;}
   else if(intro&&B&&!B.hidden&&C.t>(C.D||8)*.55&&C.step==='intro'){const al=Math.min(1,(C.t-(C.D||8)*.55)*1.5);u.globalAlpha=al;uiText('กระสือ',SWc/2,SHc*.3,40*s,'center',UIRED);uiText('ผีหัวลอย ไส้ห้อย ล่าคนกลางสวนยาง',SWc/2,SHc*.3+34*s,12*s,'center',FG);u.globalAlpha=1;}
   toasts.forEach((t,i)=>{u.globalAlpha=Math.min(1,t.life*2);uiText(t.t,SWc/2,bar+24*s+i*22*s,14*s,'center');u.globalAlpha=1;});}
 const D_INTRO_NAME=4.5;
@@ -4671,6 +4702,7 @@ ui.addEventListener('pointerdown',e=>{
   if(DF){if(DF.t>.5)DF=null;return;}
   if(state==='dying'&&death&&death.el&&!death.shown){const sb=skipBox();if(x>sb.x-14&&x<sb.x+sb.w+14&&y>sb.y-14&&y<sb.y+sb.h+14){death.shown=true;showEnd(false);}return;}
   if(state==='layout'){layDown(x,y,e.pointerId);try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
+  if(state==='play'&&CORPSE&&CORPSE.btn&&cwAvail()){const B2=CORPSE.btn;if(Math.abs(x-B2.x)<B2.w/2+10&&Math.abs(y-B2.y)<B2.h/2+10){takeCorpseW();return;}}
   if((state==='play'||state==='n3cine')&&Math.hypot(x-pauseB.x,y-pauseB.y)<pauseB.r*1.5){pauseGame();return;}
   if(waveAvail()){const wb=waveBox();if(x>wb.x-8&&x<wb.x+wb.w+8&&y>wb.y-8&&y<wb.y+wb.h+8){callWave();return;}}
   if(state==='play'&&e.pointerType!=='mouse'&&Math.hypot(x-fireB.x,y-fireB.y)<fireB.r*1.2){showTouch=true;mouse.active=false;fireB.flash=.12;tapAttack(null);return;}   // the attack button wins over anything that overlaps it
@@ -4715,7 +4747,7 @@ function ptrEnd(e){
 }
 ui.addEventListener('pointerup',ptrEnd);ui.addEventListener('pointercancel',ptrEnd);
 ui.addEventListener('contextmenu',e=>e.preventDefault());
-addEventListener('keydown',e=>{keys[e.code]=true;if(DEMO)return;if(DF){if(DF.t>.5)DF=null;return;}if((e.code==='Escape'||e.code==='KeyP')&&(state==='play'||state==='n3cine')&&!(state==='n3cine'&&e.code==='Escape')){pauseGame();return;}if((e.code==='Escape'||e.code==='KeyP')&&state==='paused'){resumeGame();return;}if(state==='n3cine'&&(e.code==='Enter'||e.code==='Escape'||e.code==='Space')){e.preventDefault();skipCine();return;}if(state!=='play')return;
+addEventListener('keydown',e=>{keys[e.code]=true;if(DEMO)return;if(e.code==='KeyE'&&cwAvail()){takeCorpseW();return;}if(DF){if(DF.t>.5)DF=null;return;}if((e.code==='Escape'||e.code==='KeyP')&&(state==='play'||state==='n3cine')&&!(state==='n3cine'&&e.code==='Escape')){pauseGame();return;}if((e.code==='Escape'||e.code==='KeyP')&&state==='paused'){resumeGame();return;}if(state==='n3cine'&&(e.code==='Enter'||e.code==='Escape'||e.code==='Space')){e.preventDefault();skipCine();return;}if(state!=='play')return;
   if(e.code==='ShiftLeft'||e.code==='ShiftRight'){doRoll();return;}if(e.code==='Enter'&&N3&&N3.ph==='count'){N3.t=0;return;}if(e.code==='KeyT'){grabTail();return;}if(e.code==='KeyH'){if(player.grip)endGrip();else startGrip(-1);return;}if(e.code==='KeyR'&&feedFire())return;
   if(e.code==='KeyF')toggleLight();else if(e.code==='KeyE'){if(!pickWood()&&!pickBunch()&&nearWardrobe())toggleHide();}else if(e.code==='KeyQ')kick();else if(e.code==='KeyG')swapWeapon();else if(e.code==='KeyN'&&sleepAvail())startSleep('clear');else if(e.code==='KeyR'&&grillAvail()&&Math.hypot(player.x-fireP.x,player.y-fireP.y)<60)grillSnakes();else if(e.code==='KeyX'&&dropAvail())dropStuff();else if(e.code==='KeyV'&&woodAvail()){const ins=inYard(player.x,player.y),dd=ins?10:yardDist(player.x,player.y)+22;placePile(player.x+Math.cos(player.facing)*dd,player.y+Math.sin(player.facing)*dd);}
   else if(e.code==='Space'){e.preventDefault();tapAttack(mouse.active&&!showTouch?mouseAngle():null);}
