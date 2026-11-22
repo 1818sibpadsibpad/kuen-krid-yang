@@ -144,7 +144,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v9.1</div>
+  <div class="ver">v9.2</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div></div>
@@ -152,7 +152,9 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v9.1</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v9.2</h3><ul>
+      <li>กระสือติดไฟ: ไฟแบบใหม่ลุกคลุมทั้งตัว กระสือชักดิ้นชักงอ · ในเกมจริง แพมฟาดด้วยไม้ที่ยังติดไฟ กระสือจะติดไฟ ชักดิ้นสตัน 3 วิ</li>
+      <li>คัตซีน 1: กระสือเลื้อยโค้งซ้ายขวาไล่ล่าฟีฟ่านานขึ้น 3 วิ ไม่งับรัว แล้วค่อยเข้ากัดหนึ่งครั้ง</li>
       <li>แบกกล้วย: มีลูกศรชี้ลงลอยขึ้นลงเหนือที่แขวนกล้วย</li>
       <li>ท่ากลิ้ง: ม้วนตัวเป็นก้อนแล้วกลิ้ง ไม่ตัวแข็งตีลังกา</li>
       <li>คัตซีน: ฟีฟ่าวิ่งหนีถูกไล่ → เดินหลบออกข้าง → กลิ้งหลบ → ฟาดสวน · แพมเดินหลบซ้ายขวาระหว่างฟาด แล้ววิ่งออกหน้าบ้านก่อนโยนไม้ไฟ · กระสือติดไฟลุกทั้งตัว ตัวดำ ขึ้นคำว่า “ติดไฟ!”</li>
@@ -633,7 +635,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='9.1';
+let useBot=true,bot=null,hero='fifa';const VERSION='9.2';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2093,31 +2095,32 @@ function updatePro1(dt){const C=N3,f=player,o=C.o,S=C.S,t=(C.t+=dt),A=BS[0],Bk=B
   else if(t<6.45){once('dash',()=>{C.dir=aTo(A,f);A.state='dash';sfx.screech(0);shake=Math.max(shake,3);});A.vx=Math.cos(C.dir)*540;A.vy=Math.sin(C.dir)*540;A.x+=A.vx*dt;A.y+=A.vy*dt;faceA=C.dir;biteA=((t-6)*3)%1;zA=3;
     if(t>6.03)once('r1',()=>proRoll(C.dir+Math.PI/2*A.sd));}
   else if(t<7.6){A.state='miss';A.vx*=Math.exp(-6*dt);A.vy*=Math.exp(-6*dt);A.x+=A.vx*dt;A.y+=A.vy*dt;}
-  else{A.state='intro';if(t<11.8)weave(A,125,0);else{fly(A,S.x+o.x*120-o.y*50,S.y+o.y*120+o.x*50,1.6,2.4);faceA=aTo(A,f);}}
+  else{A.state='intro';if(t<14.8)weave(A,125,0);else{fly(A,S.x+o.x*120-o.y*50,S.y+o.y*120+o.x*50,1.6,2.4);faceA=aTo(A,f);}}
   // ---- B: weaves · hunts him as he runs · snaps (he steps aside) · curls in again (he rolls) · takes the full swing
   const arc=(t0,T,R0)=>{const k=clamp((t-t0)/T,0,1);if(!C['a'+t0])C['a'+t0]=aTo(f,Bk);const a=C['a'+t0]+k*2.2*Bk.sd,r=R0*(1-k)+9;fly(Bk,f.x+Math.cos(a)*r,f.y+Math.sin(a)*r,9,5.5);faceB=aTo(Bk,f);if(k>.55){biteB=((t-t0)*2.6)%1;zB=3;}};
   if(t<7)weave(Bk,95,Math.PI);
-  else if(t<9){free=false;ring(58,90,Bk.sd);const ra=Math.atan2(mvy,mvx);fa=(t%.9)<.22?aTo(f,Bk):ra;   // running for it, the thing right behind him, a look back over the shoulder
-    fly(Bk,f.x-Math.cos(ra)*30,f.y-Math.sin(ra)*30,7,4.5);faceB=aTo(Bk,f);biteB=((t-7)*2.6)%1;zB=3;if(biteB<dt*2.6)sfx.bite();}
-  else if(t<9.9){free=false;once('l1',()=>{C.ld=aTo(Bk,f);sfx.screech(0);});
-    if(t<9.45){Bk.vx=Math.cos(C.ld)*250;Bk.vy=Math.sin(C.ld)*250;}else{Bk.vx*=Math.exp(-5*dt);Bk.vy*=Math.exp(-5*dt);}Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;faceB=t<9.45?C.ld:aTo(Bk,f);biteB=((t-9)*3)%1;zB=3;
-    if(t<9.6){const a=C.ld+Math.PI/2*Bk.sd;mvx=Math.cos(a)*80;mvy=Math.sin(a)*80;}fa=aTo(f,Bk);if(t>9.25)once('b1',()=>sfx.bite());}   // he walks out of the line of the bite
-  else if(t<11){free=false;arc(9.9,1.1,60);fa=aTo(f,Bk);if(t<10.6){const a=aTo(Bk,f)+1.2*Bk.sd;mvx=Math.cos(a)*40;mvy=Math.sin(a)*40;}if(t>10.82)once('r3',()=>{proRoll(aTo(Bk,f)-.9*Bk.sd);sfx.bite();});}
-  else if(t<11.73){free=false;Bk.vx*=Math.exp(-5*dt);Bk.vy*=Math.exp(-5*dt);Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;faceB=aTo(Bk,f);fa=aTo(f,Bk);
+  else if(t<12){free=false;ring(58,90,Bk.sd);const ra=Math.atan2(mvy,mvx);fa=(t%.9)<.22?aTo(f,Bk):ra;   // running for it, a look back over the shoulder
+    const sw=Math.sin((t-7)*3.1),lag=38+10*Math.sin((t-7)*1.3)-Math.max(0,t-11)*14,sx=-Math.sin(ra),sy=Math.cos(ra);   // it snakes after him in long curves, left and right, closing in
+    fly(Bk,f.x-Math.cos(ra)*lag+sx*sw*30,f.y-Math.sin(ra)*lag+sy*sw*30,5,3.6);faceB=aTo(Bk,f)+sw*.5;}
+  else if(t<12.9){free=false;once('l1',()=>{C.ld=aTo(Bk,f);sfx.screech(0);});
+    if(t<12.45){Bk.vx=Math.cos(C.ld)*250;Bk.vy=Math.sin(C.ld)*250;}else{Bk.vx*=Math.exp(-5*dt);Bk.vy*=Math.exp(-5*dt);}Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;faceB=t<12.45?C.ld:aTo(Bk,f);biteB=t<12.6?clamp((t-12)/.5,0,.99):-1;zB=3;
+    if(t<12.6){const a=C.ld+Math.PI/2*Bk.sd;mvx=Math.cos(a)*80;mvy=Math.sin(a)*80;}fa=aTo(f,Bk);if(t>12.25)once('b1',()=>sfx.bite());}   // he walks out of the line of the bite
+  else if(t<14){free=false;arc(12.9,1.1,60);fa=aTo(f,Bk);if(t<13.6){const a=aTo(Bk,f)+1.2*Bk.sd;mvx=Math.cos(a)*40;mvy=Math.sin(a)*40;}if(t>13.82)once('r3',()=>{proRoll(aTo(Bk,f)-.9*Bk.sd);sfx.bite();});}
+  else if(t<14.73){free=false;Bk.vx*=Math.exp(-5*dt);Bk.vy*=Math.exp(-5*dt);Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;faceB=aTo(Bk,f);fa=aTo(f,Bk);
     if(!(f.rollT>0)){f.charging=true;f.charge=Math.min(1,(f.charge||0)+dt*3);const d=Math.hypot(Bk.x-f.x,Bk.y-f.y);if(d>24){mvx=(Bk.x-f.x)/d*95;mvy=(Bk.y-f.y)/d*95;}}
-    if(t>11.62)once('sw',()=>{f.charging=false;f.swingDir=1;f.nextDir=-1;f.swingPow=1;f.swingDur=.2;f.swingT=.2;f.swingAng=aTo(f,Bk);f.swingReach=34;sfx.whoosh();});}
+    if(t>14.62)once('sw',()=>{f.charging=false;f.swingDir=1;f.nextDir=-1;f.swingPow=1;f.swingDur=.2;f.swingT=.2;f.swingAng=aTo(f,Bk);f.swingReach=34;sfx.whoosh();});}
   else{once('hit',()=>{const a=aTo(f,Bk);Bk.vx=Math.cos(a)*300;Bk.vy=Math.sin(a)*300;Bk.hitF=.25;C.spin=.8;C.away=a;critPop(Bk.x,Bk.y,24);blood(Bk.x,Bk.y,22,26,Math.cos(a),Math.sin(a),120);sfx.hit();sfx.kick();sfx.screech(0);shake=Math.max(shake,8);toast('ฟาดเต็มแรง!');});
-    if(t<12.6){Bk.vx*=Math.exp(-3*dt);Bk.vy*=Math.exp(-3*dt);Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;}else fly(Bk,S.x+o.x*125+o.y*55,S.y+o.y*125-o.x*55,1.6,2.4);
+    if(t<15.6){Bk.vx*=Math.exp(-3*dt);Bk.vy*=Math.exp(-3*dt);Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;}else fly(Bk,S.x+o.x*125+o.y*55,S.y+o.y*125-o.x*55,1.6,2.4);
     if(C.spin>0){C.spin-=dt;faceB=C.away+C.spin*22;}else faceB=aTo(Bk,f);   // its head snaps round from the blow
     f.pantT=Math.max(f.pantT||0,2);f.breathPh=(f.breathPh||0)+dt*8;}
   if(Bk.hitF>0)Bk.hitF-=dt;
   if(free){const foc=t<3?(Math.hypot(A.x-f.x,A.y-f.y)<Math.hypot(Bk.x-f.x,Bk.y-f.y)?A:Bk):t<7?A:Bk,oth=foc===A?Bk:A;   // walking round and round, lamp on whichever is the threat, glancing back at the other
-    ring(30,t>=11.73?26:44,1);fa=aTo(f,foc);if((t%1.5)<.3&&!(t>5.5&&t<6.5))fa=aTo(f,oth);}
+    ring(30,t>=14.73?26:44,1);fa=aTo(f,foc);if((t%1.5)<.3&&!(t>5.5&&t<6.5))fa=aTo(f,oth);}
   proFifa(dt,fa,mvx,mvy);
   for(const e of npcs()){e.moveAmt=0;e.facing=angLerp(e.facing,aTo(e,f),dt*4);}
   selB(A);KRS.R.zoff=zA;rigTick(dt,biteA,faceA);selB(Bk);KRS.R.zoff=zB;rigTick(dt,biteB,faceB);
   const mx=(A.x+Bk.x)/2,my=(A.y+Bk.y)/2;C.cam={x:f.x+(mx-f.x)*.25,y:f.y+(my-f.y)*.25-8};
-  if(t>14.5)pro2Start();}
+  if(t>17.5)pro2Start();}
 /* ---- cutscene 2: แจ็คพอท at the gate · แพม and her burning stick · the thrown brand · ฟีฟ่า taken ---- */
 function pro2Start(){const C=N3,S=C.S,o=C.o,g=gatePos(),px=-o.y,py=o.x,P=player;C.scene=2;C.t=0;C.ev={};C.p='gate';C.pt=0;C.burn=0;C.log=null;C.D=null;C.scream=false;
   let best=null,bd=1e9;const ti=Math.floor(S.x/TS),tj=Math.floor(S.y/TS);
@@ -2174,7 +2177,7 @@ function updatePro2(dt){const C=N3,S=C.S,o=C.o,g=gatePos(),t=(C.t+=dt),A=BS[0],B
         if(t>C.to+.5){const x1=tr.x+u.x*11,y1=tr.y+u.y*11;C.hold=false;pam.thrust=.4;C.log={x0:pam.x,y0:pam.y,x1,y1,t:0,T:Math.max(.75,Math.hypot(x1-pam.x,y1-pam.y)/250)};sfx.whoosh();go('log');}}}}
   else if(C.p==='log'){const L=C.log;if(L){L.t+=dt;const k=Math.min(1,L.t/L.T);L.x=L.x0+(L.x1-L.x0)*k;L.y=L.y0+(L.y1-L.y0)*k;L.h=10+Math.sin(Math.PI*k)*50;camTo(L.x,L.y-L.h*.5,12);   // the camera rides the brand through the air
       plights.push({dyn:1,kind:'lantern',x:L.x,y:L.y,r:46,v:210,f:1,rays:24,seed:7});if(rnd()<dt*30)sparks.push({x:L.x,y:L.y,h:L.h,vx:(rnd()-.5)*14,vy:(rnd()-.5)*8,vh:-10,life:.4});
-      if(k>=1){C.log=null;C.burn=1;A.char=true;toast('ติดไฟ!');pamEmbers(A.x,A.y,0,-1,40);sfx.hit();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,6);go('kill');}}}
+      if(k>=1){C.log=null;C.burn=1;A.char=true;A.fire=1;A.wt=0;A.wa=null;toast('ติดไฟ!');sfx.screech(0);pamEmbers(A.x,A.y,0,-1,40);sfx.hit();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,6);go('kill');}}}
   else if(C.p==='kill'){camTo((P.x+A.x)/2,(P.y+A.y)/2-8,6);fa=aTo(P,A);const d=Math.hypot(A.x-P.x,A.y-P.y);
     if(!C.ev.sw){if(!(P.rollT>0)){P.charging=true;P.charge=Math.min(1,(P.charge||0)+dt*2);if(d>25){mvx=(A.x-P.x)/d*95;mvy=(A.y-P.y)/d*95;}}
       if((d<=27&&pt>.5)||pt>2.2)once('sw',()=>{C.ts=t;P.charging=false;P.swingDir=1;P.swingPow=1;P.swingDur=.2;P.swingT=.2;P.swingAng=fa;P.swingReach=34;sfx.whoosh();});}
@@ -2203,13 +2206,14 @@ function updatePro2(dt){const C=N3,S=C.S,o=C.o,g=gatePos(),t=(C.t+=dt),A=BS[0],B
     else if(C.p==='log'||C.p==='kill'){if(!C.ev.crash){once('da',()=>{C.dirA=aTo(A,tr);A.state='dash';A.glow=1;sfx.screech(0);});A.vx=Math.cos(C.dirA)*540;A.vy=Math.sin(C.dirA)*540;A.x+=A.vx*dt;A.y+=A.vy*dt;faceA=C.dirA;biteA=(pt*3)%1;
           if(pt>.03)once('rl',()=>proRoll(C.dirA+Math.PI/2));
           if(Math.hypot(A.x-tr.x,A.y-tr.y)<13||pt>.5)once('crash',()=>{A.vx=A.vy=0;A.x=tr.x+u.x*11;A.y=tr.y+u.y*11;A.state='miss';shakeTree(tr.idx,1.3);shake=Math.max(shake,8);sfx.kick();nz(.3,'bandpass',500,1500,.25,2);leafBurst(tr.x,tr.y,u.x,u.y,120);});}   // it rams the rubber tree
-        else{A.x=tr.x+u.x*11+(rnd()-.5)*(C.burn>0?1.6:.4);A.y=tr.y+u.y*11;faceA=aTo(A,tr)+Math.sin(t*20)*.3;}}
+        else if(C.burn>0){selB(A);faceA=krWrithe(A,dt,tr.x+u.x*13,tr.y+u.y*13);biteA=(t*4)%1;C.wr=true;}
+        else{A.x=tr.x+u.x*11+(rnd()-.5)*.4;A.y=tr.y+u.y*11;faceA=aTo(A,tr)+Math.sin(t*20)*.3;}}
     else{const k=C.blink0!=null;if(!k)fly(A,tr.x+u.x*150+Math.sin(t*1.3)*18,tr.y+u.y*150+Math.cos(t*1.7)*12,2,2.4);else{A.state='stare1';A.vx*=.86;A.vy*=.86;A.x+=A.vx*dt;A.y+=A.vy*dt;const r=4+9*Math.min(1,(t-C.blink0)/1.2);A.ph=(A.ph||0)+dt*r;A.glow=(A.ph%1)<.5?1:.12;}faceA=aTo(A,P);}
     if(C.p!=='ask'){const a=t*.7+Math.sin(t*.5)*1.2;fly(Bk,P.x+Math.cos(a)*150+o.x*60,P.y+Math.sin(a)*120+o.y*60,1.6,2);faceB=aTo(Bk,P);}
     if(C.p==='gate'||C.p==='pam'||C.p==='fetch'){const d=Math.hypot(C.f2.x-P.x,C.f2.y-P.y);if(d>3){mvx=(C.f2.x-P.x)/d*Math.min(80,d*4);mvy=(C.f2.y-P.y)/d*Math.min(80,d*4);}fa=aTo(P,A);}
     if(C.burn>0&&A){plights.push({dyn:1,kind:'lantern',x:A.x,y:A.y,r:70,v:Math.round(235*Math.min(1,C.burn)),f:1,rays:24,seed:5});for(let k=0;k<3;k++)if(rnd()<dt*40*C.burn)sparks.push({x:A.x+(rnd()-.5)*26,y:A.y+(rnd()-.5)*8,h:10+rnd()*44,vx:(rnd()-.5)*26,vy:(rnd()-.5)*10,vh:30+rnd()*50,life:.5+rnd()*.7});}
     proFifa(dt,fa,mvx,mvy);if(C.p==='ask')P.combat=0;
-    selB(A);KRS.R.zoff=A.state==='dash'?3:6;rigTick(dt,biteA,faceA);selB(Bk);KRS.R.zoff=Bk.state==='dash'?3:6;rigTick(dt,Bk.state==='dash'?(pt*3)%1:-1,faceB);}
+    selB(A);if(!(C.wr&&A.state!=='dead'&&C.burn>0))KRS.R.zoff=A.state==='dash'?3:6;A.fire=A.state==='dead'?Math.max(0,C.burn):1;rigTick(dt,biteA,faceA);selB(Bk);KRS.R.zoff=Bk.state==='dash'?3:6;rigTick(dt,Bk.state==='dash'?(pt*3)%1:-1,faceB);}
   for(const e of[praewa,C.p==='gate'?pam:null])if(e){e.moveAmt=0;e.facing=angLerp(e.facing,aTo(e,C.p==='gate'?jp:P),dt*4);}
   if(praewa)praewa.cry=C.scream?1:0;}
 /* ---- cutscene 3: she wakes from her nap by the fire — daytime, in colour ---- */
@@ -2238,6 +2242,14 @@ function updatePro3(dt){const C=N3,t=(C.t+=dt),pw=praewa;computeLights();updateF
   if(t>20.3)endPro();}
 function proBlaze(T){const A=BS[0],b=Math.min(1,N3.burn),x=A.x-camX,y=A.y*K-camY,c=octx;   // drawn over the charred thing itself: fire from the entrails to the top of its hair
   for(const[dx,dy,n,sp,H,sd,w]of[[0,14,4,2.6,16,11,1.6],[-5,2,5,2.4,22,3,1.8],[6,-4,5,2.4,24,7,1.8],[0,-14,7,2.6,30,5,2.2],[-6,-26,6,2.2,26,9,2],[5,-32,6,2.2,28,2,2],[0,-40,5,2,22,13,1.8]]){c.save();c.translate(x+dx,y+dy);flames(c,0,0,n,sp,H*b,T,sd,false,w);c.restore();}}
+const KRSENT=0xff020101;
+function krFire(T){const o=out32;for(const b of BS){if(!b.char||b.hidden)continue;const f=b.fire==null?1:b.fire,cx=Math.round(b.x-camX),cy=Math.round(b.y*K-camY),x0=Math.max(0,cx-50),x1=Math.min(vw-1,cx+50),y0=Math.max(0,cy-100),y1=Math.min(vh-1,cy+46);
+    for(let x=x0;x<=x1;x++){let heat=0;for(let y=y1;y>=y0;y--){const i=y*vw+x;
+        if(o[i]===KRSENT){heat=f;const hq=Math.sin((x>>1)*127.1+((y+T*46)>>1)*311.7+((T*9)|0)*17.3)*43758.5453,v=(.3+.42*(hq-Math.floor(hq))+.14*Math.sin(x*.7-T*9)+.14*Math.sin(y*.5+T*13))*1.25*f;o[i]=v>.8?PY[2]:v>.54?PO[2]:v>.34?PR[2]:BK;}   // the charred body itself, crawling with fire
+        else if(heat>0){heat-=.05+.045*(1+Math.sin(x*.9+T*9+y*.21))+.045*(1+Math.sin(y*.55+T*17-x*.37));if(heat>.62)o[i]=PY[2];else if(heat>.36)o[i]=PO[2];else if(heat>.1)o[i]=PR[2];}}}}}   // tongues licking up off every part of it
+function krWrithe(b,dt,ax,ay){b.wt=(b.wt||0)+dt;const w=b.wt;b.x=ax+Math.sin(w*31)*3.2+Math.sin(w*13.7)*4;b.y=ay+Math.cos(w*27)*2.4+Math.sin(w*17.3)*3;b.vx=Math.cos(w*31)*90;b.vy=Math.sin(w*23)*70;   // jerking, arching, curling in on itself
+  KRS.R.zoff=3.5+Math.abs(Math.sin(w*15))*5;return(b.wa==null?(b.wa=KRS.R.yaw):b.wa)+Math.sin(w*19)*1.5+Math.sin(w*7.3)*.9;}
+function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
 function proBig(e,T,night){const s=Math.min(vh*.62,vw*.9)/16,X=Math.round(vw/2),Y=Math.round(vh*.5+7*s);   // the scream: the same close-up at night and by day
   if(night){lctx.save();lctx.globalCompositeOperation='multiply';lctx.fillStyle=gray(70);lctx.fillRect(0,0,vw,vh);lctx.restore();}
   const c=cuClone(e,Math.PI/2);c.cry=1;c.pantT=0;cuBig(c,X,Y,s,night?215:240,null,T);}
@@ -2451,6 +2463,7 @@ function bossHit1(h,a,R0,arc,kick){const b=B;if(!b||h!==player||!N3||N3.ph!=='fi
   const hz=KRS.R.hz*.75/K;for(let k=0;k<10;k++){const an=Math.atan2(uy,ux)+(rnd()-.5)*1.8,s=40+rnd()*80;particles.push({x:b.x,y:b.y,vx:Math.cos(an)*s,vy:Math.sin(an)*s,h:hz,vh:20+rnd()*50});}
   sfx.hit();shake=Math.max(shake,3);if(performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   if(b.hp<=0){killBoss();return true;}
+  if(hero==='pam'&&h.torch>0&&!kick&&!(b.burnCd>0)&&b.state!=='burn'&&!b.teth){krIgnite(b);return true;}
   if(!b.rage&&b.hp<=b.hpMax*.3){b.rage=true;b.cd2=Math.min(b.cd2,2);toast('กระสือคลั่ง!! ระวังท่าพุ่งส่าย');sfx.screech();shake=Math.max(shake,5);}
   if(['stare1','stare2','dash','charge'].includes(b.state)){if(rnd()<.5)toast('หยุดมันไม่ได้! ต้องกลิ้งหลบเท่านั้น');}   // the blinking lunge can't be beaten back
   else if(b.state!=='tangle'&&++b.hits>=2&&!b.teth){b.hits=0;b.state='flee';b.t=0;b.fa=Math.atan2(b.y-player.y,b.x-player.x);b.side=rnd()<.5?-1:1;b.angry=7;sfx.screech((b.x-player.x)/200);toast('กระสือหนีไป… ระวังข้างหลัง!');}
@@ -2465,7 +2478,9 @@ function killBoss(){const b=B;b.state='dead';b.t=0;b.hp=0;if(b.teth==='player')p
   if(!all){toast('ฆ่ากระสือได้ 1 ตัว! เหลืออีก '+liveBS().length);return;}
   toast(BS.length>1?'กำจัดกระสือหมดแล้ว!!':'กำจัดกระสือได้แล้ว!!');N3.cheer={t:0,next:.5,pool:CHEER.slice()};for(const e of[player,...npcs()])e.cheerT=8;}
 const CHEER=['เย้','เห้ย','อะหื่ออออ','มันตายละเบาะ','ป้าด','คึเฮ็ดเป็น','ถืกกัดบ่?','เจ็บบ่?','งึด','ตาย้านคัก','เฮ็ดจังได่สิกล้านอนบาดหนิ','กินได้ยุเบาะกระสือหนิ','เอามาปิ้งๆ'];
-function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.state==='dead'){b.vx*=.9;b.vy*=.9;rigTick(dt,-1,null);return;}
+function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.burnCd>0)b.burnCd-=dt;if(b.state==='dead'){b.vx*=.9;b.vy*=.9;rigTick(dt,-1,null);return;}
+  if(b.state==='burn'){const fa=krWrithe(b,dt,b.bx,b.by);b.fire=b.t>2.5?Math.max(0,(3-b.t)/.5):1;if(rnd()<dt*30)sparks.push({x:b.x+(rnd()-.5)*26,y:b.y+(rnd()-.5)*8,h:10+rnd()*44,vx:(rnd()-.5)*26,vy:(rnd()-.5)*10,vh:30+rnd()*50,life:.5+rnd()*.7});
+    rigTick(dt,(b.t*4)%1,fa);if(b.t>=3){b.state='roam';b.t=0;b.rt=0;b.char=false;b.burnCd=10;b.vx=b.vy=0;KRS.R.zoff=6;b.angry=5;sfx.screech();}return;}   // on fire: three seconds thrashing and curling, stunned
   if(b.state==='carry'){rigTick(dt,-1,null);return;}
   const dx=P.x-b.x,dy=P.y-b.y,d=Math.hypot(dx,dy)||1,ang=Math.atan2(dy,dx),T=performance.now()/1000;
   b.cd1-=dt;b.cd2-=dt;b.biteCd-=dt;b.cdS-=dt;if(b.q>0)b.q-=dt;if(b.angry>0)b.angry-=dt;if(b.hitF>0)b.hitF-=dt;
@@ -4719,7 +4734,7 @@ function frame(now){
   const frz=DF&&state==='play';if(DF){DF.t+=rdt;if(DF.t>3.2)DF=null;}
   if(frz){}else if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else if(state==='swap')updateSwap(dt);else computeLights();
   if(state!=='paused'&&state!=='layout'&&!frz)updateCommon(dt);
-  if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);CUB=null;if(state==='n3cine'&&N3&&N3.cu)cuDraw(T);if(state==='n3cine'&&N3&&N3.step==='pro')proDraw(T);composite();{const ey=E5&&E5.el?E5.el.y:1e9;for(const b of BS)if(!b.hidden&&b.y<=ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>BK))):KRMAP);e5Blit(out32);for(const b of BS)if(!b.hidden&&b.y>ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>BK))):KRMAP);}postFX();octx.putImageData(outImg,0,0);if(state==='n3cine'&&N3&&N3.step==='pro'&&N3.scene===2&&N3.burn>0&&BS[0]&&!BS[0].hidden)proBlaze(T);}
+  if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);CUB=null;if(state==='n3cine'&&N3&&N3.cu)cuDraw(T);if(state==='n3cine'&&N3&&N3.step==='pro')proDraw(T);composite();{const ey=E5&&E5.el?E5.el.y:1e9;for(const b of BS)if(!b.hidden&&b.y<=ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>KRSENT))):KRMAP);e5Blit(out32);for(const b of BS)if(!b.hidden&&b.y>ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>KRSENT))):KRMAP);}if(BS.length)krFire(T);postFX();octx.putImageData(outImg,0,0);}
   drawUI(dt);drawDF();
   requestAnimationFrame(frame);
 }
