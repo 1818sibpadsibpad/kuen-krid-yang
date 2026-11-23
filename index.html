@@ -161,7 +161,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v10.2</div>
+  <div class="ver">v10.3</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -169,7 +169,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.2</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.3</h3><ul>
+      <li>กระสือเลือดต่ำกว่า 30%: คัตซีนหอบ–คำราม "คุ้มคลั่ง ความเร็ว2เท่า!!" แล้วพุ่งหนีไปตั้งหลัก 100 เมตร ชนกิ่งไม้ใหญ่แตกกระจาย จากนั้นเร็วขึ้น 2 เท่าทุกอย่าง แสงแดงกว้างขึ้น 2 เท่า ติดไฟแค่ 1 วิแล้วสะบัดออก</li>
       <li>กระสือติดไฟได้แค่ 5 วิ ระหว่างติดไฟโดนดาเมจ ×2</li>
       <li>เข้าใกล้ศพ 1 เมตร จะมีปุ่มวิบวับให้เลือกหยิบอาวุธล่าสุดของศพมาใช้</li>
       <li>คัตซีนคืนที่ 6: ซอมบี้เหมือนในเกม · จบด้วยการสะบัดซากครึ่งบนแล้วเหวี่ยงลอยไกล ไถพื้น 10 เมตรไปหยุดหน้ารั้ว คลานจะเข้าบ้าน แพมเอาไฟมาเผา</li>
@@ -682,7 +683,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='10.2';
+let useBot=true,bot=null,hero='fifa';const VERSION='10.3';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -2369,7 +2370,7 @@ function krFire(T){const o=out32;for(const b of BS){if(!b.char||b.hidden)continu
         else if(heat>0){heat-=.05+.045*(1+Math.sin(x*.9+T*9+y*.21))+.045*(1+Math.sin(y*.55+T*17-x*.37));if(heat>.62)o[i]=PY[2];else if(heat>.36)o[i]=PO[2];else if(heat>.1)o[i]=PR[2];}}}}}   // tongues licking up off every part of it
 function krWrithe(b,dt,ax,ay){b.wt=(b.wt||0)+dt;const w=b.wt;b.x=ax+Math.sin(w*31)*3.2+Math.sin(w*13.7)*4;b.y=ay+Math.cos(w*27)*2.4+Math.sin(w*17.3)*3;b.vx=Math.cos(w*31)*90;b.vy=Math.sin(w*23)*70;   // jerking, arching, curling in on itself
   KRS.R.zoff=3.5+Math.abs(Math.sin(w*15))*5;return(b.wa==null?(b.wa=KRS.R.yaw):b.wa)+Math.sin(w*19)*1.5+Math.sin(w*7.3)*.9;}
-function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.burnT=5;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
+function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.burnT=b.frenzy?2:5;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
 function proWake(T){const C=N3,tw=C.t,fr=cuBand(),fh=vh*fr,y0=(vh-fh)/2,s=fh*.52/18,cx=vw/2,gy=y0+fh*.5,L=236;   // daytime, the same wide shot as the night-3 campfire
   sctx.fillStyle='rgb(150,196,226)';sctx.fillRect(0,0,vw,vh);lctx.fillStyle=gray(L);lctx.fillRect(0,0,vw,vh);
   sctx.fillStyle='rgb(74,132,66)';sctx.fillRect(0,y0,vw,fh*.2);for(let x=0;x<vw;x+=3){const h=fh*(.03+.05*Math.abs(Math.sin(x*.37)+Math.sin(x*.11)));sctx.fillRect(x,y0+fh*.2,3,h);}   // the canopy of the plantation
@@ -2489,7 +2490,9 @@ function updateN3Play(dt){
   if(N3.ph==='pre6'){if(state==='play'&&!(NC&&NC.t<2.2)){NC=null;n6Cut();}return;}
   if(N3.ph==='count'){N3.t-=dt;const s=Math.ceil(N3.t);if(s<N3.beep){N3.beep=s;if(s<=10&&s>0)tn('square',s<=3?1200:900,s<=3?1200:900,.07,.12);}
     if(N3.t<=0)startCine();return;}
-  for(const b of BS.slice()){if(state!=='play'&&state!=='n3cine')break;selB(b);updateBoss(dt);}
+  for(const b of BS.slice()){if(state!=='play'&&state!=='n3cine')break;if(N3.step==='frz')break;selB(b);
+    if(!b.frenzy&&state==='play'&&N3.ph==='fight'&&b.hp>0&&b.hp<=b.hpMax*.3&&!['dead','carry','intro'].includes(b.state)){startFrenzy(b);break;}   // under 30%: it goes berserk
+    updateBoss(dt*(b.frenzy?2:1));}
   if(N3.cheer){const C=N3.cheer;C.t+=dt;if(C.t>=C.next&&C.pool.length){C.next=C.t+.7+rnd()*.6;const who=[player,...npcs()].filter(e=>!e.say);if(who.length){const e=who[(rnd()*who.length)|0];sayE(e,C.pool.splice((rnd()*C.pool.length)|0,1)[0]);}}if(C.t>12)N3.cheer=null;}
   if(N3.ph==='fight'){N3.lineT-=dt;if(N3.lineT<=0){N3.lineT=2.2+rnd()*1.6;const H=BS.some(b=>b.teth&&b.teth!=='player'&&b.state!=='dead')?npcs():[];if(H.length){const e=H[(rnd()*H.length)|0];sayE(e,HOLD_LINES[(rnd()*HOLD_LINES.length)|0]);}}}
 }
@@ -2497,7 +2500,7 @@ function updateN3Play(dt){
 function startCine(){endGrip();state='n3cine';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.swingT=0;player.kickT=0;player.hidden=false;player.vx=player.vy=0;
   if(player.drag)toggleDrag();if(player.snakeBite){player.snakeBite.st='idle';player.snakeBite=null;}
   const cand=npcs();const H=cand[(rnd()*cand.length)|0]||null;N3.ph='cine';N3.step='fetch';N3.t=0;N3.H=H;N3.stashed=false;N3.cam=null;N3.skips=0;
-  computeFlow(player.x,player.y);if(H){sayE(H,HELP_LINE[npcName(H)]);H.sit=false;}
+  computeFlow(player.x,player.y);if(H){sayE(H,HELP_LINE[npcName(H)]||HELP_LINE[H.who==='pw'?'praewa':H.who]||HELP_LINE.fifa);H.sit=false;}
   for(const z of zombies)z.state='wander';tn('sine',300,600,.25,.15);}
 function seatSpots(){const F=fireP,list=[player,...npcs()],out=[],pa=postPos?Math.atan2(postPos.y-F.y,postPos.x-F.x):99,H=Math.PI/2;
   const cand=[H,H-1.15,H+1.15,H-2.3,H+2.3,-H,0,Math.PI].filter(a=>pa===99||Math.abs(angDiff(a,pa))>.7);
@@ -2531,6 +2534,7 @@ function updateCine(dt){
   if(N3&&N3.step==='pro'){updatePro(dt);return;}
   if(N3&&N3.step==='tutcam'){updateTutCam(dt);return;}
   if(N3&&N3.step==='n6'){updateN6Cine(dt);return;}
+  if(N3&&N3.step==='frz'){updateFrenzy(dt);return;}
   const C=N3;C.t+=dt;computeLights();updateFire(dt);if(fireP)fireP.F=Math.max(fireP.F,60);
   updateBot(dt,'hold');updatePraewa(dt,'cut');updatePam(dt,'cut');updateSnakes(dt);
   const H=C.H,F=fireP;
@@ -2560,7 +2564,7 @@ function updateCine(dt){
     if(C.t>12.9)startIntro();}
   else if(C.step==='intro')updateIntro(dt);
 }
-function skipCine(){if(state!=='n3cine'||!N3)return;if(e5Cine()){e5Skip();return;}tn('square',900,900,.04,.08);if(N3.step==='pro'){proSkip();return;}if(N3.step==='tutcam'){tutCamEnd();return;}if(N3.step==='n6'){n6Begin();return;}
+function skipCine(){if(state!=='n3cine'||!N3)return;if(e5Cine()){e5Skip();return;}tn('square',900,900,.04,.08);if(N3.step==='pro'){proSkip();return;}if(N3.step==='tutcam'){tutCamEnd();return;}if(N3.step==='n6'){n6Begin();return;}if(N3.step==='frz'){frenzyEnd();return;}
   if(N3.step!=='intro'){doStash();seatAll();if(fireP)fireP.F=Math.max(fireP.F,60);for(const e of[player,...npcs()])e.say=null;startIntro();}
   else beginFight();}
 function startIntro(){const C=N3;C.step='intro';C.t=0;C.cu=null;const g=gatePos(),o=gateOut();seatAll();const gp=gatePos();for(const e of[player,...npcs()])e.facing=Math.atan2(gp.y-e.y,gp.x-e.x);
@@ -2621,6 +2625,47 @@ function rigTick(dt,biteT,faceA){const b=B,T=performance.now()/1000,R=KRS.R;
     else{const br=b.brCd<=0&&sv>40&&onBranch(b,4);if(br){b.brCd=.8;bigDamage(br,1,b.vx/sv,b.vy/sv,1.2);}}}
   KRS.update(dt,T,b.x,b.y,b.vx,b.vy,biteT,faceA);
   const lp=KRS.lung();KRL={x:lp[0],y:lp[1],z:lp[2],v:b.state==='dead'||b.hidden?0:b.glow*(b.state==='carry'?clamp(1-(R.hz-26)/50,0,1):1)};b.krl=KRL;}
+/* ---------- under 30%: panting, a roar, "คุ้มคลั่ง ความเร็ว2เท่า!!", and it bolts off to regroup 100 m away ---------- */
+function startFrenzy(b){selB(b);b.frenzy=true;b.rage=true;if(b.teth==='player')player.holdTail=false;b.teth=null;b.taut=0;b.burnT=0;b.char=false;b.fire=1;b.state='intro';b.t=0;b.vx=b.vy=0;b.q=0;b.hitF=0;KRS.R.zoff=6;
+  const P=player;let S=null;   // where it regroups: 100 m from you, off to the right if the map allows
+  for(const a of[0,.4,-.4,.8,-.8,1.2,-1.2,1.6,-1.6,2.2,-2.2,Math.PI]){const x=P.x+Math.cos(a)*800,y=P.y+Math.sin(a)*800;if(x>40&&y>40&&x<MW*TS-40&&y<MH*TS-40&&Math.hypot(x-home.cx,y-home.cy)>150){S=openSpot(x,y,30);break;}}
+  if(!S)S=openSpot(clamp(P.x+800,40,MW*TS-40),clamp(P.y,40,MH*TS-40),30);
+  const dl=Math.hypot(S.x-P.x,S.y-P.y)||1,u={x:(S.x-P.x)/dl,y:(S.y-P.y)/dl},Q=openSpot(S.x-u.x*150,S.y-u.y*150,20);
+  bigBranches=bigBranches.filter(q=>Math.hypot(q.x-Q.x,q.y-Q.y)>60);let br;for(let k=0;k<40;k++){br=makeBig(Q.x,Q.y);if(br.L>62)break;}br.a=Math.atan2(u.x,-u.y);br.hp=999;br.dmg=0;bigBranches.push(br);   // a big bough lying right across its way
+  N3.fz={b,t:0,p:'pant',pt:0,S,u,Q,br,step0:N3.step,ev:{}};N3.step='frz';N3.cam={x:b.x,y:b.y-14};state='n3cine';
+  joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};P.charging=false;P.swingT=0;P.kickT=0;P.vx=P.vy=0;P.moveAmt=0;if(P.drag)toggleDrag();
+  tn('sine',70,50,1.5,.3);}
+function updateFrenzy(dt){const C=N3,F=C.fz,b=F.b,P=player;selB(b);F.t+=dt;F.pt+=dt;const pt=F.pt,T=performance.now()/1000;
+  computeLights();updateFire(dt);updateBot(dt,'hold');updatePraewa(dt,'cut');updatePam(dt,'cut');
+  const once=(k,fn)=>{if(!F.ev[k]){F.ev[k]=1;fn();}},go=p=>{F.p=p;F.pt=0;},q=1-Math.exp(-dt*5),camTo=(x,y)=>{C.cam={x:C.cam.x+(x-C.cam.x)*q,y:C.cam.y+(y-C.cam.y)*q};},fa=Math.atan2(P.y-b.y,P.x-b.x);
+  if(F.p==='pant'){camTo(b.x,b.y-14);b.vx*=.9;b.vy*=.9;b.glow=(pt*1.6)%1<.55?1:.2;   // heaving for breath, its light pulsing slowly
+    const br=(pt*1.6)%1;KRS.R.zoff=6+Math.sin(br*Math.PI)*2.5;if(br<dt*1.6+.001)nz(.35,'bandpass',300,160,.14,1.2);
+    rigTick(dt,br<.5?br*.4:-1,fa);if(pt>2.6){go('roar');sfx.screech(0);tn('sawtooth',90,260,1.6,.12);nz(1.6,'bandpass',500,1400,.3,1.5);}}
+  else if(F.p==='roar'){camTo(b.x,b.y-14);const k=Math.min(1,pt/1.8),hz=6+k*16;b.glow=(pt*hz)%1<.5?1:.15;   // a roar, shaking all over, the light flickering faster and faster
+    b.x+=(rnd()-.5)*2.4;b.y+=(rnd()-.5)*1.4;shake=Math.max(shake,3+k*5);if(pt>.3)once('txt',()=>{F.txt=F.t;sfx.screech(0);});
+    rigTick(dt,.2+Math.sin(pt*40)*.03,fa+Math.sin(pt*50)*.12);if(pt>2){go('bolt');b.glow=1;sfx.whoosh();tn('sawtooth',400,1500,.5,.08);}}
+  else if(F.p==='bolt'){b.vx=F.u.x*950;b.vy=F.u.y*950;b.x+=b.vx*dt;b.y+=b.vy*dt;b.glow=1;rigTick(dt,-1,Math.atan2(F.u.y,F.u.x));   // gone out of the frame in a blink
+    if(pt>.7){go('huh');F.q=F.t;b.hidden=true;tn('sine',520,700,.12,.1);}}
+  else if(F.p==='huh'){camTo(P.x,P.y-10);if(pt>1.7){go('smash');b.hidden=false;b.x=F.Q.x-F.u.x*230;b.y=F.Q.y-F.u.y*230;b.rig.init(b.x,b.y);KRS.R.zoff=6;C.cam={x:F.Q.x,y:F.Q.y-12};}}   // you: ???
+  else if(F.p==='smash'){plights.push({dyn:1,kind:'kr',x:F.Q.x,y:F.Q.y+2,r:80,v:185,f:1,rays:28,seed:3});computeLights();   // enough light left behind to watch the pieces come down
+    b.vx=F.u.x*700;b.vy=F.u.y*700;b.x+=b.vx*dt;b.y+=b.vy*dt;b.glow=1;rigTick(dt,-1,Math.atan2(F.u.y,F.u.x));
+    if(!F.hit&&(b.x-F.Q.x)*F.u.x+(b.y-F.Q.y)*F.u.y>-6){F.hit=true;F.ht=pt;F.hr=0;const n0=flyWood.length;   // straight through the big bough: it bursts, the pieces billow up and fall in slow motion
+      if(bigBranches.includes(F.br))smashBranch(F.br,F.u.x,F.u.y,1.6);for(let k=n0;k<flyWood.length;k++){flyWood[k].vh*=1.7;flyWood[k].vx*=.7;flyWood[k].vy*=.7;}
+      for(let k=0;k<70;k++){const a=rnd()*TAU,v=10+rnd()*60;sparks.push({x:F.Q.x+(rnd()-.5)*40,y:F.Q.y+(rnd()-.5)*24,h:3+rnd()*8,vx:Math.cos(a)*v+F.u.x*30,vy:Math.sin(a)*v*.6+F.u.y*30,vh:70+rnd()*150,life:1.2+rnd()*1.2});}
+      for(let k=-2;k<=2;k++)dustPuff(F.Q.x+k*10,F.Q.y,8,F.u.x,F.u.y);shake=Math.max(shake,10);sfx.kick();sfx.hit();nz(.6,'bandpass',900,200,.4,1);}
+    if(F.hit){F.hr+=dt;if(pt>F.ht+.06&&F.hr<.62)slowT=.32;if(F.hr>.95)frenzyEnd();}else if(pt>2)frenzyEnd();}}
+function frenzyEnd(){const C=N3,F=C.fz;if(!F)return;const b=F.b;selB(b);if(bigBranches.includes(F.br)&&!F.hit)smashBranch(F.br,F.u.x,F.u.y,1.6);slowT=0;
+  b.hidden=false;b.x=F.S.x;b.y=F.S.y;b.vx=b.vy=0;b.rig.init(b.x,b.y);KRS.R.zoff=6;b.state='roam';b.t=0;b.rt=0;b.wp=null;b.glow=1;b.cd1=2;b.cd2=2;b.cdS=5;b.biteCd=1;b.hits=0;
+  C.step=F.step0||null;C.fz=null;C.cam=null;state='play';toast('กระสือคุ้มคลั่ง!! ความเร็ว 2 เท่า');}
+function krBar(B,bi,s){const w=Math.min(230*s,SWc*.6),x0=SWc/2-w/2,y0=(55+bi*17)*s,bh=12*s,f=Math.max(0,B.hp/B.hpMax),fz=B.frenzy&&B.state!=='dead',bl=fz&&((performance.now()/55)|0)%2;
+  u.save();if(fz){u.shadowColor='#ff4040';u.shadowBlur=(8+(bl?10:0))*s;}u.fillStyle=fz?'#fff':BG;u.fillRect(x0-2,y0-2,w+4,bh+4);u.restore();u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,bh);u.fillStyle=B.hitF>0?'#fff':fz?(bl?'#ff8a70':'#ff2a2a'):'#d01c22';u.fillRect(x0,y0,w*f,bh);   // berserk: the bar burns bright and flickers
+  if(fz){u.save();u.font=`900 ${10*s}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineJoin='round';u.lineWidth=3*s;u.strokeStyle='#000';u.strokeText('คุ้มคลั่ง ความเร็ว2เท่า!!',SWc/2,y0+bh/2+1);u.fillStyle='#fff';u.fillText('คุ้มคลั่ง ความเร็ว2เท่า!!',SWc/2,y0+bh/2+1);u.restore();}
+  else uiText(BS.length>1?'กระสือ '+(bi+1):'กระสือ',SWc/2,y0+bh/2,9*s,'center',FG);}
+function frenzyUI(s){const C=N3,F=C.fz,bar=SHc*.11,sb=skipBox();u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle=FG;u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้าม ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',BG);
+  if(F.txt!=null){const a=F.t-F.txt,k=Math.min(1,a/.18),sz=(30+(1-k)*26)*s,jx=(Math.random()-.5)*4*s,jy=(Math.random()-.5)*3*s,y=SHc*.3;   // the words slam in
+    if(a<2.7){u.save();u.font=`900 ${sz}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineJoin='round';u.lineWidth=7*s;u.strokeStyle='#000';u.strokeText('คุ้มคลั่ง ความเร็ว2เท่า!!',SWc/2+jx,y+jy);u.fillStyle=((performance.now()/70)|0)%2?'#ff2a2a':'#fff';u.fillText('คุ้มคลั่ง ความเร็ว2เท่า!!',SWc/2+jx,y+jy);u.restore();}
+    BS.forEach((B,bi)=>{if(B===F.b)krBar(B,bi,s);});}
+  if(F.p==='huh'){const hx=(player.x-camX)*P,hy=(player.y*K-camY-30)*P+Math.sin(F.pt*7)*2*s;u.save();u.font=`900 ${28*s}px system-ui,sans-serif`;u.textAlign='center';u.lineJoin='round';u.lineWidth=5*s;u.strokeStyle=BG;u.strokeText('???',hx,hy);u.fillStyle='#ffd27a';u.fillText('???',hx,hy);u.restore();}}
 function bossGrab(){if(player.rollT>0||state!=='play'||DEMO)return false;const b=B;state='dying';death={kr:true,boss:B,t:0,x:player.x,y:player.y,blood:0,crunch:.3,shown:false};
   dropL={x:player.x+3,y:player.y+24,a:-Math.PI/2-.12,av:0,on:true};if(blocksLightAt(dropL.x,dropL.y)){dropL.x=player.x;dropL.y=player.y;}
   b.state='carry';b.t=0;b.vx=b.vy=0;player.charging=false;player.swingT=0;player.kickT=0;player.holdTail=false;joy.active=false;aimT.active=false;joyV={x:0,y:0};
@@ -2639,7 +2684,6 @@ function bossHit1(h,a,R0,arc,kick){const b=B;if(!b||h!==player||!N3||N3.ph!=='fi
   sfx.hit();shake=Math.max(shake,3);if(performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   if(b.hp<=0){killBoss();return true;}
   if(hero==='pam'&&h.torch>0&&!kick&&!(b.burnCd>0)&&b.state!=='burn'&&!b.teth){krIgnite(b);return true;}
-  if(!b.rage&&b.hp<=b.hpMax*.3){b.rage=true;b.cd2=Math.min(b.cd2,2);toast('กระสือคลั่ง!! ระวังท่าพุ่งส่าย');sfx.screech();shake=Math.max(shake,5);}
   if(['stare1','stare2','dash','charge'].includes(b.state)){if(rnd()<.5)toast('หยุดมันไม่ได้! ต้องกลิ้งหลบเท่านั้น');}   // the blinking lunge can't be beaten back
   else if(b.state!=='tangle'&&++b.hits>=2&&!b.teth){b.hits=0;b.state='flee';b.t=0;b.fa=Math.atan2(b.y-player.y,b.x-player.x);b.side=rnd()<.5?-1:1;b.angry=7;sfx.screech((b.x-player.x)/200);toast('กระสือหนีไป… ระวังข้างหลัง!');}
   else if(b.state!=='tangle'){const sd=rnd()<.5?-1:1,f=kick?2.7:2;b.state='knock';b.t=0;b.vx=(ux*150-uy*sd*130)*f;b.vy=(uy*150+ux*sd*130)*f;b.angry=7;b.glow=1;sfx.screech((b.x-player.x)/200);
@@ -2656,7 +2700,8 @@ const CHEER=['เย้','เห้ย','อะหื่ออออ','มัน
 function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.burnCd>0)b.burnCd-=dt;if(b.state==='dead'){b.vx*=.9;b.vy*=.9;rigTick(dt,-1,null);return;}
   if(b.burnT>0){b.burnT-=dt;b.fire=b.burnT<.5?Math.max(0,b.burnT/.5):1;if(b.burnT<=0){b.burnT=0;b.char=false;b.fire=1;}}   // it burns for 5 s in all
   if(b.state==='burn'){const fa=krWrithe(b,dt,b.bx,b.by);if(rnd()<dt*30)sparks.push({x:b.x+(rnd()-.5)*26,y:b.y+(rnd()-.5)*8,h:10+rnd()*44,vx:(rnd()-.5)*26,vy:(rnd()-.5)*10,vh:30+rnd()*50,life:.5+rnd()*.7});
-    rigTick(dt,(b.t*4)%1,fa);if(b.t>=3){b.state='roam';b.t=0;b.rt=0;b.burnCd=10;b.vx=b.vy=0;KRS.R.zoff=6;b.angry=5;sfx.screech();}return;}   // on fire: three seconds thrashing and curling, stunned
+    rigTick(dt,(b.t*4)%1,fa);if(b.frenzy&&b.t>=2){b.burnT=0;b.char=false;b.fire=1;for(let k=0;k<40;k++){const a=rnd()*TAU,v=60+rnd()*120;sparks.push({x:b.x,y:b.y,h:14+rnd()*30,vx:Math.cos(a)*v,vy:Math.sin(a)*v*.6,vh:20+rnd()*70,life:.5+rnd()*.6});}sfx.whoosh();}   // berserk: it shakes the fire off after a second
+    if(b.t>=(b.frenzy?2:3)){b.state='roam';b.t=0;b.rt=0;b.burnCd=10;b.vx=b.vy=0;KRS.R.zoff=6;b.angry=5;sfx.screech();}return;}   // on fire: three seconds thrashing and curling, stunned
   if(b.state==='carry'){rigTick(dt,-1,null);return;}
   const dx=P.x-b.x,dy=P.y-b.y,d=Math.hypot(dx,dy)||1,ang=Math.atan2(dy,dx),T=performance.now()/1000;
   b.cd1-=dt;b.cd2-=dt;b.biteCd-=dt;b.cdS-=dt;if(b.q>0)b.q-=dt;if(b.angry>0)b.angry-=dt;if(b.hitF>0)b.hitF-=dt;
@@ -3490,7 +3535,7 @@ function bunchFireHi(s,l,T){const F=fireP;if(!F||F.F<=0||!postPos||stock<=0)retu
     c.globalAlpha=clamp(fl,0,1);c.fillStyle=lp?'#fff':'rgb(255,246,200)';for(let r=0;r<4;r+=2){const gx=side*(3.6+((r*3)%2)),gy=-5+r*3.2+.4;if(Math.sin(T*7+r*2.3+F.seed)>.2)c.fillRect(gx-.5,gy-.5,1,1);}
     c.restore();}}
 const RMC=document.createElement('canvas');RMC.width=136;RMC.height=120;const RMX=RMC.getContext('2d');
-function krShadows(c){const L=KRL;if(!L||L.v<.05)return;const R=135;c.save();c.fillStyle='#000';const S=(wx,wy)=>[wx-camX,wy*K-camY];
+function krShadows(c){const L=KRL;if(!L||L.v<.05)return;const R=135*KRM();c.save();c.fillStyle='#000';const S=(wx,wy)=>[wx-camX,wy*K-camY];
   const cast=(x,y,w,len0,k=1,sp=1.8)=>{const dx=x-L.x,dy=y-L.y,d=Math.hypot(dx,dy);if(d<6||d>R)return;const ux=dx/d,uy=dy/d,Ln=len0+d*.55,px=-uy,py=ux;c.globalAlpha=Math.min(1,.85*k*L.v*Math.pow(1-d/R,.5));
     const a=S(x+px*w,y+py*w),b=S(x+ux*Ln+px*w*sp,y+uy*Ln+py*w*sp),e=S(x+ux*Ln-px*w*sp,y+uy*Ln-py*w*sp),f=S(x-px*w,y-py*w);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.lineTo(e[0],e[1]);c.lineTo(f[0],f[1]);c.closePath();c.fill();};
   for(const e of[player,bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null])if(e&&!e.up&&!e.st&&!e.hidden&&!e.gone)cast(e.x,e.y,e===praewa?1.8:2.8,16);
@@ -3526,7 +3571,7 @@ const KrasueLight = (() => {
   function begin(lung, t, glowOn, trees) {
     const lx = lung[0], ly = lung[1], lz = Math.max(15, lung[2] + 6);   // ยกจุดแสงขึ้นเล็กน้อยให้ส่องพื้นได้กว้าง
     const beat = 1 + 0.15 * Math.max(0, Math.sin(t * 5.7)) ** 8;      // กระพือตามหัวใจเต้น
-    const R = glowOn ? 120 : 48, I = (glowOn ? 1.45 : 0.8) * beat;
+    const R = (glowOn ? 120 : 48) * KRM(), I = (glowOn ? 1.45 : 0.8) * beat;
     // แผนที่เงา: สำหรับทุกทิศรอบจุดแสง เก็บระยะของลำต้นที่ใกล้ที่สุดที่บังทิศนั้น
     blk.fill(1e9);
     if (trees) for (const tr of trees) {
@@ -3600,7 +3645,8 @@ const KMC=document.createElement('canvas'),KMX=KMC.getContext('2d',{willReadFreq
 let KL=null;
 // how strongly the krasue's light falls on an upright surface facing it, straight from KrasueLight.shade
 function klv(x,y,z){if(!KL)return 0;const dx=KL.lx-x,dy=KL.ly-y,dh=Math.hypot(dx,dy)||1,o=KrasueLight.shade(KL,x,y,z,dx/dh,dy/dh,0,.5);return Math.min(1,KrasueLight.tone(o.r)+o.sr);}
-function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)return;const glowOn=Lk.v>.5,RR=glowOn?128:56,trees=[];
+function KRM(){return B&&B.frenzy&&B.state!=='dead'?2:1;}
+function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)return;const glowOn=Lk.v>.5,RR=(glowOn?128:56)*KRM(),trees=[];
   for(let j=Math.floor((Lk.y-RR)/TS);j<=Math.floor((Lk.y+RR)/TS);j++)for(let i=Math.floor((Lk.x-RR)/TS);i<=Math.floor((Lk.x+RR)/TS);i++)if(tAt(i,j)===TT)trees.push({x:i*TS+8,y:j*TS+8,r:RT});
   const L=KrasueLight.begin([Lk.x,Lk.y,Lk.z],T,glowOn,trees),Rr=Math.sqrt(L.R2),Rc2=L.R2;KL=L;
   const x0=Math.max(0,Math.floor(L.lx-Rr-camX)),x1=Math.min(vw-1,Math.ceil(L.lx+Rr-camX)),y0=Math.max(0,Math.floor((L.ly-Rr)*K-camY)),y1=Math.min(vh-1,Math.ceil((L.ly+Rr)*K-camY));if(x1<x0||y1<y0)return;
@@ -3609,7 +3655,7 @@ function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)retu
   // light value per pixel from KrasueLight, then blurred so the glow spreads soft instead of a hard pixel disc
   const n=w*h;if(!KLB||KLB.length<n*3){KLB=new Float32Array(n*3);}const A=KLB.subarray(0,n),Bf=KLB.subarray(n,n*2),S=KLB.subarray(n*2,n*3);A.fill(0);S.fill(0);
   for(let yy=0;yy<h;yy++){const wy=(yy+y0+camY)/K,ddy=L.ly-wy;for(let xx=0;xx<w;xx++){const wx=xx+x0+camX,ddx=L.lx-wx,dd2=ddx*ddx+ddy*ddy;if(dd2>=Rc2)continue;
-    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35),q=yy*w+xx,e=1-dd2/Rc2,halo=Lk.v*52*Math.exp(-dd2/7200)*e*e,lit=o.r>.003||o.sr>.003;
+    const o=KrasueLight.shade(L,wx,wy,0,0,0,1,.35),q=yy*w+xx,e=1-dd2/Rc2,halo=Lk.v*52*Math.exp(-dd2/(7200*KRM()*KRM()))*e*e,lit=o.r>.003||o.sr>.003;
     let v;if(lit)v=KrasueLight.tone(o.r)+o.sr;else{const d2=dd2+L.lz*L.lz,f=(1-d2/L.R2);v=f>0?KrasueLight.tone(f*f*L.I*3600/(3600+d2)*1.5*L.lz/Math.sqrt(d2)):0;}   // the light as if nothing stood in the way, for the soft glow
     A[q]=Math.min(255,(v*290+halo)*Math.pow(e,1.6));S[q]=lit?1-md[(q<<2)+3]/255:0;}}   // S = crisp shadow mask (trunk wedges + cast shadows), applied after the blur
   const box=(src,dst,r,horiz)=>{const L1=horiz?w:h,L2=horiz?h:w,st=horiz?1:w,st2=horiz?w:1,inv=1/(2*r+1);
@@ -3621,12 +3667,12 @@ function krLightPass(T){KL=null;const Lk=KRL;if(!Lk||Lk.v<.05||!B||B.hidden)retu
     if(t*1.5>B01[(((yy+y0+camY)&7)<<3)|((xx+x0+camX)&7)]){sd[p]=Math.max(a*.85,62);sd[p+1]=a*.12;sd[p+2]=a*.14;}ld[p]=ld[p+1]=ld[p+2]=Math.min(255,Lo+rl);}
   sctx.putImageData(SD,x0,y0);lctx.putImageData(LD,x0,y0);}
 let KLB=null;
-function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-camX,gy=L.y*K-camY-6,R=135,c=sctx,g=c.createRadialGradient(gx,gy,0,gx,gy,R),v=L.v;
+function redTint(){const L=KRL;if(!blackout||!L||L.v<.05)return;const gx=L.x-camX,gy=L.y*K-camY-6,R=135*KRM(),c=sctx,g=c.createRadialGradient(gx,gy,0,gx,gy,R),v=L.v;
   g.addColorStop(0,`rgb(255,${255-205*v|0},${255-200*v|0})`);g.addColorStop(.55,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(1,'#fff');
   c.save();c.globalCompositeOperation='multiply';c.fillStyle=g;c.fillRect(gx-R,gy-R,R*2,R*2);c.restore();}
 const CRC=document.createElement('canvas');CRC.width=140;CRC.height=300;const CRX=CRC.getContext('2d');
 function canopyRim(s,l,cv,x0,y0,cx,cy,al){for(const b of BS){selB(b);canopyRim1(s,l,cv,x0,y0,cx,cy,al);}}
-function canopyRim1(s,l,cv,x0,y0,cx,cy,al){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130;if(d>RR)return;const it=klv(cx,cy,30)*al;if(it<.04)return;
+function canopyRim1(s,l,cv,x0,y0,cx,cy,al){const L=KRL;if(!L||L.v<.05)return;const dx=L.x-cx,dy=L.y-cy,d=Math.hypot(dx,dy),RR=130*KRM();if(d>RR)return;const it=klv(cx,cy,30)*al;if(it<.04)return;
   if(!cv.red){const m=mk(140,300),q=m.getContext('2d');q.drawImage(cv.img,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgb(236,40,62)';q.fillRect(0,0,140,300);cv.red=m;}
   const a=Math.atan2(Math.max(18,dy*K+40),dx),ux=Math.round(Math.cos(a)*1.4),uy=Math.round(Math.sin(a)*1.4);
   CRX.globalCompositeOperation='source-over';CRX.clearRect(0,0,140,300);CRX.drawImage(cv.red,0,0);CRX.globalCompositeOperation='destination-out';CRX.drawImage(cv.red,-ux,-uy);
@@ -3637,11 +3683,11 @@ function treeRim1(s,l,cx,cy,bx,by){const L=KRL;if(L&&L.v>.05){const dx0=L.x-cx,d
   s.fillStyle='rgb(236,40,62)';s.fillRect(bx+sd*2.2-.9,top,1.9,by-top);l.fillStyle=gray(255*clamp(it*1.4,0,1));l.fillRect(bx+sd*2.2-.9,top,1.9,by-top);
   if(dy>0){s.fillRect(bx-2.5,by-1,5,1);l.fillRect(bx-2.5,by-1,5,1);}}
 function krBloom(){for(const b of BS){selB(b);krBloom1();}}
-function krBloom1(){const L=KL,Lk=KRL;if(!L||!Lk||Lk.v<.05)return;const gx=L.lx-camX,gy=L.ly*K-camY-L.lz*.4,R=160,v=Lk.v;   // a soft red haze over everything near it
+function krBloom1(){const L=KL,Lk=KRL;if(!L||!Lk||Lk.v<.05)return;const gx=L.lx-camX,gy=L.ly*K-camY-L.lz*.4,R=160*KRM(),v=Lk.v;   // a soft red haze over everything near it
   let g=lctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,gray(58*v));g.addColorStop(.3,gray(32*v));g.addColorStop(.6,gray(16*v));g.addColorStop(.85,gray(4*v));g.addColorStop(1,'#000');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(gx-R,gy-R,R*2,R*2);lctx.restore();
   g=sctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(.4,`rgb(255,${255-110*v|0},${255-106*v|0})`);g.addColorStop(.75,`rgb(255,${255-35*v|0},${255-34*v|0})`);g.addColorStop(1,'#fff');sctx.save();sctx.globalCompositeOperation='multiply';sctx.fillStyle=g;sctx.fillRect(gx-R,gy-R,R*2,R*2);sctx.restore();}
 function rimRed(s,e,x0,y0){for(const b of BS){selB(b);rimRed1(s,e,x0,y0);}}
-function rimRed1(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130;if(dd>RR)return;
+function rimRed1(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130*KRM();if(dd>RR)return;
   const str=klv(e.x,e.y,12);if(str<=.02)return;const a=Math.atan2(dy*K-L.z*.75+12,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
   RMX.globalCompositeOperation='source-over';RMX.clearRect(0,0,136,120);RMX.drawImage(OLC,0,0);RMX.globalCompositeOperation='source-in';RMX.fillStyle='rgb(255,46,66)';RMX.fillRect(0,0,136,120);
   RMX.globalCompositeOperation='destination-out';RMX.drawImage(OLC,-ux,-uy);RMX.drawImage(OLC,-ux*2,-uy*2);RMX.globalCompositeOperation='source-over';
@@ -4496,7 +4542,7 @@ function drawBubbles(s){
 }
 function skipCountBox(){const s=UIS,w=168*s,h=34*s;return{x:SWc/2-w/2,y:SHc*.2+104*s,w,h};}
 function skipBox(){const s=UIS,w=150*s,h=34*s;return{x:SWc-w-12*s,y:Math.max(8*s,SHc*.11/2-h/2),w,h};}
-function drawN3UI(s){if(N3.step==='tutcam'){const C=N3,bar=SHc*.11,sb=skipBox();u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle=FG;u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้าม ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',BG);
+function drawN3UI(s){if(N3.step==='frz'){frenzyUI(s);return;}if(N3.step==='tutcam'){const C=N3,bar=SHc*.11,sb=skipBox();u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle=FG;u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้าม ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',BG);
     if(C.text&&C.t>.5)C.text.forEach((t,k)=>{u.fillStyle='rgba(10,9,8,.62)';u.fillRect(0,SHc*.46+k*26*s-13*s,SWc,26*s);uiText(t,SWc/2,SHc*.46+k*26*s,Math.min(17*s,SWc/26),'center','#ffd27a');});return;}
   const C=N3,bar=(C.cu||C.wide)?SHc*(1-cuBand())/2:SHc*.11;u.fillStyle=BG;u.fillRect(0,0,SWc,bar);u.fillRect(0,SHc-bar,SWc,bar);drawBubbles(s);
   if(C.step==='pro'&&C.scream){const j=()=>(Math.random()-.5)*5*s;u.save();u.font=`900 ${Math.min(30*s,SWc/13)}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineWidth=5*s;u.strokeStyle=BG;const tx=SWc/2+j(),ty=SHc*.2+j();u.strokeText('กรี๊ดดดดดดดดดดด!!!!!!',tx,ty);u.fillStyle=UIRED;u.fillText('กรี๊ดดดดดดดดดดด!!!!!!',tx,ty);u.restore();}
@@ -4583,8 +4629,7 @@ function drawUI(dt){
     uiText('เก็บฟืน กล้วย งู ให้พร้อม',SWc/2,SHc*.2+86*s,11*s,'center',FG);
     const sb=skipCountBox();u.fillStyle=BG;u.fillRect(sb.x-2,sb.y-2,sb.w+4,sb.h+4);u.fillStyle='#d01c22';u.fillRect(sb.x,sb.y,sb.w,sb.h);uiText('ข้ามนับถอยหลัง ▶▶',sb.x+sb.w/2,sb.y+sb.h/2+1,13*s,'center',FG);}
   if(E5&&state==='play'&&(E5.ph==='fight'||E5.ph==='fall')){const e=E5.el,xl=Math.max(SWc*.44,150*s),w=SWc-12*s-xl,x0=xl,y0=58*s,f=Math.max(0,e.hp/e.hpMax);u.fillStyle=BG;u.fillRect(x0-3,y0-3,w+6,14*s+6);u.fillStyle='#3a2a1c';u.fillRect(x0,y0,w,14*s);u.fillStyle=e.hitF>0?'#fff':'#b08a4a';u.fillRect(x0,y0,w*f,14*s);uiText('ช้างป่า',x0+w/2,y0+7*s,11*s,'center',FG);}
-  if(N3&&state==='play')BS.forEach((B,bi)=>{if(!(N3.ph==='fight'||B.state==='dead'&&B.t<4))return;const w=Math.min(230*s,SWc*.6),x0=SWc/2-w/2,y0=(55+bi*17)*s,bh=12*s,f=Math.max(0,B.hp/B.hpMax);u.fillStyle=BG;u.fillRect(x0-2,y0-2,w+4,bh+4);u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,bh);u.fillStyle=B.hitF>0?'#fff':'#d01c22';u.fillRect(x0,y0,w*f,bh);   // right under the clock, out of the way of the fight
-    uiText(BS.length>1?'กระสือ '+(bi+1):'กระสือ',SWc/2,y0+bh/2,9*s,'center',FG);
+  if(N3&&state==='play')BS.forEach((B,bi)=>{if(!(N3.ph==='fight'||B.state==='dead'&&B.t<4))return;krBar(B,bi,s);   // right under the clock, out of the way of the fight
     if(!B.hidden&&B.state!=='dead'){const hx=(B.x-camX)*P,hy=(B.y*K-camY-B.rig.R.hz*.75-16)*P,tt=performance.now()/1000;
       if(B.q>0){u.save();u.font=`900 ${26*s}px system-ui,sans-serif`;u.textAlign='center';u.lineWidth=5*s;u.strokeStyle=BG;u.strokeText('?',hx,hy);u.fillStyle='#ffd27a';u.fillText('?',hx,hy);u.restore();}
       else if(B.state==='stare1'||B.state==='stare2'){uiText(B.state==='stare2'?'!! ระวังพุ่งชน':'!! ระวังพุ่ง',hx,hy,13*s*(1+.1*Math.sin(tt*20)),'center','#ff3b30');}
