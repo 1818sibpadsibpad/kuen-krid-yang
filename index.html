@@ -161,7 +161,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v10.4</div>
+  <div class="ver">v10.5</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -169,8 +169,9 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.4</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.5</h3><ul>
       <li>แก้: ตายแล้วตัวถัดไปไม่โผล่ตรงจุดตายอีก จะได้เล่นเป็นตัวที่อยู่ไกลศพที่สุด ณ ตำแหน่งจริงของตัวนั้น</li>
+      <li>กลางวัน: กิ่งไม้เล็ก (ฟืนที่เก็บได้) มีเส้นขอบสีดำมองเห็นง่ายขึ้น และมีเงาจางๆ เบลอนุ่มๆ ใต้กิ่ง · ตอนกลางคืนเหมือนเดิม</li>
       <li>กระสือเลือดต่ำกว่า 30%: คัตซีนหอบ–คำราม "คุ้มคลั่ง ความเร็ว2เท่า!!" แล้วพุ่งหนีไปตั้งหลัก 100 เมตร ชนกิ่งไม้ใหญ่แตกกระจาย จากนั้นเร็วขึ้น 2 เท่าทุกอย่าง แสงแดงกว้างขึ้น 2 เท่า ติดไฟแค่ 1 วิแล้วสะบัดออก</li>
       <li>กระสือติดไฟได้แค่ 5 วิ ระหว่างติดไฟโดนดาเมจ ×2</li>
       <li>เข้าใกล้ศพ 1 เมตร จะมีปุ่มวิบวับให้เลือกหยิบอาวุธล่าสุดของศพมาใช้</li>
@@ -684,7 +685,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='10.4';
+let useBot=true,bot=null,hero='fifa';const VERSION='10.5';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -4265,7 +4266,7 @@ function drawObj(o,T,s,l){
   case 14:{if(bot.down){withOutline(s,bot,c=>drawLying(c,T,null,bot));drawLying(l,T,gray(lightAt(bot.x,bot.y)),bot);}else{withOutline(s,bot,c=>drawP(c,T,null,bot));drawP(l,T,gray(Math.max(30,lightAt(bot.x,bot.y))),bot);}break;}
   case 15:{const v=lightAt(o.p.x,o.p.y+3);drawPlant(s,o.p,T,null);drawPlant(l,o.p,T,gray(v));break;}
   case 16:{const g=o.g,v=lightAt(g.x,g.y);drawBunch(s,g.x-camX,g.y*K-camY-2,.9,null,true,g.a);drawBunch(l,g.x-camX,g.y*K-camY-2,.9,gray(Math.max(10,v)),true,g.a);break;}
-  case 18:{const w=o.w,v=lightAt(w.x,w.y),lit=lampLit(w.x,w.y),x=w.x-camX,y=w.y*K-camY;drawLog(s,x,y,w.a,w.v,null,1.15,true);drawLog(l,x,y,w.a,w.v,gray(Math.max(62,v)),1.15,true);
+  case 18:{const w=o.w,v=lightAt(w.x,w.y),lit=lampLit(w.x,w.y),x=w.x-camX,y=w.y*K-camY,dy=DAYK>0;if(dy)woodShadow(s,x,y,w);drawLog(s,x,y,w.a,w.v,null,1.15,true,dy?1:0);drawLog(l,x,y,w.a,w.v,gray(Math.max(62,v)),1.15,true);
     if(lit>.15){const D=LOGS[w.v%10],L2=D[0]*1.15,ca=Math.cos(w.a),sa=Math.sin(w.a)*K;   // flashlight catches the bark: bright rim + glints
       s.strokeStyle='rgb(236,200,140)';l.strokeStyle=gray(Math.min(255,v+60));for(const c of[s,l]){c.lineWidth=.9;c.lineCap='round';c.beginPath();c.moveTo(x-ca*L2*.42,y-sa*L2*.42-1);c.lineTo(x+ca*L2*.42,y+sa*L2*.42-1);c.stroke();}
       for(let k=0;k<2;k++){const ph=Math.sin(T*(5+k*1.7)+w.x*.37+k*2.1);if(ph<.55)continue;const tt=(k?.3:-.25),gx=x+ca*L2*tt,gy=y+sa*L2*tt-1.5,r=ph>.85?2:1;
@@ -4313,13 +4314,14 @@ function drawHoeGround(c,mono){
   c.lineCap='round';c.strokeStyle=M('#2a2018');c.lineWidth=2.6;c.beginPath();c.moveTo(-11,0);c.lineTo(9,0);c.stroke();c.strokeStyle=M('#c8b79c');c.lineWidth=1.6;c.stroke();
   c.fillStyle=M('#222');c.fillRect(8,-1.5,3,7.5);c.fillStyle=M('#e6e6e6');c.fillRect(8,5,3,1.2);c.restore();
 }
-function drawLog(c,x,y,a,v,mono,sc,flat){
+function drawLog(c,x,y,a,v,mono,sc,flat,ol){
   const D=LOGS[v%10],M=col=>mono||col,s2=sc||1,L=D[0]*s2,T2=Math.max(.7,D[1]*s2*.5),tn0=D[2]+14,bend=D[3]*L,Rn=k=>{const q=Math.sin(v*12.9898+k*78.233)*43758.5453;return q-Math.floor(q);};
   const BR=t=>{t=clamp(t,10,190);return`rgb(${t+26|0},${t+4|0},${Math.max(0,t-12)|0})`;},Pt=u=>[-L/2+u*L,2*u*(1-u)*bend],segs=[];
   {let p0=Pt(0);for(let k=1;k<=4;k++){const p1=Pt(k/4);segs.push([p0[0],p0[1],p1[0],p1[1],T2*(1-k*.07)]);p0=p1;}}
   for(let f=0;f<D[5];f++){const u=.3+Rn(f)*.45,[fx,fy]=Pt(u),sd=Rn(f+5)<.5?-1:1,fa=sd*(.4+Rn(f+9)*.35),fl=L*(.28+Rn(f+3)*.2),ex=fx+Math.cos(fa)*fl,ey=fy+Math.sin(fa)*fl;segs.push([fx,fy,ex,ey,T2*.6]);
     const tu=.55+Rn(f+7)*.3,tx=fx+(ex-fx)*tu,ty=fy+(ey-fy)*tu,ta=fa-sd*(.5+Rn(f+11)*.3),tl=fl*.4;segs.push([tx,ty,tx+Math.cos(ta)*tl,ty+Math.sin(ta)*tl,T2*.4]);}
   c.save();c.translate(x,y);if(flat)c.scale(1,K);c.rotate(a);c.lineCap='round';
+  if(ol){c.strokeStyle=mono||'#000';for(const g of segs){c.lineWidth=g[4]+1+ol;c.beginPath();c.moveTo(g[0],g[1]);c.lineTo(g[2],g[3]);c.stroke();}}   // daytime: a crisp black rim so the sticks read against the grass
   c.strokeStyle=M('#0d0a07');for(const g of segs){c.lineWidth=g[4]+1;c.beginPath();c.moveTo(g[0],g[1]);c.lineTo(g[2],g[3]);c.stroke();}
   c.strokeStyle=M(BR(tn0));for(const g of segs){c.lineWidth=g[4];c.beginPath();c.moveTo(g[0],g[1]);c.lineTo(g[2],g[3]);c.stroke();}
   if(T2>.85){c.strokeStyle=M(BR(tn0+34));c.lineWidth=T2*.35;for(let k=0;k<4;k++){const g=segs[k];c.beginPath();c.moveTo(g[0],g[1]-T2*.25);c.lineTo(g[2],g[3]-T2*.25);c.stroke();}}
@@ -4327,6 +4329,11 @@ function drawLog(c,x,y,a,v,mono,sc,flat){
   if(D[6]){c.fillStyle=M('rgb(188,160,122)');const[ex,ey]=Pt(1);c.fillRect(ex-.5,ey-T2*.45,1,T2*.9);}
   c.restore();
 }
+const WSH=document.createElement('canvas');WSH.width=WSH.height=48;const WSHX=WSH.getContext('2d');
+function woodShadow(c,x,y,w){   // daytime only: a faint, soft shadow under a pick-up stick, thrown down-right
+  WSHX.clearRect(0,0,48,48);drawLog(WSHX,24,24,w.a,w.v,'#000',1.15,true,1);
+  c.save();c.globalAlpha=.42*Math.min(1,DAYK);c.shadowColor='rgba(0,0,0,.85)';c.shadowBlur=2.6;c.shadowOffsetX=1000+1.6;c.shadowOffsetY=1.9;
+  c.drawImage(WSH,Math.round(x)-24-1000,Math.round(y)-24);c.restore();}
 function drawPile(c,p,mono){const x=p.x-camX,y=p.y*K-camY,n=p.logs.length;if(!mono){c.fillStyle='rgba(0,0,0,.5)';ell(c,x,y,8+Math.min(6,n*.4),3);}
   let i=0;for(let row=0;i<n&&row<6;row++){const per=Math.max(1,4-row);for(let k=0;k<per&&i<n;k++,i++)drawLog(c,x+(k-(per-1)/2)*3.6,y-row*2.6-1,(i%2?.06:-.06)+Math.PI*.02,p.logs[i],mono,.85,false);}}
 function drawBunch(c,x,y,sc,mono,lying,a){   // a ripe bunch: tiers of yellow "hands" curling up and out around a green stalk, dark tips
