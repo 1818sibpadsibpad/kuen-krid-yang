@@ -161,7 +161,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v11.0</div>
+  <div class="ver">v11.1</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -169,7 +169,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v11.0</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v11.1</h3><ul>
+      <li>ผีปอบ: หลบได้ต่อเนื่อง 3 ครั้ง ด้วยท่ากางแขนกระโดดถอย 2 เมตรทันที หลายทิศ จากนั้นเดินหนีไปรีโหลด 3 วิ</li>
       <li>ซอมบี้แบบที่ 2 ชื่อ "ผีปอบ": ผมเส้นบางพลิ้วอิสระ เอวยาวขึ้น เล็บแยกชัด เดินย่อง · หลบเก่งขึ้น (รีโหลด 1 วิ) เอียงหลบ ก้มหลบ กลิ้งหลบ กระโดดกางขา · โดนตีหน้าสะบัด ผมสะบัดตาม</li>
       <li>ซอมบี้แบบใหม่ (คืนที่ 2 เป็นต้นไป โอกาส 1 ใน 3): หลังค่อม ผม 5 เส้น ตาขาววิบในที่มืด เดินอ้อมหลัง ถอยหลบจังหวะฟัน (3 วิครั้ง) ชูแขน 2 วิแล้วพุ่งเร็ว 2 เท่ามาตบ · พลาดจะล้มคว่ำ 1 วิ</li>
       <li>คืนที่ 2: เริ่ม 18:00 ไม่มีระลอกใหญ่ ซอมบี้มาทีละ 2–3 ตัวทุก 30 วิ จากขอบแผนที่ทุกทิศ</li>
@@ -696,7 +697,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='11.0';
+let useBot=true,bot=null,hero='fifa';const VERSION='11.1';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1320,9 +1321,11 @@ let STKT=0;
 function stalkAI(z,dt,T,d,sees,hidden){
   if(z.skS==null||STKT-z.skS>.4){z.sk='circle';z.skT=0;}z.skS=STKT;if(z.dgCd>0)z.dgCd-=dt;
   if(z.hw>0){z.hw+=dt;if(z.hw>1)z.hw=0;}
-  if(z.dg){const g=z.dg;g.t+=dt;if(g.t>=g.T){z.dg=null;}else return g.sp?[z.x+g.dx*30,z.y+g.dy*30,g.sp]:[z.x,z.y,0];}
+  if(z.dgN&&STKT-(z.dgL||0)>4)z.dgN=0;
+  if(z.dg){const g=z.dg,st=Math.min(dt,g.T-g.t);g.t+=dt;moveCircle(z,g.dx*16*st/g.T,g.dy*16*st/g.T,5);z.vx=z.vy=0;z.a=Math.atan2(-g.dy,-g.dx);if(g.t>=g.T)z.dg=null;return[z.x,z.y,0];}   // 2 m, at once
   if(T!==player||hidden||!sameLv(z,T)){z.sk='circle';z.skT=0;return null;}
   const P=player;sees=d<200&&los(z.x,z.y,P.x,P.y);
+  if(z.sk==='flee'){z.skT-=dt;if(z.skT<=0){z.sk='circle';z.skT=0;return null;}const fd=Math.hypot(z.x-player.x,z.y-player.y)||1;return[z.x+(z.x-player.x)/fd*60,z.y+(z.y-player.y)/fd*60,z.spd];}   // walking off to reload
   if(z.sk==='flop'){z.skT-=dt;z.vx*=.7;z.vy*=.7;if(z.skT<=0){z.sk='circle';z.skT=0;}return[z.x,z.y,0];}
   if(z.sk==='raise'){z.skT+=dt;z.a=angLerp(z.a,Math.atan2(P.y-z.y,P.x-z.x),dt*10);if(d>200||(!sees&&z.skT>.5)){z.sk='circle';z.skT=0;return null;}
     if(z.skT>=2){z.sk='rush';z.skT=0;z.rd=d;sfx.screech(-(z.x-P.x)/200);}return[z.x,z.y,0];}
@@ -1333,10 +1336,11 @@ function stalkAI(z,dt,T,d,sees,hidden){
   z.skT+=dt;const cur=Math.atan2(z.y-P.y,z.x-P.x);let df=P.facing+Math.PI-cur;df=Math.atan2(Math.sin(df),Math.cos(df));
   if(z.skT>1.5&&d<120&&(Math.abs(df)<.8||z.skT>(z.skM||(z.skM=3+rnd()*3)))){z.skM=0;z.sk='raise';z.skT=0;return[z.x,z.y,0];}   // it has found its moment
   const nx=cur+clamp(df,-.6,.6),R=76;return[P.x+Math.cos(nx)*R,P.y+Math.sin(nx)*R,z.spd];}   // keep its distance and work round behind you
-function stalkDodge(z,h){if(!z.stalk||z.crawl||z.state!=='chase'||z.burn>0||z.slam||z.dgCd>0||z.sk==='flop'||z.sk==='rush')return false;   // ผีปอบ: slips the blow four ways, 1 s reload
-  const d=Math.hypot(z.x-h.x,z.y-h.y)||1,bx=(z.x-h.x)/d,by=(z.y-h.y)/d,sd=rnd()<.5?1:-1,ty=['lean','duck','roll','jump'][(rnd()*4)|0];z.dgCd=1;
-  z.dg=ty==='lean'?{type:ty,t:0,T:.3,dx:-by*sd,dy:bx*sd,sp:70,sd}:ty==='duck'?{type:ty,t:0,T:.32,dx:0,dy:0,sp:0,sd}:ty==='roll'?{type:ty,t:0,T:.36,dx:-by*sd*.9+bx*.3,dy:bx*sd*.9+by*.3,sp:190,sd}:{type:ty,t:0,T:.42,dx:bx,dy:by,sp:140,sd};
-  if(z.sk==='raise'){z.sk='circle';z.skT=0;}sfx.whoosh();return true;}
+function stalkDodge(z,h){if(!z.stalk||z.crawl||z.state!=='chase'||z.burn>0||z.slam||z.dgCd>0||z.dg||z.sk==='flop'||z.sk==='rush'||z.sk==='flee')return false;   // ผีปอบ: arms flung wide, a quick hop 2 m back, three in a row
+  const d=Math.hypot(z.x-h.x,z.y-h.y)||1,bx=(z.x-h.x)/d,by=(z.y-h.y)/d,an=[0,.8,-.8,1.25,-1.25][(rnd()*5)|0],ca=Math.cos(an),sa=Math.sin(an);   // straight back, or back and off to either side
+  z.dg={type:'jump',t:0,T:.16,dx:bx*ca-by*sa,dy:bx*sa+by*ca,sd:1};z.dgN=(z.dgN||0)+1;z.dgL=STKT;z.vx=z.vy=0;
+  if(z.dgN>=3){z.dgN=0;z.dgCd=3;z.sk='flee';z.skT=3;}else if(z.sk==='raise'){z.sk='circle';z.skT=0;}   // after the third it backs off for 3 s to get its nerve back
+  sfx.whoosh();return true;}
 function stPose(z,T){const fx=z.x-camX,a=z.a,ca=Math.cos(a),sa=Math.sin(a),fwx=ca,fwy=sa*K,px=-sa,py=ca*K,sk=z.state==='chase'?z.sk:null,up=sk==='raise'?Math.min(1,z.skT/.3):0,run=sk==='rush'?1:0,
     g=z.dg,gu=g?Math.sin(Math.PI*Math.min(1,g.t/g.T)):0,lean=g&&g.type==='lean'?gu*g.sd:0,duck=g&&g.type==='duck'?gu:0,jump=g&&g.type==='jump'?gu:0,
     creep=Math.abs(Math.sin(z.phase*.5))*1.1*(1-up)*(1-run),fy=z.y*K-camY-jump*9,   // it creeps: the whole body dips with every stealthy step
