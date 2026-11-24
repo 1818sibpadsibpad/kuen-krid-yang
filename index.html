@@ -161,7 +161,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v10.9</div>
+  <div class="ver">v11.0</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -169,7 +169,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v10.9</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v11.0</h3><ul>
+      <li>ซอมบี้แบบที่ 2 ชื่อ "ผีปอบ": ผมเส้นบางพลิ้วอิสระ เอวยาวขึ้น เล็บแยกชัด เดินย่อง · หลบเก่งขึ้น (รีโหลด 1 วิ) เอียงหลบ ก้มหลบ กลิ้งหลบ กระโดดกางขา · โดนตีหน้าสะบัด ผมสะบัดตาม</li>
       <li>ซอมบี้แบบใหม่ (คืนที่ 2 เป็นต้นไป โอกาส 1 ใน 3): หลังค่อม ผม 5 เส้น ตาขาววิบในที่มืด เดินอ้อมหลัง ถอยหลบจังหวะฟัน (3 วิครั้ง) ชูแขน 2 วิแล้วพุ่งเร็ว 2 เท่ามาตบ · พลาดจะล้มคว่ำ 1 วิ</li>
       <li>คืนที่ 2: เริ่ม 18:00 ไม่มีระลอกใหญ่ ซอมบี้มาทีละ 2–3 ตัวทุก 30 วิ จากขอบแผนที่ทุกทิศ</li>
       <li>หยิบอาวุธจากศพ = ได้อาวุธของคนนั้นจริง ทั้งรูป ประสิทธิภาพ และสกิล (แพรวาใช้อาวุธพี่ๆ ความเร็วฟันเท่าพี่ๆ)</li>
@@ -695,7 +696,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='10.9';
+let useBot=true,bot=null,hero='fifa';const VERSION='11.0';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -830,13 +831,14 @@ function doHit(h=player){
   const sh=snakeHits(h,a,R0,ARC+.2),bh=bossHits(h,a,R0,ARC,false);
   if(!best){if(h===player&&W(h).blunt){const ta=a-(h.swingDir||1)*.3;pamEmbers(h.x+Math.cos(ta)*R0*.85,h.y+Math.sin(ta)*R0*.85,Math.cos(ta),Math.sin(ta),14);}   // แพม: a miss still sheds embers along the arc
     if(h===player&&!sh&&!bh&&!bigHit(h,a,R0,ARC+.15,p>.5?1.5:1))hitPlant(h);return;}
-  if(stalkDodge(best,h)){if(h===player)toast('มันถอยหลบ!');return;}   // the stalker steps back out of the stroke
+  if(stalkDodge(best,h)){if(h===player)toast('ผีปอบหลบ!');return;}   // the stalker steps back out of the stroke
   if(h===player&&hero==='pw'&&WHO()==='pw'&&!h.rollT){h.lunge=null;h.hopT=.2;h.hopDx=-Math.cos(a);h.hopDy=-Math.sin(a);h.recoilT=.45;h.cd=1;h.lastSw=performance.now()/1000+.88;h.charging=false;shake=Math.max(shake,2.5);tn('square',1400,700,.12,.12);tn('sine',900,880,.35,.08);}   // แพรวา: the pan bounces back off the zombie — she's thrown 3 m, nearly onto her back, 1 s to recover
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   if(best.burn>0){const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;shake=Math.max(shake,2.5);sfx.hit();sfx.sever();for(let k=0;k<20;k++)sparks.push({x:z.x+(rnd()-.5)*8,y:z.y+(rnd()-.5)*4,h:4+rnd()*12,vx:ux*40+(rnd()-.5)*40,vy:uy*20+(rnd()-.5)*20,vh:10+rnd()*40,life:.4+rnd()*.6});killZ(z,ux,uy,false);toast('ฟันทีเดียว ร่วงเป็นถ่าน!');return;}
   slowZ(best);const z=best,d=bd||1,low=z.crawl||z.state==='down',r0=(z.x-h.x)/d,r1=(z.y-h.y)/d,tip=d-(low?5:3)>R0-Math.max(4,R0*.26);
   const th=Math.atan2(r1,r0),tx=h.swingDir===1?Math.sin(th):-Math.sin(th),ty=h.swingDir===1?-Math.cos(th):Math.cos(th);
   let ux=r0+tx*.8,uy=r1+ty*.8;{const l=Math.hypot(ux,uy)||1;ux/=l;uy/=l;}
+  if(z.stalk){z.hw=.001;z.hwx=ux;z.hwy=uy;}
   if(h===player&&WHO()==='pam'&&UPG()&&!(z.burn>0)){igniteZ(z);toast('จุดไฟเผาซอมบี้! ไหม้ตายใน 5 วิ');}
   else if(h===player&&WHO()==='pam'&&h.torch>0&&!(z.burn>0)&&rnd()<.5){igniteZ(z);z.hp=1;pamEmbers(z.x,z.y,ux,uy,30);zShove(z,ux,uy);rebound(h);toast('ไม้ติดไฟ จุดไฟซอมบี้!');return;}   // a still-burning stick: 50% sets it alight, left on 1 HP
   if(h===player&&W(h).blunt){const head=rnd()<.1;   // แพม: 10% critical (head) chance per hitz.aware=6;pamEmbers(z.x,z.y,ux,uy,head?46:22);
@@ -1317,7 +1319,8 @@ let STKT=0;
    then lifts both arms for 2 s and rushes at double speed to slap you down. A miss leaves it face-down for a second. */
 function stalkAI(z,dt,T,d,sees,hidden){
   if(z.skS==null||STKT-z.skS>.4){z.sk='circle';z.skT=0;}z.skS=STKT;if(z.dgCd>0)z.dgCd-=dt;
-  if(z.dodge>0){z.dodge-=dt;return[z.x+z.ddx*30,z.y+z.ddy*30,230];}
+  if(z.hw>0){z.hw+=dt;if(z.hw>1)z.hw=0;}
+  if(z.dg){const g=z.dg;g.t+=dt;if(g.t>=g.T){z.dg=null;}else return g.sp?[z.x+g.dx*30,z.y+g.dy*30,g.sp]:[z.x,z.y,0];}
   if(T!==player||hidden||!sameLv(z,T)){z.sk='circle';z.skT=0;return null;}
   const P=player;sees=d<200&&los(z.x,z.y,P.x,P.y);
   if(z.sk==='flop'){z.skT-=dt;z.vx*=.7;z.vy*=.7;if(z.skT<=0){z.sk='circle';z.skT=0;}return[z.x,z.y,0];}
@@ -1330,43 +1333,64 @@ function stalkAI(z,dt,T,d,sees,hidden){
   z.skT+=dt;const cur=Math.atan2(z.y-P.y,z.x-P.x);let df=P.facing+Math.PI-cur;df=Math.atan2(Math.sin(df),Math.cos(df));
   if(z.skT>1.5&&d<120&&(Math.abs(df)<.8||z.skT>(z.skM||(z.skM=3+rnd()*3)))){z.skM=0;z.sk='raise';z.skT=0;return[z.x,z.y,0];}   // it has found its moment
   const nx=cur+clamp(df,-.6,.6),R=76;return[P.x+Math.cos(nx)*R,P.y+Math.sin(nx)*R,z.spd];}   // keep its distance and work round behind you
-function stalkDodge(z,h){if(!z.stalk||z.crawl||z.state!=='chase'||z.burn>0||z.slam||z.dgCd>0||z.sk==='flop'||z.sk==='rush')return false;
-  const d=Math.hypot(z.x-h.x,z.y-h.y)||1;z.dgCd=3;z.dodge=.2;z.ddx=(z.x-h.x)/d;z.ddy=(z.y-h.y)/d;z.vx=z.ddx*230;z.vy=z.ddy*230;if(z.sk==='raise'){z.sk='circle';z.skT=0;}sfx.whoosh();return true;}
-function stPose(z,T){const fx=z.x-camX,fy=z.y*K-camY,a=z.a,ca=Math.cos(a),sa=Math.sin(a),fwx=ca,fwy=sa*K,sk=z.state==='chase'?z.sk:null,up=sk==='raise'?Math.min(1,z.skT/.3):0,run=sk==='rush'?1:0,
-    hun=(1-up)*(1-run*.5),jit=up?Math.sin(T*60+z.seed)*.5:0,hipY=fy-9.5,shx=fx+fwx*4.2*hun+jit,shy=hipY-6.5+fwy*4.2*hun+1.6*hun-up*1.5,hx=shx+fwx*(3.8*hun+1.2),hy=shy-2.2+fwy*(3.8*hun+1.2)+.9*hun;
-  return{fx,fy,ca,sa,fwx,fwy,px:-sa,py:ca*K,sk,up,run,hun,hipY,shx,shy,hx,hy,away:sa<-.25};}
-function stEyes(z,T){if(!z.stalk||z.crawl||z.air>0||z.spin)return null;const st=z.state;if(st==='down'||st==='eat'||st==='bite'||st==='eatB'||st==='eatC'||(st==='chase'&&z.sk==='flop'))return null;
-  const q=stPose(z,T);if(q.away)return null;const tb=(T+z.seed)%2;if(tb<.08||(tb>.16&&tb<.24))return null;   // two quick blinks every 2 s
+function stalkDodge(z,h){if(!z.stalk||z.crawl||z.state!=='chase'||z.burn>0||z.slam||z.dgCd>0||z.sk==='flop'||z.sk==='rush')return false;   // ผีปอบ: slips the blow four ways, 1 s reload
+  const d=Math.hypot(z.x-h.x,z.y-h.y)||1,bx=(z.x-h.x)/d,by=(z.y-h.y)/d,sd=rnd()<.5?1:-1,ty=['lean','duck','roll','jump'][(rnd()*4)|0];z.dgCd=1;
+  z.dg=ty==='lean'?{type:ty,t:0,T:.3,dx:-by*sd,dy:bx*sd,sp:70,sd}:ty==='duck'?{type:ty,t:0,T:.32,dx:0,dy:0,sp:0,sd}:ty==='roll'?{type:ty,t:0,T:.36,dx:-by*sd*.9+bx*.3,dy:bx*sd*.9+by*.3,sp:190,sd}:{type:ty,t:0,T:.42,dx:bx,dy:by,sp:140,sd};
+  if(z.sk==='raise'){z.sk='circle';z.skT=0;}sfx.whoosh();return true;}
+function stPose(z,T){const fx=z.x-camX,a=z.a,ca=Math.cos(a),sa=Math.sin(a),fwx=ca,fwy=sa*K,px=-sa,py=ca*K,sk=z.state==='chase'?z.sk:null,up=sk==='raise'?Math.min(1,z.skT/.3):0,run=sk==='rush'?1:0,
+    g=z.dg,gu=g?Math.sin(Math.PI*Math.min(1,g.t/g.T)):0,lean=g&&g.type==='lean'?gu*g.sd:0,duck=g&&g.type==='duck'?gu:0,jump=g&&g.type==='jump'?gu:0,
+    creep=Math.abs(Math.sin(z.phase*.5))*1.1*(1-up)*(1-run),fy=z.y*K-camY-jump*9,   // it creeps: the whole body dips with every stealthy step
+    hun=(1-up)*(1-run*.5),jit=up?Math.sin(T*60+z.seed)*.5:0,hipY=fy-9.5+creep+duck*4,
+    shx=fx+fwx*4.6*hun+jit+px*4.5*lean,shy=hipY-8.6+fwy*4.6*hun+2*hun-up*1.5+duck*4.5+py*4.5*lean+Math.abs(lean)*1.5;
+  let hx=shx+fwx*(3.8*hun+1.2)+px*2.5*lean,hy=shy-2.2+fwy*(3.8*hun+1.2)+.9*hun+duck*1.5+py*2.5*lean,wk=0,wx=0,wy=0;
+  if(z.hw>0){wk=Math.exp(-z.hw*5)*Math.cos(z.hw*17);wx=(z.hwx||0);wy=(z.hwy||0)*K;hx+=wx*3.2*wk;hy+=wy*3.2*wk+Math.abs(wk)*.6;}   // struck: the head snaps round with the blow
+  return{fx,fy,gy:z.y*K-camY,ca,sa,fwx,fwy,px,py,sk,up,run,hun,hipY,shx,shy,hx,hy,away:sa<-.25,g,gu,jump,duck,lean,wk,wx,wy,turned:z.hw>0&&z.hw<.2};}
+function stEyes(z,T){if(!z.stalk||z.crawl||z.air>0||z.spin)return null;const st=z.state;if(st==='down'||st==='eat'||st==='bite'||st==='eatB'||st==='eatC'||(st==='chase'&&z.sk==='flop')||(z.dg&&z.dg.type==='roll'))return null;
+  const q=stPose(z,T);if(q.away||q.turned)return null;const tb=(T+z.seed)%2;if(tb<.08||(tb>.16&&tb<.24))return null;   // two quick blinks every 2 s
   const ex=q.hx+q.ca*1.2,as=Math.abs(q.sa),E=[[Math.round(ex-as-.5),Math.round(q.hy-.6)]];if(as>.3)E.push([Math.round(ex+as-.5)+1,Math.round(q.hy-.6)]);return E;}
-function drawStalker(c,z,T,mono){const q=stPose(z,T),{fx,fy,fwx,fwy,px,py,hipY,shx,shy,hx,hy,up,run,hun}=q,M=col=>mono||col,skin=M('#a6a6a6'),dark=M('#2e2e2e'),sw=Math.sin(z.phase)*3.4;
-  if(z.state==='chase'&&z.sk==='flop'){if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.5)';ell(c,fx,fy,7,2.4);}   // flat on its face
-    c.lineCap='round';c.strokeStyle=dark;c.lineWidth=2;c.beginPath();c.moveTo(fx-fwx*7,fy-fwy*7-1);c.lineTo(fx+fwx*3,fy+fwy*3-1.4);c.stroke();
-    c.strokeStyle=skin;c.lineWidth=1.1;for(const l of[-1,1]){c.beginPath();c.moveTo(fx+fwx*2+px*2*l,fy+fwy*2+py*2*l-1.4);c.lineTo(fx+fwx*10+px*3.4*l,fy+fwy*10+py*3.4*l-.6);c.stroke();}
-    c.fillStyle=skin;c.beginPath();c.arc(fx+fwx*5.5,fy+fwy*5.5-1.8,2.2,0,TAU);c.fill();c.strokeStyle=M('#000');c.lineWidth=.8;c.stroke();return;}
-  if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.55)';ell(c,fx,fy,4,1.6);}
-  c.lineCap='round';c.strokeStyle=M('#303030');c.lineWidth=1.2;   // long thin legs, knees bent
-  for(const l of[-1,1]){const h0=fx+px*1*l,h1=hipY+py*1.1*l,kx=h0+fwx*(1.6+sw*l*.5),ky=(h1+fy)/2+fwy*1.6-.5;c.beginPath();c.moveTo(h0,h1);c.lineTo(kx,ky);c.lineTo(h0+fwx*sw*l-fwx*.8,fy+py*1.1*l+fwy*sw*l*.6);c.stroke();}
-  const arms=()=>{c.lineWidth=1.05;for(const[idx,l]of[[0,-1],[1,1]]){const sx=shx+px*2.2*l,sy=shy+py*2.4*l+.6;if(!z.arms[idx]){c.fillStyle=M(RED);c.fillRect(sx-1,sy-1,2,2);continue;}
-      let ex,ey,hx2,hy2,cdx,cdy;const ph=Math.sin(z.phase+l)*1.3;
-      if(up>0||run){const slap=run?Math.min(1,z.skT/.25):0;ex=sx+px*1.8*l+fwx*(1+3*slap);ey=sy-4*up-2.5*(1-slap)*run+fwy*1;hx2=sx+px*1.2*l+fwx*(1.5+6*slap);hy2=sy-9.5*up-7*run*(1-slap)+5*slap*run+fwy*2;cdx=fwx*.8+px*.25*l;cdy=-.9+1.6*slap+fwy*.5;}   // both arms lifted high, then brought down
-      else{ex=sx-fwx*(2.6+ph*.6)+px*.8*l;ey=sy+2.6-fwy*2.6;hx2=ex-fwx*(3.2+ph)+px*.4*l;hy2=ey-.6-fwy*3;cdx=-fwx*.7;cdy=-.75-fwy*.5;}   // bent back behind it, hiding the claws
+function stHair(c,z,T,q,hx,hy,M){const vx=(z.vx||0)*.03,vy=(z.vy||0)*.03*K,hw=z.hw||0,wh=hw>0?Math.exp(-hw*3.2):0;c.strokeStyle=M('#0c0c0c');c.lineWidth=.45;c.lineCap='round';   // five fine strands, every one adrift on its own
+  for(let i=0;i<5;i++){const u=(i-2)/2,s1=z.seed*1.3+i*2.39,L=7+((i*5+((z.seed*3)|0))%4),bx=hx-q.fwx*1.2+q.px*1.6*u,by=hy-2+q.py*1.2*u,
+      f1=Math.sin(T*(2.1+i*.37)+s1),f2=Math.sin(T*(3.7-i*.29)+s1*1.7),f3=Math.cos(T*(1.3+i*.21)+s1*.6),
+      wp=wh*Math.cos(hw*13-i*.55-.4),wq=wh*Math.cos(hw*13-i*.55-1.5),   // the whip of a blow travels down each strand in turn
+      mx=bx-q.fwx*L*.45-vx*2.5+f1*1.3+q.wx*5*wq,my=by-2.6-q.fwy*L*.25-vy*1.5+f3*1.1+q.wy*5*wq-Math.abs(wq)*1.2,
+      ex=bx-q.fwx*L-vx*6+f2*2.4+f1*.8+q.wx*10*wp,ey=by-1.2-q.fwy*L*.45-vy*4+f3*1.8+f2*.9+q.wy*10*wp-Math.abs(wp)*2;
+    c.beginPath();c.moveTo(bx,by);c.quadraticCurveTo(mx,my,ex,ey);c.stroke();}}
+function drawStalker(c,z,T,mono){const q=stPose(z,T),{fx,fy,gy,fwx,fwy,px,py,hipY,shx,shy,hx,hy,up,run,hun,g,gu}=q,M=col=>mono||col,skin=M('#a6a6a6'),dark=M('#2e2e2e');
+  if(z.state==='chase'&&z.sk==='flop'){if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.5)';ell(c,fx,gy,7,2.4);}   // flat on its face
+    c.lineCap='round';c.strokeStyle=dark;c.lineWidth=2;c.beginPath();c.moveTo(fx-fwx*8,gy-fwy*8-1);c.lineTo(fx+fwx*3,gy+fwy*3-1.4);c.stroke();
+    c.strokeStyle=skin;c.lineWidth=1.1;for(const l of[-1,1]){c.beginPath();c.moveTo(fx+fwx*2+px*2*l,gy+fwy*2+py*2*l-1.4);c.lineTo(fx+fwx*10+px*3.4*l,gy+fwy*10+py*3.4*l-.6);c.stroke();}
+    c.fillStyle=skin;c.beginPath();c.arc(fx+fwx*5.5,gy+fwy*5.5-1.8,2.2,0,TAU);c.fill();c.strokeStyle=M('#000');c.lineWidth=.8;c.stroke();stHair(c,z,T,q,fx+fwx*5.5,gy+fwy*5.5-1.8,M);return;}
+  if(g&&g.type==='roll'){const u=g.t/g.T,cy=gy-4.2-Math.sin(Math.PI*u)*1.5,r=u*TAU*1.5*g.sd;if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.55)';ell(c,fx,gy,4.6,1.8);}   // tucked into a ball, rolling aside
+    c.save();c.translate(fx,cy);c.rotate(r);c.fillStyle=M('#444');c.strokeStyle=M('#000');c.lineWidth=.8;c.beginPath();c.ellipse(0,0,4.2,3.6,0,0,TAU);c.fill();c.stroke();c.fillStyle=skin;c.beginPath();c.arc(2.6,-1.6,2,0,TAU);c.fill();c.stroke();
+    c.strokeStyle=M('#303030');c.lineWidth=1.1;c.beginPath();c.moveTo(-2,2.4);c.lineTo(2.6,3);c.stroke();c.strokeStyle=M('#e4e4e4');c.lineWidth=.6;for(let k=-1;k<=1;k++){c.beginPath();c.moveTo(-3.4,-1+k);c.lineTo(-6.6,-2.2+k*1.9);c.stroke();}c.restore();
+    stHair(c,z,T,q,fx+Math.cos(r)*2.6,cy+Math.sin(r)*2.6-1,M);return;}
+  if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.55)';ell(c,fx,gy,4*(1-q.jump*.35),1.6*(1-q.jump*.35));}
+  c.lineCap='round';c.lineJoin='round';c.strokeStyle=M('#303030');c.lineWidth=1.15;   // long thin legs on tiptoe: one knee lifted high, set down softly
+  for(const l of[-1,1]){const ph=z.phase*.5+(l>0?0:Math.PI),st=Math.sin(ph),lf=Math.max(0,Math.cos(ph))*2.6*(1-up),spl=q.jump*6.5*l,h0=fx+px*1*l,h1=hipY+py*1.1*l,
+      tx2=h0+fwx*st*3*(1-q.jump)+spl,ty2=fy+py*1.1*l+fwy*st*1.8-lf-q.jump*2.5,kx=(h0+tx2)/2+fwx*(2.4+lf*.5)*(1-q.jump)+spl*.35,ky=(h1+ty2)/2+fwy*2-lf*.7-.4;
+    c.beginPath();c.moveTo(h0,h1);c.lineTo(kx,ky);c.lineTo(tx2,ty2);c.lineTo(tx2+fwx*1.3,ty2+fwy*1.3+(lf>.2?.9:0));c.stroke();}
+  const arms=()=>{for(const[idx,l]of[[0,-1],[1,1]]){c.lineWidth=1.05;const sx=shx+px*2.2*l,sy=shy+py*2.4*l+.6;if(!z.arms[idx]){c.fillStyle=M(RED);c.fillRect(sx-1,sy-1,2,2);continue;}
+      let ex,ey,hx2,hy2,cdx,cdy;const ph=Math.sin(z.phase*.5+l)*1.1;
+      if(q.jump>0){ex=sx+px*3.4*l;ey=sy-1.5;hx2=sx+px*6.5*l;hy2=sy-4.5*q.jump;cdx=px*.8*l;cdy=-.6;}   // flung wide in the leap
+      else if(up>0||run){const slap=run?Math.min(1,z.skT/.25):0;ex=sx+px*1.8*l+fwx*(1+3*slap);ey=sy-4*up-2.5*(1-slap)*run+fwy*1;hx2=sx+px*1.2*l+fwx*(1.5+6*slap);hy2=sy-9.5*up-7*run*(1-slap)+5*slap*run+fwy*2;cdx=fwx*.8+px*.25*l;cdy=-.9+1.6*slap+fwy*.5;}   // both arms lifted high, then brought down
+      else{ex=sx-fwx*(2.6+ph*.6)+px*.8*l;ey=sy+2.8-fwy*2.6;hx2=ex-fwx*(3.2+ph)+px*.4*l;hy2=ey-.4-fwy*3;cdx=-fwx*.7;cdy=-.75-fwy*.5;}   // bent back behind it, hiding the claws
       c.strokeStyle=skin;c.beginPath();c.moveTo(sx,sy);c.lineTo(ex,ey);c.lineTo(hx2,hy2);c.stroke();
-      c.strokeStyle=M('#e4e4e4');c.lineWidth=.7;for(let k=-1;k<=1;k++){const ox=px*.9*k,oy=py*.9*k+k*.4;c.beginPath();c.moveTo(hx2+ox*.4,hy2+oy*.4);c.quadraticCurveTo(hx2+ox+cdx*2.4,hy2+oy+cdy*2.4-1,hx2+ox*1.3+cdx*4.6+fwx*1.2,hy2+oy*1.3+cdy*4.6+.6);c.stroke();}c.lineWidth=1.05;}};   // long hooked claws
+      const nx=-cdy,ny=cdx;for(let k=-1;k<=1;k++){const bx2=hx2+nx*1.1*k,by2=hy2+ny*1.1*k,ex2=bx2+cdx*4.3+nx*1.5*k,ey2=by2+cdy*4.3+ny*1.5*k;   // three long claws, fanned clear of each other
+        if(!mono){c.strokeStyle='#000';c.lineWidth=1.1;c.beginPath();c.moveTo(bx2,by2);c.quadraticCurveTo(bx2+cdx*2.4+nx*1.8*k-cdy*.9,by2+cdy*2.4+ny*1.8*k+cdx*.9,ex2,ey2);c.stroke();}
+        c.strokeStyle=M('#f0f0f0');c.lineWidth=.6;c.beginPath();c.moveTo(bx2,by2);c.quadraticCurveTo(bx2+cdx*2.4+nx*1.8*k-cdy*.9,by2+cdy*2.4+ny*1.8*k+cdx*.9,ex2,ey2);c.stroke();}}};
   if(q.away)arms();
-  {const w=.6+.4*Math.abs(q.sa),sh=2.3*w,wa=.55*w+.2;c.fillStyle=M('#444');c.strokeStyle=M('#000');c.lineWidth=.8;c.beginPath();c.moveTo(shx-sh,shy);c.quadraticCurveTo((shx+fx)/2-wa*1.4,(shy+hipY)/2,fx-wa,hipY);c.lineTo(fx+wa,hipY);c.quadraticCurveTo((shx+fx)/2+wa*1.4,(shy+hipY)/2,shx+sh,shy);c.quadraticCurveTo(shx,shy-1.4,shx-sh,shy);c.closePath();c.fill();c.stroke();   // hunched back, a waist like a wasp
-   if(!mono){c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=.5;for(let r=1;r<4;r++){const u=r/4.4,cx2=shx+(fx-shx)*u,cy2=shy+(hipY-shy)*u,ww=sh+(wa-sh)*u;c.beginPath();c.moveTo(cx2-ww*.8,cy2);c.lineTo(cx2+ww*.8,cy2);c.stroke();}}}
+  {const w=.6+.4*Math.abs(q.sa),sh=2.3*w,wa=.5*w+.2;c.fillStyle=M('#444');c.strokeStyle=M('#000');c.lineWidth=.8;c.beginPath();c.moveTo(shx-sh,shy);c.quadraticCurveTo((shx*.35+fx*.65)-wa*1.1,(shy*.4+hipY*.6),fx-wa,hipY);c.lineTo(fx+wa,hipY);c.quadraticCurveTo((shx*.35+fx*.65)+wa*1.1,(shy*.4+hipY*.6),shx+sh,shy);c.quadraticCurveTo(shx,shy-1.4,shx-sh,shy);c.closePath();c.fill();c.stroke();   // hunched back over a long, wasp-thin waist
+   if(!mono){c.strokeStyle='rgba(0,0,0,.5)';c.lineWidth=.5;for(let r=1;r<4;r++){const u=r/6,cx2=shx+(fx-shx)*u,cy2=shy+(hipY-shy)*u,ww=sh*(1-u*1.2);c.beginPath();c.moveTo(cx2-ww*.8,cy2);c.lineTo(cx2+ww*.8,cy2);c.stroke();}}}
   c.strokeStyle=skin;c.lineWidth=1.1;c.beginPath();c.moveTo(shx,shy-.6);c.lineTo(hx-fwx*.8,hy+1.6);c.stroke();   // the neck, stretched out in front
-  {const vx=(z.vx||0)*.02,vy=(z.vy||0)*.02*K;c.strokeStyle=M('#101010');c.lineWidth=.7;   // five strands of hair, drifting like a krasue's but short
-    for(let i=0;i<5;i++){const u=(i-2)/2,bx=hx-fwx*1.4+px*1.5*u,by=hy-1.6+py*1.2*u-Math.abs(u)*-.3,wv=Math.sin(T*4.2+i*1.7+z.seed)*1.6,L=5.5+((i*7+((z.seed*3)|0))%3);
-      c.beginPath();c.moveTo(bx,by);c.quadraticCurveTo(bx-fwx*L*.5-vx*2+wv*.5,by-2.2-fwy*L*.3+Math.cos(T*3.1+i)*.8,bx-fwx*L-vx*5+wv,by-.6-fwy*L*.5-vy*3+Math.sin(T*3.3+i*2.1)*1.4);c.stroke();}}
-  c.fillStyle=skin;c.strokeStyle=M('#000');c.lineWidth=.8;c.beginPath();c.ellipse(hx,hy,2.1,2.6,0,0,TAU);c.fill();c.stroke();   // a narrow, hollow face
-  if(q.away){c.fillStyle=M('#1c1c1c');c.beginPath();c.arc(hx,hy-.5,1.8,0,TAU);c.fill();}
-  else{const ex=hx+q.ca*1.2,as=Math.abs(q.sa),cy=(T*1.1+z.seed)%3,open=up>0||run?1:cy<1.2?(Math.sin(cy*Math.PI*5)>0?1:0):cy<2.1?1:(Math.sin(cy*Math.PI*5)>0?1:0);   // snap-snap-snap, hold it open, snap again
+  stHair(c,z,T,q,hx,hy,M);
+  c.fillStyle=skin;c.strokeStyle=M('#000');c.lineWidth=.8;c.beginPath();c.ellipse(hx,hy,2.1,2.6,q.wk*.5,0,TAU);c.fill();c.stroke();   // a narrow, hollow face
+  if(q.away||q.turned){c.fillStyle=M('#1c1c1c');c.beginPath();c.arc(hx,hy-.5,1.8,0,TAU);c.fill();}
+  else{const ex=hx+q.ca*1.2,as=Math.abs(q.sa),cy=(T*1.1+z.seed)%3,open=up>0||run||z.hw>0?1:cy<1.2?(Math.sin(cy*Math.PI*5)>0?1:0):cy<2.1?1:(Math.sin(cy*Math.PI*5)>0?1:0);   // snap-snap-snap, hold it open, snap again
     c.fillStyle=M('#3a3a3a');c.fillRect(ex-as-.9,hy-.2,1.8,1);if(as>.3)c.fillRect(ex+as-.4,hy-.2,1.8,1);   // sunken cheeks
     const E=stEyes(z,T);if(E){c.fillStyle=M('#ffffff');for(const[x1,y1]of E)c.fillRect(x1,y1,1,1);}
     c.fillStyle=M(open?'rgb(170,14,18)':'rgb(60,8,10)');c.fillRect(ex-.9,hy+1.2,1.8,open?2.3:.7);if(open&&!mono){c.fillStyle='#e8e8e8';c.fillRect(ex-.9,hy+1.2,1.8,.5);}}
   if(!q.away)arms();}
-function updateZombies(dt){STKT+=dt;
+function updateZombies(dt){STKT+=dt;for(const z of zombies)if(z.stalk&&z.hw>0&&z.state!=='chase'){z.hw+=dt;if(z.hw>1)z.hw=0;}
   const humans=[player];if(bot&&!bot.dead&&!e5On())humans.push(bot);
   for(const z of zombies){
     if(z.ride){z.x=player.x-Math.cos(player.fallA||0)*2;z.y=player.y-Math.sin(player.fallA||0)*2;continue;}
@@ -1429,7 +1453,7 @@ function updateZombies(dt){STKT+=dt;
     if(vs>3&&z.state!=='windup'&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down')z.a=angLerp(z.a,Math.atan2(z.vy,z.vx),dt*(z.state==='lunge'?30:6));
     z.phase+=moved*(z.crawl?.35:.22);
     bleedTick(z,dt);if(z.tilt)z.tilt*=Math.exp(-5*dt);
-    if(!hidden&&!(T===player&&player.rollT>0)&&d<(z.crawl?9:11)&&sameLv(z,T)&&!(player.grip&&heldBetween(z.x,z.y,T.x,T.y))&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down'&&!(z.stalk&&z.sk==='flop'&&z.state==='chase')){if(T===player){grab(z);return;}biteBot(z);continue;}
+    if(!hidden&&!(T===player&&player.rollT>0)&&d<(z.crawl?9:11)&&sameLv(z,T)&&!(player.grip&&heldBetween(z.x,z.y,T.x,T.y))&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down'&&!(z.stalk&&(z.sk==='flop'||z.dg)&&z.state==='chase')){if(T===player){grab(z);return;}biteBot(z);continue;}
     z.groan-=dt;if(z.groan<=0){z.groan=(z.aware>0?2.5:6)+rnd()*6;const dp=Math.hypot(z.x-player.x,z.y-player.y);if(dp<240)sfx.groan(.05+.3*(1-dp/240),(z.x-player.x)/220);}
   }
   for(let i=zombies.length-1;i>=0;i--){const z=zombies[i];if(z.burnDead){if(near(z,260))toast('ซอมบี้ไหม้จนเหลือแต่กระดูก');killZ(z,Math.cos(z.a),Math.sin(z.a),false);continue;}if(z.dieOnLand&&z.down&&z.down.landed)killZ(z,z.down.kx,z.down.ky,false);}
