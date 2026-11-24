@@ -170,7 +170,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v11.7</div>
+  <div class="ver">v11.8</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -178,7 +178,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v11.7</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v11.8</h3><ul>
+      <li>เกมหลักซูมออก ×3 เห็นพื้นที่กว้างขึ้น</li>
       <li>คนเอาไฟมาส่งวิ่งด้วยความเร็วปกติแล้ว ต้องเดินอ้อมหลบซอมบี้เอง ผลักได้ทุกตัวเมื่อเข้าระยะ และกลิ้งหลบเมื่อโดนประชิด</li>
       <li>หน้าเลือกตัวละคร: เริ่มที่ซูมออก ×2 ใช้สองนิ้วซูมเข้าออกได้ (สูงสุด ×4) · บริเวณที่ยังไม่เคยไปสำรวจจะมืดสนิท</li>
       <li>บอทไม่มีไฟคาดหัวของตัวเองแล้ว ไฟคาดหัวมีดวงเดียว</li>
@@ -715,7 +716,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='11.7';
+let useBot=true,bot=null,hero='fifa';const VERSION='11.8';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -4852,7 +4853,7 @@ function layMove(x,y,id){if(!layDrag||layDrag.pid!==id)return;LAY[layDrag.id]=[l
 /* ---- hand the head-torch to someone else (2 s) ---- */
 /* ---------- changing character in play: time stops, drag the view to whoever you want, tap them ---------- */
 let PK=null;
-let ZM=1,EXPL=new Uint8Array(MW*MH),explT=0;const PKK=['fifa','jp','pam','pw'];
+const ZPLAY=3;let ZM=ZPLAY,EXPL=new Uint8Array(MW*MH),explT=0;const PKK=['fifa','jp','pam','pw'];
 function explTick(dt){explT-=dt;if(explT>0||!player)return;explT=.25;const R=9,ci=Math.floor(player.x/TS),cj=Math.floor(player.y/TS);   // everything within sight of where you have walked counts as seen
   for(let j=Math.max(0,cj-R);j<=Math.min(MH-1,cj+R);j++)for(let i=Math.max(0,ci-R);i<=Math.min(MW-1,ci+R);i++)if((i-ci)*(i-ci)+(j-cj)*(j-cj)<=R*R)EXPL[j*MW+i]=1;}
 function seenAt(x,y){const i=Math.floor(x/TS),j=Math.floor(y/TS);return i>=0&&j>=0&&i<MW&&j<MH&&EXPL[j*MW+i]===1;}
@@ -4862,13 +4863,13 @@ function pickList(){return[[bot,bot&&(bot.jp?'jp':'fifa')],[pam,'pam'],[praewa,'
 function pkEnt(k){return k===hero?player:(bot&&(bot.jp?'jp':'fifa')===k)?bot:(k==='pam'&&pam)?pam:(k==='pw'&&praewa)?praewa:(subE&&subE.who===k)?subE:null;}
 function pkDead(k){const e=pkEnt(k);return DEADS.has(k)||!e||!!e.dead;}
 function pkZoom(z){z=Math.round(clamp(z,1,4)*8)/8;if(ZM!==z){ZM=z;resize();}}
-function startPick(){if(state!=='play')return;PK={mode:'zoom',z:2,sel:null,dead:null,tg:null,x:player.x,y:player.y,d:null,d2:null,ui:{}};state='pick';joy.active=false;look.active=false;aimT.active=false;joyV={x:0,y:0};player.charging=false;player.vx=player.vy=0;pkZoom(2);}
-function pickEnd(){pkZoom(1);PK=null;if(state==='pick')state='play';cam.x=player.x;cam.y=player.y;}
+function startPick(){if(state!=='play')return;PK={mode:'zoom',z:4,sel:null,dead:null,tg:null,x:player.x,y:player.y,d:null,d2:null,ui:{}};state='pick';joy.active=false;look.active=false;aimT.active=false;joyV={x:0,y:0};player.charging=false;player.vx=player.vy=0;pkZoom(4);}
+function pickEnd(){pkZoom(ZPLAY);PK=null;if(state==='pick')state='play';cam.x=player.x;cam.y=player.y;}
 function pickFrame(rdt){const Q=PK;let tx=cam.x,ty=cam.y;
   if(Q.mode==='zoom'){tx=Q.x;ty=Q.y;}else if(Q.sel){const e=pkEnt(Q.sel);if(e){tx=e.x;ty=e.y;}}else if(Q.tg){tx=Q.tg.x;ty=Q.tg.y;}
   const k=1-Math.exp(-rdt*(Q.mode==='zoom'?30:9));cam.x+=(tx-cam.x)*k;cam.y+=(ty-cam.y)*k;   // a quick pan to whoever was picked
-  if(Q.mode==='focus'){state='play';updatePlay(rdt*.06);if(state==='play')state='pick';else{pkZoom(1);PK=null;}}else computeLights();}   // and there the world crawls on in extreme slow motion
-function pickDown(x,y,id){const Q=PK;if(Q.d&&Q.d.id!==id&&!Q.d2){Q.d2={id,x,y};Q.d.x=Q.d.x==null?Q.d.sx:Q.d.x;Q.d.y=Q.d.y==null?Q.d.sy:Q.d.y;Q.d.mv=99;Q.pin={d0:Math.hypot(x-Q.d.x,y-Q.d.y)||1,z0:Q.mode==='zoom'?Q.z:1};   // a second finger: pinch to zoom
+  if(Q.mode==='focus'){state='play';updatePlay(rdt*.06);if(state==='play')state='pick';else{pkZoom(ZPLAY);PK=null;}}else computeLights();}   // and there the world crawls on in extreme slow motion
+function pickDown(x,y,id){const Q=PK;if(Q.d&&Q.d.id!==id&&!Q.d2){Q.d2={id,x,y};Q.d.x=Q.d.x==null?Q.d.sx:Q.d.x;Q.d.y=Q.d.y==null?Q.d.sy:Q.d.y;Q.d.mv=99;Q.pin={d0:Math.hypot(x-Q.d.x,y-Q.d.y)||1,z0:Q.mode==='zoom'?Q.z:ZPLAY};   // a second finger: pinch to zoom
       if(Q.mode!=='zoom'){Q.mode='zoom';Q.x=cam.x;Q.y=cam.y;}return;}
   Q.d={id,sx:x,sy:y,x,y,cx:Q.x,cy:Q.y,mv:0};}
 function pickMove(x,y,id){const Q=PK;if(!Q)return;if(Q.d2&&Q.pin&&Q.d){if(id===Q.d2.id){Q.d2.x=x;Q.d2.y=y;}else if(id===Q.d.id){Q.d.x=x;Q.d.y=y;}else return;
@@ -4879,8 +4880,8 @@ function pickUp(x,y,id){const Q=PK;if(!Q)return;if(Q.d2&&(id===Q.d2.id||(Q.d&&id
   if(hit(U.start)&&Q.sel){const k=Q.sel,e=pkEnt(k);pickEnd();if(k!==hero&&e&&!e.dead)switchTo(e,k);return;}
   if(hit(U.zoom)){Q.mode='zoom';Q.x=cam.x;Q.y=cam.y;pkZoom(Q.z);return;}
   for(const k of PKK)if(hit(U[k])){
-    if(pkDead(k)){const e=pkEnt(k),ps=DEADPOS[k]||(e&&e!==player?{x:e.x,y:e.y}:null);if(!ps){toast(CNAME[k]+' ไม่อยู่แล้ว');return;}Q.mode='focus';Q.sel=null;Q.dead=k;Q.tg=ps;pkZoom(1);sfx.ready();return;}   // the dead: show where they fell
-    Q.mode='focus';Q.sel=k;Q.dead=null;Q.tg=null;pkZoom(1);sfx.ready();return;}}
+    if(pkDead(k)){const e=pkEnt(k),ps=DEADPOS[k]||(e&&e!==player?{x:e.x,y:e.y}:null);if(!ps){toast(CNAME[k]+' ไม่อยู่แล้ว');return;}Q.mode='focus';Q.sel=null;Q.dead=k;Q.tg=ps;pkZoom(ZPLAY);sfx.ready();return;}   // the dead: show where they fell
+    Q.mode='focus';Q.sel=k;Q.dead=null;Q.tg=null;pkZoom(ZPLAY);sfx.ready();return;}}
 const AUC=document.createElement('canvas'),auc=AUC.getContext('2d');
 function pkAura(e,col,pu,s){const G=56,SC=Math.max(2,Math.ceil(P*dpr)),o=Math.max(.9,1.3*s/P),T=performance.now()/1000,gx=e.x-camX-G/2,gy=e.y*K-camY-elevOf(e)-G*.72;
   if(AUC.width!==G*SC){AUC.width=AUC.height=G*SC;}auc.setTransform(1,0,0,1,0,0);auc.globalCompositeOperation='source-over';auc.clearRect(0,0,AUC.width,AUC.height);
