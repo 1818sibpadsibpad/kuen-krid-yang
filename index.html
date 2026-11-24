@@ -75,6 +75,13 @@ button.duo.on{background:linear-gradient(180deg,#1faa52,#0d6e32);color:#eafff0}
  #menu .ver{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);right:max(env(safe-area-inset-right,0px),16px)}
  .mbg:after{background:radial-gradient(ellipse at 30% 50%,rgba(10,9,8,0) 20%,rgba(10,9,8,.78) 90%),linear-gradient(90deg,rgba(10,9,8,.55),rgba(10,9,8,0) 45%,rgba(10,9,8,.35))}
 }
+@media (orientation:portrait) and (max-height:800px) and (min-aspect-ratio:3/4){
+#mMain{padding:calc(env(safe-area-inset-top,0px) + 4vh) 20px calc(env(safe-area-inset-bottom,0px) + 3vh)}
+.mtitle{margin-top:0;font-size:clamp(26px,min(11.5vw,8.6vh),72px)}
+#mMain .sub{margin-top:1vh}.mhead .landtag{margin-top:1.4vh}button.duo{margin-top:1.4vh}
+.mhead:after{height:3vh;margin-top:1.4vh}
+.mbtns{gap:1.6vh}button.mb{font-size:clamp(15px,3vh,22px);padding:1.7vh 10px}button.mb.set{font-size:clamp(14px,2.6vh,19px);padding:1.3vh 10px}button.mb.go{font-size:clamp(19px,3.9vh,28px);padding:2.1vh 10px}
+}
 @media (orientation:landscape) and (min-height:600px){button.mb{font-size:22px;padding:16px 10px}button.mb.set{font-size:19px;padding:12px 10px}button.mb.go{font-size:30px;padding:20px 10px}.landtag{font-size:19px}#mMain .sub{font-size:15px}}
 @keyframes tagf{0%,92%,100%{opacity:1}94%{opacity:.35}96%{opacity:1}97%{opacity:.5}}
 @keyframes pulse{50%{color:#ffb0a8;text-shadow:0 0 18px #ff3b30,0 0 4px #000,2px 2px 0 #000}}
@@ -170,7 +177,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v11.8</div>
+  <div class="ver">v11.9</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -178,7 +185,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v11.8</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v11.9</h3><ul>
+      <li>iPhone Duo: หน้าเมนูเห็นปุ่มเริ่มเกมครบ · ภาพเต็มจอถึงขอบซ้ายขวา · ปุ่มควบคุมเลื่อนลงต่ำไม่บังตัวละคร · เกมซูมเข้า 20% (ซูมออก ×2.5)</li>
       <li>เกมหลักซูมออก ×3 เห็นพื้นที่กว้างขึ้น</li>
       <li>คนเอาไฟมาส่งวิ่งด้วยความเร็วปกติแล้ว ต้องเดินอ้อมหลบซอมบี้เอง ผลักได้ทุกตัวเมื่อเข้าระยะ และกลิ้งหลบเมื่อโดนประชิด</li>
       <li>หน้าเลือกตัวละคร: เริ่มที่ซูมออก ×2 ใช้สองนิ้วซูมเข้าออกได้ (สูงสุด ×4) · บริเวณที่ยังไม่เคยไปสำรวจจะมืดสนิท</li>
@@ -716,7 +724,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='11.8';
+let useBot=true,bot=null,hero='fifa';const VERSION='11.9';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -3870,7 +3878,7 @@ let LAY={};const LAYS={port:{},land:{}};const curOr=()=>innerWidth>innerHeight?'
 function saveLay(){try{localStorage.setItem('lay_'+curOr(),JSON.stringify(LAY));}catch(_){}}
 function applyLayout(){LAY=LAYS[curOr()];const L=typeof LAY==='object'?LAY:{},o=id=>L[id]||[0,0];for(const b of btns){const[d1,d2]=o(b.id);b.x=b.bx+d1;b.y=b.by+d2;}{const[d1,d2]=o('atk');fireB.x=fireB.bx+d1;fireB.y=fireB.by+d2;}{const[d1,d2]=o('sleep');sleepBtn.x=sleepBtn.bx+d1;sleepBtn.y=sleepBtn.by+d2;}const pw=btns.find(b=>b.id==='pickw');if(pw){woodBtn.x=pw.x;woodBtn.y=pw.y;}}
 let SAFEB=0;
-function joyRest(){const o=(LAYS[curOr()]||{}).joy||[0,0];return[30+joyR*1.3+o[0],SHc-24-SAFEB-joyR*1.3+o[1]];}
+function joyRest(){const o=(LAYS[curOr()]||{}).joy||[0,0];return[30+joyR*1.3+o[0],SHc-(DUO?6:24)-SAFEB-joyR*(DUO?1.1:1.3)+o[1]];}
 let fireB={x:0,y:0,r:44},btns=[],joyR=55,sleepBtn={id:'sleep',x:0,y:0,r:30,flash:0},woodBtn={id:'wood',x:0,y:0,r:30},wDrag=null;
 
 let TOPI=0,UTOP=0,SAFEX=0,OFFX=0,OFFY=0,LIW=0,LIH=0,DUO=false;try{DUO=localStorage.getItem('duo')==='1';}catch(e){}
@@ -3888,7 +3896,7 @@ function topInset(){let v=null;const or=innerWidth>innerHeight?'land':'port';   
 function resize(){
   TOPI=topInset();document.documentElement.style.setProperty('--topi',TOPI+'px');LIW=innerWidth;LIH=innerHeight;
   SWc=innerWidth;SHc=innerHeight-TOPI;OFFX=0;OFFY=0;
-  if(DUO){const r=SWc>SHc?DUOR:1/DUOR,w=Math.floor(Math.min(SWc,SHc*r)),h=Math.floor(w/r);OFFX=Math.floor((SWc-w)/2);OFFY=Math.floor((SHc-h)/2);SWc=w;SHc=h;}   // the picture takes the Duo's proportions, centred
+  // Duo mode fills the whole screen, edge to edge
   for(const c of[gameCv,ui]){c.style.top=(TOPI+OFFY)+'px';c.style.left=OFFX+'px';}ui.style.width=SWc+'px';ui.style.height=SHc+'px';
   P=Math.max(2,Math.min(SWc,SHc)/(DUO?176:140))/ZM;   // and shows a wider piece of the plantation on the big screen
   {const land=innerWidth>innerHeight,touch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
@@ -3902,8 +3910,8 @@ function resize(){
   UIS=clamp(Math.min(SWc,SHc)/400,.8,1.35);const s=UIS;
   {let sb=0;try{const pr=document.createElement('div');pr.style.cssText='position:fixed;left:0;bottom:0;height:env(safe-area-inset-bottom,0px);width:1px;visibility:hidden';document.body.appendChild(pr);sb=pr.offsetHeight||0;pr.remove();}catch(_){}
    const touch=('ontouchstart' in window)||navigator.maxTouchPoints>0,standalone=navigator.standalone||matchMedia('(display-mode: standalone)').matches;
-   SAFEB=touch?sb+(standalone?6:26):0;}   // keep thumbs clear of Safari's bottom bar / the home-indicator swipe zone
-  joyR=55*s;fireB={x:SWc-92*s,y:SHc-92*s-SAFEB,r:48*s};
+   SAFEB=touch?sb+(standalone?6:DUO?10:26):0;}   // keep thumbs clear of Safari's bottom bar / the home-indicator swipe zone
+  joyR=55*s;fireB={x:SWc-92*s,y:SHc-(DUO?58:92)*s-SAFEB,r:48*s};
   const mkb=(id,label,ang)=>({id,label,x:fireB.x+Math.cos(ang)*98*s,y:fireB.y+Math.sin(ang)*98*s,r:28*s,flash:0});
   sleepBtn.x=SWc-72*s-SAFEX-(UTOP?150:0);sleepBtn.y=64*s;sleepBtn.r=34*s;woodBtn.x=fireB.x;woodBtn.y=fireB.y-176*s;woodBtn.r=27*s;
   btns=[{id:'kick',label:'ถีบ',x:fireB.x-fireB.r*2-18*s,y:fireB.y+4*s,r:fireB.r,flash:0,big:true},{id:'drop',label:'วางของ',x:fireB.x-fireB.r*2-38*s,y:fireB.y-150*s,r:24*s,flash:0},mkb('hide','ซ่อน',-Math.PI*.75),{id:'look',label:'หันมอง',x:fireB.x,y:fireB.y-104*s,r:37*s,flash:0},{id:'light',label:'ไฟ',x:SWc-34*s-SAFEX,y:122*s,r:20*s,flash:0},{id:'swap',label:'เปลี่ยนอาวุธ',x:SWc>SHc?30+joyR*2.6+28*s:34*s,y:SWc>SHc?SHc-24-SAFEB-joyR*2.3:SHc*.5,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'drag',label:'ลากกิ่ง',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'grip',label:'จับไม้',x:fireB.x-70*s,y:fireB.y-176*s,r:36*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-176*s,r:24*s,flash:0},{id:'feed',label:'จุดไฟ',x:fireB.x-122*s,y:fireB.y-176*s,r:27*s,flash:0},{id:'roll',label:'กลิ้ง',x:fireB.x-fireB.r*2-38*s,y:fireB.y-84*s,r:30*s,flash:0},{id:'tail',label:'จับหาง',x:fireB.x-46*s,y:fireB.y-262*s,r:40*s,flash:0}];
@@ -4853,7 +4861,7 @@ function layMove(x,y,id){if(!layDrag||layDrag.pid!==id)return;LAY[layDrag.id]=[l
 /* ---- hand the head-torch to someone else (2 s) ---- */
 /* ---------- changing character in play: time stops, drag the view to whoever you want, tap them ---------- */
 let PK=null;
-const ZPLAY=3;let ZM=ZPLAY,EXPL=new Uint8Array(MW*MH),explT=0;const PKK=['fifa','jp','pam','pw'];
+const ZPLAY=2.5;let ZM=ZPLAY,EXPL=new Uint8Array(MW*MH),explT=0;const PKK=['fifa','jp','pam','pw'];
 function explTick(dt){explT-=dt;if(explT>0||!player)return;explT=.25;const R=9,ci=Math.floor(player.x/TS),cj=Math.floor(player.y/TS);   // everything within sight of where you have walked counts as seen
   for(let j=Math.max(0,cj-R);j<=Math.min(MH-1,cj+R);j++)for(let i=Math.max(0,ci-R);i<=Math.min(MW-1,ci+R);i++)if((i-ci)*(i-ci)+(j-cj)*(j-cj)<=R*R)EXPL[j*MW+i]=1;}
 function seenAt(x,y){const i=Math.floor(x/TS),j=Math.floor(y/TS);return i>=0&&j>=0&&i<MW&&j<MH&&EXPL[j*MW+i]===1;}
