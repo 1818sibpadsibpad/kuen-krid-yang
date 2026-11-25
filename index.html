@@ -177,7 +177,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v12.7</div>
+  <div class="ver">v12.8</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -185,7 +185,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v12.7</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v12.8</h3><ul>
+      <li>ผีปอบ: หลบแล้วกระโดดถอยออกนอกระยะอาวุธที่เราถือ จากนั้นจ้องเรา เดินซ้ายทีขวาที ยกมือสองข้างท่าตั๊กแตนตำข้าว โยกตัวขึ้นลงหยั่งเชิง และค่อยๆ อ้อมไปทางหลังเรา · ตีอีกก็หลบอีก (ครบ 3 ครั้งถอยไปตั้งหลัก 3 วิ เหมือนเดิม)</li>
       <li>ผีปอบ: ตัวสูงขึ้น ช่วงเอวยาวขึ้น แขนยาวขึ้น</li>
       <li>เสียงใหม่: ตีโดนเป้าหมาย (ทำดาเมจ) สุ่ม 2 เสียง · ไม้แจ็คพอท ไม้ไฟแพม กระทะแพรวา และการถีบ/ผลัก ใช้เสียงฟันอากาศแบบใหม่</li>
       <li>งูที่ถือในมือ: เอาขอบดำออก</li>
@@ -737,7 +738,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='12.7';
+let useBot=true,bot=null,hero='fifa';const VERSION='12.8';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1431,10 +1432,14 @@ function stalkAI(z,dt,T,d,sees,hidden){
   if(z.skS==null||STKT-z.skS>.4){z.sk='circle';z.skT=0;}z.skS=STKT;if(z.dgCd>0)z.dgCd-=dt;
   if(z.hw>0){z.hw+=dt;if(z.hw>1)z.hw=0;}
   if(z.dgN&&STKT-(z.dgL||0)>4)z.dgN=0;
-  if(z.dg){const g=z.dg,st=Math.min(dt,g.T-g.t);g.t+=dt;moveCircle(z,g.dx*16*st/g.T,g.dy*16*st/g.T,5);z.vx=z.vy=0;z.a=Math.atan2(-g.dy,-g.dx);if(g.t>=g.T)z.dg=null;return[z.x,z.y,0];}   // 2 m, at once
+  if(z.dg){const g=z.dg,st=Math.min(dt,g.T-g.t);g.t+=dt;moveCircle(z,g.dx*(g.D||16)*st/g.T,g.dy*(g.D||16)*st/g.T,5);z.vx=z.vy=0;z.a=Math.atan2(-g.dy,-g.dx);if(g.t>=g.T)z.dg=null;return[z.x,z.y,0];}   // 2 m, at once
   if(T!==player||hidden||!sameLv(z,T)){z.sk='circle';z.skT=0;return null;}
   const P=player;sees=d<200&&los(z.x,z.y,P.x,P.y);
   if(z.sk==='flee'){z.skT-=dt;if(z.skT<=0){z.sk='circle';z.skT=0;return null;}const fd=Math.hypot(z.x-player.x,z.y-player.y)||1;return[z.x+(z.x-player.x)/fd*60,z.y+(z.y-player.y)/fd*60,z.spd];}   // walking off to reload
+  if(z.sk==='taunt'){z.skT+=dt;if(d>200||!sees||z.skT>z.tauM){z.sk='circle';z.skT=1.6;return null;}   // eyes on you: side to side, claws up like a mantis, bobbing — and edging round to your back
+    const R=W(P).kmax+14,cur=Math.atan2(z.y-P.y,z.x-P.x);let df=P.facing+Math.PI-cur;df=Math.atan2(Math.sin(df),Math.cos(df));
+    const side=Math.abs(df)>2.6?z.tauS:Math.sign(df),sw=Math.sin(z.skT*2.6+z.seed)*.45+side*.4,nx=cur+sw;   // side-steps back and forth, drifting round towards your back
+    return[P.x+Math.cos(nx)*R,P.y+Math.sin(nx)*R,z.spd*.75];}
   if(z.sk==='flop'){z.skT-=dt;z.vx*=.7;z.vy*=.7;if(z.skT<=0){z.sk='circle';z.skT=0;}return[z.x,z.y,0];}
   if(z.sk==='raise'){z.skT+=dt;z.a=angLerp(z.a,Math.atan2(P.y-z.y,P.x-z.x),dt*10);if(d>200||(!sees&&z.skT>.5)){z.sk='circle';z.skT=0;return null;}
     if(z.skT>=2){z.sk='rush';z.skT=0;z.rd=d;sfx.screech(-(z.x-P.x)/200);}return[z.x,z.y,0];}
@@ -1447,17 +1452,19 @@ function stalkAI(z,dt,T,d,sees,hidden){
   const nx=cur+clamp(df,-.6,.6),R=76;return[P.x+Math.cos(nx)*R,P.y+Math.sin(nx)*R,z.spd];}   // keep its distance and work round behind you
 function stalkDodge(z,h){if(!z.stalk||z.crawl||z.state!=='chase'||z.burn>0||z.slam||z.dgCd>0||z.dg||z.sk==='flop'||z.sk==='rush'||z.sk==='flee')return false;   // ผีปอบ: arms flung wide, a quick hop 2 m back, three in a row
   const d=Math.hypot(z.x-h.x,z.y-h.y)||1,bx=(z.x-h.x)/d,by=(z.y-h.y)/d,an=[0,.8,-.8,1.25,-1.25][(rnd()*5)|0],ca=Math.cos(an),sa=Math.sin(an);   // straight back, or back and off to either side
-  z.dg={type:'jump',t:0,T:.16,dx:bx*ca-by*sa,dy:bx*sa+by*ca,sd:1};z.dgN=(z.dgN||0)+1;z.dgL=STKT;z.vx=z.vy=0;
-  if(z.dgN>=3){z.dgN=0;z.dgCd=3;z.sk='flee';z.skT=3;}else if(z.sk==='raise'){z.sk='circle';z.skT=0;}   // after the third it backs off for 3 s to get its nerve back
+  const RCH=(h===player?W(h).kmax:24)+12,D=clamp(RCH-d+4,16,46);   // far enough back to be out of reach of what you are holding
+  z.dg={type:'jump',t:0,T:.16+(D-16)/260,D,dx:bx*ca-by*sa,dy:bx*sa+by*ca,sd:1};z.dgN=(z.dgN||0)+1;z.dgL=STKT;z.vx=z.vy=0;
+  if(z.dgN>=3){z.dgN=0;z.dgCd=3;z.sk='flee';z.skT=3;}else{z.sk='taunt';z.skT=0;z.skS=STKT;z.tauM=2.2+rnd()*1.6;z.tauS=rnd()<.5?-1:1;}   // then it squares up and sizes you up   // after the third it backs off for 3 s to get its nerve back
   sfx.whoosh();return true;}
 function stPose(z,T){const fx=z.x-camX,a=z.a,ca=Math.cos(a),sa=Math.sin(a),fwx=ca,fwy=sa*K,px=-sa,py=ca*K,sk=z.state==='chase'?z.sk:null,up=sk==='raise'?Math.min(1,z.skT/.3):0,run=sk==='rush'?1:0,
     g=z.dg,gu=g?Math.sin(Math.PI*Math.min(1,g.t/g.T)):0,lean=g&&g.type==='lean'?gu*g.sd:0,duck=g&&g.type==='duck'?gu:0,jump=g&&g.type==='jump'?gu:0,
     creep=Math.abs(Math.sin(z.phase*.5))*1.1*(1-up)*(1-run),fy=z.y*K-camY-jump*9,   // it creeps: the whole body dips with every stealthy step
-    hun=(1-up)*(1-run*.5),jit=up?Math.sin(T*60+z.seed)*.5:0,hipY=fy-12+creep+duck*4,   // taller: longer legs
+    mant=sk==='taunt'&&!g?1:0,bob=mant?Math.sin(T*7+z.seed)*1.3:0,
+    hun=(1-up)*(1-run*.5)*(1-mant*.45),jit=up?Math.sin(T*60+z.seed)*.5:0,hipY=fy-12+creep+duck*4+bob,   // taller: longer legs
     shx=fx+fwx*4.6*hun+jit+px*4.5*lean,shy=hipY-11.5+fwy*4.6*hun+2*hun-up*1.5+duck*4.5+py*4.5*lean+Math.abs(lean)*1.5;
   let hx=shx+fwx*(3.8*hun+1.2)+px*2.5*lean,hy=shy-2.2+fwy*(3.8*hun+1.2)+.9*hun+duck*1.5+py*2.5*lean,wk=0,wx=0,wy=0;
   if(z.hw>0){wk=Math.exp(-z.hw*5)*Math.cos(z.hw*17);wx=(z.hwx||0);wy=(z.hwy||0)*K;hx+=wx*3.2*wk;hy+=wy*3.2*wk+Math.abs(wk)*.6;}   // struck: the head snaps round with the blow
-  return{fx,fy,gy:z.y*K-camY,ca,sa,fwx,fwy,px,py,sk,up,run,hun,hipY,shx,shy,hx,hy,away:sa<-.25,g,gu,jump,duck,lean,wk,wx,wy,turned:z.hw>0&&z.hw<.2};}
+  return{fx,fy,gy:z.y*K-camY,ca,sa,fwx,fwy,px,py,sk,up,run,hun,hipY,shx,shy,hx,hy,away:sa<-.25,g,gu,jump,duck,lean,wk,wx,wy,mant,turned:z.hw>0&&z.hw<.2};}
 function stEyes(z,T){if(!z.stalk||z.crawl||z.air>0||z.spin)return null;const st=z.state;if(st==='down'||st==='eat'||st==='bite'||st==='eatB'||st==='eatC'||(st==='chase'&&z.sk==='flop')||(z.dg&&z.dg.type==='roll'))return null;
   const q=stPose(z,T);if(q.away||q.turned)return null;const tb=(T+z.seed)%2;if(tb<.08||(tb>.16&&tb<.24))return null;   // two quick blinks every 2 s
   const ex=q.hx+q.ca*1.2,as=Math.abs(q.sa),E=[[Math.round(ex-as-.5),Math.round(q.hy-.6)]];if(as>.3)E.push([Math.round(ex+as-.5)+1,Math.round(q.hy-.6)]);return E;}
@@ -1483,6 +1490,7 @@ function drawStalker(c,z,T,mono){const q=stPose(z,T),{fx,fy,gy,fwx,fwy,px,py,hip
   const arms=()=>{for(const[idx,l]of[[0,-1],[1,1]]){c.lineWidth=1.05;const sx=shx+px*2.2*l,sy=shy+py*2.4*l+.6;if(!z.arms[idx]){c.fillStyle=M(RED);c.fillRect(sx-1,sy-1,2,2);continue;}
       let ex,ey,hx2,hy2,cdx,cdy;const ph=Math.sin(z.phase*.5+l)*1.1;
       if(q.jump>0){ex=sx+px*3.4*l;ey=sy-1.5;hx2=sx+px*6.5*l;hy2=sy-4.5*q.jump;cdx=px*.8*l;cdy=-.6;}   // flung wide in the leap
+      else if(q.mant){const tw=Math.sin(T*9+l*1.7)*.4;ex=sx+fwx*2.6+px*.9*l;ey=sy-3.8+fwy*2.6+tw;hx2=ex+fwx*1.6+px*.3*l;hy2=ey+3.2+fwy*1.6;cdx=fwx*.35;cdy=1+fwy*.3;}   // both arms up in front, folded like a praying mantis
       else if(up>0||run){const slap=run?Math.min(1,z.skT/.25):0;ex=sx+px*1.8*l+fwx*(1+3*slap);ey=sy-4*up-2.5*(1-slap)*run+fwy*1;hx2=sx+px*1.2*l+fwx*(1.5+6*slap);hy2=sy-9.5*up-7*run*(1-slap)+5*slap*run+fwy*2;cdx=fwx*.8+px*.25*l;cdy=-.9+1.6*slap+fwy*.5;}   // both arms lifted high, then brought down
       else{ex=sx-fwx*(2.6+ph*.6)+px*.8*l;ey=sy+2.8-fwy*2.6;hx2=ex-fwx*(3.2+ph)+px*.4*l;hy2=ey-.4-fwy*3;cdx=-fwx*.7;cdy=-.75-fwy*.5;}   // bent back behind it, hiding the claws
       {const AL=1.35,ox=ex,oy=ey;ex=sx+(ox-sx)*AL;ey=sy+(oy-sy)*AL;hx2=ex+(hx2-ox)*AL;hy2=ey+(hy2-oy)*AL;}   // longer arms
@@ -1563,6 +1571,7 @@ function updateZombies(dt){STKT+=dt;for(const z of zombies)if(z.stalk&&z.hw>0&&z
     const moved=Math.hypot(z.x-ox,z.y-oy),vs=Math.hypot(z.vx,z.vy);z.lw=(tx!==null&&(z.state==='chase'||z.state==='search'))?sp*dt:0;z.lm=moved;
     if(z.state==='wander'&&moved<vs*dt*.3)z.wa=rnd()*TAU;
     if(vs>3&&z.state!=='windup'&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down')z.a=angLerp(z.a,Math.atan2(z.vy,z.vx),dt*(z.state==='lunge'?30:6));
+    if(z.stalk&&z.sk==='taunt'&&z.state==='chase')z.a=angLerp(z.a,Math.atan2(player.y-z.y,player.x-z.x),dt*14);   // stepping sideways, never taking its eyes off you
     z.phase+=moved*(z.crawl?.35:.22);
     bleedTick(z,dt);if(z.tilt)z.tilt*=Math.exp(-5*dt);
     if(!hidden&&!(T===player&&player.rollT>0)&&d<(z.crawl?9:11)&&sameLv(z,T)&&!(player.grip&&heldBetween(z.x,z.y,T.x,T.y))&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down'&&!(z.stalk&&(z.sk==='flop'||z.dg)&&z.state==='chase')){if(T===player){grab(z);return;}biteBot(z);continue;}
