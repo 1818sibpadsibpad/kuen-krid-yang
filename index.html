@@ -177,7 +177,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v12.3</div>
+  <div class="ver">v12.4</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -185,7 +185,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v12.3</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v12.4</h3><ul>
+      <li>งู: ตีตายแล้วกระเด็นลอยพลิกตัวตกพื้นไม่เกิน 3 เมตร · เดินไปกดปุ่ม <b>เก็บงู</b> (ตรงตำแหน่งปุ่มเก็บฟืน) ตัวละครก้มลงเก็บด้วยมือ · งูถูกกำหางไว้ในมือข้างที่ว่าง ห้อยแกว่งตามแรงเหวี่ยงและแรงโน้มถ่วง (ถืออาวุธสองมือก็ยังกำไว้) สูงสุด 5 ตัว</li>
       <li>เสียงฟันมีดกรีดยางใช้กับทุกคนที่ถือมีดกรีดยาง รวมถึงบอท · บอทยิ่งอยู่ไกลเสียงยิ่งเบา</li>
       <li>เสียงใหม่: ฟีฟ่าฟันด้วยมีดกรีดยาง ใช้เสียงที่อัดมา สลับ 2 แบบ (อาวุธอื่นยังเป็นเสียงเดิม)</li>
       <li>คัตซีน 1 (แนวตั้ง): เอาแถบดำบน-ล่างออก ภาพเต็มจอ</li>
@@ -355,7 +356,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
       <li>ในเขตรั้ว <b>กดค้าง "วางฟืน"</b> แล้วลากวงแหวนไปตรงที่จะวาง ปล่อยนิ้ว = วาง</li>
       <li>เจอกิ่งใหญ่ กด <b>ลากกิ่ง</b> กลับบ้าน — แพมหักเป็นฟืนให้ 3–5 ท่อน</li></ul></div>
     <div class="sec"><h3>🐍 งูสิง</h3><ul>
-      <li>เข้าใกล้ ~5 ม. งูจะ<b>ยกคอขู่ฟ่อๆ</b> — ตีตอนนั้นตาย แล้ว<b>คล้องคอ</b>ไว้ (สูงสุด 5 ตัว)</li>
+      <li>เข้าใกล้ ~5 ม. งูจะ<b>ยกคอขู่ฟ่อๆ</b> — ตีตอนนั้นตาย งูกระเด็นตกพื้น เดินไปกด <b>เก็บงู</b> ถือหางไว้ในมือ (สูงสุด 5 ตัว)</li>
       <li>ถ้าเดินเข้าไปชิด <b style="color:#ff3b30">งูกัด!!</b> เดินช้าลงครึ่งหนึ่ง → กดปุ่มโจมตีปุ่มไหนก็ได้เพื่อ<b>เตะงูออก</b></li>
       <li>กลับบ้าน กดค้างปุ่ม <b>ปิ้งงู</b> ลากใส่กองไฟ (รอบกองไฟได้ 8 ไม้) สุกแล้ว 1 ตัว = <b>6 คำ</b> เท่ากล้วย 6 ลูก</li></ul></div>
     <div class="sec"><h3>🍌 อาหาร</h3><ul>
@@ -728,7 +729,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='12.3';
+let useBot=true,bot=null,hero='fifa';const VERSION='12.4';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1080,19 +1081,60 @@ function spawnSnakes(n){for(let k=0;k<n*10&&n>0;k++){const t=outdoor[(rnd()*outd
 function updateSnakes(dt){for(let i=snakes.length-1;i>=0;i--){const n=snakes[i];n.t+=dt;
   if(n.st==='fly'){n.x+=n.vx*dt;n.y+=n.vy*dt;n.h+=n.vh*dt;n.vh-=210*dt;n.spin+=dt*16;if(n.t>1.7)snakes.splice(i,1);continue;}
   if(n.st==='att'){n.x=player.x;n.y=player.y;continue;}
+  if(n.st==='dead')continue;
+  if(n.st==='toss'){n.x+=n.vx*dt;n.y+=n.vy*dt;n.h+=n.vh*dt;n.vh-=300*dt;n.spin+=n.sv*dt;n.flip+=n.fv*dt;n.sv*=1-dt*.6;
+    if(n.h<=0){n.h=0;if(!n.bn&&n.vh<-60){n.bn=1;n.vh=-n.vh*.25;n.vx*=.4;n.vy*=.4;n.sv*=.5;nz(.08,'lowpass',900,200,.12,1);}else{n.st='dead';n.t=0;n.a+=n.spin;n.ph=rnd()*6;nz(.1,'lowpass',700,160,.14,1);}}continue;}
   const dx=player.x-n.x,dy=player.y-n.y,d=Math.hypot(dx,dy),can=!player.hidden&&!player.up&&!player.st&&state==='play';
   if(n.st==='idle'){if(can&&d<40){n.st='hiss';n.t=0;n.hissT=0;}else{n.wT-=dt;if(n.wT<=0){n.wT=2+rnd()*4;n.tw=rnd()*TAU;}n.a=angLerp(n.a,n.tw,dt*.8);const ox=n.x,oy=n.y;n.x+=Math.cos(n.a)*5*dt;n.y+=Math.sin(n.a)*5*dt;
       if(inYard(n.x,n.y)||BM[tAt(Math.floor(n.x/TS),Math.floor(n.y/TS))]){n.x=ox;n.y=oy;n.tw=n.a+Math.PI;}n.ph+=dt*3;}}
   else if(n.st==='hiss'){n.a=angLerp(n.a,Math.atan2(dy,dx),dt*7);n.hissT-=dt;if(n.hissT<=0&&d<120){n.hissT=.7+rnd()*.3;nz(.55,'highpass',5200,3600,.05+.16*Math.max(0,1-d/60),1,clamp(-dx/120,-1,1));}   // ฟ่อๆ
     if(!can||d>58){n.st='idle';}else if(d<13&&n.t>.4&&!(player.rollT>0)){n.st='att';n.t=0;player.snakeBite=n;player.biteFlash=1.2;toast('งูกัด!!');sfx.bite();shake=Math.max(shake,2);}}}}
-function snakeKill(n){const i=snakes.indexOf(n);if(i<0)return;snakes.splice(i,1);blood(n.x,n.y,12,3,Math.cos(n.a),Math.sin(n.a),30);sfx.hit();
-  if(player.snakes<5){player.snakes++;toast(`ได้งูสิง! คล้องคอไว้ (${player.snakes}/5)`);}else toast('งูเต็มคอแล้ว (5 ตัว)');}
+function snakeKill(n){const i=snakes.indexOf(n);if(i<0)return;blood(n.x,n.y,12,3,Math.cos(n.a),Math.sin(n.a),30);sfx.hit();
+  const dx=n.x-player.x,dy=n.y-player.y,dl=Math.hypot(dx,dy)||1,ua=Math.atan2(dy,dx)+(rnd()-.5)*.9,D=12+rnd()*10,v=D/1.07;   // knocked up and away, lands no further than 3 m
+  n.st='toss';n.t=0;n.h=6;n.vh=140;n.vx=Math.cos(ua)*v;n.vy=Math.sin(ua)*v;n.spin=0;n.sv=(rnd()<.5?-1:1)*(9+rnd()*5);n.flip=0;n.fv=11+rnd()*6;n.bn=0;
+  toast('ตีงูตาย! เดินไปกด "เก็บงู"');}
+function snakeNear(){let b=null,bd=18;for(const n of snakes){if(n.st!=='dead'||Math.hypot(n.x-player.x,n.y-player.y)>60)continue;for(let i=0;i<=6;i++){const q=snLie(n,i,6),d=Math.hypot(q[0]-player.x,q[1]-player.y);if(d<bd){bd=d;b=n;}}}return b;}   // within ~2 m of any part of a dead snake
+function picksAvail(){return state==='play'&&!player.drag&&!player.grip&&!player.pickS&&!player.hidden&&!woodAvail()&&!!snakeNear();}
+function snLie(n,i,N){const t=i/N,along=-t*n.len,lat=Math.sin(t*10-n.ph*2.4)*2.2*Math.min(1,t*3+.2);return[n.x+Math.cos(n.a)*along-Math.sin(n.a)*lat,n.y+Math.sin(n.a)*along+Math.cos(n.a)*lat];}   // the dead snake's body on the ground (t=0 head, t=1 tail)
+function pickSnake(){const n=snakeNear();if(!n||player.pickS)return;if(player.snakes>=5){toast('มือเต็มแล้ว ถืองูได้ 5 ตัว');return;}
+  const tl=snLie(n,1,1),dx=player.x-tl[0],dy=player.y-tl[1],dl=Math.hypot(dx,dy)||1;player.pickS={ph:'go',t:0,T:.62,n,tx:tl[0],ty:tl[1],sx:tl[0]+dx/dl*6,sy:tl[1]+dy/dl*6,got:false};player.charging=false;player.autoCh=false;}
+function pickSTick(dt){const S=player.pickS;S.t+=dt;
+  if(S.ph==='go'){if(Math.hypot(joyV.x,joyV.y)>.5){player.pickS=null;return;}const dx=S.sx-player.x,dy=S.sy-player.y,d=Math.hypot(dx,dy);   // step over to the tail end
+    if(d<1.5||S.t>1.6){S.ph='bend';S.t=0;player.vx=player.vy=0;}else{const v=Math.min(64,d/dt);player.vx=dx/d*v;player.vy=dy/d*v;player.facing=angLerp(player.facing,Math.atan2(dy,dx),dt*12);return;}}
+  player.vx=player.vy=0;player.facing=angLerp(player.facing,Math.atan2(S.ty-player.y,S.tx-player.x),dt*12);
+  if(!S.got&&S.t>=S.T*.5){S.got=true;const i=snakes.indexOf(S.n);if(i>=0&&S.n.st==='dead'&&player.snakes<5){snakes.splice(i,1);
+      const N=12,P=[];for(let j=0;j<=N;j++){const q=snLie(S.n,N-j,N);P.push({x:q[0],y:q[1],z:0,px:q[0],py:q[1],pz:0});}   // index 0 = the tail, now in the hand
+      if(!player.snR)player.snR=[];const k=player.snR.length;player.snR.push({p:P,seg:S.n.len/N,ox:(k-2)*.45,len:S.n.len,seed:S.n.seed});player.snakes++;
+      tn('sine',300,180,.08,.2);toast(`เก็บงูแล้ว (${player.snakes}/5)`);}}
+  if(S.t>=S.T)player.pickS=null;}
+function snRope(L,len,seed,A){const N=12,P=[];for(let j=0;j<=N;j++){const d=j*len/N,z=Math.max(0,A.z-d),g=Math.max(0,d-A.z);P.push({x:A.x-g*.7,y:A.y+g*.5,z,px:A.x-g*.7,py:A.y+g*.5,pz:z});}return{p:P,seg:len/N,ox:(L-2)*.45,len,seed};}
+function snRopeTick(dt){const h=player,A=h._lhW;if(!h.snR)h.snR=[];const R=h.snR;
+  if(R.length>h.snakes)R.length=Math.max(0,h.snakes|0);if(!A)return;while(R.length<h.snakes)R.push(snRope(R.length,22+rnd()*7,rnd()*100,A));
+  dt=Math.min(dt,.04);if(dt<=0)return;const G=420*dt*dt;
+  for(const r of R){const P=r.p,ax=A.x+r.ox,ay=A.y,az=A.z;
+    if(Math.hypot(P[0].x-ax,P[0].y-ay)>40){const q=snRope(0,r.len,r.seed,A);for(let j=0;j<P.length;j++)Object.assign(P[j],q.p[j]);}   // teleported: just let it hang again
+    P[0].x=P[0].px=ax;P[0].y=P[0].py=ay;P[0].z=P[0].pz=az;
+    for(let j=1;j<P.length;j++){const p=P[j],vx=(p.x-p.px)*.995,vy=(p.y-p.py)*.995,vz=(p.z-p.pz)*.995;p.px=p.x;p.py=p.y;p.pz=p.z;p.x+=vx;p.y+=vy;p.z+=vz-G;
+      if(p.z<=0){p.z=0;p.pz=0;p.x-=vx*.45;p.y-=vy*.45;}}   // the ground: it drags and rubs
+    for(let it=0;it<8;it++)for(let j=1;j<P.length;j++){const a=P[j-1],b=P[j],dx=b.x-a.x,dy=b.y-a.y,dz=b.z-a.z,d=Math.hypot(dx,dy,dz)||1e-4,f=(d-r.seg)/d;
+      if(j===1){b.x-=dx*f;b.y-=dy*f;b.z-=dz*f;}else{a.x+=dx*f*.5;a.y+=dy*f*.5;a.z+=dz*f*.5;b.x-=dx*f*.5;b.y-=dy*f*.5;b.z-=dz*f*.5;}
+      if(b.z<0)b.z=0;if(a.z<0)a.z=0;}}}
+function drawHeld(c,mono,h,ax,ay){const M=col=>mono||col,R=h.snR;if(!R||!R.length)return;c.lineCap='round';c.lineJoin='round';
+  for(const r of R){const P=r.p,N=P.length-1,pts=P.map((p,j)=>j===0?[ax+r.ox,ay]:[p.x-camX,p.y*K-camY-p.z]);
+    for(let j=0;j<N;j++){const t=j/N;c.strokeStyle=M('#0d0a07');c.lineWidth=.9+1.2*t;c.beginPath();c.moveTo(pts[j][0],pts[j][1]);c.lineTo(pts[j+1][0],pts[j+1][1]);c.stroke();}
+    for(let j=0;j<N;j++){const t=j/N;c.strokeStyle=M('rgb(108,82,58)');c.lineWidth=.4+.85*t;c.beginPath();c.moveTo(pts[j][0],pts[j][1]);c.lineTo(pts[j+1][0],pts[j+1][1]);c.stroke();}
+    if(!mono){c.strokeStyle='rgb(176,146,100)';c.lineWidth=.35;c.beginPath();c.moveTo(pts[N-7][0]+.4,pts[N-7][1]);for(let j=N-6;j<N;j++)c.lineTo(pts[j][0]+.4,pts[j][1]);c.stroke();}
+    const hd=pts[N],pv=pts[N-1],ha=Math.atan2(hd[1]-pv[1],hd[0]-pv[0]);c.fillStyle=M('#0d0a07');c.beginPath();c.ellipse(hd[0],hd[1],1.5,1.1,ha,0,TAU);c.fill();c.fillStyle=M('rgb(108,82,58)');c.beginPath();c.ellipse(hd[0],hd[1],1.05,.75,ha,0,TAU);c.fill();}
+  c.fillStyle=M(h.jp?SKJ:'#c9a27e');c.fillRect(ax-.9,ay-.9,1.8,1.8);}   // the fist round the tails
 function snakeHits(h,a,R,arc){if(h!==player)return false;let hit=false;for(const n of [...snakes]){if(n.st!=='hiss')continue;const dx=n.x-h.x,dy=n.y-h.y,d=Math.hypot(dx,dy);if(d>R+5)continue;if(Math.abs(angDiff(a,Math.atan2(dy,dx)))>arc)continue;snakeKill(n);hit=true;}return hit;}
 function kickSnake(){const n=player.snakeBite;if(!n)return;player.snakeBite=null;player.kcd=0;player.cd=0;player.swingT=0;
   const a=player.facing+(rnd()-.5)*.8;n.st='fly';n.t=0;n.x=player.x;n.y=player.y;n.h=3;n.vx=Math.cos(a)*150;n.vy=Math.sin(a)*150;n.vh=190;n.spin=0;
   player.kickAng=a;player.kickT=.32;player.kickHit=0;sfx.kick();toast('เตะงูกระเด็นไปแล้ว!');}
 function drawSnake(c,n,mono,T){const M=col=>mono||col,BODY='rgb(108,82,58)',BELLY='rgb(176,146,100)';
   if(n.st==='fly'){const x=n.x-camX,y=n.y*K-camY-n.h;c.save();c.translate(x,y);c.rotate(n.spin);c.lineCap='round';c.strokeStyle=M('#0d0a07');c.lineWidth=2;c.beginPath();for(let i=0;i<=12;i++){const t=i/12,px=(t-.5)*n.len*.8,py=Math.sin(t*9+n.t*20)*2;i?c.lineTo(px,py):c.moveTo(px,py);}c.stroke();c.strokeStyle=M(BODY);c.lineWidth=1.1;c.stroke();c.restore();return;}
+  if(n.st==='toss'){const x=n.x-camX,y=n.y*K-camY-n.h;if(!mono){c.fillStyle='rgba(0,0,0,.35)';ell(c,x,n.y*K-camY,n.len*.3,1.2);}c.save();c.translate(x,y);c.rotate(n.a+n.spin);const fl=Math.cos(n.flip);c.scale(1,Math.abs(fl)<.15?.15*Math.sign(fl||1):fl);c.lineCap='round';
+    const q=[];for(let i=0;i<=12;i++){const t=i/12;q.push([(.5-t)*n.len*.85,Math.sin(t*7+n.t*9)*2.4*(.3+t)]);}
+    c.strokeStyle=M('#0d0a07');c.lineWidth=2;c.beginPath();q.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();c.strokeStyle=M(fl<0?BELLY:BODY);c.lineWidth=1.1;c.stroke();c.fillStyle=M('#0d0a07');c.beginPath();c.ellipse(q[0][0],q[0][1],1.5,1.1,0,0,TAU);c.fill();c.restore();return;}
   const pts=[],N=16,rear=n.st==='hiss'?Math.min(1,n.t/.25):0,att=n.st==='att';
   for(let i=0;i<=N;i++){const t=i/N;let along,lat,z=0;
     if(att){const ang=t*TAU*1.4+n.t*3;along=Math.cos(ang)*(3+t*2);lat=Math.sin(ang)*(3+t*2);z=t<.3?(1-t/.3)*3:0;}
@@ -1281,8 +1323,9 @@ function updatePlay(dt){frameN++;tickBlk(dt);wobTick(Math.max(dt,1e-3));mournTic
    const act=player.swingT>0||player.charging||player.kickT>0||player.cmpA!=null,ga=player.swingT>0?player.swingAng:player.kickT>0?player.kickAng:player.cmpA!=null?player.cmpA:player.facing,R=(W(player).kmax||35)*2;
    player.ovF=act&&fenceBetween(player.x,player.y,player.x+Math.cos(ga)*R,player.y+Math.sin(ga)*R);}   // the weapon goes over the top of the fence, never under it   // 3 s without a blow: free to run again (kicks don't count)
   let calm=player.combat<=0||player.atkIdle>3;if(calm&&player.atkIdle<=3)for(const z of zombies)if(z.aware>0&&Math.hypot(z.x-player.x,z.y-player.y)<160){calm=false;break;}
-  const spd=64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(PAMSLED()?player.wood*2/3:player.wood))*(player.snakeBite?.5:1)*(player.carry?(PAMSLED()&&player.wood?.75:hero==='pw'?.25:.5):1)*(player.grip?(hero==='pw'?.21:.42):1)*(player.drag&&hero==='pw'?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0&&!player.push?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
-  const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;
+  snRopeTick(dt);
+  const spd=(player.pickS?0:1)*64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(PAMSLED()?player.wood*2/3:player.wood))*(player.snakeBite?.5:1)*(player.carry?(PAMSLED()&&player.wood?.75:hero==='pw'?.25:.5):1)*(player.grip?(hero==='pw'?.21:.42):1)*(player.drag&&hero==='pw'?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0&&!player.push?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
+  const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;if(player.pickS)pickSTick(dt);
   if(player.fly){flyTick(dt);}
   else if(player.rollT>0){player.rollT-=dt;const rs=80/.42;VAULT=hero==='pw';moveCircle(player,player.rollDx*rs*dt,player.rollDy*rs*dt,5);VAULT=false;if(player.rollT<=0&&hero==='pw'&&tAt(Math.floor(player.x/TS),Math.floor(player.y/TS))===TFN)player.rollT=.03;player.vx=player.rollDx*rs*.4;player.vy=player.rollDy*rs*.4;player.facing=Math.atan2(player.rollDy,player.rollDx);}
   else if(player.hopT>0){player.hopT-=dt;moveCircle(player,player.hopDx*120*dt,player.hopDy*120*dt,5);}else if(!player.hidden)moveCircle(player,player.vx*dt,player.vy*dt,5);
@@ -3884,7 +3927,7 @@ const B01=new Float32Array(64);for(let k=0;k<64;k++)B01[k]=(BAY[k]+.5)/64;
 const pauseB={x:26,y:28,r:19};
 let LAY={};const LAYS={port:{},land:{}};const curOr=()=>innerWidth>innerHeight?'land':'port';
 function saveLay(){try{localStorage.setItem('lay_'+curOr(),JSON.stringify(LAY));}catch(_){}}
-function applyLayout(){LAY=LAYS[curOr()];const L=typeof LAY==='object'?LAY:{},o=id=>L[id]||[0,0];for(const b of btns){const[d1,d2]=o(b.id);b.x=b.bx+d1;b.y=b.by+d2;}{const[d1,d2]=o('atk');fireB.x=fireB.bx+d1;fireB.y=fireB.by+d2;}{const[d1,d2]=o('sleep');sleepBtn.x=sleepBtn.bx+d1;sleepBtn.y=sleepBtn.by+d2;}const pw=btns.find(b=>b.id==='pickw');if(pw){woodBtn.x=pw.x;woodBtn.y=pw.y;}}
+function applyLayout(){LAY=LAYS[curOr()];const L=typeof LAY==='object'?LAY:{},o=id=>L[id]||[0,0];for(const b of btns){const[d1,d2]=o(b.id);b.x=b.bx+d1;b.y=b.by+d2;}{const[d1,d2]=o('atk');fireB.x=fireB.bx+d1;fireB.y=fireB.by+d2;}{const[d1,d2]=o('sleep');sleepBtn.x=sleepBtn.bx+d1;sleepBtn.y=sleepBtn.by+d2;}const pw=btns.find(b=>b.id==='pickw');if(pw){woodBtn.x=pw.x;woodBtn.y=pw.y;const ps=btns.find(b=>b.id==='picks');if(ps){ps.x=pw.x;ps.y=pw.y;}}}
 let SAFEB=0;
 function joyRest(){const o=(LAYS[curOr()]||{}).joy||[0,0];return[30+joyR*1.3+o[0],SHc-(DUO?6:24)-SAFEB-joyR*(DUO?1.1:1.3)+o[1]];}
 let fireB={x:0,y:0,r:44},btns=[],joyR=55,sleepBtn={id:'sleep',x:0,y:0,r:30,flash:0},woodBtn={id:'wood',x:0,y:0,r:30},wDrag=null;
@@ -3922,7 +3965,7 @@ function resize(){
   joyR=55*s;fireB={x:SWc-92*s,y:SHc-(DUO?58:92)*s-SAFEB,r:48*s};
   const mkb=(id,label,ang)=>({id,label,x:fireB.x+Math.cos(ang)*98*s,y:fireB.y+Math.sin(ang)*98*s,r:28*s,flash:0});
   sleepBtn.x=SWc-72*s-SAFEX-(UTOP?150:0);sleepBtn.y=64*s;sleepBtn.r=34*s;woodBtn.x=fireB.x;woodBtn.y=fireB.y-176*s;woodBtn.r=27*s;
-  btns=[{id:'kick',label:'ถีบ',x:fireB.x-fireB.r*2-18*s,y:fireB.y+4*s,r:fireB.r,flash:0,big:true},{id:'drop',label:'วางของ',x:fireB.x-fireB.r*2-38*s,y:fireB.y-150*s,r:24*s,flash:0},mkb('hide','ซ่อน',-Math.PI*.75),{id:'look',label:'หันมอง',x:fireB.x,y:fireB.y-104*s,r:37*s,flash:0},{id:'light',label:'ไฟ',x:SWc-34*s-SAFEX,y:122*s,r:20*s,flash:0},{id:'swap',label:'เปลี่ยนอาวุธ',x:SWc>SHc?30+joyR*2.6+28*s:34*s,y:SWc>SHc?SHc-24-SAFEB-joyR*2.3:SHc*.5,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'drag',label:'ลากกิ่ง',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'grip',label:'จับไม้',x:fireB.x-70*s,y:fireB.y-176*s,r:36*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-176*s,r:24*s,flash:0},{id:'feed',label:'จุดไฟ',x:fireB.x-122*s,y:fireB.y-176*s,r:27*s,flash:0},{id:'roll',label:'กลิ้ง',x:fireB.x-fireB.r*2-38*s,y:fireB.y-84*s,r:30*s,flash:0},{id:'tail',label:'จับหาง',x:fireB.x-46*s,y:fireB.y-262*s,r:40*s,flash:0}];
+  btns=[{id:'kick',label:'ถีบ',x:fireB.x-fireB.r*2-18*s,y:fireB.y+4*s,r:fireB.r,flash:0,big:true},{id:'drop',label:'วางของ',x:fireB.x-fireB.r*2-38*s,y:fireB.y-150*s,r:24*s,flash:0},mkb('hide','ซ่อน',-Math.PI*.75),{id:'look',label:'หันมอง',x:fireB.x,y:fireB.y-104*s,r:37*s,flash:0},{id:'light',label:'ไฟ',x:SWc-34*s-SAFEX,y:122*s,r:20*s,flash:0},{id:'swap',label:'เปลี่ยนอาวุธ',x:SWc>SHc?30+joyR*2.6+28*s:34*s,y:SWc>SHc?SHc-24-SAFEB-joyR*2.3:SHc*.5,r:22*s,flash:0,small:true},{id:'pickw',label:'เก็บฟืน',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'picks',label:'เก็บงู',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'drag',label:'ลากกิ่ง',x:fireB.x,y:fireB.y-176*s,r:27*s,flash:0},{id:'grip',label:'จับไม้',x:fireB.x-70*s,y:fireB.y-176*s,r:36*s,flash:0},{id:'carry',label:'แบก',x:fireB.x-62*s,y:fireB.y-176*s,r:24*s,flash:0},{id:'feed',label:'จุดไฟ',x:fireB.x-122*s,y:fireB.y-176*s,r:27*s,flash:0},{id:'roll',label:'กลิ้ง',x:fireB.x-fireB.r*2-38*s,y:fireB.y-84*s,r:30*s,flash:0},{id:'tail',label:'จับหาง',x:fireB.x-46*s,y:fireB.y-262*s,r:40*s,flash:0}];
   for(const b of btns){b.bx=b.x;b.by=b.y;}fireB.bx=fireB.x;fireB.by=fireB.y;sleepBtn.bx=sleepBtn.x;sleepBtn.by=sleepBtn.y;pauseB.x=26*s+SAFEX+(UTOP?62:0);pauseB.y=28*s;pauseB.r=19*s;applyLayout();
 }
 function gradV(t){if(t>=1)return 0;if(t<.22)return 1-t/.22*.1;if(t<.65)return .9-(t-.22)/.43*.52;return .38*(1-(t-.65)/.35);}
@@ -4043,6 +4086,7 @@ function drawP(c,T,mono,h=player){
   const fx=h.x-camX,fy=h.y*K-camY,a=h.facing,ca=Math.cos(a),sa=Math.sin(a),M=col=>mono||col,JP=h.jp,PW=h.pw,PM=h.pm,FF=!JP&&!PW&&!PM;   // FF = ฟีฟ่า, the player
   if(h===player&&PM&&h.wood&&!h.hidden)drawSled(c,mono,h);else if(h===player)h.sled=null;
   if(!mono){c.fillStyle='rgba(0,0,0,.55)';ell(c,fx,fy,4,1.6);}
+  if(h===player&&h.snakes>0&&ca>.3&&h._lhO)drawHeld(c,mono,h,fx+h._lhO[0],fy+h._lhO[1]);   // the free hand is on the far side: the snakes go behind the body
   const CP=climbPose(h);
   c.save();if(CP){c.translate(fx,fy-CP.up);c.rotate(CP.roll);c.translate(-fx,-fy);}if(JP||PW||PM){const sc=PW?.56:.88;c.translate(fx,fy);if(PW&&h.cry)c.translate(Math.sin(T*15)*.3,-Math.abs(Math.sin(T*7))*.5);c.scale(sc,sc);if(JP)c.rotate(Math.sin(h.phase)*.06*h.moveAmt);c.translate(-fx,-fy);}   // Jackpot waddles
   const fwx=ca,fwy=sa*K,px=-sa,py=ca*K,away=sa<-.25,sw=Math.sin(h.phase)*3.2*h.moveAmt;
@@ -4079,11 +4123,13 @@ function drawP(c,T,mono,h=player){
   let ln=0;if(swinging)ln=(1.5+2.5*h.swingPow)*Math.sin(Math.min(1,sP*1.15)*Math.PI*.62+.1);else if(h.lean>0)ln=h.lean;else if(h.charging)ln=-1.8*h.charge;
   if(kk)ln=-3.6*kk;
   if(HOLD)ln=h.hold?(h.holdLean||0):4.6;   // stooped, back bent over the bough
+  if(h===player&&h.pickS&&h.pickS.ph!=='go')ln=6.5*Math.sin(Math.PI*clamp(h.pickS.t/h.pickS.T,0,1));   // bend down to the snake
   const pI=h.pantT>0&&!kk&&!swinging&&!h.charging?Math.min(1,h.pantT/10*1.3):0,br=Math.sin(h.breathPh);if(pI)ln=(2.6+.6*br)*pI*(1-.5*h.moveAmt);
   c.save();if(ln){c.translate(fx,hipY);c.transform(1,0,-fwx*ln/12,1-(fwy*ln+ln*.35)/12,0,0);c.translate(-fx,-hipY);}
   if(pI){c.translate(0,-Math.max(0,br)*.9*pI);}   // shoulders heave with each breath
   // knife arm: realistic wind-up (arm pulls back & up/down) then a whipping swing with follow-through
   const shRx=fx+px*2.9,shRy=shY+py*2.9,shLx=fx-px*2.9,shLy=shY-py*2.9;
+  let LH=null;const PKS=h===player&&h.pickS&&h.pickS.ph!=='go',setLH=(x,y)=>{if(h!==player)return;const m=c.getTransform();LH=[m.a*x+m.c*y+m.e,m.b*x+m.d*y+m.f];};   // where the free (left) hand ends up this frame: the held snakes hang from it
   const side=swinging?h.swingDir:h.nextDir,p=swinging?h.swingPow:(h.charging?h.charge:0);
   const big=h===player&&(PW||PM)?(PW?1.55:1.15):1,armL=(5.5+5.5*p)*big,back=1.1+1.3*p+(big>1?.35:0),thru=.9+.4*p+(big>1?.35:0);
   let psi,hv;
@@ -4104,7 +4150,7 @@ function drawP(c,T,mono,h=player){
   let kx=ux,ky=uy+hv/12;{const l=Math.hypot(kx,ky)||1;kx/=l;ky/=l;}
   const behind=Math.sin(psi)<-.15;
   const holdArms=()=>{const tx=HOLD[0]-camX,ty=HOLD[1]*K-camY-1.6;c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:PW?'#c9c4bc':'#d6d6d6');c.lineWidth=1.6;   // both arms reach down to the wood
-    for(const[sx,sy,o] of[[shRx,shRy,1],[shLx,shLy,-1]]){const hx2=tx+px*1.4*o,hy2=ty+py*1.4*o,mx2=(sx+hx2)/2+fwx*1.2,my2=(sy+hy2)/2+1.4;c.beginPath();c.moveTo(sx,sy);c.lineTo(mx2,my2);c.lineTo(hx2,hy2);c.stroke();c.fillStyle=M(JP?SKJ:'#c9a27e');c.fillRect(hx2-.8,hy2-.8,1.6,1.6);}};
+    for(const[sx,sy,o] of[[shRx,shRy,1],[shLx,shLy,-1]]){const hx2=tx+px*1.4*o,hy2=ty+py*1.4*o,mx2=(sx+hx2)/2+fwx*1.2,my2=(sy+hy2)/2+1.4;c.beginPath();c.moveTo(sx,sy);c.lineTo(mx2,my2);c.lineTo(hx2,hy2);c.stroke();c.fillStyle=M(JP?SKJ:'#c9a27e');c.fillRect(hx2-.8,hy2-.8,1.6,1.6);if(o<0)setLH(hx2,hy2);}};
   const knife=()=>{if(h.hl)return;if(HOLD){holdArms();return;}
     if(swinging&&h===player&&!mono){const a0=a+side*back,R2=armR+(WHO()==='pam'&&h.weapon==='knife'?21:h.weapon==='hoe'?15:9)*big+WX,n=7,TRL=WHO()==='pam'&&h.weapon==='knife'?[[4.6,'rgba(255,50,10,.22)'],[2.6,'rgba(120,10,0,.5)'],[1.3,'rgba(255,130,60,.92)']]:[[2.4,'rgba(0,0,0,.35)'],[1.1,'rgba(255,255,255,.75)']];   // the stroke leaves a cutting arc in the air (แพม: a red ember smear)
       for(const[lw,col]of TRL){c.strokeStyle=col;c.lineWidth=lw;c.beginPath();for(let k=0;k<=n;k++){const tt=a0+(psi-a0)*k/n,r=R2*(.86+.14*k/n),X=shRx+Math.cos(tt)*r,Y=shRy+Math.sin(tt)*K*r+hv*.5;k?c.lineTo(X,Y):c.moveTo(X,Y);}c.stroke();}}
@@ -4128,7 +4174,7 @@ function drawP(c,T,mono,h=player){
     c.strokeStyle=M('#3a2c1e');c.lineWidth=2.2;c.beginPath();c.moveTo(hx-kx*4,hy-ky*4);c.lineTo(ex,ey);c.stroke();c.strokeStyle=M('#c8b79c');c.lineWidth=1.3;c.stroke();
     c.fillStyle=M('#2a2a2a');c.beginPath();c.moveTo(ex-kx*1.2,ey-ky*1.2);c.lineTo(ex+kx*1.6,ey+ky*1.6);c.lineTo(ex+kx*2.2+qx*5,ey+ky*2.2+qy*5);c.lineTo(ex-kx*2+qx*5,ey-ky*2+qy*5);c.closePath();c.fill();
     c.strokeStyle=mono||(h.bloody>0?RED:'#e8e8e8');c.lineWidth=1;c.beginPath();c.moveTo(ex+kx*2.2+qx*5,ey+ky*2.2+qy*5);c.lineTo(ex-kx*2+qx*5,ey-ky*2+qy*5);c.stroke();};
-  const spearHand=()=>{c.strokeStyle=M(JP?'#1e1e1e':'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(hx,hy);c.moveTo(shLx,shLy);c.lineTo(hx-kx*6,hy-ky*6+1);c.stroke();   // both hands on the shaft
+  const spearHand=()=>{c.strokeStyle=M(JP?'#1e1e1e':'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(hx,hy);if(!PKS){c.moveTo(shLx,shLy);c.lineTo(hx-kx*6,hy-ky*6+1);setLH(hx-kx*6,hy-ky*6+1);}c.stroke();   // both hands on the shaft
     const L=24,ex=hx+kx*L,ey=hy+ky*L;c.strokeStyle=M('#2a2018');c.lineWidth=1.9;c.beginPath();c.moveTo(hx-kx*9,hy-ky*9);c.lineTo(ex,ey);c.stroke();c.strokeStyle=M('#8b7862');c.lineWidth=.9;c.stroke();
     c.strokeStyle=M('#c9b48a');c.lineWidth=1.1;for(const r of[1.2,2.6]){c.beginPath();c.moveTo(ex-kx*r-ky*1.3,ey-ky*r+kx*1.3);c.lineTo(ex-kx*r+ky*1.3,ey-ky*r-kx*1.3);c.stroke();}   // rope lashing
     c.fillStyle=M('#e6e6e6');c.beginPath();c.moveTo(ex-ky*1.4,ey+kx*1.4);c.lineTo(ex+kx*8,ey+ky*8);c.lineTo(ex+ky*1.4,ey-kx*1.4);c.closePath();c.fill();if(!mono&&h.bloody>0){c.fillStyle=RED;c.fillRect(ex+kx*4-1,ey+ky*4-1,2,2);}};
@@ -4140,13 +4186,13 @@ function drawP(c,T,mono,h=player){
     c.strokeStyle=M('#e2e2e2');c.lineWidth=1;c.stroke();
     if(!mono&&h.bloody>0){c.strokeStyle=RED;c.beginPath();c.moveTo(ex+kx*8,ey+ky*8);c.quadraticCurveTo(ex+kx*8-qx*4,ey+ky*8-qy*4,tx_,ty_);c.stroke();}};
   const stickHands=()=>{const th=h.stab?stabK(h.stab.t):h.pokeT>0?Math.sin(clamp(1-h.pokeT/.22,0,1)*Math.PI):pth,gx2=fx+fwx*(3+5*th),gy2=shY+4+fwy*(3+5*th);
-    c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(gx2+px*1.2,gy2+py*1.2);c.moveTo(shLx,shLy);c.lineTo(gx2-fwx*4-px*1.2,gy2-fwy*4-py*1.2);c.stroke();
+    c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(gx2+px*1.2,gy2+py*1.2);if(!PKS){c.moveTo(shLx,shLy);c.lineTo(gx2-fwx*4-px*1.2,gy2-fwy*4-py*1.2);setLH(gx2-fwx*4-px*1.2,gy2-fwy*4-py*1.2);}c.stroke();
     const L=34+8*th,bx0=gx2-fwx*9,by0=gy2-fwy*9+1.5,bx1=gx2+fwx*L,by1=gy2+fwy*L-1.5;
     const mx2=(bx0+bx1)/2,my2=(by0+by1)/2,ops=[[bx0,by0,bx1,by1,1.3,'#2a2018'],[bx0,by0,bx1,by1,.6,'#8b7862'],[mx2,my2,mx2+px*3+fwx*2,my2+py*3-2,.6,'#2a2018'],[bx1-fwx*5,by1-fwy*5,bx1-fwx*3-px*2.5,by1-fwy*3-py*2.5-1.5,.6,'#2a2018']];   // thin dry stick
     if(JP&&UPG()){ops.push([bx1-fwx*2.5-px*1.1,by1-fwy*2.5-py*1.1,bx1-fwx*2.5+px*1.1,by1-fwy*2.5+py*1.1,.8,'#c9b48a'],[bx1-fwx*1-px*1.1,by1-fwy*1-py*1.1,bx1-fwx*1+px*1.1,by1-fwy*1+py*1.1,.8,'#c9b48a'],[bx1,by1,bx1+fwx*7,by1+fwy*7-.5,1.4,'#e6e6e6']);}   // a knife lashed to the tip: a spear
     if(OL_PASS){h._stk=ops;}else for(const o of ops){c.strokeStyle=M(o[5]);c.lineWidth=o[4];c.beginPath();c.moveTo(o[0],o[1]);c.lineTo(o[2],o[3]);c.stroke();}};
   const lp=swinging?-side*.6*(sP<.5?sP*2:1):0;
-  const run=h.combat>0||h.charging||swinging?0:Math.sin(h.phase)*.7*h.moveAmt;const leftArm=()=>{if(HOLD)return;c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(shLx+Math.cos(a-(run?1.3:.5)+lp+run)*5,shLy+Math.sin(a-(run?1.3:.5)+lp+run)*5*K+5);c.stroke();};
+  const run=h.combat>0||h.charging||swinging?0:Math.sin(h.phase)*.7*h.moveAmt;const leftArm=()=>{if(HOLD||PKS)return;c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();const lx2=shLx+Math.cos(a-(run?1.3:.5)+lp+run)*5,ly2=shLy+Math.sin(a-(run?1.3:.5)+lp+run)*5*K+5;c.moveTo(shLx,shLy);c.lineTo(lx2,ly2);c.stroke();setLH(lx2,ly2);};
   if(h.hold){if(away||behind)holdArms();}else if(h.carry||h.wood||(PM&&h!==player)||(PW&&h!==player&&(!UPG()||h.carryLog>=0))){}else if(PW&&h!==player){if(away||behind)knife();}else if(PM){if(away||behind)knife();}else if(h.weapon==='stick'){if(away)knife();}else{if(away||behind)knife();if(away)leftArm();}
   c.fillStyle=M(JP?NAVY:PW?'#f6f6f6':PM?'#8c8c8c':FRED);c.strokeStyle=M('#000');c.lineWidth=.9;c.beginPath();c.ellipse(fx,toY,JP?3.5:PW?3.4:3.1,JP?4.9:PW?4.4:4.6,0,0,TAU);c.fill();c.stroke();
   if(FF){c.fillStyle=M(FRED);c.beginPath();c.moveTo(fx-3,toY);c.lineTo(fx+3,toY);c.lineTo(fx+3.3,hipY+.8);c.lineTo(fx-3.3,hipY+.8);c.closePath();c.fill();c.strokeStyle=M('#000');c.lineWidth=.5;c.beginPath();c.moveTo(fx-3.3,hipY+.8);c.lineTo(fx+3.3,hipY+.8);c.stroke();}   // untucked red work shirt
@@ -4185,7 +4231,7 @@ function drawP(c,T,mono,h=player){
   if(h.hl){const q=h.hl,d=q.dir,lp=(a,b,t)=>a+(b-a)*t;c.lineCap='round';let mx=0,my=0;   // hand-over: both arms lift the lamp off / reach / put it on
     for(const sd of[-1,1]){const sx=fx+sd*2.6,sy=shY+1;let hx2=lp(fx+sd*3,hcx+sd*2.9,q.r),hy2=lp(hipY+2,heY-1-q.up*2.5,q.r);hx2=lp(hx2,fx+d*6.2,q.x);hy2=lp(hy2,shY+.5+sd*.9,q.x);
       const ex=(sx+hx2)/2+sd*2.2*q.r*(1-q.x),ey=(sy+hy2)/2+1.2*(1-q.r);c.strokeStyle=M('#000');c.lineWidth=2.6;c.beginPath();c.moveTo(sx,sy);c.lineTo(ex,ey);c.lineTo(hx2,hy2);c.stroke();
-      c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.stroke();c.fillStyle=M(PW||PM?'#e9c9a8':'#d9b48c');c.fillRect(hx2-.8,hy2-.8,1.6,1.6);mx+=hx2/2;my+=hy2/2;}
+      c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.stroke();c.fillStyle=M(PW||PM?'#e9c9a8':'#d9b48c');c.fillRect(hx2-.8,hy2-.8,1.6,1.6);if(sd<0)setLH(hx2,hy2);mx+=hx2/2;my+=hy2/2;}
     if(q.lamp==='hand'){c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(mx,my,2.8,.9,0,0,TAU);c.stroke();c.fillStyle='#fff';c.fillRect(mx+d*1.6-1,my-1,2,1.6);}}
   if(HL){c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(hcx,heY-1,2.8,.9,0,0,TAU);c.stroke();}
   if(HL&&sa>-.6){c.fillStyle=(h.hl||lampOf(h))&&!h.hidden?'#fff':M('#777');c.fillRect(hcx+ca*2-1,heY-2+sa*.5,2,1.6);}
@@ -4194,11 +4240,8 @@ function drawP(c,T,mono,h=player){
     const tipx=tx2+fwx*(28+6*th)+px*2,tipy=ty2-12+fwy*(28+6*th)+4*th;c.strokeStyle=M('#2a2018');c.lineWidth=2.2;c.beginPath();c.moveTo(tx2-fwx*8,ty2+3);c.lineTo(tipx,tipy);c.stroke();c.strokeStyle=M('#5a4836');c.lineWidth=1.3;c.stroke();
     c.fillStyle=M('#1c1c1c');c.fillRect(tipx-1,tipy-1,2,2);
     if(h.torch>0)flames(c,tipx,tipy+.5,3,1,7,performance.now()/1000,3,!!mono,1.3);}
-    const lx=fx-px*3.8,ly=hipY+2;c.strokeStyle=M('#8c8c8c');c.lineWidth=1.4;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(lx,ly-3.6);c.stroke();drawLantern(c,lx,ly,mono);}
+    const lx=fx-px*3.8,ly=hipY+2;if(!PKS){c.strokeStyle=M('#8c8c8c');c.lineWidth=1.4;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(lx,ly-3.6);c.stroke();setLH(lx,ly-3.6);}drawLantern(c,lx,ly,mono);}
   if(h===player&&h.snakeBite){const n=h.snakeBite;n.x=h.x;n.y=h.y;const sv={...n,x:h.x+2,y:h.y+1};drawSnake(c,sv,mono,performance.now()/1000);}
-  if(h===player&&h.snakes>0&&!away){for(let k=0;k<h.snakes;k++){const o=k*.5,dl=6.5+k*.9;   // dead snakes draped around the neck
-      c.lineCap='round';c.strokeStyle=M('#0d0a07');c.lineWidth=1.5;c.beginPath();c.moveTo(fx-2.6-o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx-3.6-o*.4,toY,fx-3+o*.2,toY-4.6+dl);c.moveTo(fx+2.6+o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx+3.6+o*.4,toY,fx+3-o*.2,toY-4.6+dl*.9);c.moveTo(fx-2.6-o*.3,toY-4.6+o*.2);c.quadraticCurveTo(fx,toY-6.4-o*.3,fx+2.6+o*.3,toY-4.6+o*.2);c.stroke();
-      c.strokeStyle=M('rgb(108,82,58)');c.lineWidth=.7;c.stroke();}}
   if(h!==player&&(!PM||h.hold)){drawLantern(c,fx-px*(PW?4.4:3.8),hipY+(PW?2.5:1.5),mono);}   // small lantern hung at the hip
   if(h.hold){if(!away&&!behind)holdArms();}else if(PM&&h!==player){}else if(PM){if(!behind&&!h.carry&&!h.wood)knife();}else if(PW&&h!==player){const sk=M('#c9c4bc');c.strokeStyle=sk;c.lineWidth=1.6;
     if(h.carryLog>=0){const lx=fx+fwx*3,ly=shY+4+fwy*3;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(lx+px*2,ly);c.moveTo(shLx,shLy);c.lineTo(lx-px*2,ly);c.stroke();drawLog(c,lx,ly+.5,Math.atan2(py,px),h.carryLog,mono,.8,false);}
@@ -4207,11 +4250,15 @@ function drawP(c,T,mono,h=player){
     if(h.eatT>0&&!away){c.strokeStyle=M('rgb(214,188,64)');c.lineWidth=1.4;c.beginPath();c.arc(hcx+ca*2.2,heY+3.6,2,Math.PI*1.2,Math.PI*1.8);c.stroke();}}
   else if(h.wood){const n=Math.min(9,1+Math.ceil(h.wood/2.5)),bx=fx+fwx*3,by=toY+1.5+fwy*2.5,ang=Math.atan2(py,px);   // armful of firewood hugged with both arms
     for(let k=0;k<n;k++){const r=(k/3)|0,cI=k%3;drawLog(c,bx+fwx*(cI-1)*.9,by-r*1.5+(cI-1)*.4,ang+(cI-1)*.12+(r%2?.1:-.05),h.woodV[k%h.woodV.length]||0,mono,.62,false);}
-    c.strokeStyle=M(FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.quadraticCurveTo(bx+px*4,by+2,bx-px*1,by+1.8);c.moveTo(shLx,shLy);c.quadraticCurveTo(bx-px*4,by+2,bx+px*1,by+1.8);c.stroke();}
-  else if(h.carry){const bx=fx+px*2.4-fwx,by=shY-6;c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(bx+1,by+3);c.moveTo(shLx,shLy);c.lineTo(bx-1.5,by+1);c.stroke();drawBunch(c,bx,by,.75,mono,true,Math.PI/2+.3);}
+    c.strokeStyle=M(FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.quadraticCurveTo(bx+px*4,by+2,bx-px*1,by+1.8);if(!PKS){c.moveTo(shLx,shLy);c.quadraticCurveTo(bx-px*4,by+2,bx+px*1,by+1.8);setLH(bx+px*1,by+1.8);}c.stroke();}
+  else if(h.carry){const bx=fx+px*2.4-fwx,by=shY-6;c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(bx+1,by+3);if(!PKS){c.moveTo(shLx,shLy);c.lineTo(bx-1.5,by+1);setLH(bx-1.5,by+1);}c.stroke();drawBunch(c,bx,by,.75,mono,true,Math.PI/2+.3);}
   else if(h.weapon==='stick'){if(!away)knife();}else{if(!away)leftArm();if(!away&&!behind)knife();if(away&&!behind)knife();}
   if(h.eatT>0&&!away){const ex=hcx+ca*2.4,ey=heY+2.2;c.strokeStyle=M('rgb(214,188,64)');c.lineWidth=1.4;c.beginPath();c.arc(ex,ey+2,2.2,Math.PI*1.2,Math.PI*1.8);c.stroke();}
+  if(PKS){const S=h.pickS,k=Math.sin(Math.PI*clamp(S.t/S.T,0,1)),gx=S.tx-camX,gy=S.ty*K-camY,rx=shLx+fwx*1.5,ry=shLy+6,tx=rx+(gx-rx)*k,ty=ry+(gy-ry)*k,ex=(shLx+tx)/2+fwx*1.4-px*.8,ey=(shLy+ty)/2+1;   // reach down and take it by the tail
+    c.strokeStyle=M(JP?'#1e1e1e':FF?FRED:PM?'#8c8c8c':PW?'#c9c4bc':'#d6d6d6');c.lineWidth=1.5;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(ex,ey);c.lineTo(tx,ty);c.stroke();setLH(tx,ty);}
   c.restore();c.restore();
+  if(h===player){const B=c.getTransform();let ax=fx-px*3.2,ay=hipY+1;if(LH){const X=LH[0]-B.e,Y=LH[1]-B.f,dt2=B.a*B.d-B.b*B.c||1;ax=(B.d*X-B.c*Y)/dt2;ay=(-B.b*X+B.a*Y)/dt2;}
+    const wy=h.y-ca*2.5;h._lhW={x:ax+camX,y:wy,z:Math.max(0,wy*K-camY-ay)};h._lhO=[ax-fx,ay-fy];if(h.snakes>0&&!(ca>.3))drawHeld(c,mono,h,ax,ay);}   // the snakes hang from the fist, swinging with it
 }
 function drawLying(c,T,mono,h=player){
   const M=col=>mono||col;c.save();c.translate(h.x-camX,h.y*K-camY);c.scale(1,K);c.rotate(h.fallA);
@@ -4753,7 +4800,7 @@ function drawUI(dt){
   u.save();u.translate(SAFEX,40*s+(UTOP?8:0)+(SWc<SHc&&bbN?bbN*17*s+4*s:0));
   uiText('ไฟคาดหัว: '+(player.hidden?'ปิด (ซ่อน)':flashOn?'เปิด':'ปิด'),14,22*s,13*s,'left');
   uiText(`คืนที่ ${night} · ซอมบี้เหลือ ${zombies.length}`,14,42*s,12*s,'left');uiText('อาวุธ: '+(WHO()==='pw'&&player.weapon==='knife'&&!UPG()?'กระทะ':WHO()==='pam'&&player.weapon==='knife'?pamWLabel():W().name),14,60*s,11*s,'left');if(bot)uiText(bot.dead?BOTNAME()+': ตายแล้ว':BOTNAME()+': ยังรอด'+(bot.hunger>=1?' (หิว)':''),14,77*s,11*s,'left',bot.dead?UIRED:'#5fd35f');
-  uiText(`🍌 กล้วยที่บ้าน: ${stock} ลูก`+(meat()?` · 🐍 งูปิ้ง ${meat()} คำ`:'')+(player.snakes?` · งูที่คอ ${player.snakes}/5`:''),14,(bot?94:77)*s,11*s,'left','#e6c43c');
+  uiText(`🍌 กล้วยที่บ้าน: ${stock} ลูก`+(meat()?` · 🐍 งูปิ้ง ${meat()} คำ`:'')+(player.snakes?` · งูในมือ ${player.snakes}/5`:''),14,(bot?94:77)*s,11*s,'left','#e6c43c');
   {const yy=(bot?128:111)*s,w=90*s,F=fireP;if(F){u.fillStyle=BG;u.fillRect(14,yy-5*s,w+4,10*s);u.fillStyle=F.F>0?(F.boost>0?'#ffd27a':UIRED):'#5c0a10';u.fillRect(16,yy-3*s,w*F.F/120,6*s);u.strokeStyle=FG;u.lineWidth=1;u.strokeRect(14.5,yy-4.5*s,w+3,9*s);
     uiText(F.F>0?`กองไฟ ${Math.ceil(F.F)} วิ`:'กองไฟดับ!',22+w,yy,10*s,'left',F.F>0?FG:UIRED);}
     const woodLeft=woodPiles.reduce((a,p)=>a+p.logs.length,0);uiText(`ฟืนที่บ้าน: ${woodLeft} ท่อน`+(player.wood?` · ${PAMSLED()?'มัดลาก':'ในมือ'} ${player.wood}/${WMAX()}`:''),14,yy+16*s,11*s,'left','#c8b79c');}if(player.carry)uiText(`แบกกล้วย ${player.carry.count} ลูก (ช้าลง · กด วางของ = วาง)`,14,(bot?111:94)*s,11*s,'left','#e6c43c');
@@ -4839,6 +4886,7 @@ function drawUI(dt){
           uiText('จับไม้',b.x,b.y-3*s,15*s,'center',on?BG:'#e6c43c');uiText(on?'หมุนนิ้วรอบปุ่ม':'กดค้าง',b.x,b.y+12*s,8.5*s,'center',on?BG:FG);continue;}
         if(b.id==='drag'){uiCircle(b.x,b.y,b.r,'#8e6036',2);uiText(player.drag?'ปล่อย':'ลาก',b.x,b.y-5*s,11*s,'center',FG);uiText('กิ่ง',b.x,b.y+8*s,11*s,'center',FG);continue;}
         if(b.id==='pickw'){uiCircle(b.x,b.y,b.r,'#c08a52',2);uiText('เก็บ',b.x,b.y-5*s,11*s,'center',BG);uiText('ฟืน',b.x,b.y+8*s,11*s,'center',BG);continue;}
+        if(b.id==='picks'){uiCircle(b.x,b.y,b.r,'#8fae5a',2);uiText('เก็บ',b.x,b.y-5*s,11*s,'center',BG);uiText('งู',b.x,b.y+8*s,11*s,'center',BG);continue;}
         if(b.id==='feed'){const o=fireOut||fireP.F<=0,pu=o?1+.08*Math.sin(performance.now()/110):1;uiCircle(b.x,b.y,b.r*pu,'#e8742a',2);uiText(o?'จุดไฟ':'เติมไฟ',b.x,b.y-5*s,11*s,'center',BG);uiText(`ฟืน ${player.wood}`,b.x,b.y+8*s,9*s,'center',BG);continue;}
         if(b.id==='drop'){uiCircle(b.x,b.y,b.r,'#c8b79c',2);uiText('วาง',b.x,b.y-5*s,10*s,'center',BG);uiText(player.carry?'กล้วย':'ฟืน',b.x,b.y+7*s,9*s,'center',BG);continue;}
         if(b.id==='carry'){uiCircle(b.x,b.y,b.r,'#e6c43c',2);uiText('แบก',b.x,b.y-5*s,10*s,'center',BG);uiText('กล้วย',b.x,b.y+7*s,9*s,'center',BG);continue;}
@@ -4854,7 +4902,7 @@ function drawUI(dt){
 }
 let NC=null;function nightCard(){NC={n:night,t:0};}
 function drawPauseBtn(s){const b=pauseB;u.globalAlpha=Math.max(.5,CA);uiCircle(b.x,b.y,b.r,BG,2);u.fillStyle=FG;u.fillRect(b.x-5*s,b.y-6*s,3.4*s,12*s);u.fillRect(b.x+1.6*s,b.y-6*s,3.4*s,12*s);u.globalAlpha=1;}
-function layItems(){const s=UIS,jr=joyRest();return[...btns.map(b=>({id:b.id,x:b.x,y:b.y,r:b.r,label:b.id==='look'?'หันมอง':b.id==='pickw'?'เก็บฟืน/วางฟืน':b.label})),{id:'sleep',x:sleepBtn.x,y:sleepBtn.y,r:sleepBtn.r,label:'ไปนอน'},{id:'atk',x:fireB.x,y:fireB.y,r:fireB.r,label:'ฟัน'},{id:'joy',x:jr[0],y:jr[1],r:joyR,label:'จอยเดิน'}];}
+function layItems(){const s=UIS,jr=joyRest();return[...btns.filter(b=>b.id!=='picks').map(b=>({id:b.id,x:b.x,y:b.y,r:b.r,label:b.id==='look'?'หันมอง':b.id==='pickw'?'เก็บฟืน/วางฟืน':b.label})),{id:'sleep',x:sleepBtn.x,y:sleepBtn.y,r:sleepBtn.r,label:'ไปนอน'},{id:'atk',x:fireB.x,y:fireB.y,r:fireB.r,label:'ฟัน'},{id:'joy',x:jr[0],y:jr[1],r:joyR,label:'จอยเดิน'}];}
 function layBoxes(){const s=UIS,w=120*s,h=40*s,y=SHc*.42;return{done:{x:SWc/2-w-8*s,y,w,h},reset:{x:SWc/2+8*s,y,w,h}};}
 function drawLayoutUI(s){u.fillStyle='rgba(10,9,8,.55)';u.fillRect(0,0,SWc,SHc);
   for(const it of layItems()){const on=layDrag&&layDrag.id===it.id;u.save();u.setLineDash([5*s,4*s]);u.strokeStyle=on?'#5fd35f':FG;u.lineWidth=2.5*s;u.fillStyle=on?'rgba(95,211,95,.25)':'rgba(243,236,224,.12)';u.beginPath();u.arc(it.x,it.y,it.r,0,TAU);u.fill();u.stroke();u.restore();uiText(it.label,it.x,it.y,Math.min(15,9+it.r/6)*s,'center',FG);}
@@ -5009,14 +5057,14 @@ function yardDist(x,y){if(!home)return 1e9;const dx=Math.max(home.ix0-x,0,x-home
 function hoeNear(){return hoe&&!hoe.taken&&night>3&&Math.hypot(hoe.x-player.x,hoe.y-player.y)<34;}
 function swapAvail(){return state==='play'&&(hoeNear()||player.hasHoe);}
 function sleepAvail(){return state==='play'&&zombies.length===0&&player.cleared&&!n3Active();}
-function visBtns(){const v=btns.filter(b=>(b.id!=='swap'||swapAvail())&&(b.id!=='carry'||(state==='play'&&!!groundNear()))&&(b.id!=='pickw'||(woodNear()&&!woodAvail()&&!player.drag))&&b.id!=='drag'&&(b.id!=='grip'||(!!player.grip||(!woodAvail()&&!!gripNear())))&&(b.id!=='hide'||!!nearWardrobe())&&(b.id!=='tail'||tailAvail())&&(b.id!=='feed'||feedAvail())&&(b.id!=='drop'||dropAvail()));if(sleepAvail())v.unshift(sleepBtn);return v;}
+function visBtns(){const v=btns.filter(b=>(b.id!=='swap'||swapAvail())&&(b.id!=='carry'||(state==='play'&&!!groundNear()))&&(b.id!=='pickw'||(woodNear()&&!woodAvail()&&!player.drag&&!picksAvail()))&&(b.id!=='picks'||picksAvail())&&b.id!=='drag'&&(b.id!=='grip'||(!!player.grip||(!woodAvail()&&!!gripNear())))&&(b.id!=='hide'||!!nearWardrobe())&&(b.id!=='tail'||tailAvail())&&(b.id!=='feed'||feedAvail())&&(b.id!=='drop'||dropAvail()));if(sleepAvail())v.unshift(sleepBtn);return v;}
 function swapWeapon(){if(!swapAvail()||player.charging||player.swingT>0)return;
   if(hoeNear()){hoe.taken=true;player.hasHoe=true;player.weapon='hoe';sfx.ready();tn('square',500,900,.1,.12);toast('ได้ จอบ (บักจก)! ระยะ×3 แรง×3');return;}
   player.weapon=player.weapon==='hoe'?'knife':'hoe';sfx.toggle();toast('ถือ '+W().name);}
 function hitBtn(x,y){for(const b of visBtns())if(Math.hypot(x-b.x,y-b.y)<b.r*1.15)return b;return null;}
 function dropAvail(){return state==='play'&&(!!player.carry||(player.wood>0&&!woodAvail()));}
 function dropStuff(){if(player.carry)dropBunch();else if(player.wood)dropWood();}
-function act(b){b.flash=.15;if(b.id==='drop')dropStuff();else if(b.id==='light')toggleLight();else if(b.id==='hide')toggleHide();else if(b.id==='kick')kick();else if(b.id==='swap')swapWeapon();else if(b.id==='carry')pickBunch();else if(b.id==='pickw')pickWood();else if(b.id==='drag')toggleDrag();else if(b.id==='sleep'&&sleepAvail())startSleep('clear');else if(b.id==='roll')doRoll();else if(b.id==='tail')grabTail();else if(b.id==='feed')feedFire();}
+function act(b){b.flash=.15;if(b.id==='drop')dropStuff();else if(b.id==='light')toggleLight();else if(b.id==='hide')toggleHide();else if(b.id==='kick')kick();else if(b.id==='swap')swapWeapon();else if(b.id==='carry')pickBunch();else if(b.id==='pickw')pickWood();else if(b.id==='picks')pickSnake();else if(b.id==='drag')toggleDrag();else if(b.id==='sleep'&&sleepAvail())startSleep('clear');else if(b.id==='roll')doRoll();else if(b.id==='tail')grabTail();else if(b.id==='feed')feedFire();}
 function mouseAngle(){const wx=mouse.x/P+camX,wy=(mouse.y/P+camY+8)/K;return Math.atan2(wy-player.y,wx-player.x);}
 function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l>joyR){dx*=joyR/l;dy*=joyR/l;joy.kx=joy.bx+dx;joy.ky=joy.by+dy;l=joyR;}const m=l/joyR;joyV=m<.12?{x:0,y:0}:{x:dx/joyR,y:dy/joyR};}
 ui.addEventListener('pointerdown',e=>{
