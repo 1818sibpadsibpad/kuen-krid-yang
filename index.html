@@ -129,7 +129,8 @@ p{margin:6px 0;font-size:14px;line-height:1.55}
 button{margin-top:14px;background:#f3ece0;color:#0a0908;border:none;font:bold 18px system-ui,sans-serif;padding:14px 34px;cursor:pointer;box-shadow:4px 4px 0 #574839}
 button.tog{background:#0a0908;color:#f3ece0;border:2px solid #f3ece0;font-size:15px;padding:9px 18px;box-shadow:3px 3px 0 #574839}
 #codeIn{width:92px;background:#0a0908;color:#f3ece0;border:2px solid #574839;font:bold 15px system-ui,sans-serif;padding:7px 8px;text-align:center;letter-spacing:4px;margin-top:10px}#codeIn.ok{border-color:#5fd35f;color:#5fd35f}
-#lvlBox{margin-top:8px}#lvlBox button.nb{margin:4px 3px 0;padding:7px 12px;font-size:14px;background:#0a0908;color:#f3ece0;border:2px solid #574839;box-shadow:2px 2px 0 #2c241e}#lvlBox button.nb.sel{background:#d01c22;border-color:#d01c22}
+#lvlBox{margin-top:8px}#lvlBox button#lvlBox button.prac{display:block;width:100%;margin:8px 0 10px;padding:14px 10px;font-size:24px;font-weight:bold;letter-spacing:1px;background:#f2c230!important;color:#0a0908!important;border:3px solid #fff3c4;box-shadow:0 0 18px rgba(242,194,48,.75),3px 3px 0 #2c241e;animation:pracP 1.1s ease-in-out infinite}@keyframes pracP{50%{box-shadow:0 0 30px rgba(255,230,120,1),3px 3px 0 #2c241e;transform:scale(1.03)}}
+.nb{margin:4px 3px 0;padding:7px 12px;font-size:14px;background:#0a0908;color:#f3ece0;border:2px solid #574839;box-shadow:2px 2px 0 #2c241e}#lvlBox button.nb.sel{background:#d01c22;border-color:#d01c22}
 button.tog.on{background:#5fd35f;color:#0a0908;border-color:#5fd35f}
 button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #574839}
 hr{border:none;border-top:2px dashed #f3ece0;margin:10px 0}
@@ -177,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v12.8</div>
+  <div class="ver">v12.9</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -185,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v12.8</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v12.9</h3><ul>
+      <li><b>โหมดซ้อม</b> (หลังใส่โค้ดลับ): พื้นที่รัศมี 50 ม. กระท่อมเล็กไม่มีบันได รั้ววงกลม · แตะรูปด้านบนเรียก ซอมบี้ / ผีปอบ / กระสือ / ช้างป่า · กล้วย ฟืน งูปิ้ง ไม่จำกัด · ปุ่มกลางวัน/กลางคืน · แตะรูปคนตายตอนเปลี่ยนตัวเพื่อชุบชีวิต</li>
       <li>ผีปอบ: หลบแล้วกระโดดถอยออกนอกระยะอาวุธที่เราถือ จากนั้นจ้องเรา เดินซ้ายทีขวาที ยกมือสองข้างท่าตั๊กแตนตำข้าว โยกตัวขึ้นลงหยั่งเชิง และค่อยๆ อ้อมไปทางหลังเรา · ตีอีกก็หลบอีก (ครบ 3 ครั้งถอยไปตั้งหลัก 3 วิ เหมือนเดิม)</li>
       <li>ผีปอบ: ตัวสูงขึ้น ช่วงเอวยาวขึ้น แขนยาวขึ้น</li>
       <li>เสียงใหม่: ตีโดนเป้าหมาย (ทำดาเมจ) สุ่ม 2 เสียง · ไม้แจ็คพอท ไม้ไฟแพม กระทะแพรวา และการถีบ/ผลัก ใช้เสียงฟันอากาศแบบใหม่</li>
@@ -388,7 +390,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
     <h2>เลือกตัวละครหลัก</h2><div class="hint">◀ ปัดซ้าย-ขวาเพื่อเลือกตัวละคร ▶ แล้วกด ▶ เริ่มเกม</div>
     <div class="cpick"><div class="pick"><div class="pc" data-h="fifa"><div class="badge">✔ เลือกแล้ว</div><img src="data:image/png;base64,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" alt=""><div class="cap">ฟีฟ่า</div></div><div class="pc" data-h="jp"><div class="badge">✔ เลือกแล้ว</div><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFQAAABmCAIAAADauyEwAAAO40lEQVR42rVcTWhc1xW+GjWQklY0wh4cD7KFKmJseSEbO46FxWAjQjC42hhEIWBIsmgWIQ100VUX2TZQuileNAstuhMG14WArY2wERIWyMLIXkQSlY0GYQl5MRg07hC6OMqn4/P37swog7hcP7958879zt89P7dr7vt/3p+ZTT99Fh49PTd8ksakPt71lNJodQTP4XP9ZFxZXtkYGqycGz45Wh1JKQ2dH0vOZ/nh9ND5MTHSf/E5/4j7+XMw7z7Rd4je7OiRw/z9apvbdOXokcPi7el6bXOb3/Ns/Tmec+v2XVzHnfRMonlrp761U08pbe3Um68bzcbus/XnN/9xs7b2ZGF25pdv/W+rtlauDCw/nKZR0LxVW0sp3Z+ZPd7fx+d8pOsY+XMw7/rrnz/VmHv4AzfzHr52hOryykbyP2sbLwYq5ZQS3Tk0WOFPHq2OCFTvz8wSj5hzwXf4X84L4soe8ZonNYXBipwbPjk5NQ1qQZVJrTfuv+VPqyBWnD5ff/UZEczlK3hPvhaC/taQp2fxtbz57Td4PxNtsSKF9OsV5BwBVLRmiekvQF4DZdIP4okn78/MgnKPvcWKCJrposbfew7nC4689y268w9/+ov+ry6h7QOdb67f55/8Xmhv0OnNAykoXDuinFPlyazgEdOUlEAV52f6DucZUM41EPH88soG/XFkwAuELZ+bI7gAvGB+F7+VUpqcmhaaWK8vXdfo7iFf3/6vaSdNy8n/efPbb8zFDiQ/kH+h/wvexMHfk1kXeW73YTk8T0NQTpR4I0dS8IXWdib+3gj8l1c2hBbEr9P1LOQ9P0n7TCmlv/39O0GPGD1LnmnzCrWA1n9ff/WZsHlZMk/00Ejf5yPnBZJwUB6MgsKU0p2ZRU/C9Twff4z0VlrzxciXtBkTHhL8p9HqCKccsqdHYb0CVD1rx//XvC5+kWto8oK0zjbYHk5O4afQnnuWjF/U1HorFaygqf/A+UL5BXa++6NLZwJq+a6GJuXeHtqTgMJ3e97RY0oJI/+jt9dzfj+NL+uvMrXA1k693NvTbOyOVkeerT8frY40G7tHjxyubW6TFExMjJcrAwVsL6QF8sMxF8gHUsptdasj5wtPFwj7KrQV3vzc8ElX5rkPw/05LjM0Ch9G6HM9ggYtz4XznO8Kzl949NSkBdcNtj/Rd8iMPeCbtc3tew+Wyr09tLrE82sbL17WX72sv0opvay/Ag/rN4Ms0J1AT3A1nuBpDfErXL7A+XPzixRZGK2O3Lp9Fyg+W39+bqRqI2/ufjn+AnNPJ6eUrlXPeN679uFieTbtQs4umCgCzxYgn1LicRgxao+VIwAMgQBHm9+Dn9Rz/gTzu569BP6EPEWWjvf3He/vI+RJ57nIx/thUK5tuGl1PTy1LhBa0/MOAsz1r0POgXyBzPf+6m1INcXYaE6mAphD5umXYO241MV+q8CcfyDPOZiL+7nME/LgYjy/2dh1kedcLfakwNycaz+vVS89U/97vGDu87Tlcj2804PHdMzgxvWx/Dhkfqwi9u2COE/sI5qcL5w808Mrmdjimx7OAnPzHtMi0B9d4XN8l+xFGzYfq5+PfHdXKok9qfacuA6ff7zKdSz9L49S4Lrp7Qp+ge7AnJ62tVOH/HOL4Ol8SD5lAXJlXmAuogKBPHvxWdMX8PZ/Q4MV+qPf4nOPdwqtfWvIQ1uSVkdeBZibmlzgH/thgkcEf9F+CTYF94jf5X4B5wWh8wXykZ0XcksLZr6fJ28CJdMaa8zNvYM5erZd6wu8s9iheciXvKgrj8NpT5vPg5yEiOGZuSAzUiDiJZkRHh3JE/wvTd3Exxd5JgBZp8KoW5B78+KtOren98iB3tX2UnwxyHCZMbx9bV/u7bn3YAkSTlqd78m1pInR9L2E7030k0+JXK3Q9kIHQf7xK9ovJK1BoResabm3J5b5romPL5qxd42qF8PI4QWRbwukwMu9mPIltBWijOLjIV8qjMCakZNC2TPj1oJyvuuMs6M6F8A1Dp5P+xmtO9xITuC3Z8bP4xgOvcGN62OgFnPQaa6CaQs83w5e6cKjp9rXzLXznlUPKNdWHXJIsjo0WIG0oz6Drnh1K7ySg+6sbW6Xe3vmH6/G+3mOOcl84OF1X/7gFL1fSunqlQvN1w2Kz8InhY8JT5NoRgTi0tn3t3bqNNK3Lp19v9zbQ7999coFUE40YBSvgroY0MDvnJgYbzZ2f/32L8RvYZWXVzbot+A14cle9Lbr9OAxL7taGEUX+5wgQ66zSFqreXlonm+MM2UiU0rjjetjbroq2JMFkROuybR8evFfLtvIN96ZWUSGO6ZcxxQF5aanGNQt2Np+aLASe2z8DShPPjk1vbyyQXPodp05Az1i98I1rsgjiHyb2Hdxba/zC4SNp+33ZR5vQ9Jyov89IVc8ugwdUdvcJl9laLAy/3j1Zf1Vs/njjetjXFYplvxs/Tk5ITQOnxqobW6TloFeoCtHjxxGvgU6b2JiPKVEwclmY5d0E96BSzjNMdJ37YyNXj8dz9K2na801uJa9cxApUycBszNLIoZLw0qTQL0gLbw6jnyLtt78iP22KCN+J/LmGnDzR2FZ8N1LlXfyf/XqLHz445ZMm8iL+ZYBTMTXOif6p1cUBFSeKf2R813jnJ1QXzW4wXwEs+NcW1M62LWOQV1XnFdFLdVo9URHX2Cb6fjkcX7ec9+al7gvIRsl6jkENdNOdf3mznWPalmtSOiRkJ4CvrNi2U+E3MdpebZPm/0vHezFiTmEayy3vPH+YXItwdV5lxQXu7tufjhWY0bWTWqe9aSLPx2ZFf4aPr5dCdVVFNOCTEIrBSP/4l5FL0NcjKBF+khL3jYxF/EW0xOMbX9Xi2k8uqC/FJW3D4Tc1z/3dUq6ts5zZoLdG00ft7DP0aevBrEmnVOkc8D5Lsvf3AKcSIeMzYx59epBgbY8lXgeOI69/CCvV1QSwcP7+KHZ+fmF7GH476pyaeeh5cr83pOuRFIOEebRmJ7QhK9FwRUTj+H5g7okZTS3Pwip1zH/A9S5s251tWcz1GNLrL92ifVXq3eHYo6/8w8cjsy78m5uKfZ2BWY8/mt23eXVzaarxscSR5vuHrlgqgCEZEcjTz6Z5qNXa7zD1LmPTkX+z9U/3DdhvnExPi777wFOac/Hs/xeiM45ZwvIE1D58cWZmearxuBnOO6J/PLD6fbl3leCRFoeF7PaMbnzJHH4ehXQD8h/2z9OWrETDkvlPmt2lpHMq87eLS3F+/nNML8uu6uAfKj1ZHM92wtP5+JP8VkPeShC8xqJ4EwZNu7zlcZPXPf/es/Lck8ddRJ5GN/Pq7JQcSCIy/63rydbM7eQ9RYCd8+qPnn7+l1V7Uj89qvnpgYB/K8rxJ1XpBPGnlHJTSIjrcLmef8dby/b25+0ZP5HDvfpszzXT0qe7VnHkdEeIworvnRXXT4lRye/bnsPCyWkHxB+dBgpdzbQ5HJL7/4pNnYHT41gCilwFmP3P/nOv/W7buIUrZq5yk60L6dx5sJ+smHRxyWqOW2yqxw5/FWMxovPvDwkcnCExDPDex8uTKwVVsrBRG7wrmO2/Hdm7ef15UJXrxI90mJ+I/pC9OVc8Mng7U7AN/e23V7v6c9di2f+rfM7D20jJkLmpyaHq2OBGQbuTqzHzS2IpnZ9TgzF+fegnWk3j7zzXU3ejtx+7h/jiOfc96CkJoY8zjzqbsaRZ5vcmo6AL/At/d0vng/2GFxooL27YRm4jkmru15BsLU/7zzQ1T+QHdSfdHSk7Uvv/iENFxrdr6QF4Q3jiwlX2+R2+B/cQ9PDt+ZlVmUNcLHrNKJfPvMkcehFh49Rcby3oOl5usGgQ/7p3d4ws/XNQLCC9QVobpW/4+fjlN4l1dpzc0v/rbvN3RyBrfz7VMOmX8jxjJYWV7ZWNt4IeI8Wv6FjsjMNOhuD15Hca16ZnJqenJqWtcRCfxJ/xnaXkSIMncdxPPgw2vVM1DIhZUZrVY7iuq4uBtd+Mi8I1qemZFa/Oj4nNnfGZxvoPvq457pnPvN+j9h85YfTnd/dOkMjytz+URMyhxFBoZ3ms4/Xj3R/x5VP3M7Dy1N2gF7O9TwBzgLe8R5RNeC4jrtF6nac+nJ2uoPK7W1J7S33zszo1W0xRkdAs87M4tEg9C6Hp+njHMSYszjCnzz7BWyQd0n+g7xeHgO5WTM+X6bUwUEoPDB85pHTI4VPRmmnueYe/2ZvBeA88LWTv3f38+s/rBSos4bkgQ9mqcImLpXd9eY+42gul5b7PiezJ5cUU3Gn9w9fvk0P3NKnz9F+ZZmY5ciMxxzc0T99NKTteFTA8Kqcxnhu9dYzkUPj5BtsyfXnIOn5h+vNps/lvi5YWKuT14K+qpMj7Cw9oj0go7q6GdmnsZQOHJecBWed/JQzjkhOee7BHXlgYbLoS3/fIY3TksBz5vRqJR9TkSmrc6pYQoqYuNuRPPECuN4KH3ymtkD4nXt569LcNZL25RndmCaY0mcFUgREl5dCGk08TRPTtFXRF89XzU6RcbL5OhzhYJOu6ALwLQFb8i8rp8KeD4T8xymMFen0OfP7AIoQF5U11CQxIy0m5h41j5f/w1UyqITTHSLxLotHoOq8T3kvXi7h6137lO+zMc7MH7imam3D8TylQLdbkba+Hp7sdf4bASzQ47XMweUF2Lb0nyvtSzfnplItiH/ObwQn5PU+VgKzsAJfGxNeRCNDfS/7pkN+qfz5znffQP5VveY6UA/iH/pztmfEfn8iFVOXN3LtxZ+dM98zmlpHc734/aF76f31d49el4o/7TT5nsvamPz+vZy9nCF870u6g7jKjlnnRbKi3eKYjDP6eEOrpdalV4vxuzN4/7koFs2ZZycGJyfmnN9/6iYNpA/WP3X0tmoncz3E5XxOXZ6HmMeRNcL57yfLz6rocM5xo6Qz5H/ti1oqzLfxqcU98B7khl33bfHCx3KfMro5xfzrtODx9pYy1b1fBueb+ZeqBO+KOWvpae3D1D+Seb1GZgdyrZHy77M558zXYh5h/jnn8nSoS4omXq1Q8zj80YK9Ut8lmom5jm89n+Qoz4sScH9lwAAAABJRU5ErkJggg==" alt=""><div class="cap">แจ็คพอท</div></div><div class="pc" data-h="pam"><div class="badge">✔ เลือกแล้ว</div><img src="data:image/png;base64,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" alt=""><div class="cap">แพม</div></div><div class="pc" data-h="pw"><div class="badge">✔ เลือกแล้ว</div><img src="data:image/png;base64,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" alt=""><div class="cap">แพรวา</div></div></div><div id="bio" class="bio"></div></div>
     <button id="goBtn" class="go2" type="button">▶ เริ่มเกม</button>
-    <div><input id="codeIn" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="โค้ดลับ"><div id="lvlBox" style="display:none"><div style="color:#5fd35f;font-weight:bold">✓ ปลดล็อกเลือกคืน · เสบียงจุใจ (ฟืน 50 กล้วย 40)</div><div id="lvlBtns"></div></div></div>
+    <div><input id="codeIn" maxlength="4" inputmode="numeric" autocomplete="off" placeholder="โค้ดลับ"><div id="lvlBox" style="display:none"><button id="pracBtn" type="button" class="prac">🎯 โหมดซ้อม</button><div style="color:#5fd35f;font-weight:bold">✓ ปลดล็อกเลือกคืน · เสบียงจุใจ (ฟืน 50 กล้วย 40)</div><div id="lvlBtns"></div></div></div>
     <button class="back" type="button">‹ กลับ</button></div></div>
 </div>
 
@@ -416,6 +418,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 const TAU=Math.PI*2,TS=16,MW=104,MH=104,DAY_LEN=360,WAVE_AT=300,K=.75,WALLH=20,RT=3;
 let GATEP=new Map();const TG=0,TR=1,TF=2,TW=3,TT=4,TFN=5,TB=6,TK=7,TD=8,TPL=9,TST=10;   // TFN = bamboo fence, TPL = raised floor of the เถียงนา, TST = its ladder
 const PLH=13,ROOFH=40;
+let PRAC=false,PDAY=false;const PRR=400,PFR=120;   // practice mode: 50 m of ground round a small hut, a round fence 10 m out
 const BM=[0,0,0,1,0,1,1,1,0,1,0];      // blocks movement (trunks handled as circles)
 const BL=[0,0,0,1,0,0,0,0,0,0,0];      // blocks light (trunks handled as circles)
 const INDOOR=[0,0,1,0,0,0,1,1,1,1,0];
@@ -435,9 +438,9 @@ const isRoad=i=>false;   // nothing but rubber rows outside the fence
 /* ================= MAP: Thai rubber plantation ================= */
 let UPGf=false;
 let snakes=[],gDrag=null,waveDone=false,trickleT=4,bigBranches=[],roofA=1,tiles,huts,tables,outdoor,startPos,debris,plights=[],sparks=[],props=[],home=null,hoe=null,clumps=[],grounds=[],stock=0,postPos=null,fireP=null,woodItems=[],woodPiles=[],praewa=null,fireOut=false,pam=null,postTorches=[],postSpots=[];
-function passT(tc,tn){if(tn===TST)return true;if(tn===TPL)return tc===TPL||tc===TST;if(tc===TPL)return false;return !BM[tn];}
+function passT(tc,tn){if(PRAC)return tn===TPL||tn===TST||!BM[tn];if(tn===TST)return true;if(tn===TPL)return tc===TPL||tc===TST;if(tc===TPL)return false;return !BM[tn];}
 let VAULT=false;   // แพรวา's roll hops the bamboo fence
-function blkT(t,e){if(t===TST)return false;if(VAULT&&t===TFN)return false;if(e.st)return BM[t]&&t!==TPL;if(e.up)return t!==TPL;return BM[t];}
+function blkT(t,e){if(t===TST)return false;if(PRAC)return t!==TPL&&!!BM[t]&&!(VAULT&&t===TFN);if(VAULT&&t===TFN)return false;if(e.st)return BM[t]&&t!==TPL;if(e.up)return t!==TPL;return BM[t];}
 function lvSet(e){const t=tAt(Math.floor(e.x/TS),Math.floor(e.y/TS));e.st=t===TST;e.up=t===TPL;e.ev=e.st?.55:e.up?1:0;}
 function lvUpd(e){const t=tAt(Math.floor(e.x/TS),Math.floor(e.y/TS));if(t===TST)e.st=true;else{e.st=false;e.up=t===TPL;}const tv=e.st?.55:e.up?1:0;e.ev=(e.ev||0)+(tv-(e.ev||0))*.3;}
 function sameLv(a,b){return !!a.up===!!b.up||a.st||b.st;}
@@ -453,7 +456,7 @@ function tryPlace(hs,cells,type){for(const[i,j]of cells)if(tAt(i,j)!==TF)return 
   if(!hutConnected(hs)){for(const[i,j]of cells)setT(i,j,TF);return false;}return true;}
 function buildTiang(x,y,w,h){   // เถียงนา: an open hut on stilts, corrugated roof, ladder at the front
   for(let j=y;j<y+h;j++)for(let i=x;i<x+w;i++)setT(i,j,TPL);
-  const si=x+ri(1,Math.max(1,w-4)),sj=y+h;setT(si,sj,TST);
+  const si=x+ri(1,Math.max(1,w-4)),sj=y+h;if(!PRAC)setT(si,sj,TST);   // practice: no ladder, you just step off
   const hs={x,y,w,h,door:sj*MW+si,tiang:true,si,sj,side:'b',di:si,dj:sj};huts.push(hs);
   plights.push({kind:'candle',x:(x+1)*TS+4,y:(y+1)*TS+5,e:PLH,r:56,v:118,seed:rnd()*100,f:1});
   hs.bed={x:(x+w-2)*TS+8,y:(y+1)*TS+8};
@@ -464,7 +467,7 @@ function buildTiang(x,y,w,h){   // เถียงนา: an open hut on stilts,
   hs.bamboo=[];for(let k=0;k<5;k++)hs.bamboo.push({y:y*TS+10+rnd()*(h*TS-20),x0:x*TS-6-rnd()*14,x1:(x+w)*TS+4+rnd()*14,lean:(rnd()-.5)*4,ht:2+rnd()*5});
   const fi=Math.min(x+w,si+2),fj=y+h+2;
   plights.push({kind:'fire',x:fi*TS+8,y:fj*TS+8,e:0,r:150,v:225,seed:rnd()*100,f:1});
-  yardAround(hs,x,y,w,h,fi,fj,si,sj);
+  if(PRAC)pracYard(hs,x,y,w,h,fi,fj,si,sj);else yardAround(hs,x,y,w,h,fi,fj,si,sj);
   for(let j=y+h+5;j<=y+h+15;j++)for(let i=fi-3;i<=fi+6;i++)if(tAt(i,j)===TT)setT(i,j,TG);   // nothing blocks the gate
 }
 function gateDress(hs,gate,x,y,w,h){
@@ -475,6 +478,16 @@ function gateDress(hs,gate,x,y,w,h){
    for(let j=y-12;j<=y+h+11;j++)for(let i=x-12;i<=x+w+11;i++){if(tAt(i,j)!==TT)continue;const vx=i*TS+8-hs.gate.x,vy=j*TS+8-hs.gate.y,along=(vx*og.x+vy*og.y)/ol,side=Math.abs(vx*og.y-vy*og.x)/ol;
      if(along<-12||along>64||side>170)continue;setT(i,j,TG);}}
 }
+function pracYard(hs,x,y,w,h,fi,fj,di,dj){   // practice: the bamboo fence runs in a circle, 10 m out from the hut
+  for(let j=y-1;j<=y+h;j++)for(let i=x-1;i<=x+w;i++){const t=tAt(i,j);if(t===TG||t===TT)setT(i,j,TR);}
+  const cx=x+w/2,cy=y+h/2,R=PFR/TS,ins=(i,j)=>Math.hypot(i+.5-cx,j+.5-cy)<=R,ring=[];
+  for(let j=Math.floor(cy-R-1);j<=cy+R+1;j++)for(let i=Math.floor(cx-R-1);i<=cx+R+1;i++){if(!ins(i,j))continue;let edge=false;for(let b=-1;b<=1&&!edge;b++)for(let a=-1;a<=1;a++)if(!ins(i+a,j+b)){edge=true;break;}if(edge)ring.push([i,j]);}
+  const jb=Math.max(...ring.map(q=>q[1])),row=ring.filter(q=>q[1]===jb).map(q=>q[0]).sort((a,b)=>a-b),m=row[(row.length/2)|0],gate=new Set([jb*MW+m-1,jb*MW+m]);
+  hs.gate={x:m*TS,y:jb*TS+8};
+  for(const[i,j]of ring)setT(i,j,gate.has(j*MW+i)?TR:TFN);
+  gateDress(hs,gate,x,y,w,h);
+  for(let j=jb+1;j<=jb+10;j++)for(let i=m-4;i<=m+3;i++)if(tAt(i,j)===TT)setT(i,j,TG);
+  props.push({kind:'jar',x:(x-1)*TS+8,y:(y+h)*TS+9,r:4.5});}
 function yardAround(hs,x,y,w,h,fi,fj,di,dj){
   for(let j=y-2;j<=y+h+1;j++)for(let i=x-2;i<=x+w+1;i++){const t=tAt(i,j);if(t===TG||t===TT)setT(i,j,TR);}
   const gate=new Set();gate.add((y+h+4)*MW+fi+1);gate.add((y+h+4)*MW+fi+2);
@@ -529,7 +542,10 @@ function genMap(){
     if(isRoad(i)||isRoad(j))setT(i,j,TR);
     else if(i>1&&j>1&&i<MW-2&&j<MH-2&&TREEL[i]&&TREEL[j]&&rnd()>.04)setT(i,j,TT);
   }
-  {const w=ri(7,8),h=ri(5,6),x=Math.floor(MW/2-w/2),y=Math.floor(MH/2-h/2);
+  if(PRAC){const w=4,h=3,x=Math.floor(MW/2-w/2),y=Math.floor(MH/2-h/2),cx=(x+w/2)*TS,cy=(y+h/2)*TS,q=PFR*.68;   // a small hut, a round yard
+    for(let j=0;j<MH;j++)for(let i=0;i<MW;i++){const d=Math.hypot(i*TS+8-cx,j*TS+8-cy);if(d<PFR+26)setT(i,j,TG);else if(d>PRR+10&&!isRoad(i)&&!isRoad(j))setT(i,j,(i+j)&1?TT:TG);}   // beyond the 50 m: thick forest
+    buildTiang(x,y,w,h);home={x0:cx-PFR-8,y0:cy-PFR-8,x1:cx+PFR+8,y1:cy+PFR+8,ix0:cx-q,iy0:cy-q,ix1:cx+q,iy1:cy+q,cx,cy,hs:huts[0]};}
+  else{const w=ri(7,8),h=ri(5,6),x=Math.floor(MW/2-w/2),y=Math.floor(MH/2-h/2);
     for(let j=y-5;j<=y+h+4;j++)for(let i=x-5;i<=x+w+4;i++)setT(i,j,TG);
     buildTiang(x,y,w,h);home={x0:(x-5)*TS,y0:(y-5)*TS,x1:(x+w+5)*TS,y1:(y+h+5)*TS,ix0:(x-4)*TS+6,iy0:(y-4)*TS+6,ix1:(x+w+4)*TS-6,iy1:(y+h+4)*TS-6,cx:(x+w/2)*TS,cy:(y+h/2)*TS,hs:huts[0]};}
   let best=null,bd=1e9;for(const h of huts){const d=Math.hypot(h.x+h.w/2-MW/2,h.y+h.h/2-MH/2);if(d<bd){bd=d;best=h;}}
@@ -538,7 +554,7 @@ function genMap(){
   startPos={x:sp[0]*TS+8,y:sp[1]*TS+8};
   const reach=new Uint8Array(MW*MH),q=[sp[1]*MW+sp[0]];reach[q[0]]=1;
   while(q.length){const c=q.pop();const ci=c%MW,cj=(c/MW)|0;for(const[di,dj]of D4){const ni=ci+di,nj=cj+dj;if(ni<0||nj<0||ni>=MW||nj>=MH)continue;const n=nj*MW+ni;if(reach[n]||!passT(tiles[c],tiles[n]))continue;reach[n]=1;q.push(n);}}
-  outdoor=[];for(let k=0;k<MW*MH;k++)if(reach[k]&&(tiles[k]===TG||tiles[k]===TR))outdoor.push(k);
+  outdoor=[];for(let k=0;k<MW*MH;k++)if(reach[k]&&(tiles[k]===TG||tiles[k]===TR)&&!(PRAC&&Math.hypot((k%MW)*TS+8-home.cx,((k/MW)|0)*TS+8-home.cy)>PRR-20))outdoor.push(k);
   // banana clumps (กอกล้วย) near the edges and corners of the map; ~20% carry a bunch, at least 6 overall
   clumps=[];grounds=[];const reachSet=new Set(outdoor);
   for(let n=0;n<3000&&clumps.length<44;n++){
@@ -560,7 +576,7 @@ function genMap(){
    if(!postPos)postPos={x:F.x+perp[0]*24,y:F.y+perp[1]*24};props.push({kind:'post',x:postPos.x,y:postPos.y,r:2.5});}
   // the campfire burns firewood: fuel F (s, max 120). one log = +40 s
   fireP=plights.find(p=>p.kind==='fire');fireP.sk=[];fireP.F=60;fireP.bt=-1;fireP.boost=0;fireP.hs=1;fireOut=false;
-  woodItems=[];scatterWood(150);snakes=[];spawnSnakes(22);
+  woodItems=[];scatterWood(PRAC?40:150);snakes=[];spawnSnakes(PRAC?6:22);
   bigBranches=[];growBranches();
   woodPiles=[];{const hs=home.hs,sx=(hs.x+hs.w+1)*TS+4,sy=(hs.y+1)*TS+8,x=inYard(sx,sy)?sx:(hs.x-2)*TS+8,y=sy;woodPiles.push({x,y,logs:[0,3,5,8]});}
   // a hoe (จอบ / บักจก) lies somewhere 50-66 m out in the plantation
@@ -738,7 +754,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='12.8';
+let useBot=true,bot=null,hero='fifa';const VERSION='12.9';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -788,7 +804,8 @@ function collide(e,r){
     if(d2<r*r){if(d2>1e-6){const d=Math.sqrt(d2);e.x+=dx/d*(r-d);e.y+=dy/d*(r-d);}
       else{const l=e.x-i*TS,rr=i*TS+TS-e.x,u=e.y-j*TS,b=j*TS+TS-e.y,m=Math.min(l,rr,u,b);if(m===l)e.x=i*TS-r;else if(m===rr)e.x=i*TS+TS+r;else if(m===u)e.y=j*TS-r;else e.y=j*TS+TS+r;}}}
 }
-function moveCircle(e,dx,dy,r){const st=Math.max(1,Math.ceil(Math.max(Math.abs(dx),Math.abs(dy))/4));for(let s=0;s<st;s++){e.x+=dx/st;collide(e,r);e.y+=dy/st;collide(e,r);lvUpd(e);}}
+function moveCircle(e,dx,dy,r){const v=moveCircle0(e,dx,dy,r);if(PRAC&&home){const ox=e.x-home.cx,oy=e.y-home.cy,d=Math.hypot(ox,oy);if(d>PRR){e.x=home.cx+ox/d*PRR;e.y=home.cy+oy/d*PRR;}}return v;}   // practice: nobody walks out of the 50 m
+function moveCircle0(e,dx,dy,r){const st=Math.max(1,Math.ceil(Math.max(Math.abs(dx),Math.abs(dy))/4));for(let s=0;s<st;s++){e.x+=dx/st;collide(e,r);e.y+=dy/st;collide(e,r);lvUpd(e);}}
 const isIndoor=(x,y)=>INDOOR[tAt(Math.floor(x/TS),Math.floor(y/TS))];
 
 /* ================= AUDIO ================= */
@@ -1176,7 +1193,7 @@ function meat(){let m=0;if(fireP&&fireP.sk)for(const k of fireP.sk)if(k.t>=12)m+
 function food(){return stock+meat();}
 function foodSpot(p){if(stock>0&&postPos)return{x:postPos.x+(p.x<postPos.x?-8:8),y:postPos.y+5,cx:postPos.x,cy:postPos.y};let b=null,bd=1e9;if(fireP&&fireP.sk)for(const k of fireP.sk)if(k.t>=12&&k.por>0){const d=Math.hypot(k.x-p.x,k.y-p.y);if(d<bd){bd=d;b=k;}}
   if(!b)return null;return{x:b.x+(b.x-fireP.x)*.6,y:b.y+(b.y-fireP.y)*.6,cx:b.x,cy:b.y};}
-function eatFood(n){let got=0,kind='กล้วย';if(stock>0){got=Math.min(stock,n);stock-=got;}else{kind='งูปิ้ง';for(const k of fireP.sk){if(got>=n)break;if(k.t<12)continue;const t=Math.min(k.por,n-got);k.por-=t;got+=t;}fireP.sk=fireP.sk.filter(k=>k.por>0);}return{got,kind};}
+function eatFood(n){if(PRAC)return{got:n,kind:'กล้วย'};let got=0,kind='กล้วย';if(stock>0){got=Math.min(stock,n);stock-=got;}else{kind='งูปิ้ง';for(const k of fireP.sk){if(got>=n)break;if(k.t<12)continue;const t=Math.min(k.por,n-got);k.por-=t;got+=t;}fireP.sk=fireP.sk.filter(k=>k.por>0);}return{got,kind};}
 function grillAvail(){return state==='play'&&player.snakes>0&&inYard(player.x,player.y)&&fireP&&fireP.sk.length<8;}
 function grillSnakes(){const F=fireP,free=[];for(let k=0;k<8;k++)if(!F.sk.some(q=>q.slot===k))free.push(k);const n=Math.min(player.snakes,free.length);if(!n){toast('รอบกองไฟเต็มแล้ว (8 ไม้)');return;}
   for(let i=0;i<n;i++){const k=free[i],a=k*TAU/8+.2;F.sk.push({slot:k,x:F.x+Math.cos(a)*15,y:F.y+Math.sin(a)*12,t:0,por:6,seed:rnd()*10});}
@@ -1335,7 +1352,7 @@ function wobTick(dt){for(const b of bigBranches){const vx=b.px===undefined?0:(b.
     if(b.wv||b.wob){b.wv+=(-1700*(b.wob||0)-11*b.wv)*dt;b.wob=clamp((b.wob||0)+b.wv*dt,-3.5,3.5);if(Math.abs(b.wob)<.01&&Math.abs(b.wv)<.3){b.wob=0;b.wv=0;}}}}
 let frameN=0;
 function updatePlay(dt){frameN++;tickBlk(dt);wobTick(Math.max(dt,1e-3));mournTick(dt);updateFlyWood(dt);updateDust(dt);
-  corpseTick();explTick(dt);if(!n3Active()&&!TUT)gameTime+=dt;if(player.rollCd>0)player.rollCd-=dt;
+  corpseTick();explTick(dt);if(!n3Active()&&!TUT&&!PRAC)gameTime+=dt;if(player.rollCd>0)player.rollCd-=dt;
   let mx=joyV.x,my=joyV.y;
   if(keys.KeyA||keys.ArrowLeft)mx-=1;if(keys.KeyD||keys.ArrowRight)mx+=1;if(keys.KeyW||keys.ArrowUp)my-=1;if(keys.KeyS||keys.ArrowDown)my+=1;
   let ml=Math.hypot(mx,my);if(ml>1){mx/=ml;my/=ml;ml=1;}
@@ -1392,8 +1409,8 @@ function updatePlay(dt){frameN++;tickBlk(dt);wobTick(Math.max(dt,1e-3));mournTic
   let nd=1e9;for(const z of zombies)if(z.aware>0)nd=Math.min(nd,Math.hypot(z.x-player.x,z.y-player.y));
   hbT-=dt;if(nd<150&&hbT<=0){sfx.heart(.25+.45*(1-nd/150));hbT=.35+nd/150*.65;}
   dawn=gameTime>DAY_LEN-60?(gameTime-(DAY_LEN-60))/60*60:0;if(TUT){tutTick(dt);if(state!=='play')return;}
-  if(TUT){}else if(!n3Active())nightSpawns(dt);else if(N3.multi&&!waveDone){trickleT-=dt;if(trickleT<=0){trickleT=30;edgeSpawn();if(rnd()<.3)edgeSpawn();}}
-  if(zombies.length===0&&waveDone&&!player.cleared&&!n3Active()){player.cleared=true;toast('กำจัดหมดแล้ว! พร้อมเมื่อไหร่กด "ไปนอน"');sfx.ready();}
+  if(PRAC)pracTick(dt);else if(TUT){}else if(!n3Active())nightSpawns(dt);else if(N3.multi&&!waveDone){trickleT-=dt;if(trickleT<=0){trickleT=30;edgeSpawn();if(rnd()<.3)edgeSpawn();}}
+  if(!PRAC&&zombies.length===0&&waveDone&&!player.cleared&&!n3Active()){player.cleared=true;toast('กำจัดหมดแล้ว! พร้อมเมื่อไหร่กด "ไปนอน"');sfx.ready();}
   if(gameTime>=DAY_LEN&&!TUT){if(night!==1||dawnLeave(dt))startSleep('dawn');}
 }
 function actorTick(h,dt){
@@ -1514,7 +1531,7 @@ function updateZombies(dt){STKT+=dt;for(const z of zombies)if(z.stalk&&z.hw>0&&z
   const humans=[player];if(bot&&!bot.dead&&!e5On())humans.push(bot);
   for(const z of zombies){
     if(z.ride){z.x=player.x-Math.cos(player.fallA||0)*2;z.y=player.y-Math.sin(player.fallA||0)*2;continue;}
-    if(z.blind&&z.state!=='down'&&z.state!=='fall'&&z.state!=='stagger'){if(z.ba==null)z.ba=Math.atan2(z.y-home.cy,z.x-home.cx)+(rnd()-.5)*.7;const sp=z.crawl?7:13;moveCircle(z,Math.cos(z.ba)*sp*dt,Math.sin(z.ba)*sp*dt,4);z.a=angLerp(z.a,z.ba,dt*3);z.phase=(z.phase||0)+dt*3;z.state='wander';z.t=3;z.aware=0;z.slam=null;if(z.x<10||z.y<10||z.x>MW*TS-10||z.y>MH*TS-10)z.hp=-99;continue;}   // daylight: blind, shuffling away from the house until they are off the map
+    if(z.blind&&z.state!=='down'&&z.state!=='fall'&&z.state!=='stagger'){if(z.ba==null)z.ba=Math.atan2(z.y-home.cy,z.x-home.cx)+(rnd()-.5)*.7;const sp=z.crawl?7:13;moveCircle(z,Math.cos(z.ba)*sp*dt,Math.sin(z.ba)*sp*dt,4);z.a=angLerp(z.a,z.ba,dt*3);z.phase=(z.phase||0)+dt*3;z.state='wander';z.t=3;z.aware=0;z.slam=null;if(z.x<10||z.y<10||z.x>MW*TS-10||z.y>MH*TS-10||(PRAC&&Math.hypot(z.x-home.cx,z.y-home.cy)>PRR-8))z.hp=-99;continue;}   // daylight: blind, shuffling away from the house until they are off the map
     if(z.emerge){const E=z.emerge;E.t+=dt;z.a=Math.atan2(E.uy,E.ux);if(E.t<E.T*.72){moveCircle(z,E.ux*13*dt,E.uy*13*dt,4);z.phase+=dt*7;}else if(z.crawl){z.crawl=false;z.tilt=0;}if(E.t>=E.T){z.emerge=null;z.state='chase';z.aware=8;z.hunt=true;}continue;}   // crawling out of the carcass, then getting to its feet
     if(z.state==='convB'||z.state==='eatB'){eatBotTick(z,dt);continue;}
     if(z.state==='eatC'){const C=CORPSE;z.t-=dt;if(!C||z.t<=0){z.state='wander';z.t=2;z.wa=rnd()*TAU;z.aware=0;continue;}const tx=C.x+Math.cos(z.slot)*12,ty=C.y+Math.sin(z.slot)*12,ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1;
@@ -1686,7 +1703,7 @@ function eatBotTick(z,dt){
   // eaters are distracted but still notice you if you come close
   if(Math.hypot(player.x-z.x,player.y-z.y)<26&&!player.hidden){z.state='chase';z.aware=4;z.tgt=player;}
 }
-function inYard(x,y){return home&&x>home.ix0&&x<home.ix1&&y>home.iy0&&y<home.iy1;}
+function inYard(x,y){if(PRAC)return !!home&&Math.hypot(x-home.cx,y-home.cy)<PFR-14;return home&&x>home.ix0&&x<home.ix1&&y>home.iy0&&y<home.iy1;}
 function stabK(t){return t<.2?-.9*Math.sin(t/.2*Math.PI/2):t<.3?-.9+1.9*(t-.2)/.1:Math.max(0,1-(t-.3)/.12);}   // hands: pulled back behind him, then driven out, then recovered
 function poke(b,z){if(b.jp){if(b.stab)return;b.stab={t:0,z,hit:false};b.pokeT=.42;b.pokeCd=.72+rnd()*.25;b.facing=Math.atan2(z.y-b.y,z.x-b.x);z.aware=Math.max(z.aware,4);if(near(b,220))sfx.whoosh();return;}pokeHit(b,z);}
 function stabTick(b,dt){const S=b.stab;if(!S)return;S.t+=dt;if(!S.hit&&S.t>=.3){S.hit=true;const z=S.z,R=(b.weapon==='knife'?20:32)*(zombies.includes(z)&&crossBetween(b.x,b.y,z.x,z.y)?2:1);
@@ -2295,10 +2312,10 @@ function restoreSnap(c){initAudio();menu.classList.add('hidden');endEl.classList
 const BOSS_START={3:()=>startN3(),5:o=>startE5(o&&o.byEl),6:()=>startN6()};
 function isBossNight(n){return !!BOSS_START[n];}
 function startBossNight(n,o){const f=BOSS_START[n];if(!f)return false;f(o||{});return true;}
-function retryN3(){const c=ckpt?{...ckpt,hero}:null;if(!c)return;const byKr=!!(death&&death.kr),byEl=!!(death&&death.el);restoreSnap(c);nightCk=c;const n=c.night||3;
+function retryN3(){if(PRAC){begin();return;}const c=ckpt?{...ckpt,hero}:null;if(!c)return;const byKr=!!(death&&death.kr),byEl=!!(death&&death.el);restoreSnap(c);nightCk=c;const n=c.night||3;
   if(n===3){startN3();if(byKr){startCine();skipCine();}else nightCard();return;}
   if(!startBossNight(n,{byKr,byEl}))spawnNight();nightCard();}
-function restartNight(){const c=nightCk?{...nightCk,hero}:null;if(!c){begin();return;}restoreSnap(c);zombies.length=0;if(isBossNight(night)){ckpt=c;startBossNight(night);}else spawnNight();nightCard();}
+function restartNight(){if(PRAC){begin();return;}const c=nightCk?{...nightCk,hero}:null;if(!c){begin();return;}restoreSnap(c);zombies.length=0;if(isBossNight(night)){ckpt=c;startBossNight(night);}else spawnNight();nightCard();}
 function setBlackout(on){if(on===blackout)return;blackout=on;if(on){postTorches=[];if(pam)pam.torch=0;shake=Math.max(shake,3);nz(1.2,'lowpass',600,80,.35,1);tn('sine',120,40,1.2,.25);toast('ไฟดับหมด!!');}else{toast('ไฟกลับมาแล้ว');}}
 function startN3(){N3={ph:'count',t:60,beep:61,lineT:3};B=null;BS=[];KRL=null;KL=null;waveDone=true;zombies.length=0;player.cleared=false;toast('คืนที่ 3 — จุดเช็คพอยต์');}
 function n3Busy(){return n3Active()||!!(N3&&N3.cheer);}
@@ -2730,6 +2747,7 @@ function updateN3Play(dt){
   if(N3.ph==='count'){N3.t-=dt;const s=Math.ceil(N3.t);if(s<N3.beep){N3.beep=s;if(s<=10&&s>0)tn('square',s<=3?1200:900,s<=3?1200:900,.07,.12);}
     if(N3.t<=0)startCine();return;}
   for(const b of BS.slice()){if(state!=='play'&&state!=='n3cine')break;if(N3.step==='frz')break;selB(b);
+    if(PRAC&&PDAY&&!['dead','carry','burn','intro'].includes(b.state)){pracKrLeave(b,dt);continue;}
     if(!b.frenzy&&state==='play'&&N3.ph==='fight'&&b.hp>0&&b.hp<=b.hpMax*.3&&!['dead','carry','intro'].includes(b.state)){startFrenzy(b);break;}   // under 30%: it goes berserk
     updateBoss(dt*(b.frenzy?2:1));}
   if(N3.cheer){const C=N3.cheer;C.t+=dt;if(C.t>=C.next&&C.pool.length){C.next=C.t+.7+rnd()*.6;const who=[player,...npcs()].filter(e=>!e.say);if(who.length){const e=who[(rnd()*who.length)|0];sayE(e,C.pool.splice((rnd()*C.pool.length)|0,1)[0]);}}if(C.t>12)N3.cheer=null;}
@@ -2903,7 +2921,7 @@ function updateFrenzy(dt){const C=N3,F=C.fz,b=F.b,P=player;selB(b);F.t+=dt;F.pt+
 function frenzyEnd(){const C=N3,F=C.fz;if(!F)return;const b=F.b;selB(b);if(bigBranches.includes(F.br)&&!F.hit)smashBranch(F.br,F.u.x,F.u.y,1.6);slowT=0;
   b.hidden=false;b.x=F.S.x;b.y=F.S.y;b.vx=b.vy=0;b.rig.init(b.x,b.y);KRS.R.zoff=6;b.state='roam';b.t=0;b.rt=0;b.wp=null;b.glow=1;b.cd1=2;b.cd2=2;b.cdS=5;b.biteCd=1;b.hits=0;
   C.step=F.step0||null;C.fz=null;C.cam=null;state='play';toast('กระสือคุ้มคลั่ง!! ความเร็ว 2 เท่า');}
-function krBar(B,bi,s){const w=Math.min(230*s,SWc*.6),x0=SWc/2-w/2,y0=(55+bi*17)*s,bh=12*s,f=Math.max(0,B.hp/B.hpMax),fz=B.frenzy&&B.state!=='dead',bl=fz&&((performance.now()/55)|0)%2;
+function krBar(B,bi,s){const w=Math.min(230*s,SWc*.6),x0=SWc/2-w/2,y0=((PRAC?60:55)+bi*17)*s,bh=12*s,f=Math.max(0,B.hp/B.hpMax),fz=B.frenzy&&B.state!=='dead',bl=fz&&((performance.now()/55)|0)%2;
   u.save();if(fz){u.shadowColor='#ff4040';u.shadowBlur=(8+(bl?10:0))*s;}u.fillStyle=fz?'#fff':BG;u.fillRect(x0-2,y0-2,w+4,bh+4);u.restore();u.fillStyle='#5c0a10';u.fillRect(x0,y0,w,bh);u.fillStyle=B.hitF>0?'#fff':fz?(bl?'#ff8a70':'#ff2a2a'):'#d01c22';u.fillRect(x0,y0,w*f,bh);   // berserk: the bar burns bright and flickers
   if(fz){u.save();u.font=`900 ${10*s}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineJoin='round';u.lineWidth=3*s;u.strokeStyle='#000';u.strokeText('คุ้มคลั่ง ความเร็ว2เท่า!!',SWc/2,y0+bh/2+1);u.fillStyle='#fff';u.fillText('คุ้มคลั่ง ความเร็ว2เท่า!!',SWc/2,y0+bh/2+1);u.restore();}
   else uiText(BS.length>1?'กระสือ '+(bi+1):'กระสือ',SWc/2,y0+bh/2,9*s,'center',FG);}
@@ -3608,7 +3626,9 @@ function e5Hurt(wood){const e=E5.el,EL=ELE.EL;if(e.st==='dead'||e.st==='hurt')re
 function e5ElAI(dt){const e=E5.el,EL=ELE.EL,G=ELE.G,P=player;e.t+=dt;e.cd1-=dt;e.cd2-=dt*(inYard(P.x,P.y)?2:1);e.cd3-=dt;e.cdA-=dt;if(e.hitF>0)e.hitF-=dt;if(e.hurtCd>0)e.hurtCd-=dt;
   const dx=P.x-e.x,dy=P.y-e.y,d=Math.hypot(dx,dy)||1,ang=Math.atan2(dy,dx),ad=Math.abs(angDiff(EL.yaw,ang)),rage=e.hp<e.hpMax*.4;
   let sp=0;EL.turnMax=2;EL.ov={};const sk=G.sk;if(sk)sk.t+=dt;
+  if(PRAC&&PDAY&&!sk&&e.st!=='hurt')e.st='leave';else if(e.st==='leave'){e.st='approach';e.t=0;}
   switch(e.st){
+    case 'leave':{EL.faceT=Math.atan2(e.y-home.cy,e.x-home.cx);EL.turnMax=1.2;sp=22;break;}   // practice, daylight: it cannot see, it ambles off
     case 'idle':e.st='approach';e.t=0;break;
     case 'approach':{EL.faceT=ang;sp=d>80?(d>330?112:rage?78:60)*clamp(1.25-ad,.15,1):0;
       if(e.det>0){e.det-=dt;EL.faceT=ang+e.dsd*1.45;sp=75;if(e.det<=0)e.blocked=0;}else if(e.blocked>16&&d>110){e.det=2.2;if(!e.dsd||(e.dn=(e.dn||0)+1)%3===0)e.dsd=e.dsd?-e.dsd:(rnd()<.5?-1:1);e.blocked=0;}
@@ -3706,7 +3726,7 @@ function updateE5Play(dt){const C=E5;if(!C||C.ph==='done')return;C.t+=dt;if(C.em
         for(const r of EL.riders)if(r.st!=='gone'){const p=r.nodes[1].p;e5Gore(p[0],p[1],14,80);r.st='gone';r.reT=1e9;}}}
     e5Rig(dt);e5Proj(dt);if(C.t>3.5){C.ph='brood';C.t=0;C.brood=0;C.bt=.5;}}
   else if(C.ph==='brood'){e5Proj(dt);C.bt-=dt;if(C.brood<5&&C.bt<=0){C.bt=.95;C.brood++;e5Spawn();}   // five more crawl out of the belly
-    if(C.brood>=5&&zombies.length===0&&C.t>1.5&&state==='play'&&!player.fly)e5StartOutro();}
+    if(C.brood>=5&&zombies.length===0&&C.t>1.5&&state==='play'&&!player.fly){if(PRAC){C.ph='done';if(N3)N3.ph='done';toast('ล้มช้างป่าได้แล้ว!!');sfx.ready();}else e5StartOutro();}}
   e5Push();}
 function e5StartOutro(){const C=E5,b=e5Body();endGrip();ELE.EL.knife=true;C.card=null;if(player.drag)toggleDrag();state='n3cine';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.swingT=0;player.kickT=0;player.hidden=false;player.vx=player.vy=0;
   C.ph='outro';C.t=0;C.said=0;C.at=null;C.cx=b.x;C.cy=b.y;N3.cam={x:b.x,y:b.y-6};for(const p of[player,...npcs()]){p.say=null;p._pp=null;}sfx.ready();}
@@ -4380,7 +4400,7 @@ function renderObjects(T){
   const i0=Math.max(0,Math.floor((camX-24)/TS)),i1=Math.min(MW-1,Math.floor((camX+vw+24)/TS));
   const j0=Math.max(0,Math.floor(camY/K/TS)-1),j1=Math.min(MH-1,Math.floor((camY+vh+380)/K/TS));
   const objs=[];
-  if(home&&home.hs.tiang){const hs=home.hs;objs.push({y:hs.y*TS+.2,k:24},{y:hs.sj*TS+1,k:25});for(const q of hs.posts)objs.push({y:q.y,k:26,q});}
+  if(home&&home.hs.tiang){const hs=home.hs;objs.push({y:hs.y*TS+.2,k:24});if(!PRAC)objs.push({y:hs.sj*TS+1,k:25});for(const q of hs.posts)objs.push({y:q.y,k:26,q});}
   for(const b of bigBranches)if(b.x>camX-b.L&&b.x<camX+vw+b.L&&b.y*K>camY-b.L&&b.y*K<camY+vh+b.L){objs.push({y:b.y-2,k:27,b});for(const u of b.ups)objs.push({y:bigPt(b,u.lx,u.ly)[1]+.5,k:33,b,u});}
   for(const w of flyWood)objs.push({y:w.y,k:34,w});
   for(const d of dusts)objs.push({y:d.y+2,k:35,d});
@@ -4841,8 +4861,8 @@ function drawUI(dt){
   const bbN=N3&&state==='play'?BS.filter(b=>N3.ph==='fight'||b.state==='dead'&&b.t<4).length:0;   // portrait: krasue bars under the clock push the info down
   u.save();u.translate(SAFEX,40*s+(UTOP?8:0)+(SWc<SHc&&bbN?bbN*17*s+4*s:0));
   uiText('ไฟคาดหัว: '+(player.hidden?'ปิด (ซ่อน)':flashOn?'เปิด':'ปิด'),14,22*s,13*s,'left');
-  uiText(`คืนที่ ${night} · ซอมบี้เหลือ ${zombies.length}`,14,42*s,12*s,'left');uiText('อาวุธ: '+(WHO()==='pw'&&player.weapon==='knife'&&!UPG()?'กระทะ':WHO()==='pam'&&player.weapon==='knife'?pamWLabel():W().name),14,60*s,11*s,'left');if(bot)uiText(bot.dead?BOTNAME()+': ตายแล้ว':BOTNAME()+': ยังรอด'+(bot.hunger>=1?' (หิว)':''),14,77*s,11*s,'left',bot.dead?UIRED:'#5fd35f');
-  uiText(`🍌 กล้วยที่บ้าน: ${stock} ลูก`+(meat()?` · 🐍 งูปิ้ง ${meat()} คำ`:'')+(player.snakes?` · งูในมือ ${player.snakes}/5`:''),14,(bot?94:77)*s,11*s,'left','#e6c43c');
+  uiText(PRAC?`โหมดซ้อม · ซอมบี้ ${zombies.length}`:`คืนที่ ${night} · ซอมบี้เหลือ ${zombies.length}`,14,42*s,12*s,'left');uiText('อาวุธ: '+(WHO()==='pw'&&player.weapon==='knife'&&!UPG()?'กระทะ':WHO()==='pam'&&player.weapon==='knife'?pamWLabel():W().name),14,60*s,11*s,'left');if(bot)uiText(bot.dead?BOTNAME()+': ตายแล้ว':BOTNAME()+': ยังรอด'+(bot.hunger>=1?' (หิว)':''),14,77*s,11*s,'left',bot.dead?UIRED:'#5fd35f');
+  uiText((PRAC?'🍌 กล้วย ∞ · 🪵 ฟืน ∞ · 🐍 งูปิ้ง ∞':`🍌 กล้วยที่บ้าน: ${stock} ลูก`+(meat()?` · 🐍 งูปิ้ง ${meat()} คำ`:''))+(player.snakes?` · งูในมือ ${player.snakes}/5`:''),14,(bot?94:77)*s,11*s,'left','#e6c43c');
   {const yy=(bot?128:111)*s,w=90*s,F=fireP;if(F){u.fillStyle=BG;u.fillRect(14,yy-5*s,w+4,10*s);u.fillStyle=F.F>0?(F.boost>0?'#ffd27a':UIRED):'#5c0a10';u.fillRect(16,yy-3*s,w*F.F/120,6*s);u.strokeStyle=FG;u.lineWidth=1;u.strokeRect(14.5,yy-4.5*s,w+3,9*s);
     uiText(F.F>0?`กองไฟ ${Math.ceil(F.F)} วิ`:'กองไฟดับ!',22+w,yy,10*s,'left',F.F>0?FG:UIRED);}
     const woodLeft=woodPiles.reduce((a,p)=>a+p.logs.length,0);uiText(`ฟืนที่บ้าน: ${woodLeft} ท่อน`+(player.wood?` · ${PAMSLED()?'มัดลาก':'ในมือ'} ${player.wood}/${WMAX()}`:''),14,yy+16*s,11*s,'left','#c8b79c');}if(player.carry)uiText(`แบกกล้วย ${player.carry.count} ลูก (ช้าลง · กด วางของ = วาง)`,14,(bot?111:94)*s,11*s,'left','#e6c43c');
@@ -4883,7 +4903,7 @@ function drawUI(dt){
         uiText('บ้าน '+Math.round(dm)+' ม.',ax+Math.cos(an)*16*s,ay+Math.sin(an)*14*s+(Math.sin(an)>0?6:-6)*s,10*s);}}
   }
   if(TUT)tutUI(s);if(CORPSE)corpseUI(s);
-  uiText(clockStr(),SWc/2,22*s,22*s);if(n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':E5?(E5.ph==='brood'?'คืนที่ 5 — กำจัดซอมบี้จากท้องช้าง':'คืนที่ 5 — ล้มช้างป่าให้ได้'):N3.multi?`คืนที่ ${night} — ฆ่ากระสือให้ครบ 2 ตัว (เหลือ ${liveBS().length})`:`คืนที่ ${night} — ฆ่ากระสือให้ได้`,SWc/2,44*s,11*s,'center','#ff6b5e');else uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':night===2?'ซอมบี้มาทุก 30 วิ · รอดถึงเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
+  if(PRAC)pracUI(s);else uiText(clockStr(),SWc/2,22*s,22*s);if(!PRAC&&n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':E5?(E5.ph==='brood'?'คืนที่ 5 — กำจัดซอมบี้จากท้องช้าง':'คืนที่ 5 — ล้มช้างป่าให้ได้'):N3.multi?`คืนที่ ${night} — ฆ่ากระสือให้ครบ 2 ตัว (เหลือ ${liveBS().length})`:`คืนที่ ${night} — ฆ่ากระสือให้ได้`,SWc/2,44*s,11*s,'center','#ff6b5e');else if(!PRAC)uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':night===2?'ซอมบี้มาทุก 30 วิ · รอดถึงเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
   if(waveAvail()){const wb=waveBox();u.globalAlpha=.88;u.fillStyle=BG;u.fillRect(wb.x-2,wb.y-2,wb.w+4,wb.h+4);u.fillStyle='#8a1418';u.fillRect(wb.x,wb.y,wb.w,wb.h);u.globalAlpha=1;uiText('พร้อมแล้ว!',wb.x+wb.w/2,wb.y+wb.h*.3,9*s,'center','#ffd27a');uiText('เรียกระลอกใหญ่ ▶',wb.x+wb.w/2,wb.y+wb.h*.72,Math.min(11*s,wb.w/8.6),'center',FG);}
   if(state==='play'&&N3&&N3.ph==='count'){const n=Math.ceil(N3.t),pu=1+.06*Math.sin(performance.now()/120);uiText('นับถอยหลังก่อนเริ่มเกม 1 นาที',SWc/2,SHc*.2,19*s,'center',UIRED);
     u.save();u.font=`900 ${54*s*pu}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineWidth=6*s;u.strokeStyle=BG;u.strokeText(n,SWc/2,SHc*.2+48*s);u.fillStyle='#ff3b30';u.fillText(n,SWc/2,SHc*.2+48*s);u.restore();
@@ -4986,6 +5006,7 @@ function pickUp(x,y,id){const Q=PK;if(!Q)return;if(Q.d2&&(id===Q.d2.id||(Q.d&&id
   if(hit(U.start)&&Q.sel){const k=Q.sel,e=pkEnt(k);pickEnd();if(k!==hero&&e&&!e.dead)switchTo(e,k);return;}
   if(hit(U.zoom)){Q.mode='zoom';Q.x=cam.x;Q.y=cam.y;pkZoom(Q.z);return;}
   for(const k of PKK)if(hit(U[k])){
+    if(PRAC&&k!==hero&&pkDead(k)){pracRevive(k);return;}   // practice: tap the dead to bring them back
     if(pkDead(k)){const e=pkEnt(k),ps=DEADPOS[k]||(e&&e!==player?{x:e.x,y:e.y}:null);if(!ps){toast(CNAME[k]+' ไม่อยู่แล้ว');return;}Q.mode='focus';Q.sel=null;Q.dead=k;Q.tg=ps;pkZoom(ZPLAY);sfx.ready();return;}   // the dead: show where they fell
     Q.mode='focus';Q.sel=k;Q.dead=null;Q.tg=null;pkZoom(ZPLAY);sfx.ready();return;}}
 const AUC=document.createElement('canvas'),auc=AUC.getContext('2d');
@@ -5112,6 +5133,7 @@ function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l
 ui.addEventListener('pointerdown',e=>{
   e.preventDefault();initAudio();const x=e.clientX-OFFX,y=e.clientY-TOPI-OFFY;
   if(DF){if(DF.t>.5)DF=null;return;}
+  if(PRAC&&state==='play'&&pracTap(x,y))return;
   if(tutSkipOn()){const b=tutSkipBox();if(x>b.x-8&&x<b.x+b.w+8&&y>b.y-8&&y<b.y+b.h+8){tutSkip();return;}}
   if(state==='dying'&&death&&death.el&&!death.shown){const sb=skipBox();if(x>sb.x-14&&x<sb.x+sb.w+14&&y>sb.y-14&&y<sb.y+sb.h+14){death.shown=true;showEnd(false);}return;}
   if(state==='layout'){layDown(x,y,e.pointerId);try{ui.setPointerCapture(e.pointerId);}catch(_){}return;}
@@ -5183,11 +5205,56 @@ function showEnd(won){
 }
 function demoStop(){DEMO=null;gameCv.style.transform='';gameCv.style.filter='';}
 function begin(){initAudio();demoStop();try{const d=document.documentElement;if(d.requestFullscreen&&matchMedia('(pointer: coarse)').matches)d.requestFullscreen().catch(()=>{});}catch(_){}
-  menu.classList.add('hidden');endEl.classList.add('hidden');hidePause();useBot=true;newGame();if(cheat)applyCheat();state='play';wakeFade=0;nightCk=isBossNight(night)&&ckpt?ckpt:makeSnap();nightCard();if(night===1&&(!cheat||window.PROTEST))startPro();}
+  menu.classList.add('hidden');endEl.classList.add('hidden');hidePause();useBot=true;newGame();if(PRAC)pracInit();else if(cheat)applyCheat();state='play';wakeFade=0;nightCk=isBossNight(night)&&ckpt?ckpt:makeSnap();if(PRAC){NC=null;return;}nightCard();if(night===1&&(!cheat||window.PROTEST))startPro();}
 let cheat=false,startNight=1;
 {const ci=document.getElementById('codeIn'),lb=document.getElementById('lvlBox'),bs=document.getElementById('lvlBtns');
   for(let n=1;n<=7;n++){const b=document.createElement('button');b.type='button';b.className='nb'+(n===1?' sel':'');b.textContent='คืน '+n+(n===3?' 👹':n===5?' 🐘':'');b.onclick=()=>{startNight=n;for(const x of bs.children)x.classList.toggle('sel',x===b);};bs.appendChild(b);}
   ci.addEventListener('input',()=>{ci.value=ci.value.replace(/\D/g,'').slice(0,4);cheat=ci.value==='0018';ci.classList.toggle('ok',cheat);lb.style.display=cheat?'':'none';if(cheat)ci.blur();});}
+/* ---------- practice mode (after the secret code): call any monster in, endless supplies, day or night ---------- */
+const PRK=[['z','ซอมบี้'],['p','ผีปอบ'],['k','กระสือ'],['e','ช้างป่า']];let PRI={},PRB={};
+function pracInit(){PDAY=false;ckpt=null;night=1;toasts=[];stock=40;waveDone=true;player.cleared=false;zombies.length=0;toast('โหมดซ้อม — แตะรูปด้านบนเพื่อเรียกมอนสเตอร์');}
+function pracPt(r){let q=null;for(let k=0;k<40;k++){const a=rnd()*TAU,x=home.cx+Math.cos(a)*r,y=home.cy+Math.sin(a)*r,t=tAt(Math.floor(x/TS),Math.floor(y/TS));q={x,y,a};if(!BM[t]&&t!==TT)break;}return q;}
+function pracSpawn(k){
+  if(k==='z'||k==='p'){if(zombies.length>=40){toast('เยอะเกินไปแล้ว (40 ตัว)');return;}const q=pracPt(PRR-40),z=makeZ(q.x,q.y);if(k==='p')z.stalk=true;z.hunt=true;z.aware=8;z.state='chase';z.lx=player.x;z.ly=player.y;if(PDAY){z.blind=true;z.hunt=false;z.aware=0;}zombies.push(z);
+    toast((k==='p'?'ผีปอบ':'ซอมบี้')+'บุกมาแล้ว!');if(!PDAY)sfx.groan(.3,0);return;}
+  if(k==='k'){if(E5&&E5.ph!=='done'){toast('ช้างป่ายังอยู่ — เรียกกระสือพร้อมกันไม่ได้');return;}if(liveBS().length>=2){toast('กระสือได้สูงสุด 2 ตัว');return;}
+    E5=null;BS=BS.filter(b=>b.state!=='dead');if(!N3||N3.ph!=='fight')N3={ph:'fight',lineT:3,prac:true};
+    const q=pracPt(300),b=makeBoss(q.x,q.y);b.state='roam';b.t=0;b.rt=0;b.cd1=2;b.cd2=6;if(!PDAY){setBlackout(true);sfx.screech(0);shake=Math.max(shake,4);}toast('กระสือ!! ล่อให้มันชนต้นไม้/รั้ว แล้วจับหาง');return;}
+  if(k==='e'){if(liveBS().length){toast('กระสือยังอยู่ — เรียกช้างป่าพร้อมกันไม่ได้');return;}if(E5&&E5.ph!=='done'){toast('ช้างป่ามาอยู่แล้ว');return;}
+    BS=[];B=null;KRL=null;KL=null;N3={ph:'e5',lineT:3,cam:null,stashed:false,prac:true};const a=rnd()*TAU,q=e5Spot(home.cx+Math.cos(a)*320,home.cy+Math.sin(a)*320);
+    E5={ph:'pre',t:0,st:0,said:0,step:null,el:mkEl(q.x,q.y,Math.atan2(home.cy-q.y,home.cx-q.x)+.6),th:[],wood:[],focus:null,ember:null,brood:0};e5Fight(false);}}
+function pracSetDay(d){if(PDAY===d)return;PDAY=d;sfx.ready();
+  if(d){if(blackout)setBlackout(false);toast('กลางวัน — พวกมันมองไม่เห็น ค่อยๆ เดินออกไป');}
+  else{for(const z of zombies)if(z.blind){z.blind=false;z.ba=null;z.hunt=true;z.aware=8;if(z.state==='wander')z.state='chase';}if(liveBS().length)setBlackout(true);toast('กลางคืน');}}
+function pracTick(dt){const tg=PDAY?1:0;DAYK+=(tg-DAYK)*Math.min(1,dt*1.6);if(Math.abs(tg-DAYK)<.01)DAYK=tg;dawn=215*DAYK;
+  stock=40;   // endless bananas, firewood and grilled snake
+  if(home){let p=woodPiles.find(p=>p.prac&&woodPiles.includes(p));if(!p){const q=freeYardSpot();p={x:q.x,y:q.y,logs:[],prac:true};woodPiles.push(p);}while(p.logs.length<30)p.logs.push((rnd()*10)|0);}
+  if(fireP){for(let k=0;k<4;k++)if(!fireP.sk.some(q=>q.slot===k*2)){const a=k*2*TAU/8+.2;fireP.sk.push({slot:k*2,x:fireP.x+Math.cos(a)*15,y:fireP.y+Math.sin(a)*12,t:20,por:6,seed:rnd()*10});}}
+  if(PDAY){for(const z of zombies)if(!z.blind){z.blind=true;z.ba=null;z.hunt=false;z.aware=0;}
+    if(E5&&E5.ph==='fight'&&Math.hypot(E5.el.x-home.cx,E5.el.y-home.cy)>PRR+40){E5=null;if(N3&&N3.ph==='e5')N3.ph='done';toast('ช้างป่าเดินจากไปแล้ว');}}}
+function pracKrLeave(b,dt){const a=Math.atan2(b.y-home.cy,b.x-home.cx),k=Math.min(1,dt*3);b.state='roam';b.t=0;b.rt=0;b.glow=.35;b.frenzy=b.frenzy||0;   // daylight: it drifts away, blind
+  b.vx+=(Math.cos(a)*20-b.vx)*k;b.vy+=(Math.sin(a)*20-b.vy)*k;kMove(b,b.vx*dt,b.vy*dt);rigTick(dt,-1,a);
+  if(Math.hypot(b.x-home.cx,b.y-home.cy)>PRR+30){const i=BS.indexOf(b);if(i>=0)BS.splice(i,1);if(B===b){B=null;if(BS.length)selB(BS[0]);}if(!liveBS().length&&N3)N3.ph='done';toast('กระสือลอยจากไปแล้ว');}}
+function pracRevive(k){const e0=pkEnt(k);if(e0&&e0!==player){if(e0===bot)bot=null;else if(e0===pam)pam=null;else if(e0===praewa)praewa=null;else if(e0===subE)subE=null;}
+  DEADS.delete(k);delete DEADPOS[k];if(CORPSE&&CORPSE.who===k)CORPSE=null;for(const z of zombies)if(z.state==='eatB'||z.state==='convB'){z.state='wander';z.t=1;z.wa=rnd()*TAU;}
+  if(k==='pam'&&hero!=='pam'&&!pam)pam=makePam();else if(k==='pw'&&hero!=='pw'&&!praewa)praewa=makePraewa();else if((k==='fifa'||k==='jp')&&!bot){bot=makeBot();bot.jp=k==='jp';}
+  syncSub();const e=pkEnt(k);if(!e||e===player){toast('ชุบชีวิต'+CNAME[k]+'ไม่ได้');return;}
+  const q=freeYardSpot();e.x=q.x;e.y=q.y;e.dead=false;e.down=false;e.fall=0;lvSet(e);toast('ชุบชีวิต '+CNAME[k]+' แล้ว!');sfx.ready();tn('sine',500,1000,.3,.15);}
+function pracIcon(k){if(PRI[k])return PRI[k];const W=30,H=30,cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');c.fillStyle=k==='k'?'#1a0808':k==='e'?'#2a2620':'#2c2f26';c.fillRect(0,0,W,H);
+  if(k==='z'||k==='p'){const cx0=camX,cy0=camY;try{const z=makeZ(0,0);z.a=.5;z.phase=1;z.seed=3;z.state='chase';z.aware=1;if(k==='p'){z.stalk=true;z.sk='circle';z.skT=0;}camX=-(k==='p'?11:15);camY=-(k==='p'?33:27);z._ar=true;drawZ(c,z,5.3,null);}catch(_){}camX=cx0;camY=cy0;}
+  else if(k==='k'){c.strokeStyle='#150c0c';c.lineWidth=1.2;for(let i=0;i<7;i++){c.beginPath();c.moveTo(11+i*1.4,8);c.quadraticCurveTo(4+i*3.6,16,6+i*3.2,21+(i%3)*2);c.stroke();}   // long hair
+    c.strokeStyle='#c8141a';c.lineWidth=2.2;c.lineCap='round';c.beginPath();c.moveTo(15,15);c.bezierCurveTo(19,19,11,22,15,25);c.bezierCurveTo(18,27,14,28,16,30);c.stroke();c.strokeStyle='#ff7a6a';c.lineWidth=.8;c.stroke();   // the glowing gut
+    c.fillStyle='#d8d2c8';c.beginPath();c.ellipse(15,10,5,5.6,0,0,TAU);c.fill();c.fillStyle='#150c0c';c.beginPath();c.ellipse(15,7,5.2,3.4,0,Math.PI,TAU);c.fill();c.fillStyle='#ff2a2a';c.fillRect(12,10,2,1.4);c.fillRect(16,10,2,1.4);c.fillStyle='#7a0c10';c.fillRect(13,13,4,1.6);}
+  else{c.fillStyle='#6f6a62';c.beginPath();c.ellipse(7,13,6,8,-.2,0,TAU);c.ellipse(23,13,6,8,.2,0,TAU);c.fill();c.fillStyle='#8a847a';c.beginPath();c.ellipse(15,12,7,8,0,0,TAU);c.fill();   // ears, head
+    c.strokeStyle='#8a847a';c.lineWidth=4.2;c.lineCap='round';c.beginPath();c.moveTo(15,17);c.quadraticCurveTo(15,25,19,27);c.stroke();c.strokeStyle='#f1ead8';c.lineWidth=1.6;c.beginPath();c.moveTo(11,18);c.quadraticCurveTo(8,23,6,22);c.moveTo(19,18);c.quadraticCurveTo(22,23,24,22);c.stroke();   // trunk, tusks
+    c.fillStyle='#0a0908';c.fillRect(11,10,2,2);c.fillRect(17,10,2,2);}
+  return PRI[k]=cv;}
+function pracLay(s){const sz=34*s,n=PRK.length,gap=Math.min(74*s,(SWc-130*s)/n),y=(UTOP?UTOP:0)+5*s,L={};PRK.forEach(([k],i)=>{L[k]={x:SWc/2+(i-(n-1)/2)*gap-sz/2,y,w:sz,h:sz};});
+  const bw=76*s,bh=24*s,bx=SWc-bw-10*s,by=(UTOP?UTOP:0)+94*s;L.day={x:bx,y:by,w:bw,h:bh};L.night={x:bx,y:by+bh+8*s,w:bw,h:bh};return L;}   // day / night: stacked on the right edge
+function pracUI(s){const L=PRB=pracLay(s);u.imageSmoothingEnabled=false;
+  for(const[k,nm]of PRK){const b=L[k];u.fillStyle=BG;u.fillRect(b.x-3,b.y-3,b.w+6,b.h+6);u.drawImage(pracIcon(k),b.x,b.y,b.w,b.h);u.strokeStyle='#f2c230';u.lineWidth=2;u.strokeRect(b.x-1,b.y-1,b.w+2,b.h+2);boldW(nm,b.x+b.w/2,b.y+b.h+7*s,9.5*s);}
+  for(const[k,nm,on]of[['day','☀ กลางวัน',PDAY],['night','🌙 กลางคืน',!PDAY]]){const b=L[k];u.fillStyle=BG;u.fillRect(b.x-2,b.y-2,b.w+4,b.h+4);u.fillStyle=on?'#f2c230':'#3a332b';u.fillRect(b.x,b.y,b.w,b.h);uiText(nm,b.x+b.w/2,b.y+b.h/2+1,11*s,'center',on?BG:'#cfc6b6');}}
+function pracTap(x,y){const L=PRB,hit=b=>b&&x>b.x-5&&x<b.x+b.w+5&&y>b.y-5&&y<b.y+b.h+5;for(const[k]of PRK)if(hit(L[k])){pracSpawn(k);return true;}if(hit(L.day)){pracSetDay(true);return true;}if(hit(L.night)){pracSetDay(false);return true;}return false;}
 function freeYardSpot(){const F=fireP;for(let k=0;k<24;k++){const a=k*TAU/12+.4,r=k<12?36:52,x=F.x+Math.cos(a)*r,y=F.y+Math.sin(a)*r*.9,t=tAt(Math.floor(x/TS),Math.floor(y/TS));if(inYard(x,y)&&!BM[t]&&t!==TT&&!(postPos&&Math.hypot(x-postPos.x,y-postPos.y)<16))return{x,y};}return{x:F.x+30,y:F.y+20};}
 function applyCheat(){stock+=40;const q=freeYardSpot();woodPiles.push({x:q.x,y:q.y,logs:Array.from({length:50},()=>(rnd()*10)|0)});
   if(startNight>1){night=startNight;zombies.length=0;toasts=[];if(isBossNight(night)){saveCkpt();startBossNight(night);}else spawnNight();}
@@ -5246,8 +5313,9 @@ addEventListener('pointerdown',e=>{if(wantFull&&(state==='play'||state==='swap')
 document.getElementById('pFull').style.display=FS_OK?'':'none';
 document.getElementById('pFull').onclick=()=>{wantFull=true;goFull();};
 for(const el of document.querySelectorAll('#mChars .pc'))el.onclick=()=>{hero=el.dataset.h;try{localStorage.setItem('hero',hero);}catch(_){}syncHero();};
-document.getElementById('goBtn').onclick=()=>{goFull();setTimeout(begin,120);};
-function showMenu(){hidePause();endEl.classList.add('hidden');menu.classList.remove('hidden');mScr('mMain');newGame();demoStart();}
+document.getElementById('goBtn').onclick=()=>{PRAC=false;goFull();setTimeout(begin,120);};
+document.getElementById('pracBtn').onclick=()=>{if(!cheat)return;PRAC=true;goFull();setTimeout(begin,120);};
+function showMenu(){hidePause();endEl.classList.add('hidden');menu.classList.remove('hidden');mScr('mMain');PRAC=false;PDAY=false;newGame();demoStart();}
 /* ---- pause ---- */
 const pauseEl=document.getElementById('pause');let pausedFrom=null;
 const pScr=id=>{for(const k of['pMain','pSwapS','pSetS'])document.getElementById(k).classList.toggle('hidden',k!==id);};
