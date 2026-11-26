@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v13.7</div>
+  <div class="ver">v13.8</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.7</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.8</h3><ul>
+      <li>โหมดซ้อม: เงาต้นไม้สีดำทอดลงในน้ำรอบเกาะ ลำต้นแตกกิ่งก้านและพุ่มใบ</li>
       <li>โหมดซ้อม: ทุกอย่างที่อยู่ริมน้ำมีเงาสะท้อนกลับหัวในน้ำ (ตัวละคร ซอมบี้ ต้นไม้ ฟืน ฯลฯ) · แสงไฟฉาย/กองไฟส่องโดนน้ำแล้วระยิบระยับ กลางวันมีประกายแดด</li>
       <li>ตีโดนเป้าหมายมีเสียงทุกครั้ง (รวมมีดกรีดยางของฟีฟ่า)</li>
       <li>ช้างลุยน้ำ: น้ำตัดตามรูปขา ท้อง งวง ทีละส่วนตามความลึกจริง มีวงคลื่นรอบขาทุกข้าง · มีเงาสะท้อนบนน้ำ · แสงสีแดงกระเพื่อมกระจายบนผิวน้ำเหมือนลมพัด (ช้างและกระสือ)</li>
@@ -631,6 +632,14 @@ function bake(){
   }
   if(PRAC&&home){const R=PRR+9;c.fillStyle='#16324a';c.beginPath();c.rect(0,0,MW*TS,MH*TS);c.arc(home.cx,home.cy,R,0,TAU,true);c.fill('evenodd');   // practice: the ground is an island, still water all round
     c.strokeStyle='#5a7f96';c.lineWidth=2;c.beginPath();c.arc(home.cx,home.cy,R+1,0,TAU);c.stroke();c.strokeStyle='#2a4a62';c.lineWidth=3;c.beginPath();c.arc(home.cx,home.cy,R+6,0,TAU);c.stroke();
+    {const br=(x,y,a,len,w,d)=>{const bend=(rnd()-.5)*.5,mx=x+Math.cos(a+bend*.5)*len*.5,my=y+Math.sin(a+bend*.5)*len*.5,ex=x+Math.cos(a+bend)*len,ey=y+Math.sin(a+bend)*len;   // black trees lying in the still water, trunk at the shore, crown spread far out
+        c.lineWidth=w;c.beginPath();c.moveTo(x,y);c.quadraticCurveTo(mx+(rnd()-.5)*len*.2,my+(rnd()-.5)*len*.2,ex,ey);c.stroke();
+        if(d<=2){const n=d===0?26:12;for(let q=0;q<n;q++){const t=rnd(),lx=x+(ex-x)*t+(rnd()-.5)*len*.9,ly=y+(ey-y)*t+(rnd()-.5)*len*.9;c.globalAlpha=.45+rnd()*.4;c.fillRect(lx,ly,1+rnd()*2.4,1+rnd()*1.6);}c.globalAlpha=.82;}   // leaves, in loose clouds
+        if(d<=0)return;const kids=d>3?2:2+(rnd()<.55?1:0);for(let q=0;q<kids;q++)br(ex,ey,a+bend+(q-(kids-1)/2)*(.5+rnd()*.35)+(rnd()-.5)*.3,len*(.62+rnd()*.2),Math.max(.6,w*.62),d-1);
+        if(d>2&&rnd()<.6)br(mx,my,a+(rnd()<.5?-1:1)*(.7+rnd()*.5),len*.55,Math.max(.6,w*.5),d-2);};
+      c.save();c.strokeStyle='#04080c';c.fillStyle='#04080c';c.lineCap='round';c.globalAlpha=.82;const N=18;
+      for(let k=0;k<N;k++){const a=k*TAU/N+(rnd()-.5)*.25,x=home.cx+Math.cos(a)*(R+2),y=home.cy+Math.sin(a)*(R+2);br(x,y,a+(rnd()-.5)*.3,46+rnd()*26,5+rnd()*2.5,5);}
+      c.restore();}
     for(let k=0;k<2600;k++){const a=rnd()*TAU,r=R+10+rnd()*520,x=home.cx+Math.cos(a)*r,y=home.cy+Math.sin(a)*r;c.fillStyle=rnd()<.5?'#3d6480':'#0e2233';c.fillRect(x,y,3+rnd()*7,1);}}
   // sleeping mat (เสื่อ) + pillow
   for(const hs of huts)if(hs.bed){const x=hs.bed.x-8,y=hs.bed.y-6;P(60,x,y,16,12);P(172,x+1,y+1,14,10);for(let k=2;k<15;k+=2)P(140,x+k,y+1,1,10);for(let k=3;k<11;k+=3)P(150,x+1,y+k,14,1);P(230,x+11,y+3,3,6);P(120,x+11,y+8,3,1);}
@@ -772,7 +781,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='13.7';
+let useBot=true,bot=null,hero='fifa';const VERSION='13.8';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -5280,7 +5289,7 @@ function overWater(x,y){return PRAC&&!!home&&Math.hypot(x-home.cx,y-home.cy)>PRR
 function waterNear(){return !!home&&Math.hypot(cam.x-home.cx,cam.y-home.cy)>PRR-(vw+vh)*.75;}
 function waterReflect(objs,T){if(!waterNear())return;const R=PRR+9,hx=home.cx-camX,hy=home.cy*K-camY;   // everything standing by the water lies in it upside down: drawn again, flipped about its feet, only where there is water
   for(const c of[sctx,lctx]){c.save();c.beginPath();c.rect(0,0,vw,vh);c.ellipse(hx,hy,R,R*K,0,0,TAU);c.clip('evenodd');}
-  for(const o of objs){if(o.k===59||o.k===24||o.k===25||o.k===10||o.k===9)continue;const fy=o.y*K-camY+1;if(fy<hy||fy<-20||fy>vh+10)continue;const sh=Math.sin(T*2.3+o.y*.07)*.07;
+  for(const o of objs){if(o.k===59||o.k===24||o.k===25||o.k===10||o.k===9||o.k===1)continue;const fy=o.y*K-camY+1;if(fy<hy||fy<-20||fy>vh+10)continue;const sh=Math.sin(T*2.3+o.y*.07)*.07;
     sctx.save();lctx.save();for(const c of[sctx,lctx])c.transform(1,0,-sh,-.92,sh*fy,1.92*fy);sctx.globalAlpha=.45;lctx.globalAlpha=.55;
     try{drawObj(o,T,sctx,lctx);}catch(_){}sctx.restore();lctx.restore();}
   sctx.restore();lctx.restore();}
