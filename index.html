@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v14.1</div>
+  <div class="ver">v14.2</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v14.1</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v14.2</h3><ul>
+      <li>เสียงใหม่: เสียงงับของกระสือ จากคลิปที่อัดมา</li>
       <li>เสียงใหม่: ตอนถูกซอมบี้กิน มีเสียงกินจากคลิปที่อัดมา เล่นต่อเนื่องจนกว่าจะหยุดกิน · เปลี่ยนตัวแล้วเดินเข้าใกล้ศพที่กำลังถูกกิน ยิ่งใกล้ยิ่งดัง</li>
       <li>โหมดซ้อม: เงาต้นไม้ในน้ำเป็นเงาสะท้อนจริง ห้อยกลับหัวลงจากโคนต้น ไหวตามคลื่น · ผิวน้ำกระเพื่อมตลอด มีอะไรลงน้ำ (ซอมบี้ ช้าง กระสือ ฟืน) ยิ่งกระเพื่อมแรงและเงาสะท้อนยิ่งสั่น</li>
       <li>โหมดซ้อม: เงาต้นไม้ในน้ำตรงกับต้นไม้จริง ต้นยาง 8 ต้นย้ายมาอยู่ริมน้ำรอบเกาะ แต่ละต้นมีเงาดำของตัวเองทอดลงน้ำจากโคนต้น</li>
@@ -776,7 +777,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='14.1';
+let useBot=true,bot=null,hero='fifa';const VERSION='14.2';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -858,7 +859,8 @@ function eatTick(){if(!AC||!master)return;const d=eatDist(),on=d<420,now=AC.curr
   if(on){if(now>=EAT.end-.12){const L=eatBuf.map((b,i)=>b?i:-1).filter(i=>i>=0&&i!==EAT.last);if(!L.length)return;const i=L[(Math.random()*L.length)|0];EAT.last=i;
       try{const src=AC.createBufferSource();src.buffer=eatBuf[i];src.playbackRate.value=.94+Math.random()*.12;src.connect(EAT.g);const t0=Math.max(now,EAT.end-.12);src.start(t0);EAT.src=src;EAT.end=t0+src.buffer.duration/src.playbackRate.value;}catch(e){}}}
   else if(EAT.src&&EAT.end>now){try{EAT.src.stop(now+.25);}catch(e){}EAT.src=null;EAT.end=0;}}   // the feeding is over: it stops
-function loadFk(){if(!AC||fkLd)return;fkLd=true;decB64(EAT_SND,eatBuf);decB64(HT_SND,htBuf);decB64(SW_SND,swBuf);WD_SND.forEach((b64,i)=>{try{const bin=atob(b64),ab=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)ab[k]=bin.charCodeAt(k);const pr=AC.decodeAudioData(ab.buffer,d=>{wdBuf[i]=d;},()=>{});if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}});FK_SND.forEach((b64,i)=>{try{const bin=atob(b64),ab=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)ab[k]=bin.charCodeAt(k);const pr=AC.decodeAudioData(ab.buffer,d=>{fkBuf[i]=d;},()=>{});if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}});}
+const KB_SND=['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'];let kbBuf=[];const krBite=e=>{bufPlay(kbBuf,e||null,.8);};   // the krasue's jaws snapping shut: the player's recording
+function loadFk(){if(!AC||fkLd)return;fkLd=true;decB64(KB_SND,kbBuf);decB64(EAT_SND,eatBuf);decB64(HT_SND,htBuf);decB64(SW_SND,swBuf);WD_SND.forEach((b64,i)=>{try{const bin=atob(b64),ab=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)ab[k]=bin.charCodeAt(k);const pr=AC.decodeAudioData(ab.buffer,d=>{wdBuf[i]=d;},()=>{});if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}});FK_SND.forEach((b64,i)=>{try{const bin=atob(b64),ab=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)ab[k]=bin.charCodeAt(k);const pr=AC.decodeAudioData(ab.buffer,d=>{fkBuf[i]=d;},()=>{});if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}});}
 function wdPlay(x,y,vol){if(!AC||DEMO)return;const L=wdBuf.filter(Boolean);if(!L.length)return;const d=Math.hypot(x-player.x,y-player.y),v=(vol==null?.45:vol)*Math.pow(Math.max(0,1-d/300),1.5);if(v<.01)return;   // further away = quieter
   try{const src=AC.createBufferSource(),g=AC.createGain();src.buffer=L[(rnd()*L.length)|0];src.playbackRate.value=.88+rnd()*.24;g.gain.value=v;src.connect(g);g.connect(master);src.start();}catch(e){}}
 function fkPlay(e){if(!AC||DEMO)return false;let v=.55;if(e&&e!==player){const d=Math.hypot(e.x-player.x,e.y-player.y);v*=Math.pow(Math.max(0,1-d/260),1.6);if(v<.01)return true;}   // further away = quieter, silent past ~32 m
@@ -1325,7 +1327,7 @@ function grab(z){
   z.state='bite';z.a=player.fallA;
   if(!player.noLamp){dropL={x:player.x+Math.cos(player.facing)*8,y:player.y+Math.sin(player.facing)*8,a:player.facing,av:(rnd()<.5?-1:1)*(7+rnd()*6),on:true};}   // someone without the lamp drops none: the old one stays where it lies, still shining
   if(!player.noLamp&&blocksLightAt(dropL.x,dropL.y)){dropL.x=player.x;dropL.y=player.y;}
-  shake=11;invertF=3;sfx.screech();sfx.bite();if(bot)botSay(4);
+  shake=11;invertF=3;sfx.screech();krBite();if(bot)botSay(4);
   for(const o of zombies){if(o===z)continue;if(Math.hypot(o.x-player.x,o.y-player.y)<560){o.state='converge';o.aware=99;}else o.state='wander';}
   joy.active=false;aimT.active=false;
 }
@@ -2386,12 +2388,12 @@ function updateN6Cine(rdt){const C=N3,z=C.z,S=C.S,k1=C.k1,k2=C.k2;
   else if(C.p==='air'){fly();if(k1.state==='spin'){k1.t+=dt;k1.spinA+=dt*13;f1=k1.spinA;if(k1.t>1.35){k1.state='intro';k1.spinA=null;}}else{steer(k1,z.x-40,z.y+10,2,3);f1=Math.atan2(z.y-k1.y,z.x-k1.x);}
     if(pt>.12){const m=n6Mouth(k2),dx=z.x-k2.x,dy=z.y-k2.y,d=Math.hypot(dx,dy)||1;   // the second one comes in like a bolt and takes it out of the air
       once('dash',()=>{sfx.screech(0);tn('sawtooth',500,1400,.4,.06);});k2.glow=((t*20)|0)%2?1:.4;zoff(k2,Math.max(8,z.air+4),8);const v=640;k2.vx=dx/d*v;k2.vy=dy/d*v;k2.x+=k2.vx*dt;k2.y+=k2.vy*dt;f2=Math.atan2(dy,dx);b2=.3;
-      if(d<14||pt>1.2)once('grab',()=>{C.gd={x:Math.cos(f2)*.55+.6,y:Math.sin(f2)*.4+.75};{const l=Math.hypot(C.gd.x,C.gd.y);C.gd.x/=l;C.gd.y/=l;}k2.vx*=.35;k2.vy*=.35;k2.glow=1;C.slowT=1;sfx.bite();sfx.hit();shake=Math.max(shake,9);blood(z.x,z.y,10,30,C.gd.x,C.gd.y,110);go('carry');});}}
+      if(d<14||pt>1.2)once('grab',()=>{C.gd={x:Math.cos(f2)*.55+.6,y:Math.sin(f2)*.4+.75};{const l=Math.hypot(C.gd.x,C.gd.y);C.gd.x/=l;C.gd.y/=l;}k2.vx*=.35;k2.vy*=.35;k2.glow=1;C.slowT=1;krBite();sfx.hit();shake=Math.max(shake,9);blood(z.x,z.y,10,30,C.gd.x,C.gd.y,110);go('carry');});}}
   else if(C.p==='carry'){const gx=C.gd.x,gy=C.gd.y,lx=-gy,ly=gx;zoff(k2,26,3);steer(k2,k2.x+gx*60,k2.y+gy*60,1.2,1.6);f2=Math.atan2(gy,gx);   // carried off the other way
     hang(k2,Math.sin(pt*5)*.35);b2=(pt*2)%1<.15?.4:-1;z.phase+=dt*9;
     const k=sm(pt/1.9),wig=Math.sin(pt*15)*20*(1-k*.75),bx=k2.x-gx*(80-k*62)+lx*wig,by=k2.y-gy*(80-k*62)+ly*wig;   // the first weaves in fast and low, zig-zagging up behind it
     if(pt<.2)k1.state='intro';zoff(k1,6+k*20,3);steer(k1,bx,by,9,5);f1=Math.atan2(k2.y-k1.y,k2.x-k1.x)+Math.sin(pt*15)*.5*(1-k);k1.glow=.35+k*.65;
-    if(pt>1.9)once('bite2',()=>{C.tug={x:(k1.x+k2.x)/2,y:(k1.y+k2.y)/2,ux:k2.x>=k1.x?1:-1,uy:0};sfx.bite();sfx.screech(0);shake=Math.max(shake,7);blood(z.x,z.y,10,30,-gx,-gy,100);go('tug');});}
+    if(pt>1.9)once('bite2',()=>{C.tug={x:(k1.x+k2.x)/2,y:(k1.y+k2.y)/2,ux:k2.x>=k1.x?1:-1,uy:0};krBite();sfx.screech(0);shake=Math.max(shake,7);blood(z.x,z.y,10,30,-gx,-gy,100);go('tug');});}
   else if(C.p==='tug'){const T0=C.tug,ux=T0.ux,uy=T0.uy,dur=2.8;   // a tug-of-war: one heaves, the other digs in, over and over
     const pull=n=>Math.max(0,Math.sin(pt*4.2+n*Math.PI)),sep=32+sm(pt/dur)*8+pull(0)*5+pull(1)*5,shift=(pull(0)-pull(1))*5;
     T0.x+=ux*shift*dt*.6;T0.y+=uy*shift*dt*.6;
@@ -2504,8 +2506,8 @@ function updatePro1(dt){const C=N3,f=player,o=C.o,S=C.S,t=(C.t+=dt),A=BS[0],Bk=B
     fly(Bk,f.x-Math.cos(ra)*lag+sx*sw*30,f.y-Math.sin(ra)*lag+sy*sw*30,5,3.6);faceB=aTo(Bk,f)+sw*.5;}
   else if(t<12.9){free=false;once('l1',()=>{C.ld=aTo(Bk,f);sfx.screech(0);});
     if(t<12.45){Bk.vx=Math.cos(C.ld)*250;Bk.vy=Math.sin(C.ld)*250;}else{Bk.vx*=Math.exp(-5*dt);Bk.vy*=Math.exp(-5*dt);}Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;faceB=t<12.45?C.ld:aTo(Bk,f);biteB=t<12.6?clamp((t-12)/.5,0,.99):-1;zB=3;
-    if(t<12.6){const a=C.ld+Math.PI/2*Bk.sd;mvx=Math.cos(a)*80;mvy=Math.sin(a)*80;}fa=aTo(f,Bk);if(t>12.25)once('b1',()=>sfx.bite());}   // he walks out of the line of the bite
-  else if(t<14){free=false;arc(12.9,1.1,60);fa=aTo(f,Bk);if(t<13.6){const a=aTo(Bk,f)+1.2*Bk.sd;mvx=Math.cos(a)*40;mvy=Math.sin(a)*40;}if(t>13.82)once('r3',()=>{proRoll(aTo(Bk,f)-.9*Bk.sd);sfx.bite();});}
+    if(t<12.6){const a=C.ld+Math.PI/2*Bk.sd;mvx=Math.cos(a)*80;mvy=Math.sin(a)*80;}fa=aTo(f,Bk);if(t>12.25)once('b1',()=>krBite());}   // he walks out of the line of the bite
+  else if(t<14){free=false;arc(12.9,1.1,60);fa=aTo(f,Bk);if(t<13.6){const a=aTo(Bk,f)+1.2*Bk.sd;mvx=Math.cos(a)*40;mvy=Math.sin(a)*40;}if(t>13.82)once('r3',()=>{proRoll(aTo(Bk,f)-.9*Bk.sd);krBite();});}
   else if(t<14.73){free=false;Bk.vx*=Math.exp(-5*dt);Bk.vy*=Math.exp(-5*dt);Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;faceB=aTo(Bk,f);fa=aTo(f,Bk);
     if(!(f.rollT>0)){f.charging=true;f.charge=Math.min(1,(f.charge||0)+dt*3);const d=Math.hypot(Bk.x-f.x,Bk.y-f.y);if(d>24){mvx=(Bk.x-f.x)/d*95;mvy=(Bk.y-f.y)/d*95;}}
     if(t>14.62)once('sw',()=>{f.charging=false;f.swingDir=1;f.nextDir=-1;f.swingPow=1;f.swingDur=.2;f.swingT=.2;f.swingAng=aTo(f,Bk);f.swingReach=34;sfx.whoosh();});}
@@ -2596,7 +2598,7 @@ function updatePro2(dt){const C=N3,S=C.S,o=C.o,g=gatePos(),t=(C.t+=dt),A=BS[0],B
     if(pt<2.7){if(!C.ev.tel&&pt>.2){C.ev.tel=1;Bk.x=bx+Math.cos(a)*120;Bk.y=by+Math.sin(a)*120;Bk.vx=Bk.vy=0;}fly(Bk,bx,by,3,3);faceB=aTo(Bk,P);
       if(pt>1){Bk.state='stare1';const r=9;Bk.ph=(Bk.ph||0)+dt*r;Bk.glow=(Bk.ph%1)<.5?1:.12;if((Bk.ph%1)<dt*r)tn('sine',320,140,.06,.05);}}   // the red light blinking behind him
     else{once('d2',()=>{C.dir=aTo(Bk,P);Bk.state='dash';Bk.glow=1;sfx.screech(0);});Bk.vx=Math.cos(C.dir)*540;Bk.vy=Math.sin(C.dir)*540;Bk.x+=Bk.vx*dt;Bk.y+=Bk.vy*dt;faceB=C.dir;
-      if(Math.hypot(Bk.x-P.x,Bk.y-P.y)<14||pt>3.2){C.D={t:0,x:P.x,y:P.y};Bk.state='carry';Bk.t=0;Bk.vx=Bk.vy=0;shake=11;invertF=3;sfx.screech();sfx.bite();P.say=null;
+      if(Math.hypot(Bk.x-P.x,Bk.y-P.y)<14||pt>3.2){C.D={t:0,x:P.x,y:P.y};Bk.state='carry';Bk.t=0;Bk.vx=Bk.vy=0;shake=11;invertF=3;sfx.screech();krBite();P.say=null;
         dropL={x:P.x+3,y:P.y+24,a:-Math.PI/2-.12,av:0,on:true};if(blocksLightAt(dropL.x,dropL.y)){dropL.x=P.x;dropL.y=P.y;}proSay(praewa,'กรี๊ดดดด!!',2);proSay(pam,'ไม่นะ!!',2);go('carry');}}}
   else if(C.p==='carry'){const D=C.D;selB(Bk);const R=KRS.R;D.t+=dt;C.cam={x:D.x,y:D.y-8};   // snatched up into the sky, the way the game does it
     if(!D.gone){const rise=Math.max(0,D.t-.45);R.zoff=6+rise*rise*170;P.x=D.x;P.y=D.y;P.lift=Math.max(0,(R.hz-10)*.75);P.down=false;P.moveAmt=1;P.phase+=dt*30;P.facing+=dt*3;
@@ -2968,7 +2970,7 @@ function frenzyUI(s){const C=N3,F=C.fz,bar=SHc*.11,sb=skipBox();u.fillStyle=BG;u
 function bossGrab(){if(player.rollT>0||state!=='play'||DEMO)return false;const b=B;state='dying';death={kr:true,boss:B,t:0,x:player.x,y:player.y,blood:0,crunch:.3,shown:false};
   if(!player.noLamp){dropL={x:player.x+3,y:player.y+24,a:-Math.PI/2-.12,av:0,on:true};if(blocksLightAt(dropL.x,dropL.y)){dropL.x=player.x;dropL.y=player.y;}}
   b.state='carry';b.t=0;b.vx=b.vy=0;player.charging=false;player.swingT=0;player.kickT=0;player.holdTail=false;joy.active=false;aimT.active=false;joyV={x:0,y:0};
-  shake=11;invertF=3;sfx.screech();sfx.bite();for(const e of npcs())sayE(e,e===praewa?'กรี๊ดดดด!!':'ไม่นะ!!');return true;}
+  shake=11;invertF=3;sfx.screech();krBite();for(const e of npcs())sayE(e,e===praewa?'กรี๊ดดดด!!':'ไม่นะ!!');return true;}
 function tailAvail(){for(const b of BS){selB(b);if(tailAvail1())return true;}return false;}
 function tailAvail1(){const b=B;if(!b||state!=='play'||b.state!=='tangle'||b.teth||player.holdTail)return false;const t=KRS.tail();return Math.hypot(t[0]-player.x,t[1]-player.y)<26;}
 function grabTail(){if(!tailAvail())return;   // tailAvail() leaves B on the krasue whose tail is in reach
@@ -3030,7 +3032,7 @@ function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.burnCd>0)b.burnCd-=dt;if
       else if(b.t>=5){b.state='roam';b.t=0;b.rt=0;b.q=0;b.angry=5;sfx.screech();}
       break;}
     case 'bite':{b.bt+=dt;biteT=b.bt;faceA=ang;b.vx*=.8;b.vy*=.8;
-      if(b.bt-dt<.23&&b.bt>=.23){const mx=b.x+Math.cos(KRS.R.yaw)*8,my=b.y+Math.sin(KRS.R.yaw)*8;if(near(b,240))sfx.bite();if(Math.hypot(mx-P.x,my-P.y)<12&&bossGrab())return;}
+      if(b.bt-dt<.23&&b.bt>=.23){const mx=b.x+Math.cos(KRS.R.yaw)*8,my=b.y+Math.sin(KRS.R.yaw)*8;krBite(b);if(Math.hypot(mx-P.x,my-P.y)<12&&bossGrab())return;}
       if(b.bt>.55){b.state='roam';b.t=0;b.biteCd=1.54;b.bt=-1;}break;}
     case 'spin':{b.vx*=.85;b.vy*=.85;
       if(b.t<.45){faceA=ang;b.glow=((b.t*18)|0)%2?1:.35;if(b.t<dt*1.5)tn('sawtooth',90,240,.45,.08);}
