@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v13.3</div>
+  <div class="ver">v13.4</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.3</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.4</h3><ul>
+      <li>ช้างป่า: เบียดต้นไม้แล้วต้นไม้เอนตามแรงดัน ไม่หัก ดีดกลับเมื่อช้างผ่านไป · ตัวช้างไม่ซ้อนทะลุลำต้นแล้ว · โหมดซ้อมกลางวัน ช้างเดินลุยน้ำออกไปได้ ไม่ติดขอบ</li>
       <li>โหมดซ้อม: เรียกกระสือหรือช้างป่ามีคัตซีนเปิดตัว 3 วิ กล้องแพนไปขอบสนาม · กระสือลอยเหนือน้ำมีเงาสะท้อนสั่นไหว · ช้างเดินแหวกน้ำครึ่งตัว ขึ้นบกแล้วพื้นเปียกค่อยๆ แห้ง</li>
       <li>โหมดซ้อม: เอาป่ารอบนอกออก (ทำให้เครื่องค้าง) พื้นที่เกินรัศมี 50 ม. เป็นน้ำล้อมรอบ ออกไปไม่ได้ · ย้ายปุ่มกลางวัน/กลางคืนมาด้านซ้าย ไม่ทับปุ่มไฟ</li>
       <li>โหมดซ้อม: รั้วไม้ไผ่เป็นวงกลมเรียบ ไม่เป็นเหลี่ยมแล้ว</li>
@@ -765,7 +766,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='13.3';
+let useBot=true,bot=null,hero='fifa';const VERSION='13.4';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1661,6 +1662,7 @@ function updateDeath(dt){
 }
 function updateCommon(dt){
   if(!player)return;
+  treeLeanTick(dt);
   for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vh-=320*dt;p.h+=p.vh*dt;if(p.h<=0){if(p.leaf){wctx.save();wctx.translate(p.x,p.y);wctx.rotate(p.rot);wctx.fillStyle=p.col;ell(wctx,0,0,1.6,.9);wctx.restore();}else bakeSplat(p.x,p.y,1+rnd()*1.6);particles.splice(i,1);}else if(p.leaf){p.vh=Math.max(p.vh,-40);p.vx*=.97;p.vy*=.97;}}
   for(let i=gibs.length-1;i>=0;i--){const g=gibs[i];g.x+=g.vx*dt;g.y+=g.vy*dt;g.vh-=320*dt;g.h+=g.vh*dt;g.rot+=g.vr*dt;
     if(g.h<=0){g.h=0;if(!g.bounced&&g.vh<-50){g.bounced=true;if(g.type==='half'||g.type==='parm'){shake=Math.max(shake,g.type==='half'?6:3);sfx.kick();bakeSplat(g.x,g.y,5);for(let k=0;k<14;k++){const an=rnd()*TAU,sp=20+rnd()*60;particles.push({x:g.x,y:g.y,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp,h:2,vh:30+rnd()*50});}}g.vh=-g.vh*.3;g.vx*=.5;g.vy*=.5;g.vr*=.5;bakeSplat(g.x,g.y,3);}else{bakeGib(g);gibs.splice(i,1);}}}
@@ -3529,9 +3531,15 @@ function e5Move(e,dx,dy,ghost){let nx=clamp(e.x+dx,90,MW*TS-90),ny=clamp(e.y+dy,
   if(!ghost){const hit=(cx,cy)=>{for(const o of[-22,6,36])for(const w of[-16,0,16]){const x=cx+fx*o-fy*w,y=cy+fy*o+fx*w,t=tAt(Math.floor(x/TS),Math.floor(y/TS));if((BM[t]&&t!==TT&&t!==TFN)||t===TST)return true;}return false;};   // house walls stop it; a bamboo fence does not
     if(hit(nx,ny)){if(!hit(nx,e.y))ny=e.y;else if(!hit(e.x,ny))nx=e.x;else{e.blocked=(e.blocked||0)+1;return false;}e.blocked=(e.blocked||0)+.4;}else e.blocked=Math.max(0,(e.blocked||0)-1);}   // slides along what it cannot cross
   e.x=nx;e.y=ny;if(ghost)e.blocked=0;const now=performance.now()/1000;
-  for(let j=Math.floor((e.y-40)/TS);j<=Math.floor((e.y+40)/TS);j++)for(let i=Math.floor((e.x-40)/TS);i<=Math.floor((e.x+40)/TS);i++){if(tAt(i,j)!==TT)continue;const cx=i*TS+8,cy=j*TS+8,ex=e.x-cx,ey=e.y-cy,d=Math.hypot(ex,ey),m=RT+15;
-    if(d<m){const k=(m-d)/(d||1)*.6;e.x+=ex*k;e.y+=ey*k;const id=j*MW+i;if((e.tsh.get(id)||0)<now&&Math.hypot(dx,dy)>.1){e.tsh.set(id,now+.6);shakeTree(id,.3);}}}
+  const B0={x:e.x+fx*4,y:e.y+fy*4},ox=-fx*4,oy=-fy*4;   // its whole bulk shoulders the trunks aside: they lean, it squeezes round, they spring back
+  for(let j=Math.floor((B0.y-76)/TS);j<=Math.floor((B0.y+76)/TS);j++)for(let i=Math.floor((B0.x-76)/TS);i<=Math.floor((B0.x+76)/TS);i++){if(tAt(i,j)!==TT)continue;const cx=i*TS+8,cy=j*TS+8,id=j*MW+i;
+    for(const[t,r]of[[-40,16],[-19,20],[3,20],[25,18],[46,12]]){const px=e.x-ox+fx*t,py=e.y-oy+fy*t,ex=px-cx,ey=py-cy,d=Math.hypot(ex,ey),m=r+RT;if(d>=m)continue;
+      const pen=(m-d)/m,k=(m-d)/(d||1)*.22;if(!ghost){e.x+=ex*k;e.y+=ey*k;}leanTree(id,-(Math.abs(ex)>1.5?Math.sign(ex):Math.sign(fy||1))*(.07+.15*Math.min(1,pen*3)));
+      if((e.tsh.get(id)||0)<now&&Math.hypot(dx,dy)>.1){e.tsh.set(id,now+.6);shakeTree(id,.3);}}}
   return true;}
+const treeLean=new Map();
+function leanTree(id,tg){let L=treeLean.get(id);if(!L){L={a:0,v:0,tg:0,h:0};treeLean.set(id,L);}if(Math.abs(tg)>=Math.abs(L.tg)||L.h<=0)L.tg=tg;L.h=.12;}
+function treeLeanTick(dt){if(!treeLean.size)return;dt=Math.min(dt,.04);for(const[id,L]of treeLean){L.h-=dt;if(L.h<=0)L.tg=0;L.v+=((L.tg-L.a)*(L.tg?60:110)-L.v*(L.tg?12:6))*dt;L.a+=L.v*dt;if(!L.tg&&Math.abs(L.a)<.003&&Math.abs(L.v)<.02)treeLean.delete(id);}}
 function e5Push(){if(!E5||!E5.el||E5.ph==='pre')return;
   for(const o of[player,...npcs(),...zombies]){if(!o||o.ride||o.emerge||o.dead||(o===player&&(player.fly&&player.fly.ph==='air'||player.hidden)))continue;const c=e5Closest(o.x,o.y),rr=13*ELSC+(o===player?5:4);
     if(c.d<rr){const dx=o.x-c.cx,dy=o.y-c.cy,d=Math.hypot(dx,dy)||1,k=rr-c.d;o.x+=dx/d*k;o.y+=dy/d*k;collide(o,o===player?5:4);}}}
@@ -3657,7 +3665,7 @@ function e5ElAI(dt){const e=E5.el,EL=ELE.EL,G=ELE.G,P=player;e.t+=dt;e.cd1-=dt;e
     case 'hurt':{const u=Math.min(1,e.t/.95);EL.ov={hy:Math.sin(e.t*27)*.95*(1-u),hyK:30,hd:-.3+.5*Math.sin(e.t*13),flap:1.3,amp:1};EL.faceT=null;if(e.t>.95){e.st='retreat';e.t=0;e.ra=Math.atan2(e.y-P.y,e.x-P.x)+(rnd()-.5)*.8;}break;}
     case 'retreat':{EL.faceT=e.ra;EL.turnMax=2.6;sp=100*clamp(1.3-Math.abs(angDiff(EL.yaw,e.ra)),.25,1);if(e.t>3.4||(e.t>1.2&&d>320)||(e.t>1&&e.blocked>20)){e.st='approach';e.t=0;}break;}
   }
-  const fx=Math.cos(EL.yaw),fy=Math.sin(EL.yaw),k=Math.min(1,dt*3);e.vx+=(fx*sp-e.vx)*k;e.vy+=(fy*sp-e.vy)*k;if(Math.hypot(e.vx,e.vy)>1&&!e5Move(e,e.vx*dt,e.vy*dt)){e.vx*=.5;e.vy*=.5;}
+  const fx=Math.cos(EL.yaw),fy=Math.sin(EL.yaw),k=Math.min(1,dt*3);e.vx+=(fx*sp-e.vx)*k;e.vy+=(fy*sp-e.vy)*k;if(Math.hypot(e.vx,e.vy)>1&&!e5Move(e,e.vx*dt,e.vy*dt,PRAC&&e.st==='leave'&&Math.hypot(e.x-home.cx,e.y-home.cy)>PRR-80)){e.vx*=.5;e.vy*=.5;}   // practice, daylight: it wades straight out through the water
   e5Rig(dt);
   for(const r of EL.riders)if(r.st==='gone'){r.reT-=dt;if(r.reT<=0){r.st='emerge';r.t=0;ELE.resetRider(r);if(near(e,260))sfx.groan(.25,0);}}}   // another one squeezes out between the ribs and climbs back up
 function e5ThrowTick(dt){const e=E5.el,EL=ELE.EL,r=e.rd,P=player,t=e.t,hc=ELE.headC();if(!r||(!e.thrown&&(r.st==='gone'||r.st==='emerge'))){EL.tt=null;EL.tstretch=1;E5.focus=null;e.st='approach';e.t=0;e.cd2=6;return;}
@@ -4492,7 +4500,8 @@ function withOutline(s,e,fn){   // crisp dark outline around a character (the th
   OLSX.globalCompositeOperation='source-over';OLSX.clearRect(0,0,136,120);OLSX.drawImage(OLC,0,0);OLSX.globalCompositeOperation='source-in';OLSX.fillStyle='#0a0908';OLSX.fillRect(0,0,136,120);
   for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])s.drawImage(OLS,x0+dx,y0+dy);s.drawImage(OLC,x0,y0);rimRed(s,e,x0,y0);
   if(e._stk){s.lineCap='round';for(const o of e._stk){s.strokeStyle=o[5];s.lineWidth=o[4];s.beginPath();s.moveTo(o[0],o[1]);s.lineTo(o[2],o[3]);s.stroke();}e._stk=null;}}
-function drawObj(o,T,s,l){
+function drawObj(o,T,s,l){if(o.k===1){const L=treeLean.get(o.j*MW+o.i);if(L&&Math.abs(L.a)>.004){const bx=o.i*TS+8-camX,by=(o.j*TS+8)*K-camY;s.save();l.save();for(const c of[s,l]){c.translate(bx,by);c.rotate(L.a);c.translate(-bx,-by);}drawObj0(o,T,s,l);s.restore();l.restore();return;}}drawObj0(o,T,s,l);}
+function drawObj0(o,T,s,l){
   const F=(c,v,x,y,w,h)=>{c.fillStyle=typeof v==='number'?gray(v):v;c.fillRect(x,y,w,h);};
   switch(o.k){
   case 0:{const {i,j}=o,by=(j+1)*TS,dyp=by-player.y,cut=dyp>0&&dyp<80&&Math.abs(i*TS+8-player.x)<70,H=cut?5:WALLH,sx=i*TS-camX,top=j*TS*K-camY-H;
@@ -5273,7 +5282,7 @@ function pracTick(dt){const tg=PDAY?1:0;DAYK+=(tg-DAYK)*Math.min(1,dt*1.6);if(Ma
   if(home){let p=woodPiles.find(p=>p.prac&&woodPiles.includes(p));if(!p){const q=freeYardSpot();p={x:q.x,y:q.y,logs:[],prac:true};woodPiles.push(p);}while(p.logs.length<30)p.logs.push((rnd()*10)|0);}
   if(fireP){for(let k=0;k<4;k++)if(!fireP.sk.some(q=>q.slot===k*2)){const a=k*2*TAU/8+.2;fireP.sk.push({slot:k*2,x:fireP.x+Math.cos(a)*15,y:fireP.y+Math.sin(a)*12,t:20,por:6,seed:rnd()*10});}}
   if(PDAY){for(const z of zombies)if(!z.blind){z.blind=true;z.ba=null;z.hunt=false;z.aware=0;}
-    if(E5&&E5.ph==='fight'&&Math.hypot(E5.el.x-home.cx,E5.el.y-home.cy)>PRR+40){E5=null;if(N3&&N3.ph==='e5')N3.ph='done';toast('ช้างป่าเดินจากไปแล้ว');}}}
+    if(E5&&E5.ph==='fight'&&Math.hypot(E5.el.x-home.cx,E5.el.y-home.cy)>PRR+190){E5=null;if(N3&&N3.ph==='e5')N3.ph='done';toast('ช้างป่าเดินจากไปแล้ว');}}}
 function pracKrLeave(b,dt){const a=Math.atan2(b.y-home.cy,b.x-home.cx),k=Math.min(1,dt*3);b.state='roam';b.t=0;b.rt=0;b.glow=.35;b.frenzy=b.frenzy||0;   // daylight: it drifts away, blind
   b.vx+=(Math.cos(a)*20-b.vx)*k;b.vy+=(Math.sin(a)*20-b.vy)*k;kMove(b,b.vx*dt,b.vy*dt);rigTick(dt,-1,a);
   if(Math.hypot(b.x-home.cx,b.y-home.cy)>PRR+30){const i=BS.indexOf(b);if(i>=0)BS.splice(i,1);if(B===b){B=null;if(BS.length)selB(BS[0]);}if(!liveBS().length&&N3)N3.ph='done';toast('กระสือลอยจากไปแล้ว');}}
