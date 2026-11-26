@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v13.9</div>
+  <div class="ver">v14.0</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.9</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v14.0</h3><ul>
+      <li>โหมดซ้อม: เงาต้นไม้ในน้ำเป็นเงาสะท้อนจริง ห้อยกลับหัวลงจากโคนต้น ไหวตามคลื่น · ผิวน้ำกระเพื่อมตลอด มีอะไรลงน้ำ (ซอมบี้ ช้าง กระสือ ฟืน) ยิ่งกระเพื่อมแรงและเงาสะท้อนยิ่งสั่น</li>
       <li>โหมดซ้อม: เงาต้นไม้ในน้ำตรงกับต้นไม้จริง ต้นยาง 8 ต้นย้ายมาอยู่ริมน้ำรอบเกาะ แต่ละต้นมีเงาดำของตัวเองทอดลงน้ำจากโคนต้น</li>
       <li>โหมดซ้อม: เงาต้นไม้สีดำทอดลงในน้ำรอบเกาะ ลำต้นแตกกิ่งก้านและพุ่มใบ</li>
       <li>โหมดซ้อม: ทุกอย่างที่อยู่ริมน้ำมีเงาสะท้อนกลับหัวในน้ำ (ตัวละคร ซอมบี้ ต้นไม้ ฟืน ฯลฯ) · แสงไฟฉาย/กองไฟส่องโดนน้ำแล้วระยิบระยับ กลางวันมีประกายแดด</li>
@@ -430,7 +431,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 const TAU=Math.PI*2,TS=16,MW=104,MH=104,DAY_LEN=360,WAVE_AT=300,K=.75,WALLH=20,RT=3;
 let GATEP=new Map();const TG=0,TR=1,TF=2,TW=3,TT=4,TFN=5,TB=6,TK=7,TD=8,TPL=9,TST=10,TWA=11;   // TFN = bamboo fence, TPL = raised floor of the เถียงนา, TST = its ladder
 const PLH=13,ROOFH=40;
-let PTREE=[],PRING=[],PIN=null,PWET=[],ELWZ=0;let PRAC=false,PDAY=false;const PRR=400;let PFR=120;   // practice mode: 50 m of ground round a small hut, a round fence 10 m out
+let PTREE=[],RIPS=[],WAVE=0,PRING=[],PIN=null,PWET=[],ELWZ=0;let PRAC=false,PDAY=false;const PRR=400;let PFR=120;   // practice mode: 50 m of ground round a small hut, a round fence 10 m out
 const BM=[0,0,0,1,0,1,1,1,0,1,0,1];      // blocks movement (trunks handled as circles)
 const BL=[0,0,0,1,0,0,0,0,0,0,0,0];      // blocks light (trunks handled as circles)
 const INDOOR=[0,0,1,0,0,0,1,1,1,1,0,0];
@@ -559,7 +560,7 @@ function genMap(){
   }
   if(PRAC){PFR=120;const w=4,h=3,x=Math.floor(MW/2-w/2),y=Math.floor(MH/2-h/2),cx=(x+w/2)*TS,cy=(y+h/2)*TS,q=PFR*.68;   // a small hut, a round yard
     for(let j=0;j<MH;j++)for(let i=0;i<MW;i++){const d=Math.hypot(i*TS+8-cx,j*TS+8-cy);if(d<=PRR+10){if(tAt(i,j)===TT)setT(i,j,TG);}else setT(i,j,TWA);}   // open ground inside; beyond the 50 m: water all round, no way out
-    {PTREE=[];const a0=rnd()*TAU;for(let k=0;k<8;k++){const a=a0+k*TAU/8+(rnd()-.5)*.4,r=PRR-20-rnd()*10,i=Math.floor((cx+Math.cos(a)*r)/TS),j=Math.floor((cy+Math.sin(a)*r)/TS);if(tAt(i,j)!==TG)continue;setT(i,j,TT);PTREE.push({x:i*TS+8,y:j*TS+8});}}   // eight rubber trees, spread round the water's edge: each throws its own black shape onto the water
+    {PTREE=[];RIPS=[];WAVE=0;const a0=rnd()*TAU;for(let k=0;k<8;k++){const a=a0+k*TAU/8+(rnd()-.5)*.4,r=PRR-20-rnd()*10,i=Math.floor((cx+Math.cos(a)*r)/TS),j=Math.floor((cy+Math.sin(a)*r)/TS);if(tAt(i,j)!==TG)continue;setT(i,j,TT);PTREE.push({x:i*TS+8,y:j*TS+8});}}   // eight rubber trees, spread round the water's edge: each throws its own black shape onto the water
     buildTiang(x,y,w,h);home={x0:cx-PFR-8,y0:cy-PFR-8,x1:cx+PFR+8,y1:cy+PFR+8,ix0:cx-q,iy0:cy-q,ix1:cx+q,iy1:cy+q,cx,cy,hs:huts[0]};}
   else{const w=ri(7,8),h=ri(5,6),x=Math.floor(MW/2-w/2),y=Math.floor(MH/2-h/2),cx=(x+w/2)*TS,cy=(y+h/2)*TS;PFR=Math.round(Math.hypot(w*8,h*8))+80;const q=PFR*.68;   // the bamboo fence runs in a circle, 10 m out from the corners of the house
     for(let j=Math.floor((cy-PFR)/TS)-3;j<=(cy+PFR)/TS+3;j++)for(let i=Math.floor((cx-PFR)/TS)-3;i<=(cx+PFR)/TS+3;i++)if(Math.hypot(i*TS+8-cx,j*TS+8-cy)<PFR+26)setT(i,j,TG);
@@ -633,14 +634,6 @@ function bake(){
   }
   if(PRAC&&home){const R=PRR+9;c.fillStyle='#16324a';c.beginPath();c.rect(0,0,MW*TS,MH*TS);c.arc(home.cx,home.cy,R,0,TAU,true);c.fill('evenodd');   // practice: the ground is an island, still water all round
     c.strokeStyle='#5a7f96';c.lineWidth=2;c.beginPath();c.arc(home.cx,home.cy,R+1,0,TAU);c.stroke();c.strokeStyle='#2a4a62';c.lineWidth=3;c.beginPath();c.arc(home.cx,home.cy,R+6,0,TAU);c.stroke();
-    {const br=(x,y,a,len,w,d)=>{const bend=(rnd()-.5)*.5,mx=x+Math.cos(a+bend*.5)*len*.5,my=y+Math.sin(a+bend*.5)*len*.5,ex=x+Math.cos(a+bend)*len,ey=y+Math.sin(a+bend)*len;   // black trees lying in the still water, trunk at the shore, crown spread far out
-        c.lineWidth=w;c.beginPath();c.moveTo(x,y);c.quadraticCurveTo(mx+(rnd()-.5)*len*.2,my+(rnd()-.5)*len*.2,ex,ey);c.stroke();
-        if(d<=2){const n=d===0?26:12;for(let q=0;q<n;q++){const t=rnd(),lx=x+(ex-x)*t+(rnd()-.5)*len*.9,ly=y+(ey-y)*t+(rnd()-.5)*len*.9;c.globalAlpha=.45+rnd()*.4;c.fillRect(lx,ly,1+rnd()*2.4,1+rnd()*1.6);}c.globalAlpha=.82;}   // leaves, in loose clouds
-        if(d<=0)return;const kids=d>3?2:2+(rnd()<.55?1:0);for(let q=0;q<kids;q++)br(ex,ey,a+bend+(q-(kids-1)/2)*(.5+rnd()*.35)+(rnd()-.5)*.3,len*(.62+rnd()*.2),Math.max(.6,w*.62),d-1);
-        if(d>2&&rnd()<.6)br(mx,my,a+(rnd()<.5?-1:1)*(.7+rnd()*.5),len*.55,Math.max(.6,w*.5),d-2);};
-      c.save();c.strokeStyle='#04080c';c.fillStyle='#04080c';c.lineCap='round';c.globalAlpha=.82;
-      for(const t of PTREE){const a=Math.atan2(t.y-home.cy,t.x-home.cx),x=home.cx+Math.cos(a)*(R+1),y=home.cy+Math.sin(a)*(R+1);c.lineWidth=6;c.beginPath();c.moveTo(x,y);c.lineTo(x+Math.cos(a)*14,y+Math.sin(a)*14);c.stroke();br(x+Math.cos(a)*12,y+Math.sin(a)*12,a+(rnd()-.5)*.2,58+rnd()*22,5.5+rnd()*2,5);}   // one per real tree, straight out from its foot
-      c.restore();}
     for(let k=0;k<2600;k++){const a=rnd()*TAU,r=R+10+rnd()*520,x=home.cx+Math.cos(a)*r,y=home.cy+Math.sin(a)*r;c.fillStyle=rnd()<.5?'#3d6480':'#0e2233';c.fillRect(x,y,3+rnd()*7,1);}}
   // sleeping mat (เสื่อ) + pillow
   for(const hs of huts)if(hs.bed){const x=hs.bed.x-8,y=hs.bed.y-6;P(60,x,y,16,12);P(172,x+1,y+1,14,10);for(let k=2;k<15;k+=2)P(140,x+k,y+1,1,10);for(let k=3;k<11;k+=3)P(150,x+1,y+k,14,1);P(230,x+11,y+3,3,6);P(120,x+11,y+8,3,1);}
@@ -782,7 +775,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='13.9';
+let useBot=true,bot=null,hero='fifa';const VERSION='14.0';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1680,7 +1673,7 @@ function updateDeath(dt){
 }
 function updateCommon(dt){
   if(!player)return;
-  treeLeanTick(dt);
+  treeLeanTick(dt);if(PRAC)waterTick(dt);
   for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vh-=320*dt;p.h+=p.vh*dt;if(p.h<=0){if(p.leaf){wctx.save();wctx.translate(p.x,p.y);wctx.rotate(p.rot);wctx.fillStyle=p.col;ell(wctx,0,0,1.6,.9);wctx.restore();}else bakeSplat(p.x,p.y,1+rnd()*1.6);particles.splice(i,1);}else if(p.leaf){p.vh=Math.max(p.vh,-40);p.vx*=.97;p.vy*=.97;}}
   for(let i=gibs.length-1;i>=0;i--){const g=gibs[i];g.x+=g.vx*dt;g.y+=g.vy*dt;g.vh-=320*dt;g.h+=g.vh*dt;g.rot+=g.vr*dt;
     if(g.h<=0){g.h=0;if(!g.bounced&&g.vh<-50){g.bounced=true;if(g.type==='half'||g.type==='parm'){shake=Math.max(shake,g.type==='half'?6:3);sfx.kick();bakeSplat(g.x,g.y,5);for(let k=0;k<14;k++){const an=rnd()*TAU,sp=20+rnd()*60;particles.push({x:g.x,y:g.y,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp,h:2,vh:30+rnd()*50});}}g.vh=-g.vh*.3;g.vx*=.5;g.vy*=.5;g.vr*=.5;bakeSplat(g.x,g.y,3);}else{bakeGib(g);gibs.splice(i,1);}}}
@@ -1855,6 +1848,7 @@ function dustPuff(x,y,n,ux=0,uy=0){for(let k=0;k<n;k++){const a=rnd()*TAU,sp=6+r
 function updateDust(dt){for(let i=dusts.length-1;i>=0;i--){const d=dusts[i];d.t+=dt;if(d.t>=d.T){dusts.splice(i,1);continue;}const f=Math.exp(-3*dt);d.vx*=f;d.vy*=f;d.vh*=f;d.x+=d.vx*dt;d.y+=d.vy*dt;d.h+=d.vh*dt;d.r+=dt*3.2;}}
 function updateFlyWood(dt){for(let i=flyWood.length-1;i>=0;i--){const w=flyWood[i];w.vh-=260*dt;w.h+=w.vh*dt;w.a+=w.av*dt;const nx=w.x+w.vx*dt,ny=w.y+w.vy*dt;if(w.pile||!BM[tAt(Math.floor(nx/TS),Math.floor(ny/TS))]||w.h>14){w.x=nx;w.y=ny;}else{w.vx*=-.3;w.vy*=-.3;}
   if(w.h<=0){w.h=0;
+    if(overWater(w.x,w.y)){ripAdd(w.x,w.y,1.2);flyWood.splice(i,1);continue;}
     if(w.pile){flyWood.splice(i,1);let p=w.pile;if(!woodPiles.includes(p)){p=woodPiles.find(q=>Math.hypot(q.x-w.x,q.y-w.y)<14)||{x:p.x,y:p.y,logs:[]};if(!woodPiles.includes(p))woodPiles.push(p);}p.logs.push(w.v);wdPlay(w.x,w.y,.42);dustPuff(w.x,w.y,2);continue;}   // thrown onto the pile
     if(w.vh<-45&&(w.b||0)<3){w.b=(w.b||0)+1;w.vh*=-.42;w.vx*=.55;w.vy*=.55;w.av*=.6;wdPlay(w.x,w.y,.5/w.b);}else{flyWood.splice(i,1);woodItems.push({x:w.x,y:w.y,a:w.a,v:w.v});wdPlay(w.x,w.y,.12);}}}}
 function smashBranch(b,ux=0,uy=0,pow=1,byZ=false){{const ca=Math.cos(b.a),sa=Math.sin(b.a);for(let k=-3;k<=3;k++)woodChips(b.x+ca*b.L*k/7,b.y+sa*b.L*k/7,7,ux,uy);woodKnock(b);woodKnock(b);}   // it bursts apart in a spray of splinters first
@@ -5288,13 +5282,33 @@ function pracWetAdd(e){const b=e5Body();if(PWET.length<140&&frameN%4===0)for(con
 function pracWetDraw(){const c=sctx;for(let i=PWET.length-1;i>=0;i--){const w=PWET[i];w.t+=1/60;if(w.t>=w.T){PWET.splice(i,1);continue;}c.fillStyle=`rgba(8,14,20,${(.42*(1-w.t/w.T)).toFixed(3)})`;ell(c,w.x-camX,w.y*K-camY,w.r,w.r*.55);}}
 function overWater(x,y){return PRAC&&!!home&&Math.hypot(x-home.cx,y-home.cy)>PRR+9;}
 function waterNear(){return !!home&&Math.hypot(cam.x-home.cx,cam.y-home.cy)>PRR-(vw+vh)*.75;}
+function treeShade(t){if(t.cv)return t.cv;const W=230,H=236,cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');let sd=(t.x*73+t.y*151)|0;const R=()=>{sd=(sd*1664525+1013904223)|0;return((sd>>>8)&0xffff)/65536;};   // the tree upside down, black: trunk at the top, crown spreading below
+  c.strokeStyle='#04080c';c.fillStyle='#04080c';c.lineCap='round';
+  const br=(x,y,a,len,w,d)=>{const bend=(R()-.5)*.5,mx=x+Math.cos(a+bend*.5)*len*.5,my=y+Math.sin(a+bend*.5)*len*.5,ex=x+Math.cos(a+bend)*len,ey=y+Math.sin(a+bend)*len;c.globalAlpha=1;c.lineWidth=w;c.beginPath();c.moveTo(x,y);c.quadraticCurveTo(mx+(R()-.5)*len*.2,my+(R()-.5)*len*.2,ex,ey);c.stroke();
+    if(d<=2){const n=d===0?30:14;for(let q=0;q<n;q++){const u=R(),lx=x+(ex-x)*u+(R()-.5)*len*.9,ly=y+(ey-y)*u+(R()-.5)*len*.9;c.globalAlpha=.5+R()*.45;c.fillRect(lx,ly,1+R()*2.4,1+R()*1.6);}}
+    if(d<=0)return;const kids=d>3?2:2+(R()<.55?1:0);for(let q=0;q<kids;q++)br(ex,ey,a+bend+(q-(kids-1)/2)*(.5+R()*.35)+(R()-.5)*.3,len*(.62+R()*.2),Math.max(.6,w*.62),d-1);
+    if(d>2&&R()<.6)br(mx,my,a+(R()<.5?-1:1)*(.7+R()*.5),len*.55,Math.max(.6,w*.5),d-2);};
+  c.lineWidth=5;c.beginPath();c.moveTo(W/2,0);c.lineTo(W/2,52);c.stroke();br(W/2,50,Math.PI/2+(R()-.5)*.2,46,4.6,5);return t.cv=cv;}
+function ripAdd(x,y,e){if(RIPS.length<90)RIPS.push({x,y,t:0,T:1.4+e*1.2,R:14+e*30,e});WAVE=Math.min(3,WAVE+e*.5);}   // something touched the water
+function waterTick(dt){WAVE*=Math.exp(-dt*.7);for(let i=RIPS.length-1;i>=0;i--){RIPS[i].t+=dt;if(RIPS[i].t>=RIPS[i].T)RIPS.splice(i,1);}
+  if(!PRAC||!home)return;if(waterNear()&&rnd()<dt*5){const x=camX+rnd()*vw,y=(camY+rnd()*vh)/K;if(overWater(x,y))RIPS.push({x,y,t:0,T:2.2,R:9+rnd()*8,e:.25});}   // the surface is never quite still
+  if(frameN%9===0){for(const z of zombies){const d=Math.hypot(z.x-home.cx,z.y-home.cy);if(d>PRR-12)ripAdd(home.cx+(z.x-home.cx)/d*(PRR+16),home.cy+(z.y-home.cy)/d*(PRR+16),.7);}
+    for(const b of BS)if(!b.hidden&&overWater(b.x,b.y))ripAdd(b.x+(rnd()-.5)*10,b.y+8,.3);
+    if(E5&&E5.el&&E5.ph==='fight'&&overWater(E5.el.x,E5.el.y))ripAdd(E5.el.x+(rnd()-.5)*50,E5.el.y+(rnd()-.5)*30,1);}}
+function ripDraw(){if(!RIPS.length)return;const R=PRR+9,hx=home.cx-camX,hy=home.cy*K-camY;for(const[c,col,al]of[[sctx,'#b4d2e6',.8],[lctx,'#c8c8c8',.5]]){c.save();c.setTransform(1,0,0,1,0,0);c.beginPath();c.rect(0,0,vw,vh);c.ellipse(hx,hy,R,R*K,0,0,TAU);c.clip('evenodd');c.strokeStyle=col;c.lineWidth=1;
+    for(const r of RIPS){const sx=r.x-camX,sy=r.y*K-camY;if(sx<-80||sx>vw+80||sy<-40||sy>vh+40)continue;const ph=r.t/r.T;for(let q=0;q<(r.e>.5?3:1);q++){const p=ph-q*.16;if(p<=0)continue;const rx=3+p*r.R;c.globalAlpha=al*(1-ph)*Math.min(1,.45+r.e);c.beginPath();c.ellipse(sx,sy,rx,rx*.32,0,0,TAU);c.stroke();}}
+    c.restore();}}
 function waterReflect(objs,T){if(!waterNear())return;const R=PRR+9,hx=home.cx-camX,hy=home.cy*K-camY;   // everything standing by the water lies in it upside down: drawn again, flipped about its feet, only where there is water
   for(const c of[sctx,lctx]){c.save();c.beginPath();c.rect(0,0,vw,vh);c.ellipse(hx,hy,R,R*K,0,0,TAU);c.clip('evenodd');}
-  for(const o of objs){if(o.k===59||o.k===24||o.k===25||o.k===10||o.k===9||o.k===1)continue;const fy=o.y*K-camY+1;if(fy<hy||fy<-20||fy>vh+10)continue;const sh=Math.sin(T*2.3+o.y*.07)*.07;
+  {const c=sctx,wv=1+WAVE*1.3;c.save();c.setTransform(1,0,0,1,0,0);c.imageSmoothingEnabled=false;   // each tree at the water's edge: its own black reflection, hanging straight down from its foot, breaking up with the swell
+    for(const t of PTREE){const bx=Math.round(t.x-camX),by=Math.round(t.y*K-camY)+2;if(bx<-120||bx>vw+120||by>vh||by<-240)continue;const cv=treeShade(t);
+      for(let r=0;r<236;r+=3){const dy=by+r;if(dy>=vh)break;if(dy<-3)continue;c.globalAlpha=.84*(1-r/236*.35);c.drawImage(cv,0,r,230,3,bx-115+Math.round((Math.sin(r*.21+T*2.6)*(.5+r*.012)+Math.sin(r*.07-T*1.4)*r*.008)*wv),dy,230,3);}}
+    c.restore();}
+  for(const o of objs){if(o.k===59||o.k===24||o.k===25||o.k===10||o.k===9||o.k===1)continue;const fy=o.y*K-camY+1;if(fy<hy||fy<-20||fy>vh+10)continue;const sh=Math.sin(T*2.3+o.y*.07)*.07*(1+WAVE*.9);
     sctx.save();lctx.save();for(const c of[sctx,lctx])c.transform(1,0,-sh,-.92,sh*fy,1.92*fy);sctx.globalAlpha=.45;lctx.globalAlpha=.55;
     try{drawObj(o,T,sctx,lctx);}catch(_){}sctx.restore();lctx.restore();}
   sctx.restore();lctx.restore();}
-function waterSpark(T){if(!waterNear())return;const day=DAYK>.5,G=9,x0=Math.floor(camX/G)*G,y0=Math.floor(camY/K/G)*G;   // light on the water glitters: the headlamp, the fire, the sun
+function waterSpark(T){if(!waterNear())return;ripDraw();const day=DAYK>.5,G=9,x0=Math.floor(camX/G)*G,y0=Math.floor(camY/K/G)*G;   // light on the water glitters: the headlamp, the fire, the sun
   sctx.save();lctx.save();sctx.setTransform(1,0,0,1,0,0);lctx.setTransform(1,0,0,1,0,0);
   for(let wy=y0;wy<(camY+vh)/K+G;wy+=G)for(let wx=x0;wx<camX+vw+G;wx+=G){const h=Math.sin(wx*12.9898+wy*78.233)*43758.5453,u=h-Math.floor(h);if(u>(day?.1:.34))continue;const px=wx+u*31%G,py=wy+u*57%G;if(!overWater(px,py))continue;
     const tw=Math.sin(T*(3+u*30)+u*90);if(tw<.2)continue;let a;if(day)a=tw*.55;else{const v=lightAt(px,py)-dawn;if(v<45)continue;a=Math.min(1,v/150)*tw;}
