@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v13.5</div>
+  <div class="ver">v13.6</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,9 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.5</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.6</h3><ul>
+      <li>ตีโดนเป้าหมายมีเสียงทุกครั้ง (รวมมีดกรีดยางของฟีฟ่า)</li>
+      <li>ช้างลุยน้ำ: น้ำตัดตามรูปขา ท้อง งวง ทีละส่วนตามความลึกจริง มีวงคลื่นรอบขาทุกข้าง · มีเงาสะท้อนบนน้ำ · แสงสีแดงกระเพื่อมกระจายบนผิวน้ำเหมือนลมพัด (ช้างและกระสือ)</li>
       <li>ปิดเสียงเอฟเฟกต์ที่สร้างจากโค้ดทั้งหมด เหลือเฉพาะเสียงที่อัดมาจากคลิป (มีดกรีดยาง ไม้กระทบพื้น ตีโดน ฟันอากาศ)</li>
       <li>โหมดปกติ: รั้วบ้านเป็นวงกลมเหมือนโหมดซ้อม · ย้ายกองไฟมาตรงช่องประตู ค่อนไปทางขวา ไม่ถูกเสารั้วบัง</li>
       <li>ช้างป่า: เบียดต้นไม้แล้วต้นไม้เอนตามแรงดัน ไม่หัก ดีดกลับเมื่อช้างผ่านไป · ตัวช้างไม่ซ้อนทะลุลำต้นแล้ว · โหมดซ้อมกลางวัน ช้างเดินลุยน้ำออกไปได้ ไม่ติดขอบ</li>
@@ -425,7 +427,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 const TAU=Math.PI*2,TS=16,MW=104,MH=104,DAY_LEN=360,WAVE_AT=300,K=.75,WALLH=20,RT=3;
 let GATEP=new Map();const TG=0,TR=1,TF=2,TW=3,TT=4,TFN=5,TB=6,TK=7,TD=8,TPL=9,TST=10,TWA=11;   // TFN = bamboo fence, TPL = raised floor of the เถียงนา, TST = its ladder
 const PLH=13,ROOFH=40;
-let PRING=[],PIN=null,PWET=[];let PRAC=false,PDAY=false;const PRR=400;let PFR=120;   // practice mode: 50 m of ground round a small hut, a round fence 10 m out
+let PRING=[],PIN=null,PWET=[],ELWZ=0;let PRAC=false,PDAY=false;const PRR=400;let PFR=120;   // practice mode: 50 m of ground round a small hut, a round fence 10 m out
 const BM=[0,0,0,1,0,1,1,1,0,1,0,1];      // blocks movement (trunks handled as circles)
 const BL=[0,0,0,1,0,0,0,0,0,0,0,0];      // blocks light (trunks handled as circles)
 const INDOOR=[0,0,1,0,0,0,1,1,1,1,0,0];
@@ -769,7 +771,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='13.5';
+let useBot=true,bot=null,hero='fifa';const VERSION='13.6';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -913,10 +915,10 @@ function pamTorchTick(dt){if(WHO()!=='pam'){player.pt=null;return;}const P=playe
 function pwTick(dt){if(hero!=='pw')return;const P=player;if(P.recoilT>0)P.recoilT-=dt;
   if((P.grip||P.drag)&&P.moveAmt>.1){P.moanT=(P.moanT||1.5)-dt;if(P.moanT<=0){P.moanT=5+rnd()*3;P.say={text:rnd()<.5?'หนักจัง':'ถ้าเป็นพี่ๆคงไม่หนัก',t:2.4};}}else P.moanT=Math.min(P.moanT||1.5,1.5);if(P.hopT>0&&rnd()<dt*30)sparks.push({x:P.x+(rnd()-.5)*4,y:P.y,h:1,vx:(rnd()-.5)*16,vy:(rnd()-.5)*6,vh:6+rnd()*10,life:.4+rnd()*.3,ash:1});}
 function doHit(h=player){if(h!==player)return doHit0(h);   // the player's blows that do damage use the recorded hit
-  const zh=new Map();for(const z of zombies)zh.set(z,z.hp);const bh=BS.map(b=>[b,b.hp]),sk=snakes.filter(n=>n.st==='hiss');HS=1;
-  try{return doHit0(h);}finally{const req=HS===2;HS=false;let dmg=false;for(const[z,hp]of zh)if(!zombies.includes(z)||z.hp<hp-1e-6){dmg=true;break;}
+  const zh=new Map();for(const z of zombies)zh.set(z,z.hp+'|'+z.state+'|'+(z.dgN||0));const bh=BS.map(b=>[b,b.hp]),sk=snakes.filter(n=>n.st==='hiss');HS=1;
+  try{return doHit0(h);}finally{const req=HS===2;HS=false;let dmg=false;for(const[z,k]of zh){const q=k.split('|');if(!zombies.includes(z)||z.hp<+q[0]-1e-6||(z.state!==q[1]&&(z.dgN||0)===+q[2]&&!z.dg)){dmg=true;break;}}   // hurt, floored or staggered counts; a dodge does not
     if(!dmg)dmg=bh.some(([b,hp])=>b.hp<hp-1e-6)||sk.some(n=>n.st==='toss');
-    if(dmg){if(!htPlay()&&req)sfx.hit();}else if(req)sfx.hit();}}
+    if(dmg||req)htPlay();}}   // any blow of yours that lands: the recorded hit
 function doHit0(h=player){
   const a=h.swingAng,R0=h.swingReach,p=h.swingPow;let best=null,bd=1e9;
   for(const z of zombies){const dx=z.x-h.x,dy=z.y-h.y,d=Math.hypot(dx,dy),dd=d-(z.crawl||z.state==='down'?5:3);if(dd>R0*2)continue;   // across a branch fence the reach doubles
@@ -3278,7 +3280,8 @@ function ramp(v){return v<0.45?0:v<0.95?1:v<1.6?2:v<2.35?3:4;}
 const bone=b=>b<0.5?0:b<1.25?1:b<1.65?2:b<2.25?3:4;    // unlit bone sinks into the dark
 const red=v=>v<0.5?0:v<1.05?1:v<1.75?5:6;                 // blood / raw flesh, only red where light reaches it
 const SOFT=[0,1,2,3,3,5,6,7,4];
-function ePut(X,Y,c,d,wy,raw){if(X<0||Y<0||X>=W||Y>=H)return;const i=Y*W+X;if(DEP[i]>wy+1||d>=EZB[i])return;EZB[i]=d;if(!raw&&SH0<0.45)c=0;   // where the hide itself is lost in the dark, so are its bones, its wounds and its riders
+function ePut(X,Y,c,d,wy,raw){if(X<0||Y<0||X>=W||Y>=H)return;if(ELWZ>0&&(wy*KG-camY-Y)/ZK<ELWZ)return;   // under the water: every leg, the belly, the trunk is cut where the surface meets it
+ const i=Y*W+X;if(DEP[i]>wy+1||d>=EZB[i])return;EZB[i]=d;if(!raw&&SH0<0.45)c=0;   // where the hide itself is lost in the dark, so are its bones, its wounds and its riders
  IDX[i]=(raw?c:SOFT[c])+1+(LR&&!raw?16:0);if(X<bx0)bx0=X;if(X>bx1)bx1=X;if(Y<by0)by0=Y;if(Y>by1)by1=Y;}
 function proj(p){return [p[0]-camX,p[1]*KG-camY-p[2]*ZK];}
 // tube from A to B with radius rA->rB (world px); col(n,P,o,k) picks the palette index
@@ -3571,7 +3574,7 @@ function e5Draw(T){if(!E5||!E5.el)return;const e=E5.el,b=e5Body();ELE.begin(vw,v
     for(const z of zombies)stamp(z,c=>drawZ(c,z,T,'#fff'));}
   for(const th of E5.th){const sx=th.x-camX,sy=th.y*K-camY-th.h;ELE.dep(sx-8,sy-20,sx+8,sy+3,1e9);}
   const hs=home&&home.hs;if(hs&&hs.tiang&&roofA>.5){const o=10;ELE.dep(hs.x*TS-o-camX,(hs.y*TS-o)*K-camY-ROOFH,(hs.x+hs.w)*TS+o-camX,((hs.y+hs.h)*TS+o)*K-camY-ROOFH,(hs.y+hs.h)*TS+o);}
-  if(PRAC)pracElWater(b,T);e5Lights();ELE.draw(T);if(PRAC)pracElRipple(b,T);}
+  ELWZ=PRAC?pracElDepth(b)*34:0;e5Lights();ELE.draw(T);if(ELWZ>0)pracElRipple(b,T);ELWZ=0;}
 function e5Blit(o){if(!E5||!E5.el)return;if(!ELMAPW){ELMAPW=[PG[0],PG[1],PG[2],PG[3],PG[4],PR[1],PR[2],PG[4],PG[5],PO[2],PY[2],PO[1]];ELMAPR=[PG[0],PR[1],PR[1],PR[1],PR[2],PR[1],PR[2],PR[2],PR[2],PO[2],PY[2],PO[1]];}   // under the krasue's glow the bulk stays dark; everything else stays black; only what catches the light goes red
   ELE.blit(o,ELMAPW,ELMAPR,PG[0]);
   for(const w of E5.wood){const sx=w.x-camX,sy=w.y*K-camY-w.h,ca=Math.cos(w.a),sa=Math.sin(w.a)*K;
@@ -5272,12 +5275,22 @@ let PWETT=0;
 function pracWetAdd(e){const b=e5Body();if(PWET.length<140&&frameN%4===0)for(const o of[-16,14])PWET.push({x:b.x+b.fx*o+(rnd()-.5)*26,y:b.y+b.fy*o+(rnd()-.5)*20,r:7+rnd()*8,t:0,T:5+rnd()*2});}   // dripping where it walks
 function pracWetDraw(){const c=sctx;for(let i=PWET.length-1;i>=0;i--){const w=PWET[i];w.t+=1/60;if(w.t>=w.T){PWET.splice(i,1);continue;}c.fillStyle=`rgba(8,14,20,${(.42*(1-w.t/w.T)).toFixed(3)})`;ell(c,w.x-camX,w.y*K-camY,w.r,w.r*.55);}}
 function overWater(x,y){return PRAC&&!!home&&Math.hypot(x-home.cx,y-home.cy)>PRR+9;}
-function pracMirror(T){for(const b of BS){if(b.hidden||!overWater(b.x,b.y))continue;const x0=Math.round(b.x-camX-36),y0=Math.round(b.y*K-camY+5),W=72,H=74;if(x0<-W||x0>vw||y0<0||y0>vh+10)continue;   // still water: it carries her upside down, shivering a little
-    for(const[c,al]of[[sctx,.5],[lctx,.62]]){c.save();c.setTransform(1,0,0,1,0,0);c.imageSmoothingEnabled=false;for(let r=0;r<H;r++){const sy=y0-1-r,dy=y0+r;if(sy<0||dy>=vh)break;c.globalAlpha=al*(1-r/H*.75);c.drawImage(c.canvas,x0,sy,W,1,x0+Math.round(Math.sin(r*.55+T*3.2)*(.6+r*.025)),dy,W,1);}c.restore();}}}
+function mirrorStrip(x0,W,ya,H,T,amp){x0=Math.round(x0);ya=Math.round(ya);if(x0<-W||x0>vw||ya<2||ya>vh+4)return;   // still water carries what stands over it upside down; the picture shivers, breaks up and fades with depth
+  for(const[c,al]of[[sctx,.55],[lctx,.66]]){c.save();c.setTransform(1,0,0,1,0,0);c.imageSmoothingEnabled=false;for(let r=0;r<H;r++){const sy=ya-1-Math.round(r*1.08),dy=ya+r;if(sy<0||dy>=vh)break;
+      const brk=Math.sin(r*.9+T*2.1)+Math.sin(r*.37-T*1.3);if(brk>1.55)continue;c.globalAlpha=al*Math.pow(1-r/H,1.4);c.drawImage(c.canvas,x0,sy,W,1,x0+Math.round(Math.sin(r*.55+T*3.2)*(.7+r*amp)+Math.sin(r*.21+T*1.7)*r*amp*.6),dy,W,1);}c.restore();}}
+function waterGlints(sx,sy,T,R,k,seed){   // red light on the water: rings opening outward, and gusts ruffling it
+  for(const[c,cols]of[[sctx,['#ff3a3a','#ff8a6a']],[lctx,['#d8d8d8','#f0f0f0']]]){c.save();c.setTransform(1,0,0,1,0,0);c.lineCap='round';
+    for(let i=0;i<4;i++){const ph=(T*.55+i*.25)%1,rx=R*(.35+ph*1.25),ry=rx*.3;c.strokeStyle=cols[0];c.lineWidth=1;c.globalAlpha=Math.sin(Math.PI*ph)*.75*k;for(let q=0;q<7;q++){const a0=q*TAU/7+i*1.3+Math.sin(T*.7+q)*.25;c.beginPath();c.ellipse(sx,sy,rx,ry,0,a0,a0+.42+.2*Math.sin(T*2+q*2+i));c.stroke();}}
+    for(let i=0;i<16;i++){const h=Math.sin((i+seed)*127.1)*43758.5,u=h-Math.floor(h),h2=Math.sin((i+seed)*311.7)*43758.5,v=h2-Math.floor(h2),ph=(T*(.25+u*.3)+v)%1,x=sx+(u*2-1)*R*1.5+ph*R*.7-R*.35,y=sy+(v*2-1)*R*.45;
+      c.strokeStyle=cols[1];c.globalAlpha=Math.sin(Math.PI*ph)*.8*k;c.beginPath();c.moveTo(x,y);c.lineTo(x+4+u*7,y+Math.sin(T*5+i)*.5);c.stroke();}
+    c.restore();}}
+function pracMirror(T){for(const b of BS){if(b.hidden||!overWater(b.x,b.y))continue;const sx=b.x-camX,sy=b.y*K-camY+5;mirrorStrip(sx-38,76,sy,78,T,.03);waterGlints(sx,sy+8,T,34,1,b.x*.01);}}
 function pracElDepth(b){const d=Math.hypot(b.x-home.cx,b.y-home.cy);return clamp((d-(PRR+4))/46,0,1);}
-function pracElWater(b,T){const k=pracElDepth(b);if(k<=0)return;const sx=b.x-camX,sy=b.y*K-camY,yw=sy+16-k*30;ELE.dep(sx-130,yw+Math.sin(T*2.4)*.8,sx+130,sy+120,1e9);}   // the water hides its legs and belly: half of it shows
-function pracElRipple(b,T){const k=pracElDepth(b);if(k<=0)return;const sx=b.x-camX,sy=b.y*K-camY,yw=sy+16-k*30;
-  for(const[c,col]of[[sctx,'#9cc0d6'],[lctx,gray(Math.max(60,lightAt(b.x,b.y)))]]){c.save();c.setTransform(1,0,0,1,0,0);c.strokeStyle=col;c.lineWidth=1;for(let i=0;i<5;i++){const ph=(T*.9+i*.37)%1,rx=26+ph*46+i*6;c.globalAlpha=(1-ph)*.7*k;c.beginPath();c.ellipse(sx,yw+3,rx,rx*.22,0,0,TAU);c.stroke();}c.restore();}}
+function pracElRipple(b,T){const k=pracElDepth(b);if(k<=0)return;const sx=b.x-camX,sy=b.y*K-camY;
+  mirrorStrip(sx-120,240,(b.y+34)*K-camY-ELWZ*ZKW+2,70,T,.035);   // its reflection lies on the water in front of it
+  waterGlints(sx,sy+6-ELWZ*ZKW*.5,T,78,k,b.x*.01);
+  for(const f of ELE.EL.feet){const fx=f.p[0]-camX,fy=f.p[1]*K-camY-ELWZ*ZKW;for(const[c,col]of[[sctx,'#b9d4e4'],[lctx,gray(Math.max(70,lightAt(b.x,b.y)))]]){c.save();c.setTransform(1,0,0,1,0,0);c.strokeStyle=col;c.lineWidth=1;for(let i=0;i<2;i++){const ph=(T*1.1+i*.5+f.p[0]*.03)%1,rx=8+ph*16;c.globalAlpha=(1-ph)*.75*k;c.beginPath();c.ellipse(fx,fy,rx,rx*.3,0,0,TAU);c.stroke();}c.restore();}}}   // a ring round every leg where it breaks the surface
+const ZKW=.75;
 function pracSetDay(d){if(PDAY===d)return;PDAY=d;sfx.ready();
   if(d){if(blackout)setBlackout(false);toast('กลางวัน — พวกมันมองไม่เห็น ค่อยๆ เดินออกไป');}
   else{for(const z of zombies)if(z.blind){z.blind=false;z.ba=null;z.hunt=true;z.aware=8;if(z.state==='wander')z.state='chase';}if(liveBS().length)setBlackout(true);toast('กลางคืน');}}
