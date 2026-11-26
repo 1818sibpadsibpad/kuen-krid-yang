@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v13.2</div>
+  <div class="ver">v13.3</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.2</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v13.3</h3><ul>
+      <li>โหมดซ้อม: เรียกกระสือหรือช้างป่ามีคัตซีนเปิดตัว 3 วิ กล้องแพนไปขอบสนาม · กระสือลอยเหนือน้ำมีเงาสะท้อนสั่นไหว · ช้างเดินแหวกน้ำครึ่งตัว ขึ้นบกแล้วพื้นเปียกค่อยๆ แห้ง</li>
       <li>โหมดซ้อม: เอาป่ารอบนอกออก (ทำให้เครื่องค้าง) พื้นที่เกินรัศมี 50 ม. เป็นน้ำล้อมรอบ ออกไปไม่ได้ · ย้ายปุ่มกลางวัน/กลางคืนมาด้านซ้าย ไม่ทับปุ่มไฟ</li>
       <li>โหมดซ้อม: รั้วไม้ไผ่เป็นวงกลมเรียบ ไม่เป็นเหลี่ยมแล้ว</li>
       <li>โหมดซ้อม: เหลือต้นยาง 8 ต้นกระจายกัน พื้นโล่ง · ฟืน งู กิ่งไม้ใหญ่ ลดลงตามขนาดแผนที่</li>
@@ -421,7 +422,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 const TAU=Math.PI*2,TS=16,MW=104,MH=104,DAY_LEN=360,WAVE_AT=300,K=.75,WALLH=20,RT=3;
 let GATEP=new Map();const TG=0,TR=1,TF=2,TW=3,TT=4,TFN=5,TB=6,TK=7,TD=8,TPL=9,TST=10,TWA=11;   // TFN = bamboo fence, TPL = raised floor of the เถียงนา, TST = its ladder
 const PLH=13,ROOFH=40;
-let PRING=[];let PRAC=false,PDAY=false;const PRR=400,PFR=120;   // practice mode: 50 m of ground round a small hut, a round fence 10 m out
+let PRING=[],PIN=null,PWET=[];let PRAC=false,PDAY=false;const PRR=400,PFR=120;   // practice mode: 50 m of ground round a small hut, a round fence 10 m out
 const BM=[0,0,0,1,0,1,1,1,0,1,0,1];      // blocks movement (trunks handled as circles)
 const BL=[0,0,0,1,0,0,0,0,0,0,0,0];      // blocks light (trunks handled as circles)
 const INDOOR=[0,0,1,0,0,0,1,1,1,1,0,0];
@@ -764,7 +765,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='13.2';
+let useBot=true,bot=null,hero='fifa';const VERSION='13.3';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1361,7 +1362,7 @@ function wobTick(dt){for(const b of bigBranches){const vx=b.px===undefined?0:(b.
     b.px=b.x;b.py=b.y;b.pa=b.a;b.pvx=vx;b.pvy=vy;b.pw=w;
     if(b.wv||b.wob){b.wv+=(-1700*(b.wob||0)-11*b.wv)*dt;b.wob=clamp((b.wob||0)+b.wv*dt,-3.5,3.5);if(Math.abs(b.wob)<.01&&Math.abs(b.wv)<.3){b.wob=0;b.wv=0;}}}}
 let frameN=0;
-function updatePlay(dt){frameN++;tickBlk(dt);wobTick(Math.max(dt,1e-3));mournTick(dt);updateFlyWood(dt);updateDust(dt);
+function updatePlay(dt){if(PIN){frameN++;pinTick(dt);return;}frameN++;tickBlk(dt);wobTick(Math.max(dt,1e-3));mournTick(dt);updateFlyWood(dt);updateDust(dt);
   corpseTick();explTick(dt);if(!n3Active()&&!TUT&&!PRAC)gameTime+=dt;if(player.rollCd>0)player.rollCd-=dt;
   let mx=joyV.x,my=joyV.y;
   if(keys.KeyA||keys.ArrowLeft)mx-=1;if(keys.KeyD||keys.ArrowRight)mx+=1;if(keys.KeyW||keys.ArrowUp)my-=1;if(keys.KeyS||keys.ArrowDown)my+=1;
@@ -1686,6 +1687,7 @@ function updateCommon(dt){
   if(E5&&E5.focus&&state==='play'){tx=E5.focus.x;ty=E5.focus.y;}   // the camera swings to the elephant while it winds up the throw
   if(state==='dying'&&death&&death.el&&E5&&death.ph!=='again'){tx=E5.el.x;ty=E5.el.y-12;}
   if(state==='dying'&&death&&death.pan){tx=death.pan.x;ty=death.pan.y;}
+  if(PIN&&state==='play'){tx=PIN.cx;ty=PIN.cy;}
   if(player.say){player.say.t-=dt;if(player.say.t<=0)player.say=null;}if(praewa&&praewa.point>0)praewa.point-=dt;
   if(DEMO&&DEMO.snap){cam.x=tx;cam.y=ty;DEMO.snap=false;}
   const k=1-Math.exp(-5*dt);cam.x+=(tx-cam.x)*k;cam.y+=(ty-cam.y)*k;
@@ -3556,7 +3558,7 @@ function e5Draw(T){if(!E5||!E5.el)return;const e=E5.el,b=e5Body();ELE.begin(vw,v
     for(const z of zombies)stamp(z,c=>drawZ(c,z,T,'#fff'));}
   for(const th of E5.th){const sx=th.x-camX,sy=th.y*K-camY-th.h;ELE.dep(sx-8,sy-20,sx+8,sy+3,1e9);}
   const hs=home&&home.hs;if(hs&&hs.tiang&&roofA>.5){const o=10;ELE.dep(hs.x*TS-o-camX,(hs.y*TS-o)*K-camY-ROOFH,(hs.x+hs.w)*TS+o-camX,((hs.y+hs.h)*TS+o)*K-camY-ROOFH,(hs.y+hs.h)*TS+o);}
-  e5Lights();ELE.draw(T);}
+  if(PRAC)pracElWater(b,T);e5Lights();ELE.draw(T);if(PRAC)pracElRipple(b,T);}
 function e5Blit(o){if(!E5||!E5.el)return;if(!ELMAPW){ELMAPW=[PG[0],PG[1],PG[2],PG[3],PG[4],PR[1],PR[2],PG[4],PG[5],PO[2],PY[2],PO[1]];ELMAPR=[PG[0],PR[1],PR[1],PR[1],PR[2],PR[1],PR[2],PR[2],PR[2],PO[2],PY[2],PO[1]];}   // under the krasue's glow the bulk stays dark; everything else stays black; only what catches the light goes red
   ELE.blit(o,ELMAPW,ELMAPR,PG[0]);
   for(const w of E5.wood){const sx=w.x-camX,sy=w.y*K-camY-w.h,ca=Math.cos(w.a),sa=Math.sin(w.a)*K;
@@ -4407,6 +4409,7 @@ function renderLight(){
   c.globalCompositeOperation='source-over';
 }
 function renderObjects(T){
+  if(PWET.length)pracWetDraw();
   const i0=Math.max(0,Math.floor((camX-24)/TS)),i1=Math.min(MW-1,Math.floor((camX+vw+24)/TS));
   const j0=Math.max(0,Math.floor(camY/K/TS)-1),j1=Math.min(MH-1,Math.floor((camY+vh+380)/K/TS));
   const objs=[];
@@ -4452,7 +4455,7 @@ function renderObjects(T){
         else if(rot){const cx=player.x-camX,cy=player.y*K-camY-9;c.translate(cx,cy);c.rotate(rot);c.translate(-cx,-cy);}}
       drawObj(o,T,sctx,lctx);sctx.restore();lctx.restore();if(sit){sctx.fillStyle='#3a2a1c';sctx.fillRect(e.x-camX-3.5,e.y*K-camY-1,7,2);}}
     else drawObj(o,T,sctx,lctx);}
-  drawRoof(T);krBloom();drawBoss(T);e5Draw(T);
+  drawRoof(T);krBloom();drawBoss(T);if(PRAC)pracMirror(T);e5Draw(T);
   for(const q of[subE])if(q&&q.roof>0){const ev=elevOf(q);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);withOutline(sctx,q,c=>drawP(c,T,null,q));drawP(lctx,T,gray(Math.max(70,lightAt(q.x,q.y))),q);sctx.restore();lctx.restore();}
   if(praewa&&praewa.roof>0){const ev=elevOf(praewa);sctx.save();lctx.save();sctx.translate(0,-ev);lctx.translate(0,-ev);withOutline(sctx,praewa,c=>drawP(c,T,null,praewa));drawP(lctx,T,gray(Math.max(70,lightAt(praewa.x,praewa.y))),praewa);sctx.restore();lctx.restore();}
   for(const sp of sparks){const x=sp.x-camX,y=sp.y*K-camY-sp.h,f=sp.life/(sp.L0||1),tw=Math.sin(sp.life*40+sp.x)>-.3;
@@ -5229,21 +5232,43 @@ let cheat=false,startNight=1;
   ci.addEventListener('input',()=>{ci.value=ci.value.replace(/\D/g,'').slice(0,4);cheat=ci.value==='0018';ci.classList.toggle('ok',cheat);lb.style.display=cheat?'':'none';if(cheat)ci.blur();});}
 /* ---------- practice mode (after the secret code): call any monster in, endless supplies, day or night ---------- */
 const PRK=[['z','ซอมบี้'],['p','ผีปอบ'],['k','กระสือ'],['e','ช้างป่า']];let PRI={},PRB={};
-function pracInit(){PDAY=false;ckpt=null;night=1;toasts=[];stock=40;waveDone=true;player.cleared=false;zombies.length=0;toast('โหมดซ้อม — แตะรูปด้านบนเพื่อเรียกมอนสเตอร์');}
+function pracInit(){PIN=null;PWET=[];PDAY=false;ckpt=null;night=1;toasts=[];stock=40;waveDone=true;player.cleared=false;zombies.length=0;toast('โหมดซ้อม — แตะรูปด้านบนเพื่อเรียกมอนสเตอร์');}
 function pracPt(r){let q=null;for(let k=0;k<40;k++){const a=rnd()*TAU,x=home.cx+Math.cos(a)*r,y=home.cy+Math.sin(a)*r,t=tAt(Math.floor(x/TS),Math.floor(y/TS));q={x,y,a};if(!BM[t]&&t!==TT)break;}return q;}
 function pracSpawn(k){
   if(k==='z'||k==='p'){if(zombies.length>=40){toast('เยอะเกินไปแล้ว (40 ตัว)');return;}const q=pracPt(PRR-40),z=makeZ(q.x,q.y);if(k==='p')z.stalk=true;z.hunt=true;z.aware=8;z.state='chase';z.lx=player.x;z.ly=player.y;if(PDAY){z.blind=true;z.hunt=false;z.aware=0;}zombies.push(z);
     toast((k==='p'?'ผีปอบ':'ซอมบี้')+'บุกมาแล้ว!');if(!PDAY)sfx.groan(.3,0);return;}
   if(k==='k'){if(E5&&E5.ph!=='done'){toast('ช้างป่ายังอยู่ — เรียกกระสือพร้อมกันไม่ได้');return;}if(liveBS().length>=2){toast('กระสือได้สูงสุด 2 ตัว');return;}
     E5=null;BS=BS.filter(b=>b.state!=='dead');if(!N3||N3.ph!=='fight')N3={ph:'fight',lineT:3,prac:true};
-    const q=pracPt(300),b=makeBoss(q.x,q.y);b.state='roam';b.t=0;b.rt=0;b.cd1=2;b.cd2=6;if(!PDAY){setBlackout(true);sfx.screech(0);shake=Math.max(shake,4);}toast('กระสือ!! ล่อให้มันชนต้นไม้/รั้ว แล้วจับหาง');return;}
+    const a=rnd()*TAU,r0=PRR+150,b=makeBoss(home.cx+Math.cos(a)*r0,home.cy+Math.sin(a)*r0);b.state='roam';b.t=0;b.rt=0;b.cd1=2;b.cd2=6;if(!PDAY){setBlackout(true);sfx.screech(0);shake=Math.max(shake,4);}
+    PIN={k:'k',t:0,T:3,b,a,r0,r1:PRR-70,cx:b.x,cy:b.y-14};pinHold();toast('กระสือมาแล้ว!! ทิศ'+pracDir(a));return;}   // three seconds: it comes in low over the water
   if(k==='e'){if(liveBS().length){toast('กระสือยังอยู่ — เรียกช้างป่าพร้อมกันไม่ได้');return;}if(E5&&E5.ph!=='done'){toast('ช้างป่ามาอยู่แล้ว');return;}
-    BS=[];B=null;KRL=null;KL=null;N3={ph:'e5',lineT:3,cam:null,stashed:false,prac:true};const a=rnd()*TAU,q=e5Spot(home.cx+Math.cos(a)*320,home.cy+Math.sin(a)*320);
-    E5={ph:'pre',t:0,st:0,said:0,step:null,el:mkEl(q.x,q.y,Math.atan2(home.cy-q.y,home.cx-q.x)+.6),th:[],wood:[],focus:null,ember:null,brood:0};e5Fight(false);}}
+    BS=[];B=null;KRL=null;KL=null;N3={ph:'e5',lineT:3,cam:null,stashed:false,prac:true};const a=rnd()*TAU,r0=PRR+150,q={x:home.cx+Math.cos(a)*r0,y:home.cy+Math.sin(a)*r0};
+    E5={ph:'pre',t:0,st:0,said:0,step:null,el:mkEl(q.x,q.y,a+Math.PI),th:[],wood:[],focus:null,ember:null,brood:0};e5Fight(false);E5.el.st='approach';
+    PIN={k:'e',t:0,T:3,a,r0,r1:PRR-55,cx:q.x,cy:q.y-20,wet:0};pinHold();toast('ช้างป่ามาแล้ว!! ทิศ'+pracDir(a));}}   // three seconds: it wades in, half under
+function pracDir(a){return['ตะวันออก','ตะวันออกเฉียงใต้','ใต้','ตะวันตกเฉียงใต้','ตะวันตก','ตะวันตกเฉียงเหนือ','เหนือ','ตะวันออกเฉียงเหนือ'][((Math.round(a/(TAU/8))%8)+8)%8];}
+function pinHold(){const P=player;joy.active=false;joyV={x:0,y:0};P.charging=false;P.autoCh=false;P.vx=P.vy=0;P.moveAmt=0;}
+function pinTick(dt){const C=PIN;C.t+=dt;computeLights();updateFire(dt);const u=Math.min(1,C.t/C.T),r=C.r0+(C.r1-C.r0)*u,x=home.cx+Math.cos(C.a)*r,y=home.cy+Math.sin(C.a)*r,k=Math.min(1,dt*4);
+  if(C.k==='k'){const b=C.b;selB(b);b.vx=(x-b.x)/Math.max(dt,1e-3);b.vy=(y-b.y)/Math.max(dt,1e-3);b.x=x;b.y=y;b.glow=1;rigTick(dt,-1,C.a+Math.PI);C.cx+=(x-C.cx)*k;C.cy+=(y-14-C.cy)*k;}
+  else if(E5&&E5.el){const e=E5.el;ELE.EL.faceT=C.a+Math.PI;ELE.EL.turnMax=3;e.vx=(x-e.x)/Math.max(dt,1e-3);e.vy=(y-e.y)/Math.max(dt,1e-3);e5Move(e,x-e.x,y-e.y,true);e5Rig(dt);C.cx+=(x-C.cx)*k;C.cy+=(y-24-C.cy)*k;
+    if(r<PRR+60){C.wet-=dt;if(C.wet<=0){C.wet=.12;nz(.12,'lowpass',500,200,.1,1);}}   // sloshing
+    if(r<PRR+6)pracWetAdd(e);}
+  else{PIN=null;return;}
+  if(C.t>=C.T){if(C.k==='e')PWETT=5;PIN=null;}}
+let PWETT=0;
+function pracWetAdd(e){const b=e5Body();if(PWET.length<140&&frameN%4===0)for(const o of[-16,14])PWET.push({x:b.x+b.fx*o+(rnd()-.5)*26,y:b.y+b.fy*o+(rnd()-.5)*20,r:7+rnd()*8,t:0,T:5+rnd()*2});}   // dripping where it walks
+function pracWetDraw(){const c=sctx;for(let i=PWET.length-1;i>=0;i--){const w=PWET[i];w.t+=1/60;if(w.t>=w.T){PWET.splice(i,1);continue;}c.fillStyle=`rgba(8,14,20,${(.42*(1-w.t/w.T)).toFixed(3)})`;ell(c,w.x-camX,w.y*K-camY,w.r,w.r*.55);}}
+function overWater(x,y){return PRAC&&!!home&&Math.hypot(x-home.cx,y-home.cy)>PRR+9;}
+function pracMirror(T){for(const b of BS){if(b.hidden||!overWater(b.x,b.y))continue;const x0=Math.round(b.x-camX-36),y0=Math.round(b.y*K-camY+5),W=72,H=74;if(x0<-W||x0>vw||y0<0||y0>vh+10)continue;   // still water: it carries her upside down, shivering a little
+    for(const[c,al]of[[sctx,.5],[lctx,.62]]){c.save();c.setTransform(1,0,0,1,0,0);c.imageSmoothingEnabled=false;for(let r=0;r<H;r++){const sy=y0-1-r,dy=y0+r;if(sy<0||dy>=vh)break;c.globalAlpha=al*(1-r/H*.75);c.drawImage(c.canvas,x0,sy,W,1,x0+Math.round(Math.sin(r*.55+T*3.2)*(.6+r*.025)),dy,W,1);}c.restore();}}}
+function pracElDepth(b){const d=Math.hypot(b.x-home.cx,b.y-home.cy);return clamp((d-(PRR+4))/46,0,1);}
+function pracElWater(b,T){const k=pracElDepth(b);if(k<=0)return;const sx=b.x-camX,sy=b.y*K-camY,yw=sy+16-k*30;ELE.dep(sx-130,yw+Math.sin(T*2.4)*.8,sx+130,sy+120,1e9);}   // the water hides its legs and belly: half of it shows
+function pracElRipple(b,T){const k=pracElDepth(b);if(k<=0)return;const sx=b.x-camX,sy=b.y*K-camY,yw=sy+16-k*30;
+  for(const[c,col]of[[sctx,'#9cc0d6'],[lctx,gray(Math.max(60,lightAt(b.x,b.y)))]]){c.save();c.setTransform(1,0,0,1,0,0);c.strokeStyle=col;c.lineWidth=1;for(let i=0;i<5;i++){const ph=(T*.9+i*.37)%1,rx=26+ph*46+i*6;c.globalAlpha=(1-ph)*.7*k;c.beginPath();c.ellipse(sx,yw+3,rx,rx*.22,0,0,TAU);c.stroke();}c.restore();}}
 function pracSetDay(d){if(PDAY===d)return;PDAY=d;sfx.ready();
   if(d){if(blackout)setBlackout(false);toast('กลางวัน — พวกมันมองไม่เห็น ค่อยๆ เดินออกไป');}
   else{for(const z of zombies)if(z.blind){z.blind=false;z.ba=null;z.hunt=true;z.aware=8;if(z.state==='wander')z.state='chase';}if(liveBS().length)setBlackout(true);toast('กลางคืน');}}
 function pracTick(dt){const tg=PDAY?1:0;DAYK+=(tg-DAYK)*Math.min(1,dt*1.6);if(Math.abs(tg-DAYK)<.01)DAYK=tg;dawn=215*DAYK;
+  if(PWETT>0&&E5&&E5.el&&E5.ph==='fight'){PWETT-=dt;pracWetAdd(E5.el);}
   stock=40;   // endless bananas, firewood and grilled snake
   if(home){let p=woodPiles.find(p=>p.prac&&woodPiles.includes(p));if(!p){const q=freeYardSpot();p={x:q.x,y:q.y,logs:[],prac:true};woodPiles.push(p);}while(p.logs.length<30)p.logs.push((rnd()*10)|0);}
   if(fireP){for(let k=0;k<4;k++)if(!fireP.sk.some(q=>q.slot===k*2)){const a=k*2*TAU/8+.2;fireP.sk.push({slot:k*2,x:fireP.x+Math.cos(a)*15,y:fireP.y+Math.sin(a)*12,t:20,por:6,seed:rnd()*10});}}
@@ -5332,7 +5357,7 @@ document.getElementById('pFull').onclick=()=>{wantFull=true;goFull();};
 for(const el of document.querySelectorAll('#mChars .pc'))el.onclick=()=>{hero=el.dataset.h;try{localStorage.setItem('hero',hero);}catch(_){}syncHero();};
 document.getElementById('goBtn').onclick=()=>{PRAC=false;goFull();setTimeout(begin,120);};
 document.getElementById('pracBtn').onclick=()=>{if(!cheat)return;PRAC=true;goFull();setTimeout(begin,120);};
-function showMenu(){hidePause();endEl.classList.add('hidden');menu.classList.remove('hidden');mScr('mMain');PRAC=false;PDAY=false;newGame();demoStart();}
+function showMenu(){hidePause();endEl.classList.add('hidden');menu.classList.remove('hidden');mScr('mMain');PRAC=false;PDAY=false;PIN=null;PWET=[];newGame();demoStart();}
 /* ---- pause ---- */
 const pauseEl=document.getElementById('pause');let pausedFrom=null;
 const pScr=id=>{for(const k of['pMain','pSwapS','pSetS'])document.getElementById(k).classList.toggle('hidden',k!==id);};
