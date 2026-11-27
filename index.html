@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v14.9</div>
+  <div class="ver">v15.0</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v14.9</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.0</h3><ul>
+      <li>ซอมบี้ใกล้ไฟ: เส้นขอบแสงสว่างชัดขึ้น วับตามเปลวไฟ ได้ทั้งจากกองไฟ คบไฟ ไม้ไฟของแพม และซอมบี้ที่ติดไฟ</li>
       <li>ซอมบี้ใกล้กองไฟมีขอบแสงสีส้มด้านที่หันเข้าหาไฟ · เสียงหัวใจกระสือดังขึ้น 2 เท่า · ซอมบี้กัดมีเสียงงับแบบเดียวกับกระสือ</li>
       <li>คัตซีน 1 คืนแรก: ใส่เสียงหัวใจกระสือตอนไฟกะพริบก่อนพุ่งทั้งสองครั้ง</li>
       <li>เสียงหัวใจกระสือในคัตซีน: คืนแรกตอนไฟแดงกะพริบก่อนพุ่ง · ฉากคุ้มคลั่งตอนคำราม · คืนที่ 5 ตอนจ้องช้าง</li>
@@ -791,7 +792,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='14.9';
+let useBot=true,bot=null,hero='fifa';const VERSION='15.0';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -4021,11 +4022,17 @@ function krBloom(){for(const b of BS){selB(b);krBloom1();}}
 function krBloom1(){const L=KL,Lk=KRL;if(!L||!Lk||Lk.v<.05)return;const gx=L.lx-camX,gy=L.ly*K-camY-L.lz*.4,R=160*KRM(),v=Lk.v;   // a soft red haze over everything near it
   let g=lctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,gray(58*v));g.addColorStop(.3,gray(32*v));g.addColorStop(.6,gray(16*v));g.addColorStop(.85,gray(4*v));g.addColorStop(1,'#000');lctx.save();lctx.globalCompositeOperation='lighter';lctx.fillStyle=g;lctx.fillRect(gx-R,gy-R,R*2,R*2);lctx.restore();
   g=sctx.createRadialGradient(gx,gy,0,gx,gy,R);g.addColorStop(0,`rgb(255,${255-170*v|0},${255-165*v|0})`);g.addColorStop(.4,`rgb(255,${255-110*v|0},${255-106*v|0})`);g.addColorStop(.75,`rgb(255,${255-35*v|0},${255-34*v|0})`);g.addColorStop(1,'#fff');sctx.save();sctx.globalCompositeOperation='multiply';sctx.fillStyle=g;sctx.fillRect(gx-R,gy-R,R*2,R*2);sctx.restore();}
-function rimFire(s,e,x0,y0){const F=fireP;if(!F||!(F.F>0)||fireOut||!e||!e.arms||s!==sctx)return;const dx=F.x-e.x,dy=F.y-e.y,dd=Math.hypot(dx,dy);if(dd>150||dd<2)return;   // the dead by the campfire: a warm edge of light down the side that faces it
-  const str=Math.pow(1-dd/150,.8)*(.75+.25*Math.sin(performance.now()/90+e.seed)),a=Math.atan2(dy*K-4,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
-  RMX.globalCompositeOperation='source-over';RMX.clearRect(0,0,136,120);RMX.drawImage(OLC,0,0);RMX.globalCompositeOperation='source-in';RMX.fillStyle='rgb(255,176,84)';RMX.fillRect(0,0,136,120);
-  RMX.globalCompositeOperation='destination-out';RMX.drawImage(OLC,-ux,-uy);RMX.globalCompositeOperation='source-over';
-  const ga=s.globalAlpha,al=clamp(.25+str*.85,0,1);s.globalAlpha=al;s.drawImage(RMC,x0,y0);lctx.globalAlpha=al;lctx.drawImage(RMC,x0,y0);s.globalAlpha=ga;lctx.globalAlpha=1;}
+function rimFire(s,e,x0,y0){if(!e||!e.arms||s!==sctx)return;let L=null,ld=1e9,LR=0;   // the dead near any flame: a bright edge that shimmers with it, down the side facing the light
+  const tryL=(x,y,R)=>{const d=Math.hypot(x-e.x,y-e.y)/R;if(d<1&&d<ld){ld=d;L={x,y};LR=R;}};
+  if(fireP&&fireP.F>0&&!fireOut)tryL(fireP.x,fireP.y,230);for(const p of plights)if(p.kind==='torch')tryL(p.x,p.y,110);if(pam&&pam.torch>0)tryL(pam.x,pam.y,90);for(const z of zombies)if(z!==e&&z.burn>0)tryL(z.x,z.y,90);
+  if(!L)return;const dx=L.x-e.x,dy=L.y-e.y;if(Math.hypot(dx,dy)<2)return;
+  const fl=.7+.3*Math.sin(performance.now()/70+e.seed*3)*Math.sin(performance.now()/173+e.seed),str=Math.pow(1-ld,.6)*fl,a=Math.atan2(dy*K-4,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
+  const ga=s.globalAlpha;
+  for(const[col,sh,al]of[['rgb(255,150,60)',2,clamp(.3+str*.6,0,1)],['rgb(255,236,170)',1,clamp(.55+str*.7,0,1)]]){if(sh===2&&ld>.6)continue;   // a hot inner line, a warmer one outside it when close
+    RMX.globalCompositeOperation='source-over';RMX.clearRect(0,0,136,120);RMX.drawImage(OLC,0,0);RMX.globalCompositeOperation='source-in';RMX.fillStyle=col;RMX.fillRect(0,0,136,120);
+    RMX.globalCompositeOperation='destination-out';RMX.drawImage(OLC,-ux*sh,-uy*sh);RMX.globalCompositeOperation='source-over';
+    s.globalAlpha=al;s.drawImage(RMC,x0,y0);lctx.globalAlpha=1;lctx.globalCompositeOperation='lighter';lctx.drawImage(RMC,x0,y0);lctx.globalCompositeOperation='source-over';}
+  s.globalAlpha=ga;lctx.globalAlpha=1;}
 function rimRed(s,e,x0,y0){for(const b of BS){selB(b);rimRed1(s,e,x0,y0);}}
 function rimRed1(s,e,x0,y0){const L=KRL;if(!L||L.v<.05||!e||s!==sctx)return;const dx=L.x-e.x,dy=L.y-e.y,dd=Math.hypot(dx,dy),RR=130*KRM();if(dd>RR)return;
   const str=klv(e.x,e.y,12);if(str<=.02)return;const a=Math.atan2(dy*K-L.z*.75+12,dx),ux=Math.round(Math.cos(a)),uy=Math.round(Math.sin(a));if(!ux&&!uy)return;
