@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v15.2</div>
+  <div class="ver">v15.3</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.2</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.3</h3><ul><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
       <li>ผีปอบ: พุ่งกระโจนเร็วขึ้น 3 เท่า · พลาดแล้วไถลพื้น 4 เมตร ใบไม้แห้งกระเด็น · นอน 1 วิแล้วกลิ้งหนี 5 เมตรด้วยความเร็ว 5 เท่า · วิ่งอ้อมไปด้านหลังเราเร็วขึ้น 2 เท่า</li>
       <li>ผีปอบ: วิ่งเข้ามาแล้วจบด้วยการพุ่งกระโจนอีก 3 เมตร · ถ้าพลาดจะล้มคว่ำไถลไปกับพื้นอีก 2 เมตร</li>
       <li>ซอมบี้ใกล้ไฟ: เส้นขอบแสงสว่างชัดขึ้น วับตามเปลวไฟ ได้ทั้งจากกองไฟ คบไฟ ไม้ไฟของแพม และซอมบี้ที่ติดไฟ</li>
@@ -794,7 +794,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='15.2';
+let useBot=true,bot=null,hero='fifa';const VERSION='15.3';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1535,7 +1535,8 @@ function stalkAI(z,dt,T,d,sees,hidden){
 function stalkDodge(z,h){if(!z.stalk||z.crawl||z.state!=='chase'||z.burn>0||z.slam||z.dgCd>0||z.dg||z.sk==='flop'||z.sk==='rush'||z.sk==='flee')return false;   // ผีปอบ: arms flung wide, a quick hop 2 m back, three in a row
   const d=Math.hypot(z.x-h.x,z.y-h.y)||1,bx=(z.x-h.x)/d,by=(z.y-h.y)/d,an=[0,.8,-.8,1.25,-1.25][(rnd()*5)|0],ca=Math.cos(an),sa=Math.sin(an);   // straight back, or back and off to either side
   const RCH=(h===player?W(h).kmax:24)+12,D=clamp(RCH-d+4,16,46);   // far enough back to be out of reach of what you are holding
-  z.dg={type:'jump',t:0,T:.16+(D-16)/260,D,dx:bx*ca-by*sa,dy:bx*sa+by*ca,sd:1};z.dgN=(z.dgN||0)+1;z.dgL=STKT;z.vx=z.vy=0;
+  z.dg=(z.dgN||0)>=1?{type:'roll',t:0,T:.45,D:48,dx:bx*ca-by*sa,dy:bx*sa+by*ca,sd:1}:{type:'jump',t:0,T:.16+(D-16)/260,D,dx:bx*ca-by*sa,dy:bx*sa+by*ca,sd:1};z.dgN=(z.dgN||0)+1;   // only the first is a hop; the second and third are a 6 m roll
+  z.dgL=STKT;z.vx=z.vy=0;
   if(z.dgN>=3){z.dgN=0;z.dgCd=3;z.sk='flee';z.skT=3;}else{z.sk='taunt';z.skT=0;z.skS=STKT;z.tauM=2.2+rnd()*1.6;z.tauS=rnd()<.5?-1:1;}   // then it squares up and sizes you up   // after the third it backs off for 3 s to get its nerve back
   sfx.whoosh();return true;}
 function stPose(z,T){const fx=z.x-camX,a=z.a,ca=Math.cos(a),sa=Math.sin(a),fwx=ca,fwy=sa*K,px=-sa,py=ca*K,sk=z.state==='chase'?z.sk:null,up=sk==='raise'?Math.min(1,z.skT/.3):0,run=sk==='rush'||sk==='leap'?1:0,leapK=sk==='leap'&&z.lp?Math.sin(Math.PI*Math.min(1,z.skT/z.lp.T)):0,
@@ -1550,11 +1551,11 @@ function stPose(z,T){const fx=z.x-camX,a=z.a,ca=Math.cos(a),sa=Math.sin(a),fwx=c
 function stEyes(z,T){if(!z.stalk||z.crawl||z.air>0||z.spin)return null;const st=z.state;if(st==='down'||st==='eat'||st==='bite'||st==='eatB'||st==='eatC'||(st==='chase'&&z.sk==='flop')||(z.dg&&z.dg.type==='roll'))return null;
   const q=stPose(z,T);if(q.away||q.turned)return null;const tb=(T+z.seed)%2;if(tb<.08||(tb>.16&&tb<.24))return null;   // two quick blinks every 2 s
   const ex=q.hx+q.ca*1.2,as=Math.abs(q.sa),E=[[Math.round(ex-as-.5),Math.round(q.hy-.6)]];if(as>.3)E.push([Math.round(ex+as-.5)+1,Math.round(q.hy-.6)]);return E;}
-function stHair(c,z,T,q,hx,hy,M){const hw=z.hw||0,wh=hw>0?Math.exp(-hw*3.2):0,vx=(z.vx||0)*.012,vy=(z.vy||0)*.012*K;c.strokeStyle=M('#0c0c0c');c.lineWidth=.22;c.lineCap='round';c.lineJoin='round';   // five hair-fine strands, weightless, each drifting off on its own
+function stHair(c,z,T,q,hx,hy,M){const hw=z.hw||0,wh=hw>0?Math.exp(-hw*3.2):0,vx=(z.vx||0)*.012,vy=(z.vy||0)*.012*K;const HP=[],hs=new Set(),hp=(px,py)=>{px=Math.round(px);py=Math.round(py);const kk=px*4096+py;if(!hs.has(kk)){hs.add(kk);HP.push([px,py]);}};   // five hair-fine strands, weightless, each drifting off on its own
   for(let i=0;i<5;i++){const s1=z.seed*1.3+i*2.39,L=8+((i*5+((z.seed*3)|0))%5),base=-Math.PI/2+(i-2)*.75+Math.sin(T*.5+s1)*.35;
-    let x=hx+Math.cos(base)*1.3,y=hy-1.8+Math.sin(base)*.7,a=base+Math.sin(T*.8+s1*1.7)*.8;c.beginPath();c.moveTo(x,y);
-    for(let k=1;k<=6;k++){a+=Math.sin(T*(.9+i*.21)+s1+k*1.1)*.5+Math.cos(T*(.6+i*.13)-k*.7+s1*.5)*.3+wh*Math.cos(hw*13-i*.55-k*.6)*.9;const st=L/6;x+=Math.cos(a)*st-vx*k;y+=Math.sin(a)*st*.85-vy*k;c.lineTo(x,y);}
-    c.stroke();}}
+    let x=hx+Math.cos(base)*1.3,y=hy-1.8+Math.sin(base)*.7,a=base+Math.sin(T*.8+s1*1.7)*.8;
+    for(let k=1;k<=6;k++){a+=Math.sin(T*(.9+i*.21)+s1+k*1.1)*.5+Math.cos(T*(.6+i*.13)-k*.7+s1*.5)*.3+wh*Math.cos(hw*13-i*.55-k*.6)*.9;const st=L/6,x1=x+Math.cos(a)*st-vx*k,y1=y+Math.sin(a)*st*.85-vy*k,n=Math.max(1,Math.ceil(Math.max(Math.abs(x1-x),Math.abs(y1-y))));for(let m=0;m<=n;m++)hp(x+(x1-x)*m/n,y+(y1-y)*m/n);x=x1;y=y1;}}
+  if(OL_PASS)z._hp=(z._hp||[]).concat(HP);else{c.fillStyle=M('#000');for(const p of HP)c.fillRect(p[0],p[1],1,1);}}   // one pixel wide, pure black: as thin as the screen can draw
 function drawStalker(c,z,T,mono){const q=stPose(z,T),{fx,fy,gy,fwx,fwy,px,py,hipY,shx,shy,hx,hy,up,run,hun,g,gu}=q,M=col=>mono||col,skin=M('#a6a6a6'),dark=M('#2e2e2e');
   if(z.state==='chase'&&z.sk==='flop'){if(!mono&&!z._ar){c.fillStyle='rgba(0,0,0,.5)';ell(c,fx,gy,7,2.4);}   // flat on its face
     c.lineCap='round';c.strokeStyle=dark;c.lineWidth=2;c.beginPath();c.moveTo(fx-fwx*8,gy-fwy*8-1);c.lineTo(fx+fwx*3,gy+fwy*3-1.4);c.stroke();
@@ -4567,10 +4568,11 @@ const OLC=document.createElement('canvas');OLC.width=136;OLC.height=120;const OL
 const OLS=document.createElement('canvas');OLS.width=136;OLS.height=120;const OLSX=OLS.getContext('2d');
 let OL_PASS=false;
 function withOutline(s,e,fn){   // crisp dark outline around a character (the thin stick is drawn on top, unoutlined)
-  const x0=Math.round(e.x-camX)-68,y0=Math.round(e.y*K-camY)-92;OLX.setTransform(1,0,0,1,0,0);OLX.clearRect(0,0,136,120);OLX.setTransform(1,0,0,1,-x0,-y0);e._stk=null;OL_PASS=true;try{fn(OLX);}finally{OL_PASS=false;}
+  const x0=Math.round(e.x-camX)-68,y0=Math.round(e.y*K-camY)-92;OLX.setTransform(1,0,0,1,0,0);OLX.clearRect(0,0,136,120);OLX.setTransform(1,0,0,1,-x0,-y0);e._stk=null;e._hp=null;OL_PASS=true;try{fn(OLX);}finally{OL_PASS=false;}
   OLSX.globalCompositeOperation='source-over';OLSX.clearRect(0,0,136,120);OLSX.drawImage(OLC,0,0);OLSX.globalCompositeOperation='source-in';OLSX.fillStyle='#0a0908';OLSX.fillRect(0,0,136,120);
   for(const[dx,dy]of[[-1,0],[1,0],[0,-1],[0,1]])s.drawImage(OLS,x0+dx,y0+dy);s.drawImage(OLC,x0,y0);rimRed(s,e,x0,y0);rimFire(s,e,x0,y0);
-  if(e._stk){s.lineCap='round';for(const o of e._stk){s.strokeStyle=o[5];s.lineWidth=o[4];s.beginPath();s.moveTo(o[0],o[1]);s.lineTo(o[2],o[3]);s.stroke();}e._stk=null;}}
+  if(e._stk){s.lineCap='round';for(const o of e._stk){s.strokeStyle=o[5];s.lineWidth=o[4];s.beginPath();s.moveTo(o[0],o[1]);s.lineTo(o[2],o[3]);s.stroke();}e._stk=null;}
+  if(e._hp){s.fillStyle='#000';for(const p of e._hp)s.fillRect(p[0],p[1],1,1);e._hp=null;}}
 function drawObj(o,T,s,l){if(o.k===1){const L=treeLean.get(o.j*MW+o.i);if(L&&Math.abs(L.a)>.004){const bx=o.i*TS+8-camX,by=(o.j*TS+8)*K-camY;s.save();l.save();for(const c of[s,l]){c.translate(bx,by);c.rotate(L.a);c.translate(-bx,-by);}drawObj0(o,T,s,l);s.restore();l.restore();return;}}drawObj0(o,T,s,l);}
 function drawObj0(o,T,s,l){
   const F=(c,v,x,y,w,h)=>{c.fillStyle=typeof v==='number'?gray(v):v;c.fillRect(x,y,w,h);};
