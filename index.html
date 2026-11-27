@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v15.5</div>
+  <div class="ver">v15.6</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.5</h3><ul><li>กดโจมตีรัว ๆ: จังหวะที่กดเร็วเกินจะถูกจำไว้แล้วตีทันทีที่พร้อม ไม่หายไปเฉย ๆ</li><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.6</h3><ul><li>กระทะ: เสียงตีใช้เสียงเดียวกับมีดกรีดยาง</li><li>กดโจมตีรัว ๆ: จังหวะที่กดเร็วเกินจะถูกจำไว้แล้วตีทันทีที่พร้อม ไม่หายไปเฉย ๆ</li><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
       <li>ผีปอบ: พุ่งกระโจนเร็วขึ้น 3 เท่า · พลาดแล้วไถลพื้น 4 เมตร ใบไม้แห้งกระเด็น · นอน 1 วิแล้วกลิ้งหนี 5 เมตรด้วยความเร็ว 5 เท่า · วิ่งอ้อมไปด้านหลังเราเร็วขึ้น 2 เท่า</li>
       <li>ผีปอบ: วิ่งเข้ามาแล้วจบด้วยการพุ่งกระโจนอีก 3 เมตร · ถ้าพลาดจะล้มคว่ำไถลไปกับพื้นอีก 2 เมตร</li>
       <li>ซอมบี้ใกล้ไฟ: เส้นขอบแสงสว่างชัดขึ้น วับตามเปลวไฟ ได้ทั้งจากกองไฟ คบไฟ ไม้ไฟของแพม และซอมบี้ที่ติดไฟ</li>
@@ -794,7 +794,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='15.5';
+let useBot=true,bot=null,hero='fifa';const VERSION='15.6';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -934,7 +934,7 @@ function release(angle,h=player){if(h===player)h.autoCh=false;
     const need=Math.max(0,h.swingReach-(2.9+arm+Lw)-2);h.visStep=Math.min(need*.55,15);h.visArm=Math.min((need-h.visStep)*.4,5);h.visW=Math.max(0,need-h.visStep-h.visArm);}   // the stroke is drawn out to the real hit reach: step + lean in, reach the arm, and the weapon makes up the rest
   if(h===player){const t=lungeTarget(h,angle,h.swingReach+20);if(t){h.facing=h.swingAng=t.a;lungeTo(h,t,Math.max(8,h.swingReach*.7));h.pendingHit=Math.max(h.pendingHit,.075);}}
   h.hunger=Math.min(1,(h.hunger||0)+.0025);   // a swing costs a quarter of a percent
-  if(h===player||near(h,220)){const wk=wKind(h);if(!((wk==='knife'&&fkPlay(h))||((wk==='stick'||wk==='pan'||wk==='pstick')&&swPlay(h))))sfx.swish(p*2);}
+  if(h===player||near(h,220)){const wk=wKind(h);if(!(((wk==='knife'||wk==='pan')&&fkPlay(h))||((wk==='stick'||wk==='pstick')&&swPlay(h))))sfx.swish(p*2);}
 }
 function blood(x,y,h,n,ux,uy,spd){for(let k=0;k<n;k++){const a=Math.atan2(uy,ux)+(rnd()-.5)*1.6,s=(spd||60)*(.4+rnd());particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,h,vh:10+rnd()*60});}}
 function addGib(type,x,y,h,ux,uy){gibs.push({type,x,y,h,vx:ux*(50+rnd()*40)+(rnd()-.5)*30,vy:uy*(50+rnd()*40)+(rnd()-.5)*30,vh:60+rnd()*60,rot:rnd()*TAU,vr:(rnd()-.5)*18,bounced:false});}
