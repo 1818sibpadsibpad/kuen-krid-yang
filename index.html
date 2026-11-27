@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v15.1</div>
+  <div class="ver">v15.2</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,8 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.1</h3><ul>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.2</h3><ul>
+      <li>ผีปอบ: พุ่งกระโจนเร็วขึ้น 3 เท่า · พลาดแล้วไถลพื้น 4 เมตร ใบไม้แห้งกระเด็น · นอน 1 วิแล้วกลิ้งหนี 5 เมตรด้วยความเร็ว 5 เท่า · วิ่งอ้อมไปด้านหลังเราเร็วขึ้น 2 เท่า</li>
       <li>ผีปอบ: วิ่งเข้ามาแล้วจบด้วยการพุ่งกระโจนอีก 3 เมตร · ถ้าพลาดจะล้มคว่ำไถลไปกับพื้นอีก 2 เมตร</li>
       <li>ซอมบี้ใกล้ไฟ: เส้นขอบแสงสว่างชัดขึ้น วับตามเปลวไฟ ได้ทั้งจากกองไฟ คบไฟ ไม้ไฟของแพม และซอมบี้ที่ติดไฟ</li>
       <li>ซอมบี้ใกล้กองไฟมีขอบแสงสีส้มด้านที่หันเข้าหาไฟ · เสียงหัวใจกระสือดังขึ้น 2 เท่า · ซอมบี้กัดมีเสียงงับแบบเดียวกับกระสือ</li>
@@ -793,7 +794,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='15.1';
+let useBot=true,bot=null,hero='fifa';const VERSION='15.2';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -1515,21 +1516,22 @@ function stalkAI(z,dt,T,d,sees,hidden){
     const R=W(P).kmax+14,cur=Math.atan2(z.y-P.y,z.x-P.x);let df=P.facing+Math.PI-cur;df=Math.atan2(Math.sin(df),Math.cos(df));
     const side=Math.abs(df)>2.6?z.tauS:Math.sign(df),sw=Math.sin(z.skT*2.6+z.seed)*.45+side*.4,nx=cur+sw;   // side-steps back and forth, drifting round towards your back
     return[P.x+Math.cos(nx)*R,P.y+Math.sin(nx)*R,z.spd*.75];}
-  if(z.sk==='flop'){z.skT-=dt;z.vx*=.7;z.vy*=.7;if(z.sl&&z.sl.v>2){const S=z.sl,st=S.v*dt;moveCircle(z,S.dx*st,S.dy*st,5);S.v*=Math.exp(-4.4*dt);if(rnd()<dt*22)dustPuff(z.x,z.y,1,S.dx,S.dy);}   // face down, ploughing on along the ground: 2 m
-    if(z.skT<=0){z.sk='circle';z.skT=0;z.sl=null;}return[z.x,z.y,0];}
+  if(z.sk==='flop'){z.skT-=dt;z.vx*=.7;z.vy*=.7;if(z.sl&&z.sl.v>2){const S=z.sl,st=S.v*dt;moveCircle(z,S.dx*st,S.dy*st,5);S.v*=Math.exp(-4.4*dt);if(rnd()<dt*22)dustPuff(z.x,z.y,1,S.dx,S.dy);if(rnd()<dt*30)leafBurst(z.x,z.y,S.dx,S.dy,S.v+60);}   // face down, ploughing on along the ground: 4 m, dry leaves flying
+    if(z.skT<=0){z.sk='circle';z.skT=1.2;z.sl=null;const fd=Math.hypot(z.x-P.x,z.y-P.y)||1,ux=(z.x-P.x)/fd,uy=(z.y-P.y)/fd;z.dg={type:'roll',t:0,T:40/(z.spd*5),D:40,dx:ux,dy:uy,sd:1};z.dgL=STKT;}   // one second down, then it rolls clear: 5 m, five times its pace
+    return[z.x,z.y,0];}
   if(z.sk==='leap'){const L=z.lp,st=Math.min(dt,L.T-z.skT);z.skT+=dt;moveCircle(z,L.dx*24*st/L.T,L.dy*24*st/L.T,5);z.vx=z.vy=0;z.a=Math.atan2(L.dy,L.dx);   // the last 3 m it covers in one spring, claws first
     if(z.skT>=L.T){const dd=Math.hypot(P.x-z.x,P.y-z.y);if(dd<15&&!(P.rollT>0)&&state==='play'&&!P.fly&&!P.hidden){z.sk='circle';z.skT=0;grab(z);return[z.x,z.y,0];}
-      z.sk='flop';z.skT=1.25;z.sl={dx:L.dx,dy:L.dy,v:80};if(near(z,260)){wdPlay(z.x,z.y,.5);shake=Math.max(shake,2);}dustPuff(z.x,z.y,5,L.dx,L.dy);}   // missed: it comes down flat and slides
+      z.sk='flop';z.skT=1;z.sl={dx:L.dx,dy:L.dy,v:141};if(near(z,260)){wdPlay(z.x,z.y,.5);shake=Math.max(shake,2);}dustPuff(z.x,z.y,5,L.dx,L.dy);}   // missed: it comes down flat and slides
     return[z.x,z.y,0];}
   if(z.sk==='raise'){z.skT+=dt;z.a=angLerp(z.a,Math.atan2(P.y-z.y,P.x-z.x),dt*10);if(d>200||(!sees&&z.skT>.5)){z.sk='circle';z.skT=0;return null;}
     if(z.skT>=2){z.sk='rush';z.skT=0;z.rd=d;sfx.screech(-(z.x-P.x)/200);}return[z.x,z.y,0];}
   if(z.sk==='rush'){z.skT+=dt;z.rd=Math.min(z.rd,d);
-    if(d<40||z.skT>1.6||(z.skT>.3&&d>z.rd+14)){z.sk='leap';z.skT=0;z.lp={dx:(P.x-z.x)/(d||1),dy:(P.y-z.y)/(d||1),T:.26};sfx.whoosh();return[z.x,z.y,0];}   // close enough: it springs
+    if(d<40||z.skT>1.6||(z.skT>.3&&d>z.rd+14)){z.sk='leap';z.skT=0;z.lp={dx:(P.x-z.x)/(d||1),dy:(P.y-z.y)/(d||1),T:.087};sfx.whoosh();return[z.x,z.y,0];}   // close enough: it springs
     return[P.x,P.y,z.spd*2];}
   if(d>170||!sees)return null;   // still far off: it just walks straight in like any other
   z.skT+=dt;const cur=Math.atan2(z.y-P.y,z.x-P.x);let df=P.facing+Math.PI-cur;df=Math.atan2(Math.sin(df),Math.cos(df));
   if(z.skT>1.5&&d<120&&(Math.abs(df)<.8||z.skT>(z.skM||(z.skM=3+rnd()*3)))){z.skM=0;z.sk='raise';z.skT=0;return[z.x,z.y,0];}   // it has found its moment
-  const nx=cur+clamp(df,-.6,.6),R=76;return[P.x+Math.cos(nx)*R,P.y+Math.sin(nx)*R,z.spd];}   // keep its distance and work round behind you
+  const nx=cur+clamp(df,-.6,.6),R=76;return[P.x+Math.cos(nx)*R,P.y+Math.sin(nx)*R,z.spd*2];}   // keep its distance and work round behind you
 function stalkDodge(z,h){if(!z.stalk||z.crawl||z.state!=='chase'||z.burn>0||z.slam||z.dgCd>0||z.dg||z.sk==='flop'||z.sk==='rush'||z.sk==='flee')return false;   // ผีปอบ: arms flung wide, a quick hop 2 m back, three in a row
   const d=Math.hypot(z.x-h.x,z.y-h.y)||1,bx=(z.x-h.x)/d,by=(z.y-h.y)/d,an=[0,.8,-.8,1.25,-1.25][(rnd()*5)|0],ca=Math.cos(an),sa=Math.sin(an);   // straight back, or back and off to either side
   const RCH=(h===player?W(h).kmax:24)+12,D=clamp(RCH-d+4,16,46);   // far enough back to be out of reach of what you are holding
