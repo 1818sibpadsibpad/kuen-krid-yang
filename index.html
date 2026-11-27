@@ -101,6 +101,8 @@ button.back{background:#0a0908;color:#f3ece0;border:2px solid #f3ece0;font-size:
 #pause #pSwap{font-size:32px;padding:20px 10px;margin:14px 0 6px;background:linear-gradient(180deg,rgba(255,214,90,.5),rgba(230,150,30,.38));border:2.5px solid #ffe08a;box-shadow:0 0 26px rgba(255,200,70,.65),0 8px 26px rgba(0,0,0,.4)}
 #pause .srow,#pause .hint{color:#fff}
 #pause .panel{width:min(330px,88vw);box-sizing:border-box}
+#pCards{position:absolute;left:max(10px,env(safe-area-inset-left));top:10px;display:flex;flex-wrap:wrap;gap:6px;max-width:72vw;pointer-events:none}
+#pCards canvas{display:block;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6))}
 button.pb{display:block;width:100%;margin:10px 0 0;font-size:19px;padding:13px 10px}
 button.pb.red{background:#d01c22;color:#f3ece0;box-shadow:4px 4px 0 #5c0a10}
 .srow{display:block;text-align:left;font-size:15px;margin:6px 0 4px}.srow input{display:block;width:100%;margin-top:10px;accent-color:#e6c43c}
@@ -178,7 +180,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v15.6</div>
+  <div class="ver">v16.0</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +188,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.6</h3><ul><li>กระทะ: เสียงตีใช้เสียงเดียวกับมีดกรีดยาง</li><li>กดโจมตีรัว ๆ: จังหวะที่กดเร็วเกินจะถูกจำไว้แล้วตีทันทีที่พร้อม ไม่หายไปเฉย ๆ</li><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v16.0</h3><ul><li>ผ่านคืนที่ 1 แล้วทุกคนตื่น 15:00 ของวันถัดไป · ได้แต้มอัปเกรด 2 แต้ม เลือกการ์ดของตัวละครหลัก (โยนฟืนข้ามรั้ว / กลิ้งไกลขึ้น 20% / ถีบ-ผลักไกลขึ้น 20%) หรือของพี่น้องในรั้วบ้าน (แพม: ไม้ไฟยาว 2 เท่า / โยนฟืนติดไฟ) · กดหยุดเวลาเพื่อดูการ์ดที่มี</li><li>เลิกการทำหน้าที่แทนกัน: เติมฟืนเป็นหน้าที่ของทุกคน · ฟีฟ่าตอนเป็นบอทออกไปฟัน ถีบ กลิ้งหลบเอง ไม่เกิน 10 ม. จากรั้ว หิวเหลือ 30% กลับมากินเอง</li><li>กระทะ: เสียงตีใช้เสียงเดียวกับมีดกรีดยาง</li><li>กดโจมตีรัว ๆ: จังหวะที่กดเร็วเกินจะถูกจำไว้แล้วตีทันทีที่พร้อม ไม่หายไปเฉย ๆ</li><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
       <li>ผีปอบ: พุ่งกระโจนเร็วขึ้น 3 เท่า · พลาดแล้วไถลพื้น 4 เมตร ใบไม้แห้งกระเด็น · นอน 1 วิแล้วกลิ้งหนี 5 เมตรด้วยความเร็ว 5 เท่า · วิ่งอ้อมไปด้านหลังเราเร็วขึ้น 2 เท่า</li>
       <li>ผีปอบ: วิ่งเข้ามาแล้วจบด้วยการพุ่งกระโจนอีก 3 เมตร · ถ้าพลาดจะล้มคว่ำไถลไปกับพื้นอีก 2 เมตร</li>
       <li>ซอมบี้ใกล้ไฟ: เส้นขอบแสงสว่างชัดขึ้น วับตามเปลวไฟ ได้ทั้งจากกองไฟ คบไฟ ไม้ไฟของแพม และซอมบี้ที่ติดไฟ</li>
@@ -426,7 +428,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
     <button class="back" type="button">‹ กลับ</button></div></div>
 </div>
 
-<div id="pause" class="ov hidden"><div class="panel">
+<div id="pause" class="ov hidden"><div id="pCards"></div><div class="panel">
   <div id="pMain"><h2>⏸ หยุดพัก</h2>
     <button class="pb" id="pResume">▶ เล่นต่อ</button><button class="pb" id="pRestart">↻ เริ่มใหม่ด่านนี้</button><button class="pb" id="pSwap">🔦 เปลี่ยนตัวละคร</button><button class="pb" id="pSet">⚙️ ตั้งค่า</button><button class="pb" id="pFull">⛶ เต็มจอ (ซ่อนแถบ Safari)</button><button class="pb red" id="pQuit">ออก</button></div>
   <div id="pSwapS" class="hidden"><h2>เปลี่ยนตัวละคร</h2><div class="hint">ส่งไฟคาดหัวให้คนถัดไป</div><div class="pick" id="swapPick"></div><button class="back" type="button">‹ กลับ</button></div>
@@ -794,7 +796,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='15.6';
+let useBot=true,bot=null,hero='fifa';const VERSION='16.0';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -802,7 +804,7 @@ const flow=new Int16Array(MW*MH),flowB=new Int16Array(MW*MH),fq=new Int32Array(M
 const cam={x:0,y:0};let camX=0,camY=0;
 
 function newGame(seed){
-  mapSeed=seed||(1+((Math.random()*2147483000)|0));RS=mapSeed;genMap();bake();RS=0;N3=null;E5=null;B=null;BS=[];UPGf=false;KRL=null;KL=null;blackout=false;
+  mapSeed=seed||(1+((Math.random()*2147483000)|0));RS=mapSeed;genMap();bake();RS=0;N3=null;E5=null;B=null;BS=[];UPGf=false;KRL=null;KL=null;blackout=false;DAY2=null;UPS=null;
   player={snakes:0,snakeBite:null,wood:0,woodV:[],woodCd:0,x:startPos.x,y:startPos.y,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,fallA:0,fall:0,
     up:false,st:false,ev:0,charging:false,charge:0,ready:false,swingPow:0,swingReach:KMIN,swingDur:.1,weapon:'knife',hasHoe:false,swingDir:1,nextDir:1,idleT:0,combat:0,fought:false,pantT:0,breathPh:0,breathNext:0,kickT:0,kickHit:0,kcd:0,kickAng:0,armOff:1.2,armHv:6,bloody:0,swingT:0,swingLevel:0,swingAng:0,pendingHit:0,cd:0};
   stock=0;kills=0;gameTime=0;flashOn=true;muzzle=0;shake=0;invertF=0;TUT=null;DAYK=0;DEADS=new Set();CORPSE=null;DEADPOS={};EXPL.fill(0);
@@ -956,7 +958,7 @@ function pamTorchTick(dt){if(WHO()!=='pam'){player.pt=null;return;}const P=playe
   else if(q.lit&&!P.hidden&&rnd()<dt*5)sparks.push({x:tx,y:ty,h:20,vx:(rnd()-.5)*8,vy:(rnd()-.5)*4,vh:16+rnd()*16,life:.5+rnd()*.5});}
 function pwTick(dt){if(hero!=='pw')return;const P=player;if(P.recoilT>0)P.recoilT-=dt;
   if((P.grip||P.drag)&&P.moveAmt>.1){P.moanT=(P.moanT||1.5)-dt;if(P.moanT<=0){P.moanT=5+rnd()*3;P.say={text:rnd()<.5?'หนักจัง':'ถ้าเป็นพี่ๆคงไม่หนัก',t:2.4};}}else P.moanT=Math.min(P.moanT||1.5,1.5);if(P.hopT>0&&rnd()<dt*30)sparks.push({x:P.x+(rnd()-.5)*4,y:P.y,h:1,vx:(rnd()-.5)*16,vy:(rnd()-.5)*6,vh:6+rnd()*10,life:.4+rnd()*.3,ash:1});}
-function doHit(h=player){if(h!==player)return doHit0(h);   // the player's blows that do damage use the recorded hit
+function doHit(h=player){if(h!==player){HS=1;try{return doHit0(h);}finally{const rq=HS===2;HS=false;if(rq)bufPlay(htBuf,h,.6);}}   // the player's blows that do damage use the recorded hit
   const zh=new Map();for(const z of zombies)zh.set(z,z.hp+'|'+z.state+'|'+(z.dgN||0));const bh=BS.map(b=>[b,b.hp]),sk=snakes.filter(n=>n.st==='hiss');HS=1;
   try{return doHit0(h);}finally{const req=HS===2;HS=false;let dmg=false;for(const[z,k]of zh){const q=k.split('|');if(!zombies.includes(z)||z.hp<+q[0]-1e-6||(z.state!==q[1]&&(z.dgN||0)===+q[2]&&!z.dg)){dmg=true;break;}}   // hurt, floored or staggered counts; a dodge does not
     if(!dmg)dmg=bh.some(([b,hp])=>b.hp<hp-1e-6)||sk.some(n=>n.st==='toss');
@@ -1046,11 +1048,13 @@ function doKick(h=player){
   if(h===player&&performance.now()/1000-(h.lastSlow||0)>.7){slowT=.22;h.lastSlow=performance.now()/1000;}
   slowZ(best);const z=best,d=bd||1,ux=(z.x-h.x)/d,uy=(z.y-h.y)/d;
   shake=Math.max(shake,4);sfx.kick();toast(PU?'ผลัก!':'ถีบ!');z.aware=6;
-  if(z.crawl){z.vx=ux*200;z.vy=uy*200;z.state='stagger';z.t=.6;z.tilt=Math.sign(ux||1)*.5;return;}
+  const KU=h===player&&hasU('kick');
+  if(z.crawl){z.vx=ux*200*(KU?1.2:1);z.vy=uy*200*(KU?1.2:1);z.state='stagger';z.t=.6;z.tilt=Math.sign(ux||1)*.5;return;}
   // flung backwards, lands flat on its back and ploughs ~3 m (24px) through the leaf litter
   z.a=Math.atan2(-uy,-ux);z.down={t:0,T:2.6+rnd()*.5,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y,sw:0};
-  z.state='down';z.vx=ux*175;z.vy=uy*175;z.tilt=0;shake=Math.max(shake,5);
+  z.state='down';z.vx=ux*(KU?KUV:175);z.vy=uy*(KU?KUV:175);z.tilt=0;shake=Math.max(shake,5);
 }
+const KUV=194;   // the speed that carries a kicked body a fifth further before it stops
 function leafBurst(x,y,ux,uy,v){const nx=-uy,ny=ux;for(let k=0;k<2;k++){const sd=rnd()<.5?-1:1,s=25+rnd()*55;
   particles.push({x:x+nx*sd*3,y:y+ny*sd*3,vx:nx*sd*s+ux*v*(.3+rnd()*.5),vy:ny*sd*s+uy*v*(.3+rnd()*.5),h:1,vh:30+rnd()*70,leaf:1,col:gray(120+rnd()*90),rot:rnd()*TAU});}}
 function autoAim(h=player){
@@ -1284,7 +1288,7 @@ function pickWood(){if(!woodNear())return false;if(player.wood>=WMAX()){toast(`$
 function woodSlow(n){return n<=0?0:n<=10?.02*n:.2+.03*(n-10);}    // 10 logs = -20 %, 20 logs = -50 %
 function dropWood(){if(!player.wood||player.throwW)return;for(const v of player.woodV){const a=rnd()*TAU,r=3+rnd()*8;woodItems.push({x:player.x+Math.cos(a)*r,y:player.y+Math.sin(a)*r,a:rnd()*TAU,v});}player.wood=0;player.woodV=[];player.woodCd=1.5;wdPlay(player.x,player.y,.45);setTimeout(()=>wdPlay(player.x,player.y,.3),90);toast('ทิ้งฟืนลงพื้น');}
 function placePile(x,y){if(!player.wood||player.throwW)return false;if(fireP&&Math.hypot(x-fireP.x,y-fireP.y)<16){toast('ใกล้กองไฟเกินไป');return false;}if(!inYard(x,y)||BM[tAt(Math.floor(x/TS),Math.floor(y/TS))]){toast('วางได้เฉพาะในเขตรั้วบ้าน');return false;}
-  const thrown=!inYard(player.x,player.y);if(thrown&&Math.hypot(x-player.x,y-player.y)>110){toast('ไกลเกินไป โยนไม่ถึง');return false;}
+  const thrown=!inYard(player.x,player.y);if(thrown&&Math.hypot(x-player.x,y-player.y)>110*(hasU('throw')?2:1)){toast('ไกลเกินไป โยนไม่ถึง');return false;}
   let p=woodPiles.find(p=>Math.hypot(p.x-x,p.y-y)<14);if(!p){p={x,y,logs:[]};woodPiles.push(p);}const n=player.wood;
   player.throwW={t:0,x:p.x,y:p.y,p,i:0,n,gap:Math.min(.09,.7/Math.max(1,n))};player.facing=Math.atan2(y-player.y,x-player.x);player.charging=false;player.autoCh=false;   // arms up, then the logs go one by one
   toast(thrown?`โยนฟืน ${n} ท่อนข้ามรั้ว!`:`วางฟืน ${n} ท่อน (กองนี้ ${p.logs.length+n})`);return true;}
@@ -1387,7 +1391,8 @@ function syncDyn(){plights=plights.filter(p=>!p.dyn);const T=performance.now()/1
    if(dropL&&dropL.on&&state!=='dying'&&state!=='dead'&&!DEMO){const d=dropL,ax=Math.cos(d.a),ay=Math.sin(d.a);plights.push({dyn:1,kind:'lamp',x:d.x,y:d.y,r:30,v:210,f:1,rays:24,seed:5});plights.push({dyn:1,kind:'lamp',x:d.x+ax*24,y:d.y+ay*24,r:62,v:195,f:1,rays:36,seed:9});}   // the headlamp lying by the body goes on lighting the ground
   for(const e of[bot,pam,praewa,subE])if(e&&e.courier&&e.courier.ph==='go'&&!e.dead)plights.push({dyn:1,kind:'lantern',x:e.x+Math.cos(e.facing)*10,y:e.y+Math.sin(e.facing)*10,r:44,v:175,f:1,rays:28,seed:e.x});
   for(const e of[player,bot,praewa,subE])if(e&&e.fireClub===2)plights.push({dyn:1,kind:'torch',x:e.x+Math.cos(e.facing)*22,y:e.y+Math.sin(e.facing)*22,r:64,v:165,f:1,rays:36,seed:7});
-  if(pam&&pam.torch>0)plights.push({dyn:1,kind:'torch',x:pam.x+Math.cos(pam.facing)*28,y:pam.y+Math.sin(pam.facing)*28,r:64,v:165,f:1,rays:36,seed:7});
+  if(pam&&pam.torch>0){const tl=hasU('pamlong')?6+52*(pam.plK||0):28;plights.push({dyn:1,kind:'torch',x:pam.x+Math.cos(pam.facing)*tl,y:pam.y+Math.sin(pam.facing)*tl,r:64,v:165,f:1,rays:36,seed:7});}
+  if(pam&&pam.flog&&pam.flog.lit&&!pam.dead)plights.push({dyn:1,kind:'torch',x:pam.x,y:pam.y,r:50,v:150,f:1,rays:28,seed:11});for(const w of flyWood)if(w.burn)plights.push({dyn:1,kind:'torch',x:w.x,y:w.y,r:56,v:165,f:1,rays:28,seed:13});
   for(const t of postTorches)plights.push({dyn:1,kind:'post',x:t.x,y:t.y,r:80,v:175*Math.min(1,t.t/2,t.age/.6),f:1,rays:40,seed:t.seed});
   if(E5&&E5.stuck&&E5.stuck.lit&&E5.stuck.fx!=null)plights.push({dyn:1,kind:'post',e5t:1,x:E5.stuck.fx,y:E5.stuck.fy,r:110,v:185*E5.stuck.fl,f:1,rays:40,seed:5});
   for(const z of zombies)if(z.burn>0)plights.push({dyn:1,kind:'burn',x:z.x,y:z.y,r:82,v:195*Math.min(1,z.burn/1.5,(z.burnMax-z.burn)/.4+.2),f:1,rays:40,seed:z.seed});}
@@ -1413,7 +1418,7 @@ function wobTick(dt){for(const b of bigBranches){const vx=b.px===undefined?0:(b.
     if(b.wv||b.wob){b.wv+=(-1700*(b.wob||0)-11*b.wv)*dt;b.wob=clamp((b.wob||0)+b.wv*dt,-3.5,3.5);if(Math.abs(b.wob)<.01&&Math.abs(b.wv)<.3){b.wob=0;b.wv=0;}}}}
 let frameN=0;
 function updatePlay(dt){if(PIN){frameN++;pinTick(dt);return;}frameN++;hungerTick(dt);tickBlk(dt);wobTick(Math.max(dt,1e-3));mournTick(dt);updateFlyWood(dt);updateDust(dt);
-  corpseTick();explTick(dt);if(!n3Active()&&!TUT&&!PRAC)gameTime+=dt;if(player.rollCd>0)player.rollCd-=dt;
+  corpseTick();explTick(dt);if(!n3Active()&&!TUT&&!PRAC&&!DAY2)gameTime+=dt;if(player.rollCd>0)player.rollCd-=dt;
   let mx=joyV.x,my=joyV.y;
   if(keys.KeyA||keys.ArrowLeft)mx-=1;if(keys.KeyD||keys.ArrowRight)mx+=1;if(keys.KeyW||keys.ArrowUp)my-=1;if(keys.KeyS||keys.ArrowDown)my+=1;
   let ml=Math.hypot(mx,my);if(ml>1){mx/=ml;my/=ml;ml=1;}
@@ -1434,7 +1439,7 @@ function updatePlay(dt){if(PIN){frameN++;pinTick(dt);return;}frameN++;hungerTick
   const spd=(player.pickS||player.throwW?0:1)*hungK(player)*64*(calm&&!(player.charging&&!player.autoCh)?2:1)*(1-woodSlow(PAMSLED()?player.wood*2/3:player.wood))*(player.snakeBite?.5:1)*(player.carry?(PAMSLED()&&player.wood?.75:hero==='pw'?.25:.5):1)*(player.grip?(hero==='pw'?.21:.42):1)*(player.drag&&hero==='pw'?.5:1)*(player.charging&&!player.autoCh?.6:1)*(player.swingT>0?.4:1)*(player.kickT>0&&!player.push?.35:1)*(player.pantT>0?1-.25*player.pantT/10:1);
   const k=Math.min(1,dt*14);player.vx+=(mx*spd-player.vx)*k;player.vy+=(my*spd-player.vy)*k;if(player.pickS)pickSTick(dt);if(player.throwW)throwTick(dt);
   if(player.fly){flyTick(dt);}
-  else if(player.rollT>0){player.rollT-=dt;const rs=80/.42;VAULT=hero==='pw';moveCircle(player,player.rollDx*rs*dt,player.rollDy*rs*dt,5);VAULT=false;if(player.rollT<=0&&hero==='pw'&&tAt(Math.floor(player.x/TS),Math.floor(player.y/TS))===TFN)player.rollT=.03;player.vx=player.rollDx*rs*.4;player.vy=player.rollDy*rs*.4;player.facing=Math.atan2(player.rollDy,player.rollDx);}
+  else if(player.rollT>0){player.rollT-=dt;const rs=80*(hasU('roll')?1.2:1)/.42;VAULT=hero==='pw';moveCircle(player,player.rollDx*rs*dt,player.rollDy*rs*dt,5);VAULT=false;if(player.rollT<=0&&hero==='pw'&&tAt(Math.floor(player.x/TS),Math.floor(player.y/TS))===TFN)player.rollT=.03;player.vx=player.rollDx*rs*.4;player.vy=player.rollDy*rs*.4;player.facing=Math.atan2(player.rollDy,player.rollDx);}
   else if(player.hopT>0){player.hopT-=dt;moveCircle(player,player.hopDx*120*dt,player.hopDy*120*dt,5);}else if(!player.hidden)moveCircle(player,player.vx*dt,player.vy*dt,5);
   const sp=Math.hypot(player.vx,player.vy);player.moveAmt=Math.min(1,sp/40);player.phase+=sp*dt*.24;
   actorTick(player,dt);
@@ -1469,9 +1474,9 @@ function updatePlay(dt){if(PIN){frameN++;pinTick(dt);return;}frameN++;hungerTick
   smellT-=dt;if(smellT<=0){smellT=14;for(const z of zombies)if(z.state==='wander'){z.state='search';z.t=12;z.lx=player.x+(rnd()-.5)*140;z.ly=player.y+(rnd()-.5)*140;}}   // they slowly sniff you out
   let nd=1e9;for(const z of zombies)if(z.aware>0)nd=Math.min(nd,Math.hypot(z.x-player.x,z.y-player.y));
   hbT-=dt;if(nd<150&&hbT<=0){sfx.heart(.25+.45*(1-nd/150));hbT=.35+nd/150*.65;}
-  dawn=gameTime>DAY_LEN-60?(gameTime-(DAY_LEN-60))/60*60:0;if(TUT){tutTick(dt);if(state!=='play')return;}
-  if(PRAC)pracTick(dt);else if(TUT){}else if(!n3Active())nightSpawns(dt);else if(N3.multi&&!waveDone){trickleT-=dt;if(trickleT<=0){trickleT=30;edgeSpawn();if(rnd()<.3)edgeSpawn();}}
-  if(!PRAC&&zombies.length===0&&waveDone&&!player.cleared&&!n3Active()){player.cleared=true;toast('กำจัดหมดแล้ว! พร้อมเมื่อไหร่กด "ไปนอน"');sfx.ready();}
+  dawn=gameTime>DAY_LEN-60?(gameTime-(DAY_LEN-60))/60*60:0;if(TUT){tutTick(dt);if(state!=='play')return;}if(DAY2)day2Tick(dt);
+  if(PRAC)pracTick(dt);else if(TUT||DAY2){}else if(!n3Active())nightSpawns(dt);else if(N3.multi&&!waveDone){trickleT-=dt;if(trickleT<=0){trickleT=30;edgeSpawn();if(rnd()<.3)edgeSpawn();}}
+  if(!PRAC&&!DAY2&&zombies.length===0&&waveDone&&!player.cleared&&!n3Active()){player.cleared=true;toast('กำจัดหมดแล้ว! พร้อมเมื่อไหร่กด "ไปนอน"');sfx.ready();}
   if(gameTime>=DAY_LEN&&!TUT){if(night!==1||dawnLeave(dt))startSleep('dawn');}
 }
 function actorTick(h,dt){
@@ -1659,7 +1664,7 @@ function updateZombies(dt){STKT+=dt;for(const z of zombies)if(z.stalk&&z.hw>0&&z
     if(z.stalk&&z.sk==='taunt'&&z.state==='chase')z.a=angLerp(z.a,Math.atan2(player.y-z.y,player.x-z.x),dt*14);   // stepping sideways, never taking its eyes off you
     z.phase+=moved*(z.crawl?.35:.22);
     bleedTick(z,dt);if(z.tilt)z.tilt*=Math.exp(-5*dt);
-    if(!hidden&&!(T===player&&player.rollT>0)&&d<(z.crawl?9:11)&&sameLv(z,T)&&!(player.grip&&heldBetween(z.x,z.y,T.x,T.y))&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down'&&!(z.stalk&&(z.sk==='flop'||z.dg)&&z.state==='chase')){if(T===player){grab(z);return;}biteBot(z);continue;}
+    if(!hidden&&!(T.rollT>0)&&d<(z.crawl?9:11)&&sameLv(z,T)&&!(player.grip&&heldBetween(z.x,z.y,T.x,T.y))&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down'&&!(z.stalk&&(z.sk==='flop'||z.dg)&&z.state==='chase')){if(T===player){grab(z);return;}biteBot(z);continue;}
     z.groan-=dt;if(z.groan<=0){z.groan=(z.aware>0?2.5:6)+rnd()*6;const dp=Math.hypot(z.x-player.x,z.y-player.y);if(dp<240)sfx.groan(.05+.3*(1-dp/240),(z.x-player.x)/220);}
   }
   for(let i=zombies.length-1;i>=0;i--){const z=zombies[i];if(z.burnDead){if(near(z,260))toast('ซอมบี้ไหม้จนเหลือแต่กระดูก');killZ(z,Math.cos(z.a),Math.sin(z.a),false);continue;}if(z.dieOnLand&&z.down&&z.down.landed)killZ(z,z.down.kx,z.down.ky,false);}
@@ -1752,7 +1757,7 @@ function updateCommon(dt){
   camX=Math.round(cam.x-vw/2+(rnd()-.5)*shake*2);camY=Math.round(cam.y*K-vh/2-12+(rnd()-.5)*shake*2);
   if(state==='win'){dawn=Math.min(150,dawn+dt*40);for(const z of zombies){z.t-=dt;if(z.t<=0){z.wa=rnd()*TAU;z.t=3;}moveCircle(z,Math.cos(z.wa)*8*dt,Math.sin(z.wa)*8*dt,5);z.phase+=dt*2;z.a=angLerp(z.a,z.wa,dt*3);}}
 }
-function makeBot(){const b={jp:hero!=='jp',x:player.x+12,y:player.y+6,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,dead:false,fall:0,fallA:0,deadT:0,lampOn:false,
+function makeBot(){const b={jp:hero==='fifa',x:player.x+12,y:player.y+6,vx:0,vy:0,facing:Math.PI/2,phase:0,moveAmt:0,hidden:false,down:false,dead:false,fall:0,fallA:0,deadT:0,lampOn:false,
   weapon:'stick',pokeT:0,pokeCd:0,hunger:0,eatT:0,charging:false,charge:0,ready:false,swingPow:0,swingReach:14,swingDur:.1,swingDir:1,nextDir:1,idleT:0,combat:0,fought:false,pantT:0,breathPh:0,breathNext:0,
   kickT:0,kickHit:0,kcd:0,kickAng:0,armOff:1.2,armHv:6,bloody:0,swingT:0,swingAng:0,pendingHit:0,cd:0,lean:0,
   say:null,sayT:5+rnd()*4,last:-1,mind:'tag',mindT:3,goal:null,scanA:0,stuck:0};lvSet(b);collide(b,4.5);lvUpd(b);return b;}
@@ -1832,13 +1837,13 @@ function stepYardBot(p,gx,gy,sp,dt){
   if(inYard(ox,oy)&&!inYard(p.x,p.y)){p.x=ox;p.y=oy;}
   const mv=Math.hypot(p.x-ox,p.y-oy);p.lw=gx!==null?sp*dt:0;p.lm=mv;if(gx!==null&&mv<sp*dt*.2){p.stuck+=dt;if(p.stuck>3){p.stuck=0;p.goal=null;p.post=null;p.safe=null;}}else p.stuck=0;
   p.moveAmt=Math.min(1,mv/dt/30);p.phase+=mv*.3;if(mv>.2)p.facing=angLerp(p.facing,Math.atan2(p.y-oy,p.x-ox),dt*8);}
-function updatePam(dt,mode){if(!pam){if(subE&&subE.role==='torch'){pam=subE;try{updatePam(dt,mode);}finally{pam=null;}}return;}
+function updatePam(dt,mode){if(!pam)return;   // nobody carries the torch in her place
   const p=pam;if(!p)return;if(p.say){p.say.t-=dt;if(p.say.t<=0)p.say=null;}
   if(p.courier&&!p.dead&&mode==='play'&&state==='play'){courierTick(p,dt);return;}
   for(let i=postTorches.length-1;i>=0;i--){const t=postTorches[i];t.t-=dt;t.age+=dt;if(t.t<=0){postTorches.splice(i,1);   // the wind blows it out
     for(let k=0;k<8;k++)sparks.push({x:t.x+(rnd()-.5)*3,y:t.y,h:15,vx:(rnd()-.5)*30+18,vy:(rnd()-.5)*8,vh:5+rnd()*20,life:.3+rnd()*.4});if(near(t,260))nz(.45,'bandpass',800,300,.2,1);}}
   p.sayT-=dt;if(p.sayT<=0&&mode!=='cut'&&!p.dead&&!n3Busy()){p.sayT=13+rnd()*10;sayAs(p,PAM_LINES[(rnd()*PAM_LINES.length)|0]);}
-  if(p.thrust>0)p.thrust-=dt;
+  if(p.thrust>0)p.thrust-=dt;if(p.slapT>0)p.slapT-=dt;p.slapCd=(p.slapCd||0)-dt;p.flCd=(p.flCd||0)-dt;p.plT=(p.plT||0)-dt;p.plK=(p.plK||0)+((p.plT>0?1:0)-(p.plK||0))*Math.min(1,dt*10);
   if(mode!=='play'||p.dead){if(mode!=='cut')p.moveAmt=0;return;}
   if(bossBot(p,dt))return;
   if(p.torch>0)p.torch-=dt;p.igCd-=dt*(p.hunger>=1?1/3:1);p.hunger=Math.min(1,p.hunger+dt/171.4);if(p.eatT>0){p.eatT-=dt;p.moveAmt=0;return;}
@@ -1846,11 +1851,32 @@ function updatePam(dt,mode){if(!pam){if(subE&&subE.role==='torch'){pam=subE;try{
     if(p.act<=0&&p.doAct){const f=p.doAct;p.doAct=null;p.breaking=false;f();}return;}
   if(fleeUp(p,dt))return;
   if(p.urge>0)p.urge-=dt;const F=fireP;let gx=null,gy=null,sp=40;
-  let tz=null,td=1e9;if(p.torch>0)for(const z of zombies){if(z.burn>0||z.dieOnLand)continue;if(!UPG()&&(z.state!=='down'||!z.down||z.down.t>z.down.T-.25))continue;   // only zombies lying on the ground (after the upgrade: any zombie)
-    const ex=clamp(z.x,home.ix0,home.ix1),ey=clamp(z.y,home.iy0,home.iy1);if(Math.hypot(z.x-ex,z.y-ey)>40)continue;const d=Math.hypot(z.x-p.x,z.y-p.y);if(d<td&&d<230){td=d;tz=z;}}
+  const PL=hasU('pamlong'),PF=hasU('pamfire');let faceA=null;
+  let tz=null,td=1e9;if(p.torch>0)for(const z of zombies){if(z.burn>0||z.dieOnLand||(PL&&(z.blind||z.emerge)))continue;if(!UPG()&&!PL&&(z.state!=='down'||!z.down||z.down.t>z.down.T-.25))continue;   // only zombies lying on the ground (after the upgrade, or with the long stick: any zombie)
+    const ex=clamp(z.x,home.ix0,home.ix1),ey=clamp(z.y,home.iy0,home.iy1);if(Math.hypot(z.x-ex,z.y-ey)>(PL?80:40))continue;const d=Math.hypot(z.x-p.x,z.y-p.y);if(d<td&&d<230){td=d;tz=z;}}
   const brT=bigBranches.find(b=>b.yard&&b!==player.drag);
-  if(tz){gx=tz.x;gy=tz.y;sp=54;
+  const fz=PF&&!tz?pamFireTarget(p):null;
+  if(tz&&PL){const a=Math.atan2(tz.y-p.y,tz.x-p.x),lying=tz.state==='down'||tz.state==='fall';faceA=a;if(td<130)p.plT=.5;   // the long stick: down onto the fence rail, then the tip does the work
+    const strike=()=>{p.facing=a;p.thrust=.4;p.act=.2;p.igCd=1.2;p.back=0;p.backT=0;const z=tz;p.doAct=()=>{if(zombies.includes(z)&&!(z.burn>0)){igniteZ(z);toast('แพมแทงไม้ไฟ เผาซอมบี้!');}};if(near(p,240))swPlay(p);if(rnd()<.5)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);};
+    if(td<40&&!lying&&p.slapCd<=0){p.facing=a;p.slapT=.34;p.act=.17;p.slapCd=1.2;const z=tz,ux=Math.cos(a),uy=Math.sin(a);if(near(p,240))swPlay(p);   // nearer than the middle of the stick: it is knocked flat first
+      p.doAct=()=>{if(!zombies.includes(z))return;z.aware=Math.max(z.aware,4);if(z.crawl){z.vx=ux*90;z.vy=uy*90;z.state='stagger';z.t=.5;}else{z.a=Math.atan2(-uy,-ux);z.down={t:0,T:2.3+rnd()*.5,kx:ux,ky:uy,sup:true,landed:false,kick:true,px:z.x,py:z.y};z.state='down';z.vx=ux*80;z.vy=uy*80;z.tilt=0;}if(near(p,260))bufPlay(htBuf,p,.5);};}
+    else if(td<46){gx=p.x-(tz.x-p.x);gy=p.y-(tz.y-p.y);sp=60;p.backT=(p.backT||0)+dt;if(p.backT>1.5&&p.igCd<=0)strike();}   // …then she steps back until the tip is what reaches it
+    else if(td<=86){p.backT=0;if(p.igCd<=0)strike();}
+    else{gx=tz.x;gy=tz.y;sp=54;}}
+  else if(tz){gx=tz.x;gy=tz.y;sp=54;
     if(td<(UPG()&&tz.state!=='down'?24:40)*(crossBetween(p.x,p.y,tz.x,tz.y)?2:1)&&p.igCd<=0){p.facing=Math.atan2(tz.y-p.y,tz.x-p.x);p.thrust=.4;p.act=.35;p.igCd=1.2;igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}}
+  else if(PF&&(p.flog||(fz&&woodPiles.reduce((n,q)=>n+(inYard(q.x,q.y)?q.logs.length:0),0)>3))){const L=p.flog;   // a log from the pile, lit, and thrown at the nearest of them out to 20 m beyond the fence
+    if(!L){let best=null,bd=1e9;for(const q of woodPiles){if(!q.logs.length||!inYard(q.x,q.y))continue;const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){bd=d;best=q;}}gx=best.x;gy=best.y+5;sp=52;
+      if(bd<14){p.flog={v:best.logs.pop(),lit:false,t:0};if(!best.logs.length&&!best.prac)woodPiles.splice(woodPiles.indexOf(best),1);p.act=.3;}}
+    else if(!L.lit){const light=()=>{if(!p.flog)return;p.flog.lit=true;for(let k=0;k<10;k++)sparks.push({x:p.x+(rnd()-.5)*5,y:p.y,h:10+rnd()*5,vx:(rnd()-.5)*24,vy:(rnd()-.5)*8,vh:14+rnd()*26,life:.35+rnd()*.4});};
+      if(p.torch>0){p.act=.45;p.doAct=light;}
+      else if(F.F>0){gx=F.x+(p.x<F.x?-16:16);gy=F.y+3;sp=52;if(Math.hypot(F.x-p.x,F.y-p.y)<22){p.facing=Math.atan2(F.y-p.y,F.x-p.x);p.act=.6;p.doAct=light;}}
+      else{woodItems.push({x:p.x,y:p.y,a:rnd()*TAU,v:L.v});p.flog=null;}}
+    else if(fz){const d=Math.hypot(fz.x-p.x,fz.y-p.y),a=Math.atan2(fz.y-p.y,fz.x-p.x);faceA=a;L.t=0;
+      if(d>260){gx=fz.x;gy=fz.y;sp=52;}
+      else if(p.flCd<=0){const Tf=.5+d/320,h0=15;p.facing=a;p.thrust=.4;p.act=.35;p.flCd=2.4;p.flog=null;
+        flyWood.push({x:p.x+Math.cos(a)*4,y:p.y+Math.sin(a)*4,h:h0,vh:(.5*260*Tf*Tf-h0)/Tf,vx:(fz.x-p.x)/Tf,vy:(fz.y-p.y)/Tf,a,av:(rnd()<.5?-1:1)*(9+rnd()*5),v:L.v,burn:{z:fz,T:Tf,t:0}});if(near(p,260))swPlay(p);if(rnd()<.4)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);}}
+    else{L.t+=dt;if(L.t>5){const q=woodPiles.find(q=>inYard(q.x,q.y));if(q)q.logs.push(L.v);else woodItems.push({x:p.x,y:p.y,a:rnd()*TAU,v:L.v});p.flog=null;}}}   // nothing left to burn: it goes back on the pile
   else if(!(p.urge>0)&&p.hunger>=.5&&food()>0&&foodSpot(p)){const fs=foodSpot(p);gx=fs.x;gy=fs.y;
     if(Math.hypot(fs.cx-p.x,fs.cy-p.y)<17){const r=eatFood(Math.max(1,Math.round(p.hunger/.5)));p.hunger=Math.max(0,p.hunger-r.got*.5);p.eatT=2.4;biteSnd(p);gx=null;sayAs(p,`กิน${r.kind} ${r.got} คำ อิ่มแล้ว`);}}
   else if(brT){gx=brT.x;gy=brT.y;sp=46;if(Math.hypot(brT.x-p.x,brT.y-p.y)<16){p.facing=Math.atan2(brT.y-p.y,brT.x-p.x);p.act=2.6;p.breaking=true;p.doAct=()=>breakBranch(brT);if(rnd()<.6)sayAs(p,'เดี๋ยวเอื้อยหักให้');}}
@@ -1862,8 +1888,10 @@ function updatePam(dt,mode){if(!pam){if(subE&&subE.role==='torch'){pam=subE;try{
     if(p.post){const q=p.post;gx=q.x;gy=q.y;const ax=clamp(q.x,home.ix0,home.ix1),ay=clamp(q.y,home.iy0,home.iy1);
       if(Math.hypot(ax-p.x,ay-p.y)<9){p.facing=Math.atan2(q.y-p.y,q.x-p.x);p.thrust=.6;p.act=.8;p.doAct=()=>{if(!postTorches.some(t=>t.spot===q)&&postTorches.length<4){postTorches.push({spot:q,x:q.x,y:q.y,t:10+rnd()*25,age:0,seed:rnd()*100});tn('sine',300,600,.08,.2);nz(.3,'bandpass',700,1500,.15,1);}p.post=null;};}}}
   else{if(!p.goal||Math.hypot(p.goal.x-p.x,p.goal.y-p.y)<6||rnd()<dt*.15)p.goal={x:home.ix0+rnd()*(home.ix1-home.ix0),y:home.iy0+rnd()*(home.iy1-home.iy0)};gx=p.goal.x;gy=p.goal.y;sp=20;}
-  stepYardBot(p,gx,gy,p.urge>0?sp*1.5:sp,dt);
+  {const f0=p.facing;stepYardBot(p,gx,gy,p.urge>0?sp*1.5:sp,dt);if(faceA!=null)p.facing=angLerp(f0,faceA,dt*12);}   // she keeps her eyes (and the stick) on it even while stepping back
 }
+function pamFireTarget(p){let b=null,bd=1e9;const RF=PFR-14;for(const z of zombies){if(z.burn>0||z.dieOnLand||z.blind||z.emerge||z.burnDead)continue;const rf=Math.hypot(z.x-home.cx,z.y-home.cy)-RF;if(rf<0||rf>160)continue;   // out to 20 m beyond the fence
+    if(flyWood.some(w=>w.burn&&w.burn.z===z))continue;const d=Math.hypot(z.x-p.x,z.y-p.y);if(d<bd){bd=d;b=z;}}return b;}
 function growBranches(){bigBranches=bigBranches.filter(b=>b.yard||b===player?.drag);flyWood=[];   // a fresh fall of branches every night
   for(let n=0;n<800&&bigBranches.filter(b=>!b.yard).length<(PRAC?3:18);n++){const t=outdoor[(rnd()*outdoor.length)|0],x=(t%MW)*TS+8,y=((t/MW)|0)*TS+8;if(tiles[t]===TT||Math.hypot(x-home.cx,y-home.cy)<110)continue;if(bigBranches.some(b=>Math.hypot(b.x-x,b.y-y)<90))continue;if(player&&Math.hypot(player.x-x,player.y-y)<40)continue;const nb=makeBig(x,y);if(branchBlocked(nb))continue;bigBranches.push(nb);}}
 function smashSafe(h){for(const z of zombies){if(z.dieOnLand)continue;if(Math.hypot(z.x-h.x,z.y-h.y)<130)return false;}   // only once there is nothing close by that wants you
@@ -1891,9 +1919,13 @@ function bigDamage(b,amt,ux,uy,pow,byZ){b.dmg=(b.dmg||0)+amt;b.shk=.3;b.shkA=.9;
 let flyWood=[],dusts=[];
 function dustPuff(x,y,n,ux=0,uy=0){for(let k=0;k<n;k++){const a=rnd()*TAU,sp=6+rnd()*22;dusts.push({x,y,h:1+rnd()*4,vx:Math.cos(a)*sp+ux*14,vy:Math.sin(a)*sp*.6+uy*8,vh:6+rnd()*14,r:1.2+rnd()*1.6,t:0,T:.7+rnd()*.8,g:150+rnd()*60|0});}}
 function updateDust(dt){for(let i=dusts.length-1;i>=0;i--){const d=dusts[i];d.t+=dt;if(d.t>=d.T){dusts.splice(i,1);continue;}const f=Math.exp(-3*dt);d.vx*=f;d.vy*=f;d.vh*=f;d.x+=d.vx*dt;d.y+=d.vy*dt;d.h+=d.vh*dt;d.r+=dt*3.2;}}
-function updateFlyWood(dt){for(let i=flyWood.length-1;i>=0;i--){const w=flyWood[i];w.vh-=260*dt;w.h+=w.vh*dt;w.a+=w.av*dt;const nx=w.x+w.vx*dt,ny=w.y+w.vy*dt;if(w.pile||w.fire||!BM[tAt(Math.floor(nx/TS),Math.floor(ny/TS))]||w.h>14){w.x=nx;w.y=ny;}else{w.vx*=-.3;w.vy*=-.3;}
+function updateFlyWood(dt){for(let i=flyWood.length-1;i>=0;i--){const w=flyWood[i];w.vh-=260*dt;w.h+=w.vh*dt;w.a+=w.av*dt;
+  if(w.burn){const B=w.burn;B.t+=dt;const rem=Math.max(.06,B.T-B.t);if(zombies.includes(B.z)){w.vx=(B.z.x-w.x)/rem;w.vy=(B.z.y-w.y)/rem;}if(rnd()<dt*40)sparks.push({x:w.x+(rnd()-.5)*3,y:w.y,h:w.h+2,vx:(rnd()-.5)*14,vy:(rnd()-.5)*6,vh:6+rnd()*18,life:.25+rnd()*.35});}
+  const nx=w.x+w.vx*dt,ny=w.y+w.vy*dt;if(w.pile||w.fire||w.burn||!BM[tAt(Math.floor(nx/TS),Math.floor(ny/TS))]||w.h>14){w.x=nx;w.y=ny;}else{w.vx*=-.3;w.vy*=-.3;}
   if(w.h<=0){w.h=0;
     if(overWater(w.x,w.y)){ripAdd(w.x,w.y,1.2);flyWood.splice(i,1);continue;}
+    if(w.burn){flyWood.splice(i,1);let hit=null,hd=20;for(const z of zombies){if(z.burn>0||z.dieOnLand)continue;const d=Math.hypot(z.x-w.x,z.y-w.y);if(d<hd){hd=d;hit=z;}}
+      if(hit){igniteZ(hit);if(near(w,320))toast('แพมโยนฟืนติดไฟใส่ซอมบี้!');}wdPlay(w.x,w.y,.4);for(let k=0;k<14;k++)sparks.push({x:w.x+(rnd()-.5)*6,y:w.y+(rnd()-.5)*4,h:3,vx:(rnd()-.5)*40,vy:(rnd()-.5)*18,vh:20+rnd()*40,life:.4+rnd()*.5});woodItems.push({x:w.x,y:w.y,a:w.a,v:w.v});continue;}
     if(w.fire){flyWood.splice(i,1);addLog();wdPlay(w.x,w.y,.3);continue;}
     if(w.pile){flyWood.splice(i,1);let p=w.pile;if(!woodPiles.includes(p)){p=woodPiles.find(q=>Math.hypot(q.x-w.x,q.y-w.y)<14)||{x:p.x,y:p.y,logs:[]};if(!woodPiles.includes(p))woodPiles.push(p);}p.logs.push(w.v);wdPlay(w.x,w.y,.42);dustPuff(w.x,w.y,2);continue;}   // thrown onto the pile
     if(w.vh<-45&&(w.b||0)<3){w.b=(w.b||0)+1;w.vh*=-.42;w.vx*=.55;w.vy*=.55;w.av*=.6;wdPlay(w.x,w.y,.5/w.b);}else{flyWood.splice(i,1);woodItems.push({x:w.x,y:w.y,a:w.a,v:w.v});wdPlay(w.x,w.y,.12);}}}}
@@ -1914,7 +1946,7 @@ function drawPostTorch(c,t,T,lp){const x=t.x-camX,y=t.y*K-camY;c.lineCap='round'
 function drawLantern(c,x,y,mono,T){c.strokeStyle=mono||'#1c1c1c';c.lineWidth=.7;c.beginPath();c.arc(x,y-2.6,1.3,Math.PI,TAU);c.stroke();
   c.fillStyle=mono||'#2a2a2a';c.fillRect(x-1.5,y-2.6,3,.8);c.fillRect(x-1.5,y+1.4,3,.8);
   c.fillStyle=mono?'#fff':'#f3ece0';c.fillRect(x-1.2,y-1.8,2.4,3.2);if(!mono){c.fillStyle='rgb(230,196,60)';c.fillRect(x-.4,y-.9,.8,1.4);}}
-function updatePraewa(dt,mode){if(!praewa){if(subE&&subE.role==='fire'){praewa=subE;try{updatePraewa(dt,mode);}finally{praewa=null;}}return;}
+function updatePraewa(dt,mode){if(!praewa)return;   // nobody keeps the fire in her place: feeding it is everybody's job (hungerTick)
   const p=praewa;if(!p)return;if(p.say){p.say.t-=dt;if(p.say.t<=0)p.say=null;}
   if(p.courier&&!p.dead&&mode==='play'&&state==='play'){courierTick(p,dt);return;}
   p.sayT-=dt;if(p.sayT<=0&&mode!=='cut'&&!n3Busy()){p.sayT=9+rnd()*9;if(p.hunger>=1&&food()===0)sayAs(p,PW_HUNGRY[(rnd()*PW_HUNGRY.length)|0]);else sayAs(p,PW_LINES[(rnd()*PW_LINES.length)|0]);}
@@ -1946,8 +1978,57 @@ function updatePraewa(dt,mode){if(!praewa){if(subE&&subE.role==='fire'){praewa=s
     gx=p.goal.x;gy=p.goal.y;sp=22;if(Math.hypot(gx-p.x,gy-p.y)<6)gx=null;}
   stepYardBot(p,gx,gy,p.urge>0?sp*1.6:sp,dt);if(p.moveAmt<.05&&p.eatT>0)p.facing=angLerp(p.facing,Math.atan2(postPos.y-p.y,postPos.x-p.x),dt*6);
 }
-function updateBot(dt,mode){
-  const b=bot;if(!b)return;if(b.courier&&!b.dead&&mode==='play'&&state==='play'){if(b.say){b.say.t-=dt;if(b.say.t<=0)b.say=null;}courierTick(b,dt);return;}if(b.say){b.say.t-=dt;if(b.say.t<=0)b.say=null;}
+/* ---- ฟีฟ่า as a companion: out through the gate to cut them down with the knife in his hand, a kick for the one that gets too close, a roll when he is crowded —
+   never further than 10 m beyond the fence, and home to eat by himself once he is down to 30 % ---- */
+const FLEASH=80;
+function fifaFree(b,dx,dy,D){const hx=home.cx,hy=home.cy,ex=b.x+dx*D,ey=b.y+dy*D;if(Math.hypot(ex-hx,ey-hy)>PFR+FLEASH-2)return -1;   // how clear the ground is D px that way: -1 = he may not go there
+  for(const k of[.5,1]){const t=tAt(Math.floor((b.x+dx*D*k)/TS),Math.floor((b.y+dy*D*k)/TS));if(BM[t]||t===TT)return -1;}
+  let m=1e9;for(const z of zombies){if(z.state==='down'||z.dieOnLand||z.blind)continue;m=Math.min(m,Math.hypot(z.x-ex,z.y-ey));}return Math.min(m,110);}
+function fifaAway(b,ax,ay,D){let l=Math.hypot(ax,ay)||1;ax/=l;ay/=l;let best=null,bs=-1e9;   // the best way out, starting from "straight away from them" and fanning round
+  for(const t of[0,.7,-.7,1.4,-1.4,2.1,-2.1,2.8]){const c=Math.cos(t),s=Math.sin(t),dx=ax*c-ay*s,dy=ax*s+ay*c,f=fifaFree(b,dx,dy,D);if(f<0)continue;const sc=f-Math.abs(t)*7;if(sc>bs){bs=sc;best=[dx,dy];}}
+  if(!best){const d=Math.hypot(home.cx-b.x,home.cy-b.y)||1;best=[(home.cx-b.x)/d,(home.cy-b.y)/d];}return best;}
+function fifaRoll(b,ax,ay){const d=fifaAway(b,ax,ay,80);b.rollDx=d[0];b.rollDy=d[1];b.rollT=.42;b.rollCd=.85;b.charging=false;b.swingT=0;b.kickT=0;b.kdash=null;b.pendingHit=0;b.hunger=Math.min(1,(b.hunger||0)+.005);if(near(b,240))swPlay(b);}
+function fifaBot(b,dt){
+  if(TUT||DAY2){b.rollT=0;return false;}
+  const hx=home.cx,hy=home.cy,LR=PFR+FLEASH,inY=inYard(b.x,b.y),g=gatePos(),o=gateOut(),post={x:g.x-o.x*26,y:g.y-o.y*26};
+  {const h0=hitter,sh0=shake;hitter=b;actorTick(b,dt);hitter=h0;if(!near(b,240))shake=sh0;}   // his stroke, his kick, the blow landing
+  b.rollCd=(b.rollCd||0)-dt;b.atkCd=(b.atkCd||0)-dt*(b.hunger>=1?1/3:1);
+  if(b.rollT>0){b.rollT-=dt;const rs=80/.42,ox=b.x,oy=b.y;moveCircle(b,b.rollDx*rs*dt,b.rollDy*rs*dt,4.5);if(Math.hypot(b.x-hx,b.y-hy)>LR){b.x=ox;b.y=oy;}b.vx=b.vy=0;b.moveAmt=1;b.phase+=dt*20;b.facing=Math.atan2(b.rollDy,b.rollDx);return true;}
+  let tz=null,ts=1e9,nz=null,nd=1e9,crowd=0,mob=0,cx=0,cy=0,mx=0,my=0;
+  for(const z of zombies){if(z.dieOnLand||z.blind||z.emerge||z.burnDead||['eatB','convB','eatC'].includes(z.state))continue;const d=Math.hypot(z.x-b.x,z.y-b.y),live=z.state!=='down'&&z.state!=='fall';
+    if(live&&sameLv(z,b)){if(d<nd){nd=d;nz=z;}if(d<30){crowd++;cx+=z.x;cy+=z.y;}if(d<70){mob++;mx+=z.x;my+=z.y;}}
+    if(Math.hypot(z.x-hx,z.y-hy)>LR+24)continue;const sc=d+(live?0:30)+(z.burn>0?60:0);if(sc<ts){ts=sc;tz=z;}}
+  const hungry=b.hunger>=.7&&food()>0&&!!foodSpot(b),home2=hungry||fireOut||mob>=4;
+  if(!tz&&(!nz||nd>90)&&inY)return false;   // nothing on his ground and he is home: the ordinary yard life (and the banana post)
+  if((hungry||b.eatT>0)&&inY&&nd>60)return false;   // at the banana post: he finishes his mouthful first
+  if(b.eatT>0)b.eatT-=dt;b.combat=2;b.fought=true;b.pantT=0;const busy=b.kickT>0||b.swingT>0;
+  // too close for the knife: out of there if it is on him, a kick if there is just the one, a roll if he is crowded
+  if(nz&&nd<14&&b.rollCd<=0&&(busy||crowd>1||b.kcd>0)){fifaRoll(b,b.x-(crowd?cx/crowd:nz.x),b.y-(crowd?cy/crowd:nz.y));return true;}
+  if(nz&&nd<17&&!busy){const a=Math.atan2(nz.y-b.y,nz.x-b.x);
+    if(crowd<=1&&b.kcd<=0){b.facing=a;kick(b);if(b.kdash){b.kdash.ux=Math.cos(a);b.kdash.uy=Math.sin(a);b.kdash.d=clamp(nd-13,0,6);}b.kickAng=a;}
+    else if(b.rollCd<=0){fifaRoll(b,b.x-(crowd?cx/crowd:nz.x),b.y-(crowd?cy/crowd:nz.y));return true;}}
+  else if(crowd>=2&&nd<24&&b.rollCd<=0&&!(b.kickT>0)){fifaRoll(b,b.x-cx/crowd,b.y-cy/crowd);return true;}
+  // the knife: whatever is in reach, three strokes a second — a hand, not a second you
+  const at=nz&&nd<38?nz:tz;
+  if(at&&b.atkCd<=0&&!(b.kickT>0)&&!(b.kcd>.4)){const d=Math.hypot(at.x-b.x,at.y-b.y),R=33*(crossBetween(b.x,b.y,at.x,at.y)?2:1);
+    if(d<=R&&sameLv(at,b)&&los(b.x,b.y,at.x,at.y)){const a=Math.atan2(at.y-b.y,at.x-b.x);b.swingT=0;b.cd=0;b.charging=true;b.charge=.62;b.tap=true;release(a,b);b.tap=false;b.atkCd=.34;}}
+  // footwork
+  let gx=null,gy=null,sp=72,face=at?Math.atan2(at.y-b.y,at.x-b.x):null,kite=false;
+  if(home2){if(!inY){gx=post.x;gy=post.y;sp=80;}else if(nz&&nd<30){gx=b.x-(nz.x-b.x);gy=b.y-(nz.y-b.y);sp=62;}else if(Math.hypot(post.x-b.x,post.y-b.y)>50){gx=post.x;gy=post.y;}}   // hungry, the fire out, or a pack of them round him: back inside the gate, still cutting at whatever comes in reach
+  else if(tz){const d=Math.hypot(tz.x-b.x,tz.y-b.y),live=tz.state!=='down'&&tz.state!=='fall',want=live?27:19;
+    if(nz&&nz!==tz&&nd<24){gx=b.x-(nz.x-b.x);gy=b.y-(nz.y-b.y);sp=64;}   // another one is at his elbow: give ground first
+    else if(d>want+4){gx=tz.x;gy=tz.y;const zr=Math.hypot(gx-hx,gy-hy);if(zr>LR-3){gx=hx+(gx-hx)/zr*(LR-3);gy=hy+(gy-hy)/zr*(LR-3);}}
+    else if(live&&d<want-6){gx=b.x-(tz.x-b.x);gy=b.y-(tz.y-b.y);sp=58;}}
+  else if(!inY){gx=post.x;gy=post.y;sp=64;face=null;}   // all quiet: back in through the gate
+  sp*=(b.swingT>0&&!kite?.55:1)*(b.kickT>0?.3:1)*(b.eatT>0?1:hungK(b));
+  if(gx!==null){const ox=b.x,oy=b.y;if(!kite&&Math.hypot(gx-b.x,gy-b.y)>10&&!walkClear(b.x,b.y,gx,gy,b))followPath(b,gx,gy,sp,dt);else walkTo(b,gx,gy,sp,dt,null);
+    if(Math.hypot(b.x-hx,b.y-hy)>LR){b.x=ox;b.y=oy;}b.vx=(b.x-ox)/Math.max(dt,1e-3);b.vy=(b.y-oy)/Math.max(dt,1e-3);}
+  else{b.moveAmt=0;b.vx=b.vy=0;}
+  if(face!=null&&!(b.swingT>0)&&!(b.kickT>0))b.facing=angLerp(b.facing,face,dt*12);
+  return true;}
+function updateBot(dt,mode){updateBot0(dt,mode);const q=subE;if(q&&!q.role){const b0=bot;bot=q;try{updateBot0(dt,mode);}finally{bot=b0;}}}   // the fourth sibling lives by the same rules
+function updateBot0(dt,mode){
+  const b=bot;if(!b)return;if(b.rollT>0&&(b.jp||mode!=='play')&&!b.courier)b.rollT=0;if(b.courier&&!b.dead&&mode==='play'&&state==='play'){if(b.say){b.say.t-=dt;if(b.say.t<=0)b.say=null;}courierTick(b,dt);return;}if(b.say){b.say.t-=dt;if(b.say.t<=0)b.say=null;}
   if(b.dead){b.deadT+=dt;b.fall=Math.min(1,b.deadT/.35);const d=b.lampDrop;if(d){d.a+=d.av*dt;d.av*=Math.exp(-2.2*dt);}
     if(b.deadT<14&&rnd()<dt*9){const r=3+Math.min(18,b.deadT*3),an=rnd()*TAU,rr=rnd()*r;bakeSplat(b.x+Math.cos(an)*rr,b.y+Math.sin(an)*rr,1.5+rnd()*3);}return;}
   b.sayT-=dt;if(b.sayT<=0&&mode!=='sleep'&&mode!=='hold'&&!n3Busy())botSay();
@@ -1955,18 +2036,18 @@ function updateBot(dt,mode){
   b.hunger=Math.min(1,b.hunger+dt/171.4);if(b.hunger>=1&&food()===0&&rnd()<dt*.08&&!b.say)botSay(5);
   if(mode==='dead'||mode==='hold'){if(mode==='dead')b.moveAmt=0;return;}
   if(mode!=='play'){   // cutscene: go to bed with you
-    const dx=player.x+10-b.x,dy=player.y+6-b.y,d=Math.hypot(dx,dy);if(d>300){b.x=player.x+10;b.y=player.y+6;collide(b,4.5);}
+    const sx0=b.sub?-10:10,dx=player.x+sx0-b.x,dy=player.y+6-b.y,d=Math.hypot(dx,dy);if(d>300){b.x=player.x+sx0;b.y=player.y+6;collide(b,4.5);}
     if(d>8){let mx=dx/d,my=dy/d;if(d>30&&!los(b.x,b.y,player.x,player.y)){const ft=flowTarget(b);if(ft){const ex=ft[0]-b.x,ey=ft[1]-b.y,el=Math.hypot(ex,ey)||1;mx=ex/el;my=ey/el;}}
       const v=Math.min(80,d*4);moveCircle(b,mx*v*dt,my*v*dt,4.5);b.moveAmt=Math.min(1,v/40);b.phase+=v*dt*.24;b.facing=angLerp(b.facing,Math.atan2(my,mx),dt*8);}else b.moveAmt=0;
     return;}
   if(bossBot(b,dt))return;
-  b.weapon=UPG()&&!b.jp?'knife':'stick';if(b.swingT>0)b.swingT-=dt;
+  b.weapon=b.jp?'stick':'knife';if(!b.jp&&fifaBot(b,dt))return;if(b.swingT>0)b.swingT-=dt;   // the long stick is แจ็คพอท's alone
   if(b.pantT>0){b.pantT=Math.max(0,b.pantT-dt);b.breathPh+=dt*TAU*(.35+1.4*b.pantT/10);}
   if(b.combat>0){b.combat-=dt;if(b.combat<=0&&b.fought){b.fought=false;b.pantT=10;}}
   // he never leaves the yard: guard the fence & gate and push zombies away with the branch
   if(!inYard(b.x,b.y)){const tx=home.hs.di*TS+8,ty=home.hs.dj*TS+8;b.goal={x:tx,y:ty+12};}
   if(b.urge>0)b.urge-=dt;const ur=b.urge>0;
-  let tz=null,td=1e9;for(const z of zombies){if(z.dieOnLand||z.state==='eatB')continue;if(fireOut&&!ur)break;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d>(ur?190:110))continue;   // fire out: blind, can't fend anything off
+  let tz=null,td=1e9;for(const z of zombies){if(!b.jp)break;if(z.dieOnLand||z.state==='eatB')continue;if(fireOut&&!ur)break;const d=Math.hypot(z.x-b.x,z.y-b.y);if(d>(ur?190:110))continue;   // fire out: blind, can't fend anything off
     if(!(ur||z.litBy===b||d<60||z.aware>0)||!los(b.x,b.y,z.x,z.y))continue;const dz=d-((z.state==='windup'||z.state==='lunge')&&d<70?40:0);if(dz<td){td=dz;tz=z;}}
   if(tz)td=Math.hypot(tz.x-b.x,tz.y-b.y);
   let gx=null,gy=null,sp=56,face=null;
@@ -2058,6 +2139,7 @@ function nextNight(){
   if(bot){bot.x=player.x+10;bot.y=player.y+4;lvSet(bot);collide(bot,4.5);bot.goal=null;bot.pantT=0;botSay(rnd()<.5?5:3);}
   if(praewa){praewa.carryLog=-1;praewa.goal=null;}if(pam){pam.goal=null;pam.post=null;pam.act=0;}postTorches=[];spawnSnakes(6);player.snakeBite=null;fireP.F=Math.max(fireP.F,60);fireOut=false;scatterWood(40);
   if(isBossNight(night)){saveCkpt();nightCk=ckpt;startBossNight(night);}else{spawnNight();nightCk=makeSnap();}
+  if(night===2&&!PRAC){UPT+=2;UPACK=true;day2Start();}   // night 1 is behind you: two upgrade points, and the next afternoon to spend them in
 }
 function win(){state='win';player.charging=false;for(const z of zombies){z.state='wander';z.aware=0;}setTimeout(()=>showEnd(true),1800);}
 
@@ -2353,12 +2435,13 @@ function npcs(){return[bot&&!bot.dead?bot:null,praewa,pam&&!pam.dead?pam:null,su
 /* ---- stand-ins: when แพรวา (keeps the fire) or แพม (lights the torches) is the one being played, the character left off the field takes over that job, in their own voice;
    whoever's job it is gets it back the moment they are a bot again */
 let subE=null;
-function syncSub(x,y){const role=hero==='pw'?'fire':hero==='pam'?'torch':null;if(!role){subE=null;return;}
+function syncSub(x,y){if(hero!=='pw'&&hero!=='pam'){subE=null;return;}   // only when a sister is the one being played is there a fourth person on the field
   const have=new Set([hero]);if(bot)have.add(bot.jp?'jp':'fifa');if(praewa)have.add('pw');if(pam)have.add('pam');
-  const who=['fifa','jp','pw','pam'].find(c=>!have.has(c)&&!DEADS.has(c));if(!who){subE=null;return;}
-  if(subE&&subE.who===who&&subE.role===role)return;
-  const e=role==='fire'?makePraewa():makePam();if(subE){e.x=subE.x;e.y=subE.y;e.dead=subE.dead;if(subE.courier&&subE.who===who)e.courier=subE.courier;}else if(x!=null){e.x=x;e.y=y;}
-  e.pw=false;e.pm=false;e.jp=who==='jp';e.who=who;e.sub=true;e.role=role;e.weapon='stick';e.torch=0;lvSet(e);subE=e;}
+  const who=['fifa','jp'].find(c=>!have.has(c)&&!DEADS.has(c));if(!who){subE=null;return;}
+  if(!(subE&&subE.who===who&&!subE.role)){const e=makeBot(),hs=home.hs;e.x=(hs.x+1)*TS+10;e.y=(hs.y+hs.h)*TS+14;if(!inYard(e.x,e.y)){e.x=home.cx;e.y=home.cy+TS*4;}
+    if(subE){e.x=subE.x;e.y=subE.y;e.dead=subE.dead;if(subE.courier&&subE.who===who)e.courier=subE.courier;}else if(x!=null){e.x=x;e.y=y;}
+    e.jp=who==='jp';e.who=who;e.sub=true;e.role=null;e.weapon=e.jp?'stick':'knife';lvSet(e);subE=e;}
+  if(subE.who==='fifa'&&bot&&bot.jp&&!bot.dead&&!subE.dead){const f=subE,jq=bot;f.sub=false;f.who=null;f.jp=false;jq.sub=true;jq.who='jp';jq.jp=true;jq.role=null;bot=f;subE=jq;}}   // ฟีฟ่า is the one who goes out to fight, so he is always the companion the zombies can reach
 const SUBN={fifa:'ฟีฟ่า',jp:'แจคพอท'};
 function subVoice(e,t){const jp=e.who==='jp',me=jp?(hero==='pw'?'อ้าย':'พอท'):'อ้าย',end=jp?'คับ':'เด้อ';
   const M={'ไฟลุกแล้ว~':'ไฟลุกแล้ว'+end,'เติมฟืนแล้วค่า':me+'เติมฟืนแล้ว'+end,'นู้นๆ ตรงนู้นนนนน':'ฟืนหมดกองแล้ว ไผไปหาแหน่','เคียวหนูคมนะ!':me+'บ่ย้านดอก!','อย่ามาใกล้!!':'อย่าเข้ามา!!',
@@ -2496,7 +2579,16 @@ function n6Begin(){const C=N3;if(!C||C.step!=='n6')return;for(const e of[player,
   const st=stations();npcs().forEach((e,i)=>{e.station=st[i%st.length];e.goal=null;e.say=null;});
   toast('คืนที่ 6 — กระสือ 2 ตัว!! ฆ่าให้ครบ 2 ตัวถึงจะผ่าน');setTimeout(()=>{if(N3&&N3.multi)toast('ซอมบี้ยังทยอยมาทุก 30 วินาที');},2600);sfx.screech(0);shake=Math.max(shake,4);}
 /* ---------- prologue before night 1: แพรวา's dream (three skippable cutscenes), then the daytime lessons ---------- */
-let TUT=null,DAYK=0;   // DAYK: 0 = the 3-bit night look, 1 = the 8-bit colour daytime
+let TUT=null,DAYK=0,DAY2=null,UPT=0,UCARDS=[],UPS=null,UPACK=false;const hasU=k=>UCARDS.includes(k);   // DAY2: the afternoon after night 1 · UPT: upgrade points left · UCARDS: cards held
+const DAY2_SAY=['ตื่นโคตรสาย','จะค่ำอีกแล้วเนี่ย','เมื่อคืนมีใครเจ็บไหม','ไฟฉายยังใช้ได้ไหม','มีใครหิวบ่?'];
+function day2Start(){DAY2={cm:0,cd:1.6,q:null,n:0};DAYK=1;dawn=215;gameTime=0;waveDone=false;waveNow=false;waveExtra=0;toasts=[];}
+function day2Tick(dt){const D=DAY2,P=player;D.cm+=dt*2;   // 15:00 → 18:00 at the night's own pace: a minute and a half
+  if(D.cm>=180){DAY2=null;DAYK=0;dawn=0;gameTime=0;spawnNight();nightCard();return;}
+  const cm=D.cm;dawn=cm<120?215:Math.max(0,215*(1-(cm-120)/60));DAYK=cm<135?1:Math.max(0,1-(cm-135)/35);   // 17:00 → 18:00: the light drains away
+  if(!D.q){const L=DAY2_SAY.filter(t=>t!=='เมื่อคืนมีใครเจ็บไหม'||(!DEADS.size&&npcs().length>=3));for(let i=L.length-1;i>0;i--){const j=(rnd()*(i+1))|0;[L[i],L[j]]=[L[j],L[i]];}D.q=['ตื่นกันยังทุกคน',...L];}
+  D.cd-=dt;if(D.cd>0||!D.q.length)return;const L=npcs().filter(e=>!e.dead&&!e.down),nr=L.filter(e=>Math.hypot(e.x-P.x,e.y-P.y)<46);if(!nr.length||P.say||L.some(e=>e.say))return;   // you walk past one of them: somebody says the next thing
+  const who=[P,...L.filter(e=>Math.hypot(e.x-P.x,e.y-P.y)<110)],e=who[(rnd()*who.length)|0],t=D.q.shift();if(e===P)P.say={text:t,t:3.2};else{e.say={text:t,t:3.2};e.sayT=Math.max(e.sayT||0,6);}D.cd=3.4+rnd()*1.6;}
+   // DAYK: 0 = the 3-bit night look, 1 = the 8-bit colour daytime
 function proCine(){state='n3cine';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.swingT=0;player.kickT=0;player.vx=player.vy=0;if(player.drag)toggleDrag();}
 function proReset(h){const C=N3,dk=DAYK;restoreSnap({...nightCk,hero:h});zombies.length=0;N3=C;DAYK=dk;}
 function proSay(e,t,d){if(e)e.say={text:t,t:d||2.6};}
@@ -2761,7 +2853,7 @@ function tutUI(s){if(tutSkipOn()){const b=tutSkipBox();u.fillStyle=BG;u.fillRect
     case 'z1':{const z=T.z;if(z){arrow(z.x,z.y,null,.4);const d=Math.hypot(z.x-player.x,z.y-player.y),R=(W(player).kmax||35);if(d<=R*(crossBetween(player.x,player.y,z.x,z.y)?2:1)+3)ring(fireB);}break;}
     case 'roll':ring(BT('roll'));break;
     case 'kick':if(!T.kicked)ring(BT('kick'));break;}}
-function clockStr(){let m;if(TUT)m=15*60+Math.floor(TUT.cm);else{const gm=Math.min(DAY_LEN,gameTime);if(night===2)m=18*60+Math.floor(gm*2);else if(night!==1)m=Math.floor(gm);else m=gm<=WAVE_AT?19*60+Math.floor(gm*2):5*60+Math.floor(gm-WAVE_AT);}   // night 1 runs 19:00 → 05:00 → 06:00
+function clockStr(){let m;if(TUT)m=15*60+Math.floor(TUT.cm);else if(DAY2)m=15*60+Math.floor(DAY2.cm);else{const gm=Math.min(DAY_LEN,gameTime);if(night===2)m=18*60+Math.floor(gm*2);else if(night!==1)m=Math.floor(gm);else m=gm<=WAVE_AT?19*60+Math.floor(gm*2):5*60+Math.floor(gm-WAVE_AT);}   // night 1 runs 19:00 → 05:00 → 06:00
   const hh=Math.floor(m/60)%24,mm=m%60;return(hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;}
 /* ---- 06:00 on night 1: it gets light, they go blind and wander off the map ---- */
 function dawnLeave(dt){const P=player,L=P.leave||(P.leave={t:0});if(!L.t){for(const z of zombies){z.blind=true;z.aware=0;z.slam=null;if(z.state!=='down'&&z.state!=='fall')z.state='wander';}}
@@ -4391,11 +4483,18 @@ function drawP(c,T,mono,h=player){
   if(HL){c.strokeStyle=M('#111');c.lineWidth=.8;c.beginPath();c.ellipse(hcx,heY-1,2.8,.9,0,0,TAU);c.stroke();}
   if(HL&&sa>-.6){c.fillStyle=(h.hl||lampOf(h))&&!h.hidden?'#fff':M('#777');c.fillRect(hcx+ca*2-1,heY-2+sa*.5,2,1.6);}
   if(PM&&!h.hold){const th=h.thrust>0?Math.sin(clamp(1-h.thrust/.4,0,1)*Math.PI):0,tx2=fx+fwx*(1.5+6*th)+px*4.6,ty2=shY+4+fwy*(1.5+6*th)-2*th;   // torch in the right hand
-    if(h!==player){c.strokeStyle=M('#8c8c8c');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(tx2,ty2);c.stroke();
+    if(h!==player&&hasU('pamlong')){const k=h.plK||0,u=h.thrust>0?clamp(1-h.thrust/.4,0,1):-1,tq=u<0?0:u<.2?-(u/.2):u<.42?-1+2*((u-.2)/.22):Math.max(0,1-(u-.42)/.58),us=h.slapT>0?clamp(1-h.slapT/.34,0,1):-1,el=us<0?0:us<.3?us/.3*.95:us<.55?.95-(us-.3)/.25*1.2:-.25*(1-(us-.55)/.45),fl=Math.hypot(fwx,fwy)||1;   // drawn back in a blink, driven out, recovered · the slap: up over the shoulder and down flat on its head
+      const hx2=fx+fwx*(2+9*tq*k)+px*4.6,hy2=shY+4+3.5*k+fwy*(2+9*tq*k);let dx2=fwx*k,dy2=-(1-k)+(fwy-.07)*k;{const l2=Math.hypot(dx2,dy2)||1,len=1-(1-fl)*k;dx2*=len/l2;dy2*=len/l2;}if(el){const ce=Math.cos(el);dx2*=ce;dy2=dy2*ce-Math.sin(el);}
+      const LS=76,bx2=hx2-dx2*14,by2=hy2-dy2*14,tipx=hx2+dx2*(LS-14),tipy=hy2+dy2*(LS-14),sx=x=>OL_PASS?fx+(x-fx)*.88:x,sy=y=>OL_PASS?fy+(y-fy)*.88:y,ops=[[sx(bx2),sy(by2),sx(tipx),sy(tipy),1.1,'#2a2018'],[sx(bx2),sy(by2),sx(tipx),sy(tipy),.65,'#6a5642']];   // twice the length, half the thickness
+      c.strokeStyle=M('#8c8c8c');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(hx2,hy2);c.stroke();
+      if(OL_PASS)h._stk=ops;else for(const o of ops){c.strokeStyle=M(o[5]);c.lineWidth=o[4];c.beginPath();c.moveTo(o[0],o[1]);c.lineTo(o[2],o[3]);c.stroke();}
+      c.fillStyle=M('#1c1c1c');c.fillRect(tipx-.7,tipy-.7,1.4,1.4);if(h.torch>0)flames(c,tipx,tipy+.5,3,1,7,performance.now()/1000,3,!!mono,1.3);}
+    else if(h!==player){c.strokeStyle=M('#8c8c8c');c.lineWidth=1.5;c.beginPath();c.moveTo(shRx,shRy);c.lineTo(tx2,ty2);c.stroke();
     const tipx=tx2+fwx*(28+6*th)+px*2,tipy=ty2-12+fwy*(28+6*th)+4*th;c.strokeStyle=M('#2a2018');c.lineWidth=2.2;c.beginPath();c.moveTo(tx2-fwx*8,ty2+3);c.lineTo(tipx,tipy);c.stroke();c.strokeStyle=M('#5a4836');c.lineWidth=1.3;c.stroke();
     c.fillStyle=M('#1c1c1c');c.fillRect(tipx-1,tipy-1,2,2);
     if(h.torch>0)flames(c,tipx,tipy+.5,3,1,7,performance.now()/1000,3,!!mono,1.3);}
-    const lx=fx-px*3.8,ly=hipY+2;if(!PKS){c.strokeStyle=M('#8c8c8c');c.lineWidth=1.4;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(lx,ly-3.6);c.stroke();setLH(lx,ly-3.6);}drawLantern(c,lx,ly,mono);}
+    const lx=fx-px*3.8,ly=hipY+2;if(!PKS){c.strokeStyle=M('#8c8c8c');c.lineWidth=1.4;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(lx,ly-3.6);c.stroke();setLH(lx,ly-3.6);}drawLantern(c,lx,ly,mono);
+    if(h.flog&&h!==player){const gx3=fx+fwx*4-px*1.5,gy3=shY+6+fwy*4;c.strokeStyle=M('#8c8c8c');c.lineWidth=1.4;c.beginPath();c.moveTo(shLx,shLy);c.lineTo(gx3,gy3);c.stroke();drawLog(c,gx3,gy3+.5,Math.atan2(py,px),h.flog.v,mono,.8,false);if(h.flog.lit)flames(c,gx3,gy3-.5,3,1,6,performance.now()/1000,5,!!mono,1.2);}}
   if(h===player&&h.snakeBite){const n=h.snakeBite;n.x=h.x;n.y=h.y;const sv={...n,x:h.x+2,y:h.y+1};drawSnake(c,sv,mono,performance.now()/1000);}
   if(h!==player&&(!PM||h.hold)){drawLantern(c,fx-px*(PW?4.4:3.8),hipY+(PW?2.5:1.5),mono);}   // small lantern hung at the hip
   if(h.hold){if(!away&&!behind)holdArms();}else if(PM&&h!==player){}else if(PM){if(!behind&&!h.carry&&!h.wood)knife();}else if(PW&&h!==player){const sk=M('#c9c4bc');c.strokeStyle=sk;c.lineWidth=1.6;
@@ -4526,14 +4625,14 @@ function renderObjects(T){
   objs.sort((a,b)=>a.y-b.y);
   fireShadows();
   if(PRAC)waterReflect(objs,T);
-  for(const o of objs){const e=o.k===31?o.e:o.k===6?o.z:o.k===7?player:o.k===14?bot:o.k===20?praewa:o.k===23?pam:null;let ev=e?(e.ev||0)*PLH+(e.lift||0):0;
+  for(const o of objs){const e=o.k===31||o.k===32?o.e:o.k===6?o.z:o.k===7?player:o.k===14?bot:o.k===20?praewa:o.k===23?pam:null;let ev=e?(e.ev||0)*PLH+(e.lift||0):0;
     const pwJ=o.k===7&&hero==='pw'&&player.rollT>0?Math.sin(Math.PI*clamp(1-player.rollT/.42,0,1)):0;if(pwJ)ev+=pwJ*11;
     let pamK=0,stepK=0;if(o.k===7&&player.swingT>0&&!player.rollT){const u=clamp(1-player.swingT/(player.swingDur||.15),0,1);stepK=reachF(u);}
     if(o.k===7&&!player.rollT&&!(hero==='pw'&&player.recoilT>0)){if(player.swingT>0){const u=clamp(1-player.swingT/(player.swingDur||.15),0,1);pamK=u<.28?-.55*(u/.28):Math.sin(Math.PI*(u-.28)/.72);}else if(player.charging)pamK=-.45*Math.min(1,(player.charge||0)*1.6);}   // แพม: wind up leaning back, then throw her whole body into the blow
-    const rot=pamK?pamK*.42*(Math.cos(player.swingT>0?player.swingAng:player.facing)>=0?1:-1)+(Math.abs(Math.cos(player.facing))<.35?0:0):o.k===7&&hero==='pw'?(player.recoilT>0?Math.sign(player.hopDx||1)*.62*Math.min(1,player.recoilT/.3):0):o.k===7&&player.rollT>0?(1-player.rollT/.42)*TAU*(player.rollDx>=0?1:-1):o.k===7&&player.fly&&player.fly.ph==='air'?player.fly.t*15*(player.fly.vx>=0?1:-1):0,sit=e&&e.sit&&!e.down;
+    const rot=pamK?pamK*.42*(Math.cos(player.swingT>0?player.swingAng:player.facing)>=0?1:-1)+(Math.abs(Math.cos(player.facing))<.35?0:0):o.k===7&&hero==='pw'?(player.recoilT>0?Math.sign(player.hopDx||1)*.62*Math.min(1,player.recoilT/.3):0):o.k===7&&player.rollT>0?(1-player.rollT/.42)*TAU*(player.rollDx>=0?1:-1):o.k===14&&bot.rollT>0&&!bot.courier&&!bot.down?(1-bot.rollT/.42)*TAU*(bot.rollDx>=0?1:-1):o.k===7&&player.fly&&player.fly.ph==='air'?player.fly.t*15*(player.fly.vx>=0?1:-1):0,sit=e&&e.sit&&!e.down;
     if(ev>.2||rot||sit||pamK){for(const c of[sctx,lctx]){c.save();c.translate(0,-ev);if(sit){const gy=e.y*K-camY;c.beginPath();c.rect(e.x-camX-40,gy-80,80,79.4);c.clip();c.translate(0,e===praewa?2.5:5);}
         if(pamK){const fx2=player.x-camX,fy2=player.y*K-camY,sq=1-.13*Math.max(0,pamK),sa2=player.swingT>0?player.swingAng:player.facing,st=4*pamK+(player.visStep||0)*stepK,lx=Math.cos(sa2)*st,ly=Math.sin(sa2)*st*K;c.translate(fx2+lx,fy2+ly);c.rotate(rot);c.scale(1+.06*Math.max(0,pamK),sq);c.translate(-fx2,-fy2);}   // pivot on the feet, dip and step into it
-        else if(rot&&o.k===7&&player.rollT>0&&hero!=='pw'){const u=clamp(1-player.rollT/.42,0,1),tk=Math.sin(Math.PI*u),cx=player.x-camX,fy0=player.y*K-camY;c.translate(cx,fy0-9+4.2*tk);c.rotate(rot);c.scale(1+.18*tk,1-.5*tk);c.translate(-cx,-(fy0-9));}   // knees to chest, rolling over the shoulder like a ball
+        else if(rot&&((o.k===7&&player.rollT>0&&hero!=='pw')||o.k===14)){const RE=o.k===14?bot:player,u=clamp(1-RE.rollT/.42,0,1),tk=Math.sin(Math.PI*u),cx=RE.x-camX,fy0=RE.y*K-camY;c.translate(cx,fy0-9+4.2*tk);c.rotate(rot);c.scale(1+.18*tk,1-.5*tk);c.translate(-cx,-(fy0-9));}   // knees to chest, rolling over the shoulder like a ball
         else if(rot){const cx=player.x-camX,cy=player.y*K-camY-9;c.translate(cx,cy);c.rotate(rot);c.translate(-cx,-cy);}}
       drawObj(o,T,sctx,lctx);sctx.restore();lctx.restore();if(sit){sctx.fillStyle='#3a2a1c';sctx.fillRect(e.x-camX-3.5,e.y*K-camY-1,7,2);}}
     else drawObj(o,T,sctx,lctx);}
@@ -4651,7 +4750,7 @@ function drawObj0(o,T,s,l){
   case 36:{const b=e5Body(),dead=ELE.EL.dead;s.save();s.translate(b.x-camX,b.y*K-camY);s.scale(1,K);s.rotate(ELE.EL.yaw);s.fillStyle='rgba(0,0,0,.55)';s.beginPath();s.ellipse(0,0,dead?27:25,dead?17:13,0,0,TAU);s.fill();s.restore();break;}   // the ground under it is a pool of shadow
   case 37:{const th=o.th,z=th.z,sx=th.x-camX,sy=th.y*K-camY,v=Math.max(70,lightAt(th.x,th.y));s.fillStyle='rgba(0,0,0,.45)';ell(s,sx,sy,6*Math.max(.4,1-th.h/160),2*Math.max(.4,1-th.h/160));
     for(const[c,m]of[[s,null],[l,gray(v)]]){c.save();c.translate(sx,sy-th.h-9);c.rotate(th.sp);c.translate(-sx,-(sy-9));drawZ(c,z,T,m);c.restore();}break;}
-  case 34:{const w=o.w,v=lightAt(w.x,w.y),x=w.x-camX,y=w.y*K-camY-w.h;drawLog(s,x,y,w.a,w.v,null,1.15,true);drawLog(l,x,y,w.a,w.v,gray(Math.max(62,v)),1.15,true);break;}
+  case 34:{const w=o.w,v=lightAt(w.x,w.y),x=w.x-camX,y=w.y*K-camY-w.h;drawLog(s,x,y,w.a,w.v,null,1.15,true);drawLog(l,x,y,w.a,w.v,gray(Math.max(62,v)),1.15,true);if(w.burn){flames(s,x,y-1,3,1.2,8,T,3,false,1.6);flames(l,x,y-1,3,1.2,8,T,3,true,1.6);}break;}
   case 28:{drawSkewer(s,o.sk,null,T);drawSkewer(l,o.sk,gray(Math.max(40,lightAt(o.sk.x,o.sk.y))),T);break;}
   case 29:{drawSnake(s,o.n,null,T);drawSnake(l,o.n,gray(Math.max(70,lightAt(o.n.x,o.n.y))),T);break;}
   case 20:{withOutline(s,praewa,c=>drawP(c,T,null,praewa));drawP(l,T,gray(Math.max(28,lightAt(praewa.x,praewa.y))),praewa);break;}
@@ -5008,7 +5107,7 @@ function drawUI(dt){
         uiText('บ้าน '+Math.round(dm)+' ม.',ax+Math.cos(an)*16*s,ay+Math.sin(an)*14*s+(Math.sin(an)>0?6:-6)*s,10*s);}}
   }
   if(TUT)tutUI(s);if(CORPSE)corpseUI(s);
-  if(PRAC)pracUI(s);else uiText(clockStr(),SWc/2,22*s,22*s);if(!PRAC&&n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':E5?(E5.ph==='brood'?'คืนที่ 5 — กำจัดซอมบี้จากท้องช้าง':'คืนที่ 5 — ล้มช้างป่าให้ได้'):N3.multi?`คืนที่ ${night} — ฆ่ากระสือให้ครบ 2 ตัว (เหลือ ${liveBS().length})`:`คืนที่ ${night} — ฆ่ากระสือให้ได้`,SWc/2,44*s,11*s,'center','#ff6b5e');else if(!PRAC)uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':night===2?'ซอมบี้มาทุก 30 วิ · รอดถึงเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
+  if(PRAC)pracUI(s);else uiText(clockStr(),SWc/2,22*s,22*s);if(!PRAC&&n3Active())uiText(N3.ph==='count'?'คืนที่ 3 — เวลาหยุดนิ่ง':E5?(E5.ph==='brood'?'คืนที่ 5 — กำจัดซอมบี้จากท้องช้าง':'คืนที่ 5 — ล้มช้างป่าให้ได้'):N3.multi?`คืนที่ ${night} — ฆ่ากระสือให้ครบ 2 ตัว (เหลือ ${liveBS().length})`:`คืนที่ ${night} — ฆ่ากระสือให้ได้`,SWc/2,44*s,11*s,'center','#ff6b5e');else if(!PRAC&&!DAY2)uiText(waveDone?'รอดถึงรุ่งเช้า 06:00':night===2?'ซอมบี้มาทุก 30 วิ · รอดถึงเช้า 06:00':'ระลอกใหญ่ตอน 05:00',SWc/2,44*s,11*s,'center',waveDone?FG:'#ff6b5e');
   if(waveAvail()){const wb=waveBox();u.globalAlpha=.88;u.fillStyle=BG;u.fillRect(wb.x-2,wb.y-2,wb.w+4,wb.h+4);u.fillStyle='#8a1418';u.fillRect(wb.x,wb.y,wb.w,wb.h);u.globalAlpha=1;uiText('พร้อมแล้ว!',wb.x+wb.w/2,wb.y+wb.h*.3,9*s,'center','#ffd27a');uiText('เรียกระลอกใหญ่ ▶',wb.x+wb.w/2,wb.y+wb.h*.72,Math.min(11*s,wb.w/8.6),'center',FG);}
   if(state==='play'&&N3&&N3.ph==='count'){const n=Math.ceil(N3.t),pu=1+.06*Math.sin(performance.now()/120);uiText('นับถอยหลังก่อนเริ่มเกม 1 นาที',SWc/2,SHc*.2,19*s,'center',UIRED);
     u.save();u.font=`900 ${54*s*pu}px system-ui,sans-serif`;u.textAlign='center';u.textBaseline='middle';u.lineWidth=6*s;u.strokeStyle=BG;u.strokeText(n,SWc/2,SHc*.2+48*s);u.fillStyle='#ff3b30';u.fillText(n,SWc/2,SHc*.2+48*s);u.restore();
@@ -5153,7 +5252,7 @@ function switchTo(e,nh){const old=hero,P0=player,ox=P0.x,oy=P0.y,of=P0.facing,ha
   if(old==='pam'){pam=makePam();pam.x=ox;pam.y=oy;pam.facing=of;lvSet(pam);oe=pam;}
   if(old==='pw'){praewa=makePraewa();praewa.x=ox;praewa.y=oy;praewa.facing=of;lvSet(praewa);oe=praewa;}
   if((old==='fifa'||old==='jp')&&!oe&&!bot){bot=makeBot();bot.jp=old==='jp';bot.x=ox;bot.y=oy;bot.facing=of;lvSet(bot);oe=bot;}
-  syncSub(ox,oy);if(!oe&&subE&&subE.who===old){subE.x=ox;subE.y=oy;lvSet(subE);oe=subE;}
+  syncSub(ox,oy);if(!oe&&subE&&subE.who===old){subE.x=ox;subE.y=oy;lvSet(subE);oe=subE;}if(!oe&&(old==='fifa'||old==='jp')&&bot&&!bot.dead&&(bot.jp?'jp':'fifa')===old)oe=bot;   // whichever of them you just were: he is the one who brings the lamp over
   if(N3&&N3.ph==='fight'){const st=stations();npcs().forEach((q,i)=>{q.station=st[i%st.length];});}
   if(wasCourier){P0.noLamp=false;flashOn=true;toast('ตอนนี้คุณคือ '+HERONAME()+' · ไฟคาดหัวอยู่กับตัว');}   // you stepped into the one who was carrying it
   else{P0.noLamp=true;flashOn=false;if(hadLamp&&oe){oe.courier={ph:'go',t:0};oe.sit=false;toast('ตอนนี้คุณคือ '+HERONAME()+' · '+CNAME[old]+'กำลังเอาไฟคาดหัวมาให้');}else toast('ตอนนี้คุณคือ '+HERONAME()+' · ยังไม่มีไฟคาดหัว');}
@@ -5221,7 +5320,7 @@ function drawSwapUI(s){const S=SW,e=S.ent,bar=SHc*.09;u.fillStyle=BG;u.fillRect(
 
 /* ================= INPUT ================= */
 function wAim(d){return{x:d.wx+(d.x-d.sx)/P,y:d.wy+(d.y-d.sy)/P/K};}
-function woodAvail(){return state==='play'&&player.wood>0&&!player.drag&&(inYard(player.x,player.y)||(hero==='pw'&&yardDist(player.x,player.y)<70));}
+function woodAvail(){return state==='play'&&player.wood>0&&!player.drag&&(inYard(player.x,player.y)||((hero==='pw'||hasU('throw'))&&yardDist(player.x,player.y)<70*(hasU('throw')?2:1)));}
 function yardDist(x,y){if(!home)return 1e9;const dx=Math.max(home.ix0-x,0,x-home.ix1),dy=Math.max(home.iy0-y,0,y-home.iy1);return Math.hypot(dx,dy);}
 function hoeNear(){return hoe&&!hoe.taken&&night>3&&Math.hypot(hoe.x-player.x,hoe.y-player.y)<34;}
 function swapAvail(){return state==='play'&&(hoeNear()||player.hasHoe);}
@@ -5239,6 +5338,8 @@ function updJoy(){let dx=joy.kx-joy.bx,dy=joy.ky-joy.by,l=Math.hypot(dx,dy);if(l
 ui.addEventListener('pointerdown',e=>{
   e.preventDefault();initAudio();const x=e.clientX-OFFX,y=e.clientY-TOPI-OFFY;
   if(DF){if(DF.t>.5)DF=null;return;}
+  if(state==='upg'){upgTap(x,y);return;}
+  if(upgPopOn()){const b=upgPopBox();if(x>b.x-6&&x<b.x+b.w+6&&y>b.y-6&&y<b.y+b.h+6){upgOpen();return;}}
   if(PRAC&&state==='play'&&pracTap(x,y))return;
   if(tutSkipOn()){const b=tutSkipBox();if(x>b.x-8&&x<b.x+b.w+8&&y>b.y-8&&y<b.y+b.h+8){tutSkip();return;}}
   if(state==='dying'&&death&&death.el&&!death.shown){const sb=skipBox();if(x>sb.x-14&&x<sb.x+sb.w+14&&y>sb.y-14&&y<sb.y+sb.h+14){death.shown=true;showEnd(false);}return;}
@@ -5311,7 +5412,7 @@ function showEnd(won){
 }
 function demoStop(){DEMO=null;gameCv.style.transform='';gameCv.style.filter='';}
 function begin(){initAudio();demoStop();try{const d=document.documentElement;if(d.requestFullscreen&&matchMedia('(pointer: coarse)').matches)d.requestFullscreen().catch(()=>{});}catch(_){}
-  menu.classList.add('hidden');endEl.classList.add('hidden');hidePause();useBot=true;newGame();if(PRAC)pracInit();else if(cheat)applyCheat();state='play';wakeFade=0;nightCk=isBossNight(night)&&ckpt?ckpt:makeSnap();if(PRAC){NC=null;return;}nightCard();if(night===1&&(!cheat||window.PROTEST))startPro();}
+  menu.classList.add('hidden');endEl.classList.add('hidden');hidePause();useBot=true;UPT=0;UCARDS=[];UPACK=false;newGame();if(PRAC)pracInit();else if(cheat)applyCheat();state='play';wakeFade=0;nightCk=isBossNight(night)&&ckpt?ckpt:makeSnap();if(PRAC){NC=null;return;}nightCard();if(night===1&&(!cheat||window.PROTEST))startPro();}
 let cheat=false,startNight=1;
 {const ci=document.getElementById('codeIn'),lb=document.getElementById('lvlBox'),bs=document.getElementById('lvlBtns');
   for(let n=1;n<=7;n++){const b=document.createElement('button');b.type='button';b.className='nb'+(n===1?' sel':'');b.textContent='คืน '+n+(n===3?' 👹':n===5?' 🐘':'');b.onclick=()=>{startNight=n;for(const x of bs.children)x.classList.toggle('sel',x===b);};bs.appendChild(b);}
@@ -5432,7 +5533,7 @@ function hungerTick(dt){const P=player;P.hunger=Math.min(1,(P.hunger||0)+dt/171.
   if(P.eatT>0)P.eatT-=dt;
   for(const e of[P,bot,praewa,pam,subE]){if(!e||e.dead||e.down||!(e.hunger>=.7)||e.eatT>0)continue;e.hgT=(e.hgT==null?4+rnd()*6:e.hgT)-dt;if(e.hgT<=0&&!e.say&&!n3Busy()){e.hgT=9+rnd()*9;sayAs(e,HUNG_SAY[(rnd()*HUNG_SAY.length)|0]);}}
   AFT-=dt;if(AFT<=0&&!TUT&&fireP&&fireP.F<45&&!n3Busy()){AFT=.5;let p=null,pd=1e9;for(const q of woodPiles){if(!q.logs.length||!inYard(q.x,q.y))continue;const d=Math.hypot(q.x-fireP.x,q.y-fireP.y);if(d<pd){pd=d;p=q;}}   // the fire is low: whoever stands nearest it puts a log on, hungry or not
-    let e=null,ed=80;for(const q of[bot,praewa,pam,subE]){if(!q||q.dead||q.down||q.courier||q.carryLog>=0)continue;const d=Math.hypot(q.x-fireP.x,q.y-fireP.y);if(d<ed){ed=d;e=q;}}
+    let e=null,ed=1e9;for(const q of[bot,praewa,pam,subE]){if(!q||q.dead||q.down||q.courier||q.carryLog>=0||q.flog||q.rollT>0||q.act>0||!inYard(q.x,q.y))continue;const d=Math.hypot(q.x-fireP.x,q.y-fireP.y);if(d<ed){ed=d;e=q;}}
     if(p&&e){const v=p.logs.pop();if(!p.logs.length&&!p.prac)woodPiles.splice(woodPiles.indexOf(p),1);e.facing=Math.atan2(fireP.y-e.y,fireP.x-e.x);const h0=e===praewa?8:15,d=Math.max(1,ed),Tf=.45+d/300;
       flyWood.push({x:e.x,y:e.y,h:h0,vh:(.5*260*Tf*Tf-h0)/Tf,vx:(fireP.x-e.x)/Tf,vy:(fireP.y-e.y)/Tf,a:e.facing,av:(rnd()-.5)*8,v,fire:true});AFT=3;}}}
 function eatAvail(){const P=player;if(state!=='play'||P.hidden||P.eatT>0||!((P.hunger||0)>.01))return false;if(P.carry&&P.carry.count>0)return true;if(food()<=0)return false;const f=foodSpot(P);return !!f&&Math.hypot(f.cx-P.x,f.cy-P.y)<30;}
@@ -5445,7 +5546,7 @@ function drawStomach(s){const P=player,sat=clamp(1-(P.hunger||0),0,1),pc=sat*100
   boldW(pc.toFixed(1)+'%',x0+S*.52,y0+S*.63,10*s);}
 function freeYardSpot(){const F=fireP;for(let k=0;k<24;k++){const a=k*TAU/12+.4,r=k<12?36:52,x=F.x+Math.cos(a)*r,y=F.y+Math.sin(a)*r*.9,t=tAt(Math.floor(x/TS),Math.floor(y/TS));if(inYard(x,y)&&!BM[t]&&t!==TT&&!(postPos&&Math.hypot(x-postPos.x,y-postPos.y)<16))return{x,y};}return{x:F.x+30,y:F.y+20};}
 function applyCheat(){stock+=40;const q=freeYardSpot();woodPiles.push({x:q.x,y:q.y,logs:Array.from({length:50},()=>(rnd()*10)|0)});
-  if(startNight>1){night=startNight;zombies.length=0;toasts=[];if(isBossNight(night)){saveCkpt();startBossNight(night);}else spawnNight();}
+  if(startNight>1){night=startNight;zombies.length=0;toasts=[];if(isBossNight(night)){saveCkpt();startBossNight(night);}else spawnNight();if(!PRAC){UPT=2;UPACK=true;if(night===2)day2Start();}}
   toast('เสบียงจุใจ: ฟืน 50 กล้วย 40');}
 // stop the browser from scrolling / pull-to-refresh / swipe gestures while playing
 const inPanel=e=>e.target&&e.target.closest&&e.target.closest('.panel');
@@ -5503,11 +5604,11 @@ document.getElementById('pFull').onclick=()=>{wantFull=true;goFull();};
 for(const el of document.querySelectorAll('#mChars .pc'))el.onclick=()=>{hero=el.dataset.h;try{localStorage.setItem('hero',hero);}catch(_){}syncHero();};
 document.getElementById('goBtn').onclick=()=>{PRAC=false;goFull();setTimeout(begin,120);};
 document.getElementById('pracBtn').onclick=()=>{if(!cheat)return;PRAC=true;goFull();setTimeout(begin,120);};
-function showMenu(){hidePause();endEl.classList.add('hidden');menu.classList.remove('hidden');mScr('mMain');PRAC=false;PDAY=false;PIN=null;PWET=[];newGame();demoStart();}
+function showMenu(){UPT=0;UCARDS=[];UPACK=false;hidePause();endEl.classList.add('hidden');menu.classList.remove('hidden');mScr('mMain');PRAC=false;PDAY=false;PIN=null;PWET=[];newGame();demoStart();}
 /* ---- pause ---- */
 const pauseEl=document.getElementById('pause');let pausedFrom=null;
 const pScr=id=>{for(const k of['pMain','pSwapS','pSetS'])document.getElementById(k).classList.toggle('hidden',k!==id);};
-function pauseGame(){if(state!=='play'&&state!=='n3cine')return;pausedFrom=state;state='paused';joy.active=false;look.active=false;aimT.active=false;joyV={x:0,y:0};for(const k in keys)keys[k]=false;pScr('pMain');pauseEl.classList.remove('hidden');}
+function pauseGame(){if(state!=='play'&&state!=='n3cine')return;pausedFrom=state;state='paused';joy.active=false;look.active=false;aimT.active=false;joyV={x:0,y:0};for(const k in keys)keys[k]=false;pScr('pMain');pauseCards();pauseEl.classList.remove('hidden');}
 function hidePause(){pauseEl.classList.add('hidden');}
 function resumeGame(){hidePause();if(DEMO&&state==='layout'){state=pausedFrom||'play';menu.classList.remove('hidden');mScr('mSet');return;}if(state==='paused'||state==='layout')state=pausedFrom||'play';}
 document.getElementById('pResume').onclick=resumeGame;
@@ -5594,11 +5695,137 @@ function frame(now){
   if(DEMO)demoTick(dt);
   const frz=DF&&state==='play';if(DF){DF.t+=rdt;if(DF.t>3.2)DF=null;}
   if(frz){}else if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else if(state==='swap')updateSwap(dt);else if(state==='pick'&&PK)pickFrame(rdt);else computeLights();
-  if(state!=='paused'&&state!=='layout'&&!frz)updateCommon(state==='pick'?(PK&&PK.mode==='focus'?rdt*.06:0):dt);
+  if(state!=='paused'&&state!=='layout'&&state!=='upg'&&!frz)updateCommon(state==='pick'?(PK&&PK.mode==='focus'?rdt*.06:0):dt);
   if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);CUB=null;if(state==='n3cine'&&N3&&N3.cu)cuDraw(T);if(state==='n3cine'&&N3&&N3.step==='pro')proDraw(T);composite();{const ey=E5&&E5.el?E5.el.y:1e9;for(const b of BS)if(!b.hidden&&b.y<=ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>KRSENT))):KRMAP);e5Blit(out32);for(const b of BS)if(!b.hidden&&b.y>ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>KRSENT))):KRMAP);}if(BS.length)krFire(T);postFX();octx.putImageData(outImg,0,0);}
-  drawUI(dt);drawDF();
+  drawUI(dt);drawDF();upgUI(rdt);
   requestAnimationFrame(frame);
 }
+/* ================= UPGRADE CARDS: two points once night 1 is behind you ================= */
+const UCD={throw:{n:['โยนฟืน','ข้ามรั้วได้'],d:'เหมือนวางฟืนปกตินี่แหละ เพียงแค่วางจากข้างนอกได้เหมือนแพรวา และโยนไกลขึ้น2เท่า',rec:1},
+  roll:{n:['กลิ้งไกลขึ้น','20%'],d:'กลิ้งไกลขึ้น 20%'},kick:{n:['ถีบ/ผลัก','ไกลขึ้น 20%'],d:'ถีบ/ผลักไกลขึ้น 20%'},
+  pamlong:{n:['ไม้ไฟแพม','ยาวขึ้น 2 เท่า'],d:'ไม้ไฟของแพมยาวขึ้น 2 เท่าและบางลง เดินย้ายที่จะยกไม้ตั้งชัน พอจะใช้ก็พาดบนรั้วแล้วแทงจุดไฟได้ไกลขึ้น 2 เท่า ถ้าซอมบี้เข้ามาใกล้เกินกลางไม้จะตบให้ล้มก่อนแล้วถอยไปให้ได้ระยะ'},
+  pamfire:{n:['แพมโยน','ฟืนติดไฟ'],d:'แพมหยิบฟืนในบ้านมาจุดไฟ แล้วโยนไปเผาซอมบี้ที่ใกล้ที่สุด ระยะ 20 เมตรจากรั้ว'},
+  main:{n:['อัปเกรด','ตัวละครหลัก']},sib:{n:['พี่น้อง','ในรั้วบ้าน']}};
+const ULIST={cat:['main','sib'],main:['throw','roll','kick'],sib:['fifa','jp','pam','pw'],pam:['pamlong','pamfire']},UTITLE={cat:'เลือกหมวดที่จะอัปเกรด',main:'อัปเกรดตัวละครหลัก',sib:'พี่น้องในรั้วบ้าน — เลือกตัวละคร',pam:'การ์ดของแพม'};
+const UGOLD='#ffd27a';
+function uRR(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();}
+function uTx(c,t,x,y,sz,col,al,wt){c.font=`${wt||'bold'} ${sz}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;c.textAlign=al||'center';c.textBaseline='middle';c.fillStyle=col||'#f3ece0';c.fillText(t,x,y);}
+function uWrap(c,t,maxW){let W=null;try{W=[...new Intl.Segmenter('th',{granularity:'word'}).segment(t)].map(q=>q.segment);}catch(_){W=t.split(/(\s+)/);}
+  const L=[];let cur='';for(const w of W){if(cur&&c.measureText(cur+w).width>maxW){L.push(cur.trim());cur=w.trim()?w:'';}else cur+=w;}if(cur.trim())L.push(cur.trim());return L;}
+/* a pictogram body: every part is drawn g wider on the first pass and punched out at its own width on the second, so only the white outline is left and the inside stays see-through */
+function uFig(c,g,J,ox,oy,sc){ox=ox||0;oy=oy||0;sc=sc||1;const X=v=>ox+v*sc,Y=v=>oy+v*sc,L=(p,w)=>{c.lineWidth=(w+2*g/sc)*sc;c.beginPath();c.moveTo(X(p[0]),Y(p[1]));for(let i=2;i<p.length;i+=2)c.lineTo(X(p[i]),Y(p[i+1]));c.stroke();};
+  c.beginPath();c.arc(X(J.h[0]),Y(J.h[1]),J.h[2]*sc+g,0,TAU);c.fill();if(J.bun){c.beginPath();c.arc(X(J.bun[0]),Y(J.bun[1]),J.bun[2]*sc+g,0,TAU);c.fill();}
+  L(J.t,J.tw||9);for(const a of J.l)L(a,J.lw||5.6);}
+const UFIG={
+  throw:{h:[30,41,7],t:[30,50,32,71],l:[[30,53,41,45,47,32],[30,53,19,46,14,33],[32,71,26,83,21,95],[32,71,39,83,44,95]]},
+  roll:{h:[51,58,7],t:[44,55,36,48,25,49,17,58,15,70,21,81],l:[[21,81,43,77,29,91],[40,53,48,66,44,76]]},
+  kick:{h:[26,27,7],t:[29,36,40,58],l:[[40,58,38,76,35,94],[40,58,57,56,79,54],[30,39,21,48,26,58],[30,39,41,45,49,40]]},
+  pamlong:{h:[20,40,6.5],bun:[13,35,3.2],t:[20,47,22,70],l:[[22,70,17,83,14,95],[22,70,28,83,31,95],[21,50,28,59,35,57],[21,50,15,58,23,61]]},
+  pamfire:{h:[24,42,6.5],bun:[17,37,3.2],t:[24,49,26,72],l:[[26,72,20,84,16,95],[26,72,33,83,38,95],[25,52,35,44,45,37],[25,52,19,60,23,69]]},
+  one:{h:[50,24,10],t:[50,36,50,64],tw:13,lw:7,l:[[50,40,35,50,33,65],[50,40,65,50,67,65],[50,64,43,80,41,96],[50,64,57,80,59,96]]}};
+const UART={};
+function uArt(id,px){px=Math.max(16,Math.round(px));const key=id+'@'+px;if(UART[key])return UART[key];const cv=document.createElement('canvas');cv.width=cv.height=px;const c=cv.getContext('2d'),k=px/100;c.scale(k,k);c.lineCap='round';c.lineJoin='round';
+  const g=1.5,body=(fn)=>{const t=document.createElement('canvas');t.width=t.height=px;const q=t.getContext('2d');q.scale(k,k);q.lineCap='round';q.lineJoin='round';q.fillStyle=q.strokeStyle='#fff';fn(q,g);q.globalCompositeOperation='destination-out';fn(q,0);c.save();c.setTransform(1,0,0,1,0,0);c.shadowColor='rgba(255,255,255,.75)';c.shadowBlur=px*.045;c.drawImage(t,0,0);c.restore();},
+    log=(x,y,a,L,w,fire)=>{c.save();c.translate(x,y);c.rotate(a);c.lineCap='round';c.strokeStyle='#4a2f17';c.lineWidth=w+1.6;c.beginPath();c.moveTo(-L/2,0);c.lineTo(L/2,0);c.stroke();c.strokeStyle='#b9824a';c.lineWidth=w;c.stroke();c.strokeStyle='#e6bd85';c.lineWidth=w*.3;c.beginPath();c.moveTo(-L/2+1,-w*.18);c.lineTo(L/2-1,-w*.18);c.stroke();c.restore();if(fire)flame(x,y-w*.5,w*1.05);},
+    flame=(x,y,r)=>{const f=(rr,col)=>{c.fillStyle=col;c.beginPath();c.moveTo(x,y-rr*2.1);c.bezierCurveTo(x+rr*.9,y-rr*.9,x+rr*1.05,y+rr*.2,x,y+rr*.75);c.bezierCurveTo(x-rr*1.05,y+rr*.2,x-rr*.9,y-rr*.9,x,y-rr*2.1);c.fill();};c.save();c.shadowColor='#ff7a1a';c.shadowBlur=6;f(r,'#ff6a1a');c.restore();f(r*.62,'#ffc23a');f(r*.3,'#fff3c0');},
+    dash=(pts,col)=>{c.save();c.setLineDash([2.2,3.4]);c.strokeStyle=col||'rgba(255,255,255,.55)';c.lineWidth=1.3;c.beginPath();c.moveTo(pts[0],pts[1]);c.quadraticCurveTo(pts[2],pts[3],pts[4],pts[5]);c.stroke();c.restore();},
+    fence=(x0,x1,y0,y1)=>{c.save();c.strokeStyle='rgba(255,255,255,.5)';c.lineWidth=1.8;c.lineCap='round';for(let x=x0;x<=x1+.1;x+=(x1-x0)/2){c.beginPath();c.moveTo(x,y0-3);c.lineTo(x,y1);c.stroke();}c.lineWidth=1.3;for(const yy of[y0+3,y0+(y1-y0)*.55]){c.beginPath();c.moveTo(x0-3,yy);c.lineTo(x1+3,yy);c.stroke();}c.restore();},
+    ground=()=>{c.save();c.strokeStyle='rgba(255,255,255,.28)';c.lineWidth=1;c.beginPath();c.moveTo(6,97.5);c.lineTo(94,97.5);c.stroke();c.restore();};
+  if(id==='throw'){ground();fence(62,76,68,97);dash([49,29,68,-4,93,58]);body((q,gg)=>uFig(q,gg,UFIG.throw));log(58,22,-.6,15,5.6);log(73,13,.1,15,5.6);log(87,24,.9,15,5.6);
+    c.save();c.strokeStyle='rgba(255,255,255,.6)';c.lineWidth=1.3;c.lineCap='round';for(const[x,y]of[[40,24],[10,24],[30,22]]){c.beginPath();c.moveTo(x,y);c.lineTo(x,y+5);c.stroke();}c.restore();}
+  else if(id==='roll'){ground();c.save();c.strokeStyle='rgba(255,255,255,.5)';c.lineWidth=1.3;c.lineCap='round';c.beginPath();c.arc(33,68,31,Math.PI*1.02,Math.PI*1.6);c.stroke();c.beginPath();c.arc(33,68,37,Math.PI*1.1,Math.PI*1.45);c.stroke();c.restore();
+    body((q,gg)=>uFig(q,gg,UFIG.roll));
+    c.save();const gr=c.createLinearGradient(60,0,98,0);gr.addColorStop(0,'rgba(255,255,255,.08)');gr.addColorStop(.55,'#fff1c9');gr.addColorStop(1,'#ffc64a');c.fillStyle=gr;c.shadowColor='#ffb53a';c.shadowBlur=7;
+    c.beginPath();c.moveTo(61,68);c.quadraticCurveTo(75,62.5,84,63);c.lineTo(84,55);c.lineTo(98,68);c.lineTo(84,81);c.lineTo(84,73);c.quadraticCurveTo(75,73.5,61,68);c.fill();c.restore();
+    c.save();c.strokeStyle='rgba(255,226,150,.75)';c.lineWidth=1.3;c.lineCap='round';for(const[x0,x1,y]of[[66,78,52],[63,73,84],[71,81,89]]){c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y);c.stroke();}c.restore();}
+  else if(id==='kick'){ground();body((q,gg)=>uFig(q,gg,UFIG.kick));c.save();c.strokeStyle=UGOLD;c.lineWidth=1.8;c.lineCap='round';c.shadowColor='#ffb53a';c.shadowBlur=6;for(let i=0;i<7;i++){const a=-1.25+i*2.5/6,r0=6.5,r1=i%2?11:14.5;c.beginPath();c.moveTo(85+Math.cos(a)*r0,54+Math.sin(a)*r0);c.lineTo(85+Math.cos(a)*r1,54+Math.sin(a)*r1);c.stroke();}c.restore();
+    c.save();c.strokeStyle='rgba(255,255,255,.5)';c.lineWidth=1.3;c.lineCap='round';for(const[x0,x1,y]of[[50,62,46],[52,66,64]]){c.beginPath();c.moveTo(x0,y);c.lineTo(x1,y);c.stroke();}c.restore();}
+  else if(id==='pamlong'){ground();fence(52,62,57,97);c.save();c.lineCap='round';c.strokeStyle='#3a2a1c';c.lineWidth=2.6;c.beginPath();c.moveTo(9,63);c.lineTo(91,47);c.stroke();c.strokeStyle='#d9c3a0';c.lineWidth=1.3;c.stroke();c.restore();body((q,gg)=>uFig(q,gg,UFIG.pamlong));flame(92.5,45.5,4.6);}
+  else if(id==='pamfire'){ground();dash([46,35,62,4,95,62],'rgba(255,190,110,.7)');body((q,gg)=>uFig(q,gg,UFIG.pamfire));log(70,22,-.35,16,5.6,true);c.save();c.fillStyle='#ffc23a';for(const[x,y,r]of[[58,24,1.1],[52,29,.9],[63,17,.8]]){c.beginPath();c.arc(x,y,r,0,TAU);c.fill();}c.restore();}
+  else if(id==='main'){body((q,gg)=>uFig(q,gg,UFIG.one,4,2,.92));}
+  else if(id==='sib'){body((q,gg)=>{uFig(q,gg,UFIG.one,-6,34,.56);uFig(q,gg,UFIG.one,50,34,.56);uFig(q,gg,UFIG.one,14,12,.72);});}
+  return UART[key]=cv;}
+function uCard(c,id,x,y,w,h,o){o=o||{};const r=w*.075,D=UCD[id],prof=!D;c.save();
+  if(o.sel||o.glow){c.shadowColor=UGOLD;c.shadowBlur=w*.16;}uRR(c,x,y,w,h,r);const bg=c.createLinearGradient(0,y,0,y+h);
+  if(o.back){bg.addColorStop(0,'#5a1418');bg.addColorStop(1,'#2a0a0d');}else{bg.addColorStop(0,'#241c17');bg.addColorStop(1,'#0d0a09');}c.fillStyle=bg;c.fill();c.restore();
+  c.save();uRR(c,x,y,w,h,r);c.lineWidth=o.sel?Math.max(2,w*.022):Math.max(1.2,w*.013);c.strokeStyle=o.sel?UGOLD:o.back?'#c9a35a':'#8d7a58';c.stroke();
+  if(o.back){c.clip();c.strokeStyle='rgba(230,196,60,.28)';c.lineWidth=1;const st=w*.16;for(let k=-h;k<w+h;k+=st){c.beginPath();c.moveTo(x+k,y);c.lineTo(x+k+h,y+h);c.stroke();c.beginPath();c.moveTo(x+k+h,y);c.lineTo(x+k,y+h);c.stroke();}
+    c.fillStyle='#2a0a0d';c.beginPath();c.arc(x+w/2,y+h/2,w*.22,0,TAU);c.fill();c.strokeStyle='#c9a35a';c.lineWidth=Math.max(1.2,w*.015);c.stroke();uTx(c,'★',x+w/2,y+h/2+w*.01,w*.24,UGOLD);c.restore();return;}
+  c.restore();
+  const pad=w*.07,fs=Math.min(w*.118,h*.085),nameH=fs*2.75,ah=h-pad-nameH-pad*.4,aw=w-pad*2,S=Math.min(aw,ah),ax=x+(w-S)/2,ay=y+pad+(ah-S);
+  if(prof){const im=document.querySelector(`#mChars [data-h=${id}] img`),ph=Math.min(ah,aw*102/84),pw=ph*84/102,px=x+(w-pw)/2,py=y+pad+(ah-ph)/2;
+    if(im&&im.complete&&im.naturalWidth){c.save();c.imageSmoothingEnabled=false;if(o.lock)c.filter='grayscale(1) brightness(.5)';c.drawImage(im,px,py,pw,ph);c.restore();}c.strokeStyle=o.lock?'#5a5146':'#c9a35a';c.lineWidth=1;c.strokeRect(px+.5,py+.5,pw-1,ph-1);
+    uTx(c,CNAME[id],x+w/2,y+h-nameH+fs*.72,fs*1.08,o.lock?'#8a8378':'#f3ece0');uTx(c,o.lock?(o.lockT||'เร็วๆนี้'):(o.sub||'แตะเพื่อเลือก'),x+w/2,y+h-nameH+fs*1.95,fs*.82,o.lock?'#b9a15a':UGOLD);
+    if(o.lock){c.fillStyle='rgba(8,6,6,.35)';uRR(c,x,y,w,h,r);c.fill();uTx(c,'🔒',x+w/2,py+ph/2,S*.3);}return;}
+  const art=uArt(id,S*(o.res||2));c.drawImage(art,ax,ay,S,S);
+  uTx(c,D.n[0],x+w/2,y+h-nameH+fs*.72,fs,'#f3ece0');uTx(c,D.n[1],x+w/2,y+h-nameH+fs*1.92,fs,'#f3ece0');
+  if(D.rec&&!o.mini){const t='แนะนำ',ts=Math.max(8,w*.1);c.font=`bold ${ts}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;const tw=c.measureText(t).width+ts*.9,th=ts*1.5,tx=x+w-tw-w*.025,ty=y+w*.025;c.save();c.shadowColor='#ffb53a';c.shadowBlur=6;uRR(c,tx,ty,tw,th,th*.3);c.fillStyle=UGOLD;c.fill();c.restore();uTx(c,t,tx+tw/2,ty+th/2+.5,ts,'#3a1c05');}
+  if(o.own){c.fillStyle='rgba(8,6,6,.62)';uRR(c,x,y,w,h,r);c.fill();uTx(c,'✔ มีแล้ว',x+w/2,y+h/2,fs*1.1,UGOLD);}}
+function upgPopOn(){return state==='play'&&UPT>0&&!PRAC&&!TUT&&!DEMO&&!DF&&!n3Busy()&&!(NC&&NC.t<2.2);}
+function upgPopBox(){const s=UIS,w=188*s,h=42*s;return{x:SWc-w-12*s-SAFEX,y:46*s+(UTOP?8:0),w,h};}
+function upgOpen(){if(state!=='play'||!UPT)return;state='upg';joy.active=false;aimT.active=false;look.active=false;joyV={x:0,y:0};player.charging=false;player.autoCh=false;wDrag=null;gDrag=null;for(const k in keys)keys[k]=false;
+  UPS={scr:UPACK?'pack':'cat',t:UPACK?0:9,sel:null,from:null,sp:[],msg:null,got:null};UPACK=false;}
+function upgClose(){UPS=null;if(state==='upg')state='play';}
+function upgGo(scr,from){UPS.scr=scr;UPS.t=0;UPS.sel=null;UPS.from=from||null;}
+function upgLay(){const S=UPS,s=UIS,ids=ULIST[S.scr]||[],n=ids.length,top=(UTOP?8:0)+18*s,gap=(n>3?7:11)*s,bh=34*s,by=SHc-bh-14*s-(typeof SAFEB==='number'?SAFEB:0);
+  const cols=n===4&&SWc<SHc?2:Math.max(1,n),rows=Math.ceil(n/cols),availH=by-(top+58*s)-26*s,w=Math.max(40,Math.min((SWc-28*s-SAFEX*2-(cols-1)*gap)/cols,(availH-(rows-1)*gap)/rows/1.42,(S.scr==='cat'?172:160)*s)),h=w*1.42,tot=cols*w+(cols-1)*gap,toth=rows*h+(rows-1)*gap,x0=(SWc-tot)/2,y0=top+58*s+(availH-toth)/2;   // four portraits on an upright phone: two rows of two
+  return{top,cards:ids.map((id,i)=>({id,x:x0+(i%cols)*(w+gap),y:y0+((i/cols)|0)*(h+gap),w,h})),back:{x:SWc/2-64*s,y:by,w:128*s,h:bh},hintY:y0+toth+13*s};}
+function upgDealEnd(n){return .34+(n-1)*.1+.3;}
+function upgCardState(S,id){if(S.scr==='sib'){if(id!=='pam')return{lock:1};if(DEADS.has('pam'))return{lock:1,lockT:'ตายแล้ว'};if(ULIST.pam.every(hasU))return{lock:1,lockT:'ครบแล้ว'};return{};}if(S.scr==='main'||S.scr==='pam')return hasU(id)?{own:1}:{};return{};}
+function upgTake(id){UCARDS.push(id);UPT=Math.max(0,UPT-1);const S=UPS,s=UIS;S.scr='got';S.t=0;S.got=id;S.last=id;S.sel=null;S.sp=[];
+  for(let k=0;k<110;k++)S.sp.push({x:rnd()*SWc,y:-rnd()*SHc*.9-10,vy:(190+rnd()*300)*s,vx:(rnd()-.5)*40*s,r:(2.2+rnd()*4.2)*s,ph:rnd()*TAU,w:rnd()<.3});}
+function upgTap(x,y){const S=UPS;if(!S)return;const hit=b=>x>=b.x-4&&x<=b.x+b.w+4&&y>=b.y-4&&y<=b.y+b.h+4;
+  if(S.scr==='pack'){upgGo('cat','pack');S.t=upgDealEnd(2);return;}
+  if(S.scr==='got'){if(S.t>.55){if(UPT>0)upgGo('cat');else upgClose();}return;}
+  const L=upgLay(),n=L.cards.length,de=upgDealEnd(n);if(S.t<de){S.t=de;return;}   // the first tap only finishes the deal
+  if(hit(L.back)){if(S.scr==='cat')upgClose();else upgGo(S.scr==='pam'?'sib':'cat');return;}
+  for(const q of L.cards){if(!hit(q))continue;const st=upgCardState(S,q.id);
+    if(S.scr==='cat'){upgGo(q.id);return;}
+    if(S.scr==='sib'){if(st.lock){S.msg={t:CNAME[q.id]+': '+(st.lockT||'เร็วๆนี้'),life:1.4};S.shk={id:q.id,t:.3};return;}upgGo('pam');return;}
+    if(st.own){S.msg={t:'มีการ์ดนี้แล้ว',life:1.2};return;}
+    if(S.sel!==q.id){S.sel=q.id;return;}upgTake(q.id);return;}
+  S.sel=null;}
+function uStar(x,y,r,a,col){u.save();u.translate(x,y);u.rotate(a);u.fillStyle=col;u.beginPath();for(let k=0;k<4;k++){const q=k*Math.PI/2;u.lineTo(Math.cos(q)*r,Math.sin(q)*r);u.lineTo(Math.cos(q+Math.PI/4)*r*.28,Math.sin(q+Math.PI/4)*r*.28);}u.closePath();u.fill();u.restore();}
+function upgUI(rdt){if(!player||DEMO)return;u.setTransform(dpr,0,0,dpr,0,0);const s=UIS,tm=performance.now()/1000;
+  if(upgPopOn()){const b=upgPopBox(),pu=.5+.5*Math.sin(tm*4.2);u.save();u.shadowColor=UGOLD;u.shadowBlur=(8+10*pu)*s;uRR(u,b.x,b.y,b.w,b.h,9*s);u.fillStyle='rgba(26,18,10,.94)';u.fill();u.restore();
+    uRR(u,b.x,b.y,b.w,b.h,9*s);u.strokeStyle=UGOLD;u.lineWidth=2*s;u.stroke();uStar(b.x+17*s,b.y+b.h/2,(8+1.5*pu)*s,tm*.9,UGOLD);
+    uTx(u,`คุณมีแต้มอัปเกรด ${UPT} แต้ม`,b.x+b.w/2+10*s,b.y+b.h*.36,12.5*s,UGOLD);uTx(u,'แตะเพื่อเลือกการ์ด',b.x+b.w/2+10*s,b.y+b.h*.73,9.5*s,'#f3ece0');}
+  const S=UPS;if(state!=='upg'||!S)return;S.t+=rdt;
+  u.fillStyle='rgba(6,4,4,.8)';u.fillRect(0,0,SWc,SHc);
+  const cx=SWc/2,cy=SHc/2;
+  if(S.scr==='pack'){const t=S.t,pw=Math.min(128*s,SWc*.34),ph=pw*1.4;
+    if(t<.95){const k=t/.95,am=(.02+.11*k*k),rot=Math.sin(t*46)*am+Math.sin(t*71)*am*.5,jx=Math.sin(t*63)*3*k*s,jy=Math.cos(t*52)*2*k*s;   // 1. shake: it trembles and starts to glow
+      u.save();u.translate(cx+jx,cy+jy);u.rotate(rot);u.shadowColor=UGOLD;u.shadowBlur=(6+46*k*k)*s;uRR(u,-pw/2,-ph/2,pw,ph,7*s);const g=u.createLinearGradient(-pw/2,0,pw/2,0);g.addColorStop(0,'#7a1a1e');g.addColorStop(.5,'#c2382c');g.addColorStop(1,'#6a1418');u.fillStyle=g;u.fill();u.shadowBlur=0;
+      u.strokeStyle=UGOLD;u.lineWidth=2*s;u.stroke();u.fillStyle='rgba(255,210,122,.9)';for(const yy of[-ph/2+9*s,ph/2-9*s]){u.beginPath();for(let k2=0;k2<=12;k2++){const xx=-pw/2+4*s+(pw-8*s)*k2/12;u.lineTo(xx,yy+(k2%2?-3:3)*s);}u.lineTo(pw/2-4*s,yy+(yy<0?-6:6)*s);u.lineTo(-pw/2+4*s,yy+(yy<0?-6:6)*s);u.closePath();u.fill();}
+      uStar(0,-ph*.1,pw*.2,0,UGOLD);uTx(u,'การ์ดอัปเกรด',0,ph*.2,pw*.115,'#fff1c9');uTx(u,'× '+UPT,0,ph*.33,pw*.13,UGOLD);u.restore();
+      for(let k2=0;k2<8;k2++){const a=k2*TAU/8+t*1.7,r=pw*(.75+.25*Math.sin(t*5+k2));u.globalAlpha=.25+.6*k;uStar(cx+Math.cos(a)*r,cy+Math.sin(a)*r*1.2,(2.5+3*k)*s,t*3+k2,UGOLD);}u.globalAlpha=1;uTx(u,'แตะเพื่อข้าม',cx,SHc-30*s,10*s,'rgba(243,236,224,.6)');}
+    else{const k=Math.min(1,(t-.95)/.3);   // 2. tear: it bursts open with a flash
+      for(const sd of[-1,1]){u.save();u.globalAlpha=1-k;u.translate(cx+sd*k*pw*.6,cy+sd*k*ph*.35);u.rotate(sd*k*.7);u.beginPath();u.rect(-pw/2,sd<0?-ph/2:0,pw,ph/2);u.clip();uRR(u,-pw/2,-ph/2,pw,ph,7*s);u.fillStyle='#b5332a';u.fill();u.strokeStyle=UGOLD;u.lineWidth=2*s;u.stroke();u.restore();}
+      u.globalAlpha=(1-k)*.95;u.fillStyle='#fff7e0';u.fillRect(0,0,SWc,SHc);u.globalAlpha=1;for(let k2=0;k2<14;k2++){const a=k2*TAU/14,r=k*SWc*.5;u.globalAlpha=1-k;uStar(cx+Math.cos(a)*r,cy+Math.sin(a)*r,(7-4*k)*s,a,UGOLD);}u.globalAlpha=1;
+      if(k>=1)upgGo('cat','pack');}
+    return;}
+  if(S.scr==='got'){const id=S.got,t=S.t,w=Math.min(168*s,SWc*.46,SHc*.42),h=w*1.42,k=Math.min(1,t/.28),sc=.6+.4*(1-Math.pow(1-k,3));
+    u.save();u.translate(cx,cy+4*s);u.scale(sc,sc);uCard(u,id,-w/2,-h/2,w,h,{glow:1,sel:1});u.restore();
+    uTx(u,'ได้รับการ์ด!',cx,cy-h/2-22*s,18*s,UGOLD);uTx(u,UPT>0?`เหลือแต้มอัปเกรด ${UPT} แต้ม · แตะเพื่อเลือกต่อ`:'แตะเพื่อเล่นต่อ',cx,cy+h/2+24*s,11*s,'#f3ece0');
+    for(const p of S.sp){p.y+=p.vy*rdt;p.x+=p.vx*rdt+Math.sin(tm*3+p.ph)*.4;if(p.y>SHc+12)continue;const tw=.55+.45*Math.sin(tm*9+p.ph);u.globalAlpha=tw;uStar(p.x,p.y,p.r*(.7+.5*tw),p.ph+tm*2,p.w?'#fff8dc':UGOLD);}u.globalAlpha=1;   // ★ gold sparkles rain over the whole screen
+    if(t>2.6){if(UPT>0)upgGo('cat');else upgClose();}return;}
+  const L=upgLay(),n=L.cards.length,de=upgDealEnd(n);
+  uTx(u,`แต้มอัปเกรด: ${UPT}`,cx,L.top,15*s,UGOLD);uTx(u,UTITLE[S.scr],cx,L.top+19*s,11*s,'#f3ece0');
+  if(S.sel&&UCD[S.sel]){u.font=`bold ${8.5*s}px system-ui,-apple-system,"Noto Sans Thai",sans-serif`;const ln=uWrap(u,UCD[S.sel].d,Math.min(SWc-24*s,420*s));ln.slice(0,3).forEach((q,i)=>uTx(u,q,cx,L.top+35*s+i*10.5*s,8.5*s,'#ffe9b8'));}   // a single tap: the small print at the top
+  const shine=S.scr==='sib'?2:Math.max(0,L.cards.findIndex(q=>UCD[q.id]&&UCD[q.id].rec));
+  L.cards.forEach((q,i)=>{const t=S.t,st=upgCardState(S,q.id),a0=i*.07,sl=Math.min(1,Math.max(0,(t-a0)/.26)),es=1-Math.pow(1-sl,3),f0=.34+i*.1,fl=Math.min(1,Math.max(0,(t-f0)/.3));
+    const ox=S.from==='pack'?(cx-(q.x+q.w/2))*(1-es):0,oy=S.from==='pack'?(cy-(q.y+q.h/2))*(1-es):(SHc-q.y+20)*(1-es),fan=(i-(n-1)/2)*.16*(1-es);   // 3. fan: they slide out face down
+    const trem=i===shine&&t<f0&&sl>=1?Math.sin(t*70)*.035:0,shk=S.shk&&S.shk.id===q.id?Math.sin(S.shk.t*60)*4*s*S.shk.t/.3:0,sx=Math.max(.02,Math.abs(Math.cos(fl*Math.PI))),face=fl>=.5,lift=Math.sin(fl*Math.PI)*8*s,sel=S.sel===q.id;
+    u.save();u.translate(q.x+q.w/2+ox+shk,q.y+q.h/2+oy-lift-(sel?6*s:0));u.rotate(fan+trem);u.scale(sx*(sel?1.04:1),sel?1.04:1);if(sl>0)uCard(u,q.id,-q.w/2,-q.h/2,q.w,q.h,face?{...st,sel}:{back:1});
+    if(i===shine&&fl>=1){const k=Math.min(1,(t-f0-.3)/.5);if(k<1){u.save();uRR(u,-q.w/2,-q.h/2,q.w,q.h,q.w*.075);u.clip();const bx=-q.w*1.1+k*q.w*2.2,g=u.createLinearGradient(bx-q.w*.35,0,bx+q.w*.35,0);g.addColorStop(0,'rgba(255,210,122,0)');g.addColorStop(.5,'rgba(255,226,150,.78)');g.addColorStop(1,'rgba(255,210,122,0)');u.fillStyle=g;u.transform(1,0,-.45,1,0,0);u.fillRect(-q.w*2,-q.h,q.w*4,q.h*2);u.restore();}}   // 4. flip: the special one turns over with a gold sweep
+    u.restore();});
+  if(S.shk){S.shk.t-=rdt;if(S.shk.t<=0)S.shk=null;}
+  if(S.t>=de){const b=L.back;uRR(u,b.x,b.y,b.w,b.h,8*s);u.fillStyle='rgba(255,255,255,.1)';u.fill();u.strokeStyle='rgba(243,236,224,.8)';u.lineWidth=1.4*s;u.stroke();uTx(u,S.scr==='cat'?'เล่นต่อ ▶':'‹ กลับ',b.x+b.w/2,b.y+b.h/2+1,13*s);
+    if(S.scr==='main'||S.scr==='pam')uTx(u,S.sel?'แตะการ์ดใบเดิมอีกครั้งเพื่อเลือก':'แตะการ์ดเพื่อดูรายละเอียด',cx,L.hintY,9.5*s,'rgba(243,236,224,.7)');
+    else if(S.scr==='cat')uTx(u,'เลือกได้ทั้งสองหมวด ย้อนกลับมาได้เสมอ',cx,L.hintY,9.5*s,'rgba(243,236,224,.7)');}
+  if(S.msg){S.msg.life-=rdt;u.globalAlpha=Math.min(1,S.msg.life*3);uTx(u,S.msg.t,cx,L.hintY+15*s,12*s,UGOLD);u.globalAlpha=1;if(S.msg.life<=0)S.msg=null;}}
+function pauseCards(){const el=document.getElementById('pCards');if(!el)return;el.innerHTML='';for(const id of UCARDS){const w=58,h=82,cv=document.createElement('canvas'),r=Math.min(3,window.devicePixelRatio||1);cv.width=w*r;cv.height=h*r;cv.style.width=w+'px';cv.style.height=h+'px';const c=cv.getContext('2d');c.scale(r,r);uCard(c,id,0,0,w,h,{mini:1,res:r});el.appendChild(cv);}}
+
 addEventListener('resize',resize);addEventListener('orientationchange',()=>{for(const d of[80,250,600,1200])setTimeout(resize,d);});if(window.visualViewport)visualViewport.addEventListener('resize',()=>setTimeout(resize,30));
 setInterval(()=>{if(innerWidth!==LIW||innerHeight!==LIH)resize();},400);   // if the picture ever ends up a different size from the screen, fix it
 for(const ev of['fullscreenchange','webkitfullscreenchange'])document.addEventListener(ev,()=>setTimeout(resize,60));
