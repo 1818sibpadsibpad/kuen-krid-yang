@@ -173,15 +173,24 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 #mChars .bio:before{display:none}
 @media (max-height:560px){#mChars .cpick{display:block}#mChars .pick{min-height:calc(min(22vh,120px)*1.32)}#mChars .pc{width:calc(min(22vh,120px)/4)}#mChars .pc.sel{width:min(22vh,120px)}#mChars .bio{flex:none;margin:8px auto 4px;max-width:520px}}
 
+#gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(8,7,6,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);touch-action:none}
+#gate.off{display:none}
+#gate .gbox{text-align:center;padding:20px;max-width:92vw}
+#gate .gt{font:900 clamp(34px,9vw,84px)/1.15 system-ui,sans-serif;color:#fff;text-shadow:0 3px 0 #000,0 0 24px rgba(0,0,0,.8);letter-spacing:.01em}
+#gate .gs{margin-top:18px;font:600 13px system-ui,sans-serif;color:#cbbfa9;opacity:.85}
+#gate input{margin-top:8px;width:96px;padding:6px 8px;font:700 16px ui-monospace,monospace;letter-spacing:.35em;text-align:center;color:#fff;background:rgba(0,0,0,.55);border:1.5px solid #8d7a58;border-radius:8px;outline:none;-webkit-text-security:disc}
+#gate input.bad{border-color:#d0463a;animation:gshake .3s}
+@keyframes gshake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 </style>
 </head>
 <body>
 <canvas id="game"></canvas>
 <canvas id="ui"></canvas>
 
+<div id="gate"><div class="gbox"><div class="gt">ปิดปรับปรุงชั่วคราว</div><div class="gs">ใส่รหัสเพื่อเข้าเล่น</div><input id="gateIn" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" aria-label="รหัส"></div></div>
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v16.3</div>
+  <div class="ver">v16.4</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -189,7 +198,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v16.3</h3><ul><li>แพมที่อัปเกรดไม้ไฟยาว: ใช้ไม้ผลักดันซอมบี้ออกไปทุกครั้งที่แทง กระเด็นไกล 3 เมตร (ไฟดับก็ยังผลักได้ ถ้าไฟติดก็เผาไปด้วย) · วางไม้ชี้ที่ซอมบี้ไว้ตลอด จะยกไม้ขึ้นก็ต่อเมื่อต้องเปลี่ยนมุมหรือเดินย้ายไปรั้วด้านอื่น ถึงที่แล้วค่อยวางลงชี้ใหม่</li><li>การ์ด "แพมโยนฟืนติดไฟ" เปลี่ยนชื่อเป็น "โยนไฟ Lv.1" และต้องรีโหลด 10 วินาทีต่อการโยน 1 ครั้ง</li><li>โหมดซ้อม: ปุ่มอัปเกรด เลือกการ์ดได้ไม่จำกัดแต้ม</li><li>หลังคืนที่ 1: เก็บของได้ถึง 16:00 แล้วหน้าการ์ดเปิดเอง · อัปเกรดเสร็จนาฬิกาวิ่งเร็วไปถึง 18:30 แล้วกล้องแพนไปโชว์สิ่งที่เพิ่งอัปเกรด</li><li>คืนที่ 3 เป็นต้นไป: ตื่น 15:00 ก่อน มีปุ่ม “ข้ามไปกลางคืน” (18:30)</li><li>ใส่โค้ดลับแล้วกดหยุดเวลา: มีปุ่ม “ข้ามไปด่านถัดไป” อยู่บนสุดของเมนู</li><li>ผ่านคืนที่ 1 แล้วทุกคนตื่น 15:00 ของวันถัดไป · ได้แต้มอัปเกรด 2 แต้ม เลือกการ์ดของตัวละครหลัก (โยนฟืนข้ามรั้ว / กลิ้งไกลขึ้น 20% / ถีบ-ผลักไกลขึ้น 20%) หรือของพี่น้องในรั้วบ้าน (แพม: ไม้ไฟยาว 2 เท่า / โยนฟืนติดไฟ) · กดหยุดเวลาเพื่อดูการ์ดที่มี</li><li>เลิกการทำหน้าที่แทนกัน: เติมฟืนเป็นหน้าที่ของทุกคน · ฟีฟ่าตอนเป็นบอทออกไปฟัน ถีบ กลิ้งหลบเอง ไม่เกิน 10 ม. จากรั้ว หิวเหลือ 30% กลับมากินเอง</li><li>กระทะ: เสียงตีใช้เสียงเดียวกับมีดกรีดยาง</li><li>กดโจมตีรัว ๆ: จังหวะที่กดเร็วเกินจะถูกจำไว้แล้วตีทันทีที่พร้อม ไม่หายไปเฉย ๆ</li><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v16.4</h3><ul><li>ไฟไม่ทำดาเมจแล้ว: ซอมบี้ที่ติดไฟไม่ตาย ไฟดับเองใน 3 วินาที (กระสือด้วย) · ระหว่างติดไฟจะสับสน เดินมั่วกระจายทุกทิศ ตะครุบผิดทาง · ไฟดับแล้วมีรอยถ่านแดงๆ ตามตัว ค่อยๆ ดับใน 5 วินาที</li><li>ซอมบี้ที่ติดไฟลามติดตัวอื่นที่อยู่ใกล้ 1 เมตร · กระสือไหม้แค่ท่อนบน (หัว)</li><li>ไม้ไฟของแพม (ไม้สั้นและไม้ยาว) ผลักแล้วมีโอกาสติดไฟแค่ 2 ใน 10 ครั้ง ที่เหลือเป็นการผลักธรรมดา</li><li>หน้าแรก: ปิดปรับปรุงชั่วคราว ต้องใส่รหัสก่อนเข้าเล่น</li><li>แพมที่อัปเกรดไม้ไฟยาว: ใช้ไม้ผลักดันซอมบี้ออกไปทุกครั้งที่แทง กระเด็นไกล 3 เมตร (ไฟดับก็ยังผลักได้ ถ้าไฟติดก็เผาไปด้วย) · วางไม้ชี้ที่ซอมบี้ไว้ตลอด จะยกไม้ขึ้นก็ต่อเมื่อต้องเปลี่ยนมุมหรือเดินย้ายไปรั้วด้านอื่น ถึงที่แล้วค่อยวางลงชี้ใหม่</li><li>การ์ด "แพมโยนฟืนติดไฟ" เปลี่ยนชื่อเป็น "โยนไฟ Lv.1" และต้องรีโหลด 10 วินาทีต่อการโยน 1 ครั้ง</li><li>โหมดซ้อม: ปุ่มอัปเกรด เลือกการ์ดได้ไม่จำกัดแต้ม</li><li>หลังคืนที่ 1: เก็บของได้ถึง 16:00 แล้วหน้าการ์ดเปิดเอง · อัปเกรดเสร็จนาฬิกาวิ่งเร็วไปถึง 18:30 แล้วกล้องแพนไปโชว์สิ่งที่เพิ่งอัปเกรด</li><li>คืนที่ 3 เป็นต้นไป: ตื่น 15:00 ก่อน มีปุ่ม “ข้ามไปกลางคืน” (18:30)</li><li>ใส่โค้ดลับแล้วกดหยุดเวลา: มีปุ่ม “ข้ามไปด่านถัดไป” อยู่บนสุดของเมนู</li><li>ผ่านคืนที่ 1 แล้วทุกคนตื่น 15:00 ของวันถัดไป · ได้แต้มอัปเกรด 2 แต้ม เลือกการ์ดของตัวละครหลัก (โยนฟืนข้ามรั้ว / กลิ้งไกลขึ้น 20% / ถีบ-ผลักไกลขึ้น 20%) หรือของพี่น้องในรั้วบ้าน (แพม: ไม้ไฟยาว 2 เท่า / โยนฟืนติดไฟ) · กดหยุดเวลาเพื่อดูการ์ดที่มี</li><li>เลิกการทำหน้าที่แทนกัน: เติมฟืนเป็นหน้าที่ของทุกคน · ฟีฟ่าตอนเป็นบอทออกไปฟัน ถีบ กลิ้งหลบเอง ไม่เกิน 10 ม. จากรั้ว หิวเหลือ 30% กลับมากินเอง</li><li>กระทะ: เสียงตีใช้เสียงเดียวกับมีดกรีดยาง</li><li>กดโจมตีรัว ๆ: จังหวะที่กดเร็วเกินจะถูกจำไว้แล้วตีทันทีที่พร้อม ไม่หายไปเฉย ๆ</li><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
       <li>ผีปอบ: พุ่งกระโจนเร็วขึ้น 3 เท่า · พลาดแล้วไถลพื้น 4 เมตร ใบไม้แห้งกระเด็น · นอน 1 วิแล้วกลิ้งหนี 5 เมตรด้วยความเร็ว 5 เท่า · วิ่งอ้อมไปด้านหลังเราเร็วขึ้น 2 เท่า</li>
       <li>ผีปอบ: วิ่งเข้ามาแล้วจบด้วยการพุ่งกระโจนอีก 3 เมตร · ถ้าพลาดจะล้มคว่ำไถลไปกับพื้นอีก 2 เมตร</li>
       <li>ซอมบี้ใกล้ไฟ: เส้นขอบแสงสว่างชัดขึ้น วับตามเปลวไฟ ได้ทั้งจากกองไฟ คบไฟ ไม้ไฟของแพม และซอมบี้ที่ติดไฟ</li>
@@ -728,7 +737,7 @@ function bakeBones(z,dx,dy){   // burnt to the bone: charred black upper skeleto
   c.fillStyle=gray(215);c.fillRect(7.2,-1.9,1.6,.5);c.fillRect(9.6,-1.1,.6,.4);c.fillStyle=gray(70);c.fillRect(8.1,-1.1,.9,.8);c.fillRect(8.1,.4,.9,.8);
   c.restore();
 }
-function igniteZ(z){if(z.burn>0)return;z.burnMax=z.burn=UPG()?5:8+rnd()*2;z.aware=Math.max(z.aware,4);if(z.state==='windup'||z.state==='lunge')z.state='chase';
+function igniteZ(z){if(z.burn>0)return;z.burnMax=z.burn=3;z.ember=0;z.cft=0;z.aware=Math.max(z.aware,4);if(z.state==='windup'||z.state==='lunge')z.state='chase';
   const d=Math.hypot(z.x-player.x,z.y-player.y);if(d<300){nz(.6,'bandpass',500,1600,.35*(1-d/300)+.08,1);sfx.screech(-(z.x-player.x)/200);}
   for(let k=0;k<16;k++)sparks.push({x:z.x+(rnd()-.5)*6,y:z.y+(rnd()-.5)*4,h:8+rnd()*8,vx:(rnd()-.5)*30,vy:(rnd()-.5)*14,vh:20+rnd()*40,life:.5+rnd()*.7});}
 const ZFC=document.createElement('canvas');ZFC.width=ZFC.height=64;const zfc=ZFC.getContext('2d',{willReadFrequently:true}),ZFA=document.createElement('canvas'),ZFL=document.createElement('canvas');ZFA.width=ZFA.height=ZFL.width=ZFL.height=64;const zfa=ZFA.getContext('2d'),zfl=ZFL.getContext('2d');
@@ -744,6 +753,15 @@ function zFire(s,l,z,T){const f=Math.min(1,z.burn/1.2,(z.burnMax-z.burn)/.3+.3);
         if(!half)continue;const hq=Math.sin(((x+x0)>>1)*127.1+((y+y0+T*46)>>1)*311.7+((T*9)|0)*17.3)*43758.5453,v=(.3+.42*(hq-Math.floor(hq))+.14*Math.sin((x+x0)*.7-T*9)+.14*Math.sin((y+y0)*.5+T*13))*1.25*f;
         if(v>.34){put(i,v>.8?CY:v>.54?CO:CR);any=true;}}
       else if(heat>0){const X=x+x0,Y=y+y0;heat-=.05+.045*(1+Math.sin(X*.9+T*9+Y*.21))+.045*(1+Math.sin(Y*.55+T*17-X*.37));if(!half||heat<=.1)continue;put(i,heat>.62?CY:heat>.36?CO:CR);any=true;}}}
+  if(!any)return;zfa.putImageData(A,0,0);zfl.putImageData(Lm,0,0);s.drawImage(ZFA,x0,y0);l.drawImage(ZFL,x0,y0);}
+function zEmber(s,l,z,T){const k=Math.min(1,z.ember/5);if(!(k>0))return;   // after the fire: a few red embers left glowing on the burnt part, dying away over 5 s
+  const fx=Math.round(z.x-camX),fy=Math.round(z.y*K-camY),ox=32,oy=50,x0=fx-ox,y0=fy-oy;
+  zfc.setTransform(1,0,0,1,0,0);zfc.clearRect(0,0,64,64);zfc.setTransform(1,0,0,1,ox-fx,oy-fy);drawZ(zfc,z,T,'#fff');zfc.setTransform(1,0,0,1,0,0);
+  const m=zfc.getImageData(0,0,64,64).data,A=zfa.createImageData(64,64),Lm=zfl.createImageData(64,64),a=A.data,ld=Lm.data,D=z.down,
+    low=!!(z.crawl||(z.state==='down'&&D&&D.t>=.07&&D.t<D.T-.2)),dir=low?(z.crawl?z.a:Math.atan2(D.ky,D.kx)):0,ux=Math.cos(dir),uy=Math.sin(dir)*K,cut=oy-10.5;let any=false;
+  for(let y=0;y<64;y++)for(let x=0;x<64;x++){const i=y*64+x;if(m[(i<<2)+3]<=100)continue;const up=low?((x-ox)*ux+(y-oy+1.2)*uy>-1):y<cut;if(!up)continue;
+    const hq=Math.sin((x-ox)*127.1+(y-oy)*311.7+z.seed*17.3)*43758.5453,h=hq-Math.floor(hq);if(h>.12*k)continue;
+    const fl=.65+.35*Math.sin(T*(6+h*40)+h*90),p=i<<2,br=fl*(.55+.45*k);a[p]=Math.round(150+90*br);a[p+1]=Math.round(20+60*br*br);a[p+2]=14;a[p+3]=255;ld[p]=ld[p+1]=ld[p+2]=Math.round(120+120*br*k);ld[p+3]=255;any=true;}
   if(!any)return;zfa.putImageData(A,0,0);zfl.putImageData(Lm,0,0);s.drawImage(ZFA,x0,y0);l.drawImage(ZFL,x0,y0);}
 function drawBodyFire(c,z,T,lp){const x=z.x-camX,y=z.y*K-camY,low=z.crawl||z.state==='down',base=low?y-1:y-5,H=low?7:14,s=Math.min(1,z.burn/1.2,(z.burnMax-z.burn)/.3+.3);
   if(low)flames(c,x,base,6,2.1,H*s,T,z.seed,lp,1.8);else{flames(c,x,base,4,1.6,H*.7*s,T,z.seed,lp,1.7);flames(c,x,base-6,3,1.8,H*.6*s,T,z.seed+3,lp,1.5);}}
@@ -797,7 +815,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='16.3';
+let useBot=true,bot=null,hero='fifa';const VERSION='16.4';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -983,8 +1001,8 @@ function doHit0(h=player){
   const th=Math.atan2(r1,r0),tx=h.swingDir===1?Math.sin(th):-Math.sin(th),ty=h.swingDir===1?-Math.cos(th):Math.cos(th);
   let ux=r0+tx*.8,uy=r1+ty*.8;{const l=Math.hypot(ux,uy)||1;ux/=l;uy/=l;}
   if(z.stalk){z.hw=.001;z.hwx=ux;z.hwy=uy;}
-  if(h===player&&WHO()==='pam'&&UPG()&&!(z.burn>0)){igniteZ(z);toast('จุดไฟเผาซอมบี้! ไหม้ตายใน 5 วิ');}
-  else if(h===player&&WHO()==='pam'&&h.torch>0&&!(z.burn>0)&&rnd()<.5){igniteZ(z);z.hp=1;pamEmbers(z.x,z.y,ux,uy,30);zShove(z,ux,uy);rebound(h);toast('ไม้ติดไฟ จุดไฟซอมบี้!');return;}   // a still-burning stick: 50% sets it alight, left on 1 HP
+  if(h===player&&WHO()==='pam'&&UPG()&&!(z.burn>0)&&rnd()<.2){igniteZ(z);toast('จุดไฟเผาซอมบี้!');}
+  else if(h===player&&WHO()==='pam'&&h.torch>0&&!(z.burn>0)&&rnd()<.2){igniteZ(z);pamEmbers(z.x,z.y,ux,uy,30);zShove(z,ux,uy);rebound(h);toast('ไม้ติดไฟ จุดไฟซอมบี้!');return;}   // a still-burning stick: 50% sets it alight, left on 1 HP
   if(h===player&&W(h).blunt){const head=rnd()<.1;   // แพม: 10% critical (head) chance per hitz.aware=6;pamEmbers(z.x,z.y,ux,uy,head?46:22);
     if(head){critPop(z.x,z.y,20);shake=Math.max(shake,4);blood(z.x,z.y,14,8,ux,uy,80);sfx.hit();sfx.sever();killZ(z,ux,uy,false);toast('คริติคอล! ฟาดโดนหัว');return;}
     const dmg=1+.9*Math.min(1,p),sideArm=(h.swingDir===1||rnd()<.35)&&z.arms&&(z.arms[0]||z.arms[1]);   // the blow lands on an arm
@@ -1618,7 +1636,9 @@ function updateZombies(dt){STKT+=dt;for(const z of zombies)if(z.stalk&&z.hw>0&&z
     if(z.burn>0){z.burn-=dt;if(z.state==='windup'||z.state==='lunge'){z.state='chase';}   // on fire: slow, cannot pounce
       if(rnd()<dt*14)sparks.push({x:z.x+(rnd()-.5)*6,y:z.y+(rnd()-.5)*3,h:8+rnd()*10,vx:(rnd()-.5)*12,vy:(rnd()-.5)*6,vh:22+rnd()*30,life:.5+rnd()*.7});
       const dp=Math.hypot(z.x-player.x,z.y-player.y);if(dp<160&&rnd()<dt*3)nz(.05+rnd()*.05,'highpass',2500+rnd()*2500,1500,.06+.1*(1-dp/160),1,clamp((z.x-player.x)/140,-1,1));
-      if(z.burn<=0){z.burn=.001;z.burnDead=true;continue;}}
+      for(const o of zombies)if(o!==z&&!(o.burn>0)&&!(o.ember>0)&&!o.dieOnLand&&!o.emerge&&!o.ride&&!o.blind&&o.state!=='eatB'&&o.state!=='convB'&&o.state!=='eatC'&&Math.hypot(o.x-z.x,o.y-z.y)<18)igniteZ(o);   // 1 m between them: it catches
+      if(z.burn<=0){z.burn=0;z.ember=5;}}   // the fire dies by itself: no kill, only glowing ash for 5 s
+    else if(z.ember>0)z.ember-=dt;
     let tg=null,td=1e9;
     for(const hm of humans){if(hm.hidden)continue;const dd=Math.hypot(hm.x-z.x,hm.y-z.y),lo=lampOf(hm),sr=lo?140:(isIndoor(hm.x,hm.y)?42:62);
       if((dd<sr&&los(z.x,z.y,hm.x,hm.y))||(lo&&z.litBy===hm&&z.lit>0)){if(dd<td){td=dd;tg=hm;}}}
@@ -1637,7 +1657,7 @@ function updateZombies(dt){STKT+=dt;for(const z of zombies)if(z.stalk&&z.hw>0&&z
           if(d<48&&sees&&sameLv(z,T)){tx=T.x;ty=T.y;}else{const ft=flowTarget(z,FL);if(ft){tx=ft[0];ty=ft[1];}else{tx=T.x;ty=T.y;}}
           if(z.stalk&&!z.crawl&&!(z.burn>0)){const r=stalkAI(z,dt,T,d,sees,hidden);if(r){tx=r[0];ty=r[1];sp=r[2];}}
           if(false&&!z.crawl&&!(z.burn>0)&&d<40&&sees&&sameLv(z,T)){z.state='windup';z.t=.3;if(T===player||near(T,250))sfx.screech(-(z.x-player.x)/200);}
-        }else{tx=z.lx;ty=z.ly;if(d<20){grab(z);return;}}
+        }else{tx=z.lx;ty=z.ly;if(d<20&&!(z.burn>0)){grab(z);return;}}
         break;
       case 'search':z.t-=dt;tx=z.lx;ty=z.ly;sp=z.spd*.6;if(Math.hypot(z.lx-z.x,z.ly-z.y)<10||z.t<=0){z.state='wander';z.t=1;}if(z.aware>0)z.state='chase';break;
       case 'windup':z.t-=dt;z.vx*=.8;z.vy*=.8;z.a=angLerp(z.a,Math.atan2(dy,dx),dt*20);if(z.t<=0){z.state='lunge';z.t=.24;z.jx=dx/d;z.jy=dy/d;}break;
@@ -1655,21 +1675,23 @@ function updateZombies(dt){STKT+=dt;for(const z of zombies)if(z.stalk&&z.hw>0&&z
         if(D.t<.3){const f=Math.exp(-2.5*dt);z.vx*=f;z.vy*=f;}else{if(!D.landed){D.landed=true;shake=Math.max(shake,1.5);bakeSplat(z.x,z.y,2.5);nz(.12,'lowpass',500,120,.35,1);}z.vx*=.7;z.vy*=.7;}
         if(D.t>=D.T){z.state='chase';z.aware=5;z.down=null;tornUp(z);}break;}
     }
+    if(z.burn>0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.cft=(z.cft||0)-dt;if(z.cft<=0){z.cfa=rnd()*TAU;z.cft=.4+rnd()*.7;}tx=z.x+Math.cos(z.cfa)*20;ty=z.y+Math.sin(z.cfa)*20;sp=Math.max(sp,z.crawl?7.8:14.3);z.slam=null;}   // burning: lost, staggering off every which way
     if(z.burn>0&&sp>0)sp/=3;if(z.slow&&sp>0)sp*=1-z.slow;   // every blow taken slows it 20%, at most 95%
     if(z.slam){const S=z.slam;S.t+=dt;sp=0;z.vx*=.6;z.vy*=.6;if(!bigBranches.includes(S.b)||!(z.state==='chase'||z.state==='search'||z.state==='wander'))z.slam=null;else{z.a=angLerp(z.a,S.a,dt*12);
       if(!S.hit&&S.t>=.4){S.hit=true;slamHit(z,S.b);}if(S.t>=.66)z.slam=null;}}
-    {const br=!z.slam&&!z.crawl&&onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.brT=1.2+rnd()*.6;z.slam={t:0,b:br,a:Math.atan2(br.y-z.y,br.x-z.x),hit:false};}}}
-    if(z.crawl){const br=onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search')){z.brT=1.4+rnd()*.6;bigDamage(br,1/3,Math.cos(z.a),Math.sin(z.a),.5,true);woodKnock(br,z);}}}   // a zombie wading the branch claws at it: a third of a player's blow
+    {const br=!z.slam&&!z.crawl&&!(z.burn>0)&&onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search'||z.state==='wander')){z.brT=1.2+rnd()*.6;z.slam={t:0,b:br,a:Math.atan2(br.y-z.y,br.x-z.x),hit:false};}}}
+    if(z.crawl&&!(z.burn>0)){const br=onBranch(z,6);if(br){z.brT=(z.brT||rnd())-dt;if(z.brT<=0&&(z.state==='chase'||z.state==='search')){z.brT=1.4+rnd()*.6;bigDamage(br,1/3,Math.cos(z.a),Math.sin(z.a),.5,true);woodKnock(br,z);}}}   // a zombie wading the branch claws at it: a third of a player's blow
     if(tx!==null&&sp>0&&(z.state==='chase'||z.state==='search')){const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,r=antiStuck(z,ex/el,ey/el,dt);if(r[2]){tx=z.x+r[0]*20;ty=z.y+r[1]*20;}}
     if(tx!==null){const ex=tx-z.x,ey=ty-z.y,el=Math.hypot(ex,ey)||1,k=Math.min(1,dt*6);z.vx+=(ex/el*sp-z.vx)*k;z.vy+=(ey/el*sp-z.vy)*k;}
     const ox=z.x,oy=z.y;moveCircle(z,z.vx*dt,z.vy*dt,5);
     const moved=Math.hypot(z.x-ox,z.y-oy),vs=Math.hypot(z.vx,z.vy);z.lw=(tx!==null&&(z.state==='chase'||z.state==='search'))?sp*dt:0;z.lm=moved;
-    if(z.state==='wander'&&moved<vs*dt*.3)z.wa=rnd()*TAU;
+    if(z.state==='wander'&&moved<vs*dt*.3)z.wa=rnd()*TAU;if(z.burn>0&&moved<vs*dt*.3)z.cft=0;
     if(vs>3&&z.state!=='windup'&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down')z.a=angLerp(z.a,Math.atan2(z.vy,z.vx),dt*(z.state==='lunge'?30:6));
     if(z.stalk&&z.sk==='taunt'&&z.state==='chase')z.a=angLerp(z.a,Math.atan2(player.y-z.y,player.x-z.x),dt*14);   // stepping sideways, never taking its eyes off you
     z.phase+=moved*(z.crawl?.35:.22);
     bleedTick(z,dt);if(z.tilt)z.tilt*=Math.exp(-5*dt);
-    if(!hidden&&!(T.rollT>0)&&d<(z.crawl?9:11)&&sameLv(z,T)&&!(player.grip&&heldBetween(z.x,z.y,T.x,T.y))&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down'&&!(z.stalk&&(z.sk==='flop'||z.dg)&&z.state==='chase')){if(T===player){grab(z);return;}biteBot(z);continue;}
+    if(z.burn>0&&!hidden&&d<(z.crawl?9:11)&&z.state!=='down'){z.cfa=Math.atan2(-dy,-dx)+(rnd()-.5)*1.2;z.cft=.6;z.a=z.cfa;}   // it claws, but the wrong way
+    else if(!hidden&&!(T.rollT>0)&&d<(z.crawl?9:11)&&sameLv(z,T)&&!(player.grip&&heldBetween(z.x,z.y,T.x,T.y))&&z.state!=='stagger'&&z.state!=='fall'&&z.state!=='down'&&!(z.stalk&&(z.sk==='flop'||z.dg)&&z.state==='chase')){if(T===player){grab(z);return;}biteBot(z);continue;}
     z.groan-=dt;if(z.groan<=0){z.groan=(z.aware>0?2.5:6)+rnd()*6;const dp=Math.hypot(z.x-player.x,z.y-player.y);if(dp<240)sfx.groan(.05+.3*(1-dp/240),(z.x-player.x)/220);}
   }
   for(let i=zombies.length-1;i>=0;i--){const z=zombies[i];if(z.burnDead){if(near(z,260))toast('ซอมบี้ไหม้จนเหลือแต่กระดูก');killZ(z,Math.cos(z.a),Math.sin(z.a),false);continue;}if(z.dieOnLand&&z.down&&z.down.landed)killZ(z,z.down.kx,z.down.ky,false);}
@@ -1866,7 +1888,7 @@ function updatePam(dt,mode){if(!pam)return;   // nobody carries the torch in her
   const fz=PF&&!tz?pamFireTarget(p):null;
   if(tz&&PL){const a=Math.atan2(tz.y-p.y,tz.x-p.x),lying=tz.state==='down'||tz.state==='fall',da=Math.abs(angDiff(p.facing,a)),sd=Math.hypot(clamp(tz.x,home.ix0,home.ix1)-p.x,clamp(tz.y,home.iy0,home.iy1)-p.y),far=td>90&&sd>10;p.plZ=tz;   // the long stick: down onto the fence rail and always on the zombie
     if((td>116&&sd>24)||da>.9){p.plUp=1;p.plT=0;}else if(!far&&da<.35)p.plUp=0;   // another stretch of fence, or a wide turn: up it comes first, and down again once she is there
-    const strike=()=>{p.facing=a;p.thrust=.4;p.act=.2;p.igCd=1.2;p.back=0;p.backT=0;const z=tz,ux=Math.cos(a),uy=Math.sin(a),lit=p.torch>0&&!(z.burn>0);   // the tip drives it 3 m (24 px) back, and sets it alight if the flame is on
+    const strike=()=>{p.facing=a;p.thrust=.4;p.act=.2;p.igCd=1.2;p.back=0;p.backT=0;const z=tz,ux=Math.cos(a),uy=Math.sin(a),lit=p.torch>0&&!(z.burn>0)&&rnd()<.2;   // the tip drives it 3 m (24 px) back, and sets it alight if the flame is on
       p.doAct=()=>{if(!zombies.includes(z))return;z.aware=Math.max(z.aware,4);
         if(z.crawl){z.vx=ux*173;z.vy=uy*173;z.state='stagger';z.t=.5;}
         else if(z.state==='down'&&z.down){const D=z.down;D.kick=true;D.landed=true;D.px=z.x;D.py=z.y;z.vx=ux*120;z.vy=uy*120;}
@@ -1881,7 +1903,9 @@ function updatePam(dt,mode){if(!pam)return;   // nobody carries the torch in her
     else if(td<=86){p.backT=0;if(p.igCd<=0&&p.plK>.85)strike();}
     else if(sd>3){gx=tz.x;gy=tz.y;sp=40;}}}   // a step or two closer, the stick still on it
   else if(tz){gx=tz.x;gy=tz.y;sp=54;
-    if(td<(UPG()&&tz.state!=='down'?24:40)*(crossBetween(p.x,p.y,tz.x,tz.y)?2:1)&&p.igCd<=0){p.facing=Math.atan2(tz.y-p.y,tz.x-p.x);p.thrust=.4;p.act=.35;p.igCd=1.2;igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}}
+    if(td<(UPG()&&tz.state!=='down'?24:40)*(crossBetween(p.x,p.y,tz.x,tz.y)?2:1)&&p.igCd<=0){const a=Math.atan2(tz.y-p.y,tz.x-p.x),ux=Math.cos(a),uy=Math.sin(a);p.facing=a;p.thrust=.4;p.act=.35;p.igCd=1.2;
+      if(rnd()<.2){igniteZ(tz);if(rnd()<.6)sayAs(p,PAM_BURN[(rnd()*PAM_BURN.length)|0]);toast('แพมจุดไฟเผาซอมบี้!');}   // 2 in 10: it catches
+      else{const z=tz;z.aware=Math.max(z.aware,4);if(z.state==='down'&&z.down){const D=z.down;D.kick=true;D.landed=true;D.px=z.x;D.py=z.y;z.vx=ux*70;z.vy=uy*70;}else zShove(z,ux,uy);if(near(p,240))swPlay(p);}}}   // otherwise just a shove
   else if(PF&&(p.flog||(fz&&p.flCd<=3&&woodPiles.reduce((n,q)=>n+(inYard(q.x,q.y)?q.logs.length:0),0)>3))){const L=p.flog;   // a log from the pile, lit, and thrown at the nearest of them out to 20 m beyond the fence
     if(!L){let best=null,bd=1e9;for(const q of woodPiles){if(!q.logs.length||!inYard(q.x,q.y))continue;const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<bd){bd=d;best=q;}}gx=best.x;gy=best.y+5;sp=52;
       if(bd<14){p.flog={v:best.logs.pop(),lit:false,t:0};if(!best.logs.length&&!best.prac)woodPiles.splice(woodPiles.indexOf(best),1);p.act=.3;}}
@@ -2802,13 +2826,23 @@ function updatePro3(dt){const C=N3,tw=(C.t+=dt),t=tw-1.7,pw=praewa;C.wide=tw<3.3
 function proBlaze(T){const A=BS[0],b=Math.min(1,N3.burn),x=A.x-camX,y=A.y*K-camY,c=octx;   // drawn over the charred thing itself: fire from the entrails to the top of its hair
   for(const[dx,dy,n,sp,H,sd,w]of[[0,14,4,2.6,16,11,1.6],[-5,2,5,2.4,22,3,1.8],[6,-4,5,2.4,24,7,1.8],[0,-14,7,2.6,30,5,2.2],[-6,-26,6,2.2,26,9,2],[5,-32,6,2.2,28,2,2],[0,-40,5,2,22,13,1.8]]){c.save();c.translate(x+dx,y+dy);flames(c,0,0,n,sp,H*b,T,sd,false,w);c.restore();}}
 const KRSENT=0xff020101;
-function krFire(T){const o=out32;for(const b of BS){if(!b.char||b.hidden)continue;const f=b.fire==null?1:b.fire,cx=Math.round(b.x-camX),cy=Math.round(b.y*K-camY),x0=Math.max(0,cx-50),x1=Math.min(vw-1,cx+50),y0=Math.max(0,cy-100),y1=Math.min(vh-1,cy+46);
-    for(let x=x0;x<=x1;x++){let heat=0;for(let y=y1;y>=y0;y--){const i=y*vw+x;
-        if(o[i]===KRSENT){heat=f;const hq=Math.sin((x>>1)*127.1+((y+T*46)>>1)*311.7+((T*9)|0)*17.3)*43758.5453,v=(.3+.42*(hq-Math.floor(hq))+.14*Math.sin(x*.7-T*9)+.14*Math.sin(y*.5+T*13))*1.25*f;o[i]=v>.8?PY[2]:v>.54?PO[2]:v>.34?PR[2]:BK;}   // the charred body itself, crawling with fire
-        else if(heat>0){heat-=.05+.045*(1+Math.sin(x*.9+T*9+y*.21))+.045*(1+Math.sin(y*.55+T*17-x*.37));if(heat>.62)o[i]=PY[2];else if(heat>.36)o[i]=PO[2];else if(heat>.1)o[i]=PR[2];}}}}}   // tongues licking up off every part of it
+let KRTMP=null;
+function krBlit(b){b._m=null;if(!(b.char||b.ember>0)){b.rig.blit(out32,KRMAP);return;}
+  const o=out32,n=o.length;if(!KRTMP||KRTMP.length!==n)KRTMP=new Uint32Array(n);const t=KRTMP;b.rig.blit(t,KRMAP);   // drawn aside first, to learn where its body lies on screen
+  let xa=1e9,xb=-1,ya=1e9,yb=-1;for(let i=0;i<n;i++){const v=t[i];if(!v)continue;o[i]=v;const y=(i/vw)|0,x=i-y*vw;if(x<xa)xa=x;if(x>xb)xb=x;if(y<ya)ya=y;if(y>yb)yb=y;}
+  if(yb<0)return;const R=b.rig.R,pj=p=>[p[0]-camX,p[1]*K-camY-p[2]*.75],hd=pj([R.hx,R.hy,R.hz]),ch=[];for(let k=0;k<=8&&k<R.chain.length;k++)ch.push(pj(R.chain[k].p));   // its upper part: the head with its hair, and the chain down to the lungs
+  const w=xb-xa+1,m=new Uint8Array(w*(yb-ya+1));for(let y=ya;y<=yb;y++)for(let x=xa;x<=xb;x++){const i=y*vw+x;if(!t[i])continue;t[i]=0;let up=Math.hypot(x-hd[0],y-hd[1])<13;if(!up)for(const q of ch)if(Math.abs(x-q[0])<5&&Math.abs(y-q[1])<5){up=true;break;}m[(y-ya)*w+x-xa]=up?2:1;}
+  b._m={m,x0:xa,x1:xb,y0:ya,y1:yb,w};}
+function krFire(T){const o=out32;for(const b of BS){const M=b._m;if(!M||b.hidden)continue;const{m,x0,x1,y0,y1,w}=M;
+    if(!b.char){const k=Math.min(1,b.ember/5);for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){if(m[(y-y0)*w+x-x0]!==2)continue;const hq=Math.sin((x-x0)*127.1+(y-y0)*311.7)*43758.5453,h=hq-Math.floor(hq);if(h>.12*k)continue;o[y*vw+x]=Math.sin(T*(6+h*40)+h*90)>-.3?PR[2]:PO[2];}continue;}   // after the fire: embers on the burnt half, dying away
+    const f=b.fire==null?1:b.fire,Y0=Math.max(0,y0-40);
+    for(let x=x0;x<=x1;x++){let heat=0;for(let y=y1;y>=Y0;y--){const i=y*vw+x,mk=y>=y0?m[(y-y0)*w+x-x0]:0;
+        if(mk===1){heat=0;continue;}   // the dangling half below: untouched by the fire
+        if(mk){heat=f;const hq=Math.sin((x>>1)*127.1+((y+T*46)>>1)*311.7+((T*9)|0)*17.3)*43758.5453,v=(.3+.42*(hq-Math.floor(hq))+.14*Math.sin(x*.7-T*9)+.14*Math.sin(y*.5+T*13))*1.25*f;o[i]=v>.8?PY[2]:v>.54?PO[2]:v>.34?PR[2]:BK;}   // the charred upper half, crawling with fire
+        else if(heat>0){heat-=.05+.045*(1+Math.sin(x*.9+T*9+y*.21))+.045*(1+Math.sin(y*.55+T*17-x*.37));if(heat>.62)o[i]=PY[2];else if(heat>.36)o[i]=PO[2];else if(heat>.1)o[i]=PR[2];}}}}}   // tongues licking up off it
 function krWrithe(b,dt,ax,ay){b.wt=(b.wt||0)+dt;const w=b.wt;b.x=ax+Math.sin(w*31)*3.2+Math.sin(w*13.7)*4;b.y=ay+Math.cos(w*27)*2.4+Math.sin(w*17.3)*3;b.vx=Math.cos(w*31)*90;b.vy=Math.sin(w*23)*70;   // jerking, arching, curling in on itself
   KRS.R.zoff=3.5+Math.abs(Math.sin(w*15))*5;return(b.wa==null?(b.wa=KRS.R.yaw):b.wa)+Math.sin(w*19)*1.5+Math.sin(w*7.3)*.9;}
-function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.burnT=b.frenzy?2:5;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
+function krIgnite(b){b.state='burn';b.t=0;b.char=true;b.fire=1;b.burnT=b.frenzy?2:3;b.ember=0;b.cft=0;b.wt=0;b.wa=null;b.bx=b.x;b.by=b.y;b.vx=b.vy=0;toast('ติดไฟ!');sfx.screech();nz(.5,'bandpass',900,300,.25,1);shake=Math.max(shake,5);}
 function proWake(T){const C=N3,tw=C.t,fr=cuBand(),fh=vh*fr,y0=(vh-fh)/2,s=fh*.52/18,cx=vw/2,gy=y0+fh*.5,L=236;   // daytime, the same wide shot as the night-3 campfire
   sctx.fillStyle='rgb(150,196,226)';sctx.fillRect(0,0,vw,vh);lctx.fillStyle=gray(L);lctx.fillRect(0,0,vw,vh);
   sctx.fillStyle='rgb(74,132,66)';sctx.fillRect(0,y0,vw,fh*.2);for(let x=0;x<vw;x+=3){const h=fh*(.03+.05*Math.abs(Math.sin(x*.37)+Math.sin(x*.11)));sctx.fillRect(x,y0+fh*.2,3,h);}   // the canopy of the plantation
@@ -3150,9 +3184,10 @@ function killBoss(){const b=B;b.state='dead';b.t=0;b.hp=0;if(b.teth==='player')p
   toast(BS.length>1?'กำจัดกระสือหมดแล้ว!!':'กำจัดกระสือได้แล้ว!!');N3.cheer={t:0,next:.5,pool:CHEER.slice()};for(const e of[player,...npcs()])e.cheerT=8;}
 const CHEER=['เย้','เห้ย','อะหื่ออออ','มันตายละเบาะ','ป้าด','คึเฮ็ดเป็น','ถืกกัดบ่?','เจ็บบ่?','งึด','ตาย้านคัก','เฮ็ดจังได่สิกล้านอนบาดหนิ','กินได้ยุเบาะกระสือหนิ','เอามาปิ้งๆ'];
 function updateBoss(dt){const b=B,P=player;b.t+=dt;if(b.burnCd>0)b.burnCd-=dt;if(b.state==='dead'){b.vx*=.9;b.vy*=.9;rigTick(dt,-1,null);return;}
-  if(b.burnT>0){b.burnT-=dt;b.fire=b.burnT<.5?Math.max(0,b.burnT/.5):1;if(b.burnT<=0){b.burnT=0;b.char=false;b.fire=1;}}   // it burns for 5 s in all
-  if(b.state==='burn'){const fa=krWrithe(b,dt,b.bx,b.by);if(rnd()<dt*30)sparks.push({x:b.x+(rnd()-.5)*26,y:b.y+(rnd()-.5)*8,h:10+rnd()*44,vx:(rnd()-.5)*26,vy:(rnd()-.5)*10,vh:30+rnd()*50,life:.5+rnd()*.7});
-    rigTick(dt,(b.t*4)%1,fa);if(b.frenzy&&b.t>=2){b.burnT=0;b.char=false;b.fire=1;for(let k=0;k<40;k++){const a=rnd()*TAU,v=60+rnd()*120;sparks.push({x:b.x,y:b.y,h:14+rnd()*30,vx:Math.cos(a)*v,vy:Math.sin(a)*v*.6,vh:20+rnd()*70,life:.5+rnd()*.6});}sfx.whoosh();}   // berserk: it shakes the fire off after a second
+  if(b.burnT>0){b.burnT-=dt;b.fire=b.burnT<.5?Math.max(0,b.burnT/.5):1;if(b.burnT<=0){b.burnT=0;b.char=false;b.fire=1;b.ember=5;}}else if(b.ember>0)b.ember-=dt;   // it burns for 3 s, then the embers die away
+  if(b.state==='burn'){b.cft=(b.cft||0)-dt;if(b.cft<=0){b.cfa=rnd()*TAU;b.cft=.4+rnd()*.7;}b.bx=clamp(b.bx+Math.cos(b.cfa)*26*dt,30,MW*TS-30);b.by=clamp(b.by+Math.sin(b.cfa)*26*dt,30,MH*TS-30);   // lost: it lurches off every which way
+    const fa=krWrithe(b,dt,b.bx,b.by);if(rnd()<dt*30)sparks.push({x:b.x+(rnd()-.5)*26,y:b.y+(rnd()-.5)*8,h:10+rnd()*44,vx:(rnd()-.5)*26,vy:(rnd()-.5)*10,vh:30+rnd()*50,life:.5+rnd()*.7});
+    rigTick(dt,(b.t*4)%1,fa);if(b.frenzy&&b.t>=2&&b.burnT>0){b.burnT=0;b.char=false;b.fire=1;b.ember=5;for(let k=0;k<40;k++){const a=rnd()*TAU,v=60+rnd()*120;sparks.push({x:b.x,y:b.y,h:14+rnd()*30,vx:Math.cos(a)*v,vy:Math.sin(a)*v*.6,vh:20+rnd()*70,life:.5+rnd()*.6});}sfx.whoosh();}   // berserk: it shakes the fire off after a second
     if(b.t>=(b.frenzy?2:3)){b.state='roam';b.t=0;b.rt=0;b.burnCd=10;b.vx=b.vy=0;KRS.R.zoff=6;b.angry=5;sfx.screech();}return;}   // on fire: three seconds thrashing and curling, stunned
   if(b.state==='carry'){rigTick(dt,-1,null);return;}
   const dx=P.x-b.x,dy=P.y-b.y,d=Math.hypot(dx,dy)||1,ang=Math.atan2(dy,dx),T=performance.now()/1000;
@@ -3939,7 +3974,7 @@ function e5Outro(dt){const C=E5,L=[player,...npcs()];let all=true;N3.cam={x:C.cx
   if(C.card!=null)C.card+=dt;
   if(t>25)e5Done();}
 function fifaE(){if(hero==='fifa')return player;if(bot&&!bot.dead&&!bot.jp)return bot;return praewa||PWE();}
-const UPG_LIST=[['แจ็คพอท','หอก — มีดสั้นมัดเชือกติดปลายไม้ แทงทีเดียวตาย'],['แพม','คบไฟ — จุดไฟเผาซอมบี้ ไหม้ตายใน 5 วิ'],['แพรวา','เคียว — ฟันซอมบี้ได้แล้ว'],['ฟีฟ่า','มีดกรีดยาง — ฟันซอมบี้ได้แล้ว']];
+const UPG_LIST=[['แจ็คพอท','หอก — มีดสั้นมัดเชือกติดปลายไม้ แทงทีเดียวตาย'],['แพม','คบไฟ — ผลักซอมบี้ 2 ใน 10 ครั้งติดไฟ'],['แพรวา','เคียว — ฟันซอมบี้ได้แล้ว'],['ฟีฟ่า','มีดกรีดยาง — ฟันซอมบี้ได้แล้ว']];
 function e5Done(){const C=E5;UPGf=true;ELE.EL.knife=null;C.card=null;state='play';C.ph='done';N3.ph='done';N3.cam=null;waveDone=true;player.cleared=false;for(const p of[player,...npcs()]){p.cheerT=5;p._pp=null;}toast('ผ่านคืนที่ 5 แล้ว!! ทุกคนได้อาวุธใหม่');sfx.ready();}
 /* ---- you lose: it stamps on what is left of you, then goes for the others ---- */
 function e5KillPlayer(){if(state!=='play'||(DEMO&&!DEMO.mortal)||!E5)return;const P=player,e=E5.el;if(P.drag)toggleDrag();state='dying';death={el:true,t:0,ph:'again',x:P.x,y:P.y,shown:false,vt:0,t2:0,t3:0};
@@ -4744,7 +4779,7 @@ function drawObj0(o,T,s,l){
     F(s,26,x-1,ty-1,16,th+H+2);F(s,120,x,ty,14,th);F(s,170,x,fy,14,H);F(s,215,x,fy,14,1);F(s,80,x+7,fy+1,1,H-1);F(s,50,x+5,fy+11,1,3);F(s,50,x+9,fy+11,1,3);
     for(let xx=2;xx<14;xx+=3)F(s,140,x+xx,fy+1,1,H-2);F(s,52,x,fy+H-1,14,1);
     const v=lightAt(i*TS+8,(j+1)*TS+3);F(l,v*.7,x-1,ty-1,16,th+1);F(l,v,x-1,fy,16,H+1);break;}
-  case 6:{withOutline(s,o.z,c=>drawZ(c,o.z,T,null));drawZ(l,o.z,T,gray(lightAt(o.z.x,o.z.y+1,o.z)));if(o.z.burn>0)zFire(s,l,o.z,T);if(o.z.stalk){const E=stEyes(o.z,T);if(E)for(const[ex,ey]of E){s.fillStyle='#fff';s.fillRect(ex,ey,1,1);l.fillStyle='#fff';l.fillRect(ex,ey,1,1);}}break;}   // its white eyes show even in the dark
+  case 6:{withOutline(s,o.z,c=>drawZ(c,o.z,T,null));drawZ(l,o.z,T,gray(lightAt(o.z.x,o.z.y+1,o.z)));if(o.z.burn>0)zFire(s,l,o.z,T);else if(o.z.ember>0)zEmber(s,l,o.z,T);if(o.z.stalk){const E=stEyes(o.z,T);if(E)for(const[ex,ey]of E){s.fillStyle='#fff';s.fillRect(ex,ey,1,1);l.fillStyle='#fff';l.fillRect(ex,ey,1,1);}}break;}   // its white eyes show even in the dark
   case 31:{const q=o.e;withOutline(s,q,c=>drawP(c,T,null,q));drawP(l,T,gray(Math.max(40,lightAt(q.x,q.y))),q);break;}
   case 7:{if(player.down){withOutline(s,player,c=>drawLying(c,T,null));drawLying(l,T,gray(lightAt(player.x,player.y)));}else{withOutline(s,player,c=>drawP(c,T,null));drawP(l,T,gray(Math.max(curL&&state!=='dying'?150*curL.i:0,lightAt(player.x,player.y))));}break;}
   case 8:{drawGib(s,o.g,null);drawGib(l,o.g,gray(lightAt(o.g.x,o.g.y)));break;}
@@ -5725,7 +5760,7 @@ function frame(now){
   const frz=DF&&state==='play';if(DF){DF.t+=rdt;if(DF.t>3.2)DF=null;}
   if(frz){}else if(state==='play')updatePlay(dt);else if(state==='dying')updateDeath(dt);else if(state==='cutscene')updateCut(dt);else if(state==='n3cine')updateCine(dt);else if(state==='swap')updateSwap(dt);else if(state==='pick'&&PK)pickFrame(rdt);else computeLights();
   if(state!=='paused'&&state!=='layout'&&state!=='upg'&&!frz)updateCommon(state==='pick'?(PK&&PK.mode==='focus'?rdt*.06:0):dt);
-  if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);CUB=null;if(state==='n3cine'&&N3&&N3.cu)cuDraw(T);if(state==='n3cine'&&N3&&N3.step==='pro')proDraw(T);composite();{const ey=E5&&E5.el?E5.el.y:1e9;for(const b of BS)if(!b.hidden&&b.y<=ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>KRSENT))):KRMAP);e5Blit(out32);for(const b of BS)if(!b.hidden&&b.y>ey)b.rig.blit(out32,b.char?(KRMAP.blk||(KRMAP.blk=Array.from(KRMAP,()=>KRSENT))):KRMAP);}if(BS.length)krFire(T);postFX();octx.putImageData(outImg,0,0);}
+  if(player){updateLamps(T);renderScene();renderLight();for(const b of BS){selB(b);krLightPass(T);b.kl=KL;}renderObjects(T);CUB=null;if(state==='n3cine'&&N3&&N3.cu)cuDraw(T);if(state==='n3cine'&&N3&&N3.step==='pro')proDraw(T);composite();{const ey=E5&&E5.el?E5.el.y:1e9;for(const b of BS)if(!b.hidden&&b.y<=ey)krBlit(b);e5Blit(out32);for(const b of BS)if(!b.hidden&&b.y>ey)krBlit(b);}if(BS.length)krFire(T);postFX();octx.putImageData(outImg,0,0);}
   drawUI(dt);drawDF();upgUI(rdt);
   requestAnimationFrame(frame);
 }
@@ -5901,5 +5936,9 @@ for(const ev of['fullscreenchange','webkitfullscreenchange'])document.addEventLi
 resize();newGame();demoStart();syncHero();
 requestAnimationFrame(frame);
 </script>
+<script>(()=>{const g=document.getElementById('gate'),i=document.getElementById('gateIn');   // closed for maintenance: only the code lets you in
+  i.addEventListener('keydown',e=>e.stopPropagation());i.addEventListener('keyup',e=>e.stopPropagation());
+  i.addEventListener('input',()=>{i.value=i.value.replace(/\D/g,'').slice(0,4);i.classList.remove('bad');
+    if(i.value.length===4){if(i.value==='0018'){i.blur();g.classList.add('off');}else{i.classList.add('bad');setTimeout(()=>{i.value='';},300);}}});})();</script>
 </body>
 </html>
