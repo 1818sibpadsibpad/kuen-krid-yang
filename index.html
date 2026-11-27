@@ -178,7 +178,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
 
 <div id="menu" class="ov">
   <div class="mbg"></div>
-  <div class="ver">v15.4</div>
+  <div class="ver">v15.5</div>
   <div id="mMain" class="mscr">
     <div class="mhead"><div class="mtitle">เอาชีวิตรอด<br><span>18</span> คืนในสวนยาง</div>
     <div class="sub">3-BIT SURVIVAL</div><div class="landtag"><i></i><span class="tl">เวอร์ชันแนวนอน</span><span class="tp">เวอร์ชันแนวตั้ง</span><i></i></div><button id="duoBtn" class="duo"><b class="newtag">ใหม่</b><span id="duoTx">✨ ขยายจอ iPhone Duo</span></button></div>
@@ -186,7 +186,7 @@ button.go2{display:block;margin:10px auto 4px;background:#5fd35f;color:#0a0908;f
   </div>
   <div id="mHow" class="mscr hidden"><div class="panel">
     <h2>⚠️ สำคัญ วิธีเล่น</h2>
-    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.4</h3><ul><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
+    <div class="sec new"><h3>🆕 อัปเดตล่าสุด v15.5</h3><ul><li>กดโจมตีรัว ๆ: จังหวะที่กดเร็วเกินจะถูกจำไว้แล้วตีทันทีที่พร้อม ไม่หายไปเฉย ๆ</li><li>แก้บั๊ก: กินได้แค่ครั้งเดียวแล้วปุ่มกินหาย</li><li>ผีปอบ: หลบครั้งแรกกระโดดถอย ครั้งที่ 2–3 กลิ้งหลบ 6 เมตร · เส้นผมบางที่สุด สีดำ</li>
       <li>ผีปอบ: พุ่งกระโจนเร็วขึ้น 3 เท่า · พลาดแล้วไถลพื้น 4 เมตร ใบไม้แห้งกระเด็น · นอน 1 วิแล้วกลิ้งหนี 5 เมตรด้วยความเร็ว 5 เท่า · วิ่งอ้อมไปด้านหลังเราเร็วขึ้น 2 เท่า</li>
       <li>ผีปอบ: วิ่งเข้ามาแล้วจบด้วยการพุ่งกระโจนอีก 3 เมตร · ถ้าพลาดจะล้มคว่ำไถลไปกับพื้นอีก 2 เมตร</li>
       <li>ซอมบี้ใกล้ไฟ: เส้นขอบแสงสว่างชัดขึ้น วับตามเปลวไฟ ได้ทั้งจากกองไฟ คบไฟ ไม้ไฟของแพม และซอมบี้ที่ติดไฟ</li>
@@ -794,7 +794,7 @@ const PW_LINES=['ใครเตะฟืนหนูเนี่ย!!!','ระ
 // 10 firewood designs: [length, thickness, bark tone, bend, knots, branch stub, split end]
 const LOGS=[[12,2.6,92,0,1,1,1],[14,3.0,78,.1,2,2,0],[10,2.2,100,-.08,0,1,1],[13,3.4,70,0,3,0,0],[9,2.6,86,.15,1,1,1],[15,2.4,96,-.12,2,2,0],[11,2.8,64,.05,0,1,1],[12,2,104,.18,1,2,0],[13,3.2,82,-.05,2,1,1],[10,3.6,74,.08,1,0,1]];
 const JP_LINES=['อ้าาาาาย ฟีฟ่าคับ?','พอทว่า เลือดมันเปื้อน เด้ คับ ?','อ้าย ถืกกัด บ่อ คับ???','พอทยังบ่เอาจริงสื่อๆ','กรี้ดดดดดดด','อ้ายหิวข้าวบ่อคับ','มีดบ่คมแหม','โอ้ยยยย'];
-let useBot=true,bot=null,hero='fifa';const VERSION='15.4';
+let useBot=true,bot=null,hero='fifa';const VERSION='15.5';
 const FF_LINES=['พอท อยู่ไสวะ?','เลือดเปื้อนเสื้ออ้ายแล้ว','พอท ถืกกัดบ่?','อ้ายยังบ่เอาจริงเด้อ','อ๊ากกกกกก','หิวข้าวเหนียวแล้วพอท','ไม้บ่แข็งแหม','โอ้ยยยย','ไผเห็นเกิบอ้าย','ยายอุโทรมาบ่','น้องยุไสหนิ','เกิบอ้ายเสีย','แพรวายุไส','พอทๆ ทางนี้ๆ','มาแหมะๆ','เอ้อะ!!!'];
 const BOTL=()=>bot&&!bot.jp?FF_LINES:JP_LINES,BOTNAME=()=>bot&&!bot.jp?'ฟีฟ่า':'แจคพอท';
 let night=1,cut=null,smellT=14,wakeFade=0,state='menu',player,zombies,particles,gibs,toasts,kills,gameTime,flashOn,muzzle=0,shake,invertF,spawnT,flowT,hbT,flickT,flickNext,death,dropL,dawn;
@@ -918,9 +918,11 @@ function lungeTarget(h,ang,R){let best=null,bd=1e9;for(const z of zombies){if(z.
   return best?{z:best,d:Math.hypot(best.x-h.x,best.y-h.y),a:Math.atan2(best.y-h.y,best.x-h.x)}:null;}
 function lungeTo(h,t,stand){return;   // dash removed: only aim at the target
 const mv=Math.min(24,Math.max(0,t.d-stand));if(mv<1)return;h.lunge={ux:Math.cos(t.a),uy:Math.sin(t.a),sp:mv/.065,t:.065};h.lean=Math.max(h.lean||0,2.4);}
+let TAPQ=null;function tapQTick(){if(!TAPQ)return;const q=TAPQ;if(state!=='play'||performance.now()/1000-q.t>.4){TAPQ=null;return;}q.keep=true;tapAttack(q.ang);if(TAPQ)TAPQ.keep=false;}
 function tapAttack(ang){const h=player;const SWG=(WHO()==='pw'?.12:.25)*((h.hunger||0)>=1?3:1);   // starving: three times as long between blows
   if(state!=='play'||h.hidden||h.fly)return;if(h.snakeBite){kickSnake();return;}if(h.drag)toggleDrag();dropForAtk();   // the attack button drops whatever is carried, then swings
-  const now=performance.now()/1000;if((h.lastSw||0)-now>1.2)h.lastSw=now-1;if(now-(h.lastSw||0)<SWG||h.kickT>0)return;h.lastSw=now;
+  const now=performance.now()/1000;if((h.lastSw||0)-now>1.2)h.lastSw=now-1;if(now-(h.lastSw||0)<SWG||h.kickT>0){if((h.lastSw||0)+SWG-now<=.3)TAPQ={ang,t:TAPQ&&TAPQ.keep?TAPQ.t:now};return;}h.lastSw=now;TAPQ=null;   // a tap that lands a moment too early is kept and goes off the instant the arm is free
+  
   h.swingT=0;h.cd=0;h.charging=true;h.charge=.62;h.tap=true;release(ang==null?autoAim(h):ang);h.tap=false;}
 function release(angle,h=player){if(h===player)h.autoCh=false;
   if(!h.charging)return;h.charging=false;if(state!=='play')return;
@@ -5587,7 +5589,7 @@ function demoTick(dt){const D=DEMO;D.t+=dt;D.atkT-=dt;const P=player;
 let last=performance.now();
 let slowT=0;
 function frame(now){
-  const rdt=Math.min(.05,(now-last)/1000);last=now;const T=now/1000;eatTick();
+  const rdt=Math.min(.05,(now-last)/1000);last=now;const T=now/1000;eatTick();tapQTick();
   const dt=slowT>0?rdt*(.22+.78*Math.pow(1-slowT/.32,2)):rdt;if(slowT>0)slowT-=rdt;   // brief slow-motion after a hit
   if(DEMO)demoTick(dt);
   const frz=DF&&state==='play';if(DF){DF.t+=rdt;if(DF.t>3.2)DF=null;}
